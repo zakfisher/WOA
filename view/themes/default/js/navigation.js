@@ -12,8 +12,11 @@
      >> loadPage
      >> updateSession
  * - View
-     >> showSubNav
-     >> hideSubNav
+     >> login
+         >> PWInputFocus
+         >> PWInputBlur
+         >> UNInputFocus
+         >> UNInputBlur
      >> requestPage
      >> showPage
      >> hashBangRedirect
@@ -27,11 +30,11 @@ WOA.navigation =
    model :
    {
       /*************************************************************
-       * Method - loadPage(theme, page)
+       * Method - loadPage()
        *
        *    Refresh #container HTML with new view
        *************************************************************/
-      loadPage : function(theme, page)
+      loadPage : function()
       {
          // Load View
          $('#main-content').before(WOA.static.loading).addClass('hidden').load('view/themes/' + WOA.static.theme + '/templates/pages/' + WOA.static.page + '.php', WOA.navigation.view.showPage);
@@ -49,43 +52,70 @@ WOA.navigation =
    },
    view :
    {
-      /*************************************************************
-       * Method - showSubNav(e)
-       *
-       *    Display Sub Navigation
-       *************************************************************/
-      showSubNav : function(e)
-      {
-         if ($(e.target).attr('id') == 'show-login-modal')
+      login : {
+         /*************************************************************
+          * Method - PWInputFocus(e)
+          *
+          *    Show real pw input on focus
+          *************************************************************/
+         PWInputFocus : function(e)
          {
-            WOA.navigation.view.hideSubNav();
-         }
-         else
-         {
-            if (!$('#sub-nav').hasClass('active'))
-            {
-               $('#sub-nav').addClass('active').animate({ height : '32px' }, 150);
-               $('#sub-nav ul[data-page=' + $(e.target).attr('data-page') + ']').removeClass('hidden');
-            }
-            else
-            {
-               $('#sub-nav ul').addClass('hidden');
-               $('#sub-nav ul[data-page=' + $(e.target).attr('data-page') + ']').removeClass('hidden');
-            }
-         }
-      },
+            $('#login-form input[name=pw]').show().focus();
+            $(e.target).hide();
+         },
 
-      /*************************************************************
-       * Method - hideSubNav()
-       *
-       *    Hide Sub Navigation
-       *************************************************************/
-      hideSubNav : function()
-      {
-         $('#sub-nav').animate({ height : '0px' }, 200, function() {
-            $('#sub-nav').removeClass('active');
-            $('#sub-nav ul').addClass('hidden');
-         });
+         /*************************************************************
+          * Method - PWInputBlur(e)
+          *
+          *    Replace fake pw input on blur (if real pw is empty)
+          *************************************************************/
+         PWInputBlur : function(e)
+         {
+            if ($(e.target).val() == '')
+            {
+               $('#login-form input[name=pw-fake]').show().val('password');
+               $(e.target).hide();
+            }
+         },
+
+         /*************************************************************
+          * Method - UNInputFocus(e)
+          *
+          *    Clear un input val on focus
+          *************************************************************/
+         UNInputFocus : function(e)
+         {
+            if ($(e.target).val() == 'username')
+            {
+               $(e.target).val('');
+            }
+         },
+
+         /*************************************************************
+          * Method - UNInputBlur(e)
+          *
+          *    Replace un input val on blur (if blank)
+          *************************************************************/
+         UNInputBlur : function(e)
+         {
+            if ($(e.target).val() == '')
+            {
+               $(e.target).val('username');
+            }
+         },
+
+         /*************************************************************
+          * Method - submitUserInput()
+          *
+          *    Replace un input val on blur (if blank)
+          *************************************************************/
+         submitUserInput : function()
+         {
+            var un = $('#login-form input[name=un]').val();
+            var pw = $('#login-form input[name=pw]').val();
+
+            alert(un + ' ' + pw);
+         }
       },
 
       /*************************************************************
@@ -106,17 +136,14 @@ WOA.navigation =
             $('#navigation ul li a[data-page=' + WOA.static.page + ']').addClass('active');
             location.hash = '!/' + WOA.static.page;
 
-            $('#main-content, #footer, #footer-bg').fadeOut('normal',
+            $('#main-content').fadeOut('normal',
                function()
                {
-                  // Resize Header for Page Transition
-                  $('#header').addClass('transition');
-
                   // Load Page
                   WOA.navigation.model.loadPage();
 
                   // Update #container attributes
-                  $('#container').removeAttr('class').addClass(WOA.static.page).attr('data-page', WOA.static.page);
+                  $('#container').attr('data-page', WOA.static.page);
 
                   // Update Session
                   WOA.navigation.model.updateSession();
@@ -132,7 +159,7 @@ WOA.navigation =
        *************************************************************/
       showPage : function()
       {
-         setTimeout("$('#loading').remove();$('#main-content, #footer, #footer-bg').fadeIn('normal').removeClass('hidden');$('#header').removeClass('transition');WOA.navigation.view.adjustFooterPosition();", 700);
+         setTimeout("$('#loading').remove();$('#main-content').fadeIn('normal').removeClass('hidden');", 700);
       },
 
       /*************************************************************
@@ -155,16 +182,6 @@ WOA.navigation =
 
          var target = (redirect) ? '#navigation li a[data-page=' + page + ']' : '#logo img';
          $(target).click();
-      },
-
-      /*************************************************************
-       * Method - adjustFooterPosition()
-       *
-       *    Position #footer-bg (for zooming out)
-       *************************************************************/
-      adjustFooterPosition : function()
-      {
-         $('#footer-bg').css('top', ($('#container').height() - $('#footer').height() ) + 'px');
       }
    },
    controller :
@@ -182,21 +199,27 @@ WOA.navigation =
          /** Handlers **/
 
          // Highlight Current Page Nav
-         $(document).on('click', '#navigation ul li a:not(#show-login-modal), #logo img', WOA.navigation.view.requestPage);
+         $(document).on('click', '#logo.sprite', WOA.navigation.view.requestPage);
 
-         // Show Sub Nav
-         $(document).on('mouseover', '#navigation ul.main li a', WOA.navigation.view.showSubNav);
+         // Focus on PW (login input)
+         $(document).on('focus', '#login-form input[name=pw-fake]', WOA.navigation.view.login.PWInputFocus);
 
-         // Hide Sub Nav
-         $(document).on('mouseleave', '#navigation', WOA.navigation.view.hideSubNav);
+         // Blur on PW (login input)
+         $(document).on('blur', '#login-form input[name=pw]', WOA.navigation.view.login.PWInputBlur);
+
+         // Focus on UN (login input)
+         $(document).on('focus', '#login-form input[name=un]', WOA.navigation.view.login.UNInputFocus);
+
+         // Blur on UN (login input)
+         $(document).on('blur', '#login-form input[name=un]', WOA.navigation.view.login.UNInputBlur);
+
+         // Submit Login Credentials
+         $(document).on('click', '#login-form div.btn.login', WOA.navigation.view.login.submitUserInput);
 
          /** Behaviors **/
 
          // Redirect by #! (on load)
          WOA.navigation.view.hashBangRedirect();
-
-         // Adjust Footer BG Position
-         WOA.navigation.view.adjustFooterPosition();
 
          // Redirect by #! (back/forward buttons)
          $(window).bind('hashchange', WOA.navigation.view.hashBangRedirect);

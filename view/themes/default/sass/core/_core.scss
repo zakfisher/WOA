@@ -120,6 +120,8 @@ html { background: black; }
                               outline: red;
 
                               &:not(:focus) { color: #CCC; }
+
+                              &[name=pw] { display:none; }
                            }
                         }
                      }
