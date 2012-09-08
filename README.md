@@ -1,4 +1,0 @@
-WOA
-===
-
-World of Anarchy
