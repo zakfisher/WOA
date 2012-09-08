@@ -1,11 +1,11 @@
 /*********************************************
- * UpMo Navigation Class
+ * WOA Navigation Class
  *
  * Desc:  Javascript Navigation Object
  *
- * Creator: Zachary Fisher - zach@upmo.com
+ * Creator: Zachary Fisher - zfisher@worldofanarchy.com
  *
- * Copyright (c) Upwardly Mobile, Inc., 2012
+ * Copyright (c) Anarchy Productions International LLC, 2012
  *
  * Search Keys:
  * - Model
@@ -22,7 +22,7 @@
      >> Handlers
      >> Behaviors
  *********************************************/
-UpMo.navigation =
+WOA.navigation =
 {
    model :
    {
@@ -34,7 +34,7 @@ UpMo.navigation =
       loadPage : function(theme, page)
       {
          // Load View
-         $('#main-content').before(UpMo.static.loading).addClass('hidden').load('view/themes/' + UpMo.static.theme + '/templates/pages/' + UpMo.static.page + '.php', UpMo.navigation.view.showPage);
+         $('#main-content').before(WOA.static.loading).addClass('hidden').load('view/themes/' + WOA.static.theme + '/templates/pages/' + WOA.static.page + '.php', WOA.navigation.view.showPage);
       },
 
       /*************************************************************
@@ -44,7 +44,7 @@ UpMo.navigation =
        *************************************************************/
       updateSession : function()
       {
-         $.post('navigation/update_session_page', { page : UpMo.static.page });
+         $.post('navigation/update_session_page', { page : WOA.static.page });
       }
    },
    view :
@@ -58,7 +58,7 @@ UpMo.navigation =
       {
          if ($(e.target).attr('id') == 'show-login-modal')
          {
-            UpMo.navigation.view.hideSubNav();
+            WOA.navigation.view.hideSubNav();
          }
          else
          {
@@ -95,16 +95,16 @@ UpMo.navigation =
        *************************************************************/
       requestPage : function(e)
       {
-         if (UpMo.static.page != $(e.target).attr('data-page'))
+         if (WOA.static.page != $(e.target).attr('data-page'))
          {
             // Hide Sub Nav
-            UpMo.navigation.view.hideSubNav();
+            WOA.navigation.view.hideSubNav();
 
             // Update Nav Links
-            UpMo.static.page = $(e.target).attr('data-page');
+            WOA.static.page = $(e.target).attr('data-page');
             $('#navigation ul li a').removeClass('active');
-            $('#navigation ul li a[data-page=' + UpMo.static.page + ']').addClass('active');
-            location.hash = '!/' + UpMo.static.page;
+            $('#navigation ul li a[data-page=' + WOA.static.page + ']').addClass('active');
+            location.hash = '!/' + WOA.static.page;
 
             $('#main-content, #footer, #footer-bg').fadeOut('normal',
                function()
@@ -113,13 +113,13 @@ UpMo.navigation =
                   $('#header').addClass('transition');
 
                   // Load Page
-                  UpMo.navigation.model.loadPage();
+                  WOA.navigation.model.loadPage();
 
                   // Update #container attributes
-                  $('#container').removeAttr('class').addClass(UpMo.static.page).attr('data-page', UpMo.static.page);
+                  $('#container').removeAttr('class').addClass(WOA.static.page).attr('data-page', WOA.static.page);
 
                   // Update Session
-                  UpMo.navigation.model.updateSession();
+                  WOA.navigation.model.updateSession();
                }
             );
          }
@@ -132,7 +132,7 @@ UpMo.navigation =
        *************************************************************/
       showPage : function()
       {
-         setTimeout("$('#loading').remove();$('#main-content, #footer, #footer-bg').fadeIn('normal').removeClass('hidden');$('#header').removeClass('transition');UpMo.navigation.view.adjustFooterPosition();", 700);
+         setTimeout("$('#loading').remove();$('#main-content, #footer, #footer-bg').fadeIn('normal').removeClass('hidden');$('#header').removeClass('transition');WOA.navigation.view.adjustFooterPosition();", 700);
       },
 
       /*************************************************************
@@ -175,34 +175,34 @@ UpMo.navigation =
       init : function()
       {
          /** Init Global Variables **/
-         UpMo.static.page = $('#container').attr('data-page');
-         UpMo.static.theme = $('#container').attr('data-theme');
-         UpMo.static.loading = '<img id="loading" src="view/themes/' + UpMo.static.theme + '/img/global/loading.gif" />';
+         WOA.static.page = $('#container').attr('data-page');
+         WOA.static.theme = $('#container').attr('data-theme');
+         WOA.static.loading = '<img id="loading" src="view/themes/' + WOA.static.theme + '/img/global/loading.gif" />';
 
          /** Handlers **/
 
          // Highlight Current Page Nav
-         $(document).on('click', '#navigation ul li a:not(#show-login-modal), #logo img', UpMo.navigation.view.requestPage);
+         $(document).on('click', '#navigation ul li a:not(#show-login-modal), #logo img', WOA.navigation.view.requestPage);
 
          // Show Sub Nav
-         $(document).on('mouseover', '#navigation ul.main li a', UpMo.navigation.view.showSubNav);
+         $(document).on('mouseover', '#navigation ul.main li a', WOA.navigation.view.showSubNav);
 
          // Hide Sub Nav
-         $(document).on('mouseleave', '#navigation', UpMo.navigation.view.hideSubNav);
+         $(document).on('mouseleave', '#navigation', WOA.navigation.view.hideSubNav);
 
          /** Behaviors **/
 
          // Redirect by #! (on load)
-         UpMo.navigation.view.hashBangRedirect();
+         WOA.navigation.view.hashBangRedirect();
 
          // Adjust Footer BG Position
-         UpMo.navigation.view.adjustFooterPosition();
+         WOA.navigation.view.adjustFooterPosition();
 
          // Redirect by #! (back/forward buttons)
-         $(window).bind('hashchange', UpMo.navigation.view.hashBangRedirect);
+         $(window).bind('hashchange', WOA.navigation.view.hashBangRedirect);
       }
    }
 };
 
 // Initialize Instance
-UpMo.navigation.controller.init();
+WOA.navigation.controller.init();

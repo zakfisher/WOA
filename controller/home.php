@@ -1,6 +1,6 @@
 <?php
 class Home {
-   function __construct() { }
+   function __construct() { session_start(); }
 
    function test($str)
    {

@@ -1,9 +1,6 @@
 <?php
 class Navigation {
-   function __construct()
-   {
-      session_start();
-   }
+   function __construct() { session_start(); }
 
    function update_session_page()
    {

@@ -1,11 +1,11 @@
 /*********************************************
- * UpMo Page Class
+ * WOA Page Class
  *
  * Desc:  Javascript Page Object
  *
- * Creator: Zachary Fisher - zach@upmo.com
+ * Creator: Zachary Fisher - zfisher@worldofanarchy.com
  *
- * Copyright (c) Upwardly Mobile, Inc., 2012
+ * Copyright (c) Anarchy Productions International LLC, 2012
  *
  * Search Keys:
  * - Import Pages

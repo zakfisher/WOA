@@ -1,20 +1,20 @@
 /*********************************************
- * UpMo Class
+ * WOA Class
  *
- * Desc:  Global Javascript UpMo Object
+ * Desc:  Global Javascript WOA Object
  *
- * Creator: Zachary Fisher - zach@upmo.com
+ * Creator: Zachary Fisher - zfisher@worldofanarchy.com
  *
- * Copyright (c) Upwardly Mobile, Inc., 2012
+ * Copyright (c) Anarchy Productions International LLC, 2012
  *
  * Search Keys:
- * - Init Global UpMo Object
+ * - Init Global WOA Object
  * - Import JS Classes
  *********************************************/
 $(function() {
 
-   /** Init Global UpMo Object **/
-   UpMo =
+   /** Init Global WOA Object **/
+   WOA =
    {
       navigation : {},
       pages : {},
