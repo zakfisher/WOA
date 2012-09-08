@@ -10,7 +10,13 @@
                   <div class="link left sign-in">
                      <p class="left">Log In</p>
                      <div class="caret"></div>
-                     <div class="dropdown"></div>
+                     <div class="dropdown">
+                        <div id="login-form">
+                           <input type="text" name="un" value="username" />
+                           <input type="text" name="pw" value="password" />
+                           <div class="btn btn-inverse right">Log In</div>
+                        </div>
+                     </div>
                      <!-- end .dropdown -->
                   </div>
                   <!-- end .sign-in -->

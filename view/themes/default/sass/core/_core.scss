@@ -42,6 +42,8 @@ html { background: black; }
          @include box-shadow(0 0 30px 0 #B3B3B3);
          @include black-gradient();
 
+         div.inner-container { width: 98%; }
+
          #logo {
             border-left: 1px solid #565656;
             border-right: 1px solid #565656;
@@ -62,25 +64,73 @@ html { background: black; }
 
          div.right {
             &.home {
+
                div.link {
                   border-left: 1px solid #565656;
                   border-right: 1px solid #565656;
                   cursor: pointer;
                   height: 26px;
-                  padding: 8px 22px 2px 15px;
+                  padding: 8px 26px 2px 18px;
+                  position: relative;
 
                   p {
                      color: $gray;
                      font-size: 14px;
                      font-weight: bold;
                      cursor: pointer;
+                     position: relative;
+                     z-index: 2;
                   }
 
                   div {
                      &.caret {
                         @include caret('down', $gray);
                         cursor: pointer;
+                        position: relative;
+                        z-index: 2;
                      }
+
+                     &.dropdown {
+                        background: url('../img/navigation/login-dropdown-bg.png') 0 0 no-repeat;
+                        cursor: default;
+                        display: none;
+                        height: 182px;
+                        width: 213px;
+                        position: absolute;
+                        right: -5px;
+                        top: -3px;
+
+                        div#login-form {
+                           width: 170px;
+                           margin: 0 auto;
+                           height: 120px;
+                           position: relative;
+                           top: 50px;
+
+                           input {
+                              width: 160px;
+                              border: 1px solid #CCC;
+                              @include border-radius(3px);
+                              padding: 3px 5px;
+                              font-size: 14px;
+                              font-weight: bold;
+                              color: black;
+                              @include box-shadow(inset 0px 1px 3px 0 #ccc);
+                              margin-bottom: 15px;
+                              outline: red;
+
+                              &:not(:focus) { color: #CCC; }
+                           }
+                        }
+                     }
+                  }
+                  
+                  &:hover {
+                     p { color: black; }
+
+                     div.caret { @include caret('down', black); }
+
+                     div.dropdown { display: block; }
                   }
                }
             }
@@ -104,6 +154,8 @@ html { background: black; }
          }
 
          &.inner-container {
+            width: 95%;
+            min-width: 700px;
 
             div {
                &.social-media {
