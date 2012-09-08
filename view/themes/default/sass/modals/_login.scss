@@ -1,0 +1,48 @@
+#login-modal .modal {
+   height: 306px;
+   margin: 0 0 0 -311px;
+   width: 620px;
+   top: 200px;
+
+   div.modal-body {
+      height: 191px;
+      margin: 0;
+      padding: 0;
+
+      #login-form {
+         padding-top: 14px;
+         width: 557px;
+
+         div {
+            &.input {
+               input[type=password] { width: 342px; }
+            }
+
+            &.submit {
+               padding-top: 18px;
+
+               div {
+                  &.sprite {
+                     background: url('../img/global/modal-sprite.png') no-repeat;
+
+                     &.logo {
+                        background-position: 0px 0px;
+                        height: 47px;
+                        width: 68px;
+                     }
+                  }
+
+                  &.login {
+                     display: block;
+                     font-size: 22px;
+                     font-weight: lighter;
+                     padding: 10px 30px;
+                     position: relative;
+                     right: -11px;
+                  }
+               }
+            }
+         }
+      }
+   }
+}

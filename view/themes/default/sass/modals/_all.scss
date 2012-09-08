@@ -1,0 +1,96 @@
+.modal {
+   background-color: white;
+   position: absolute;
+   top: 70px;
+   left: 50%;
+   z-index: 1050;
+   overflow: hidden;
+   border: 1px solid black;
+   @include border-radius(8px);
+   @include box-shadow(0 3px 7px rgba(0, 0, 0, 0.3));
+   -webkit-background-clip: padding-box;
+   -moz-background-clip: padding-box;
+   background-clip: padding-box;
+
+   div {
+      &.close {
+         height: 19px;
+         margin: 0;
+         padding: 0;
+         position: absolute;
+         right: 5px;
+         top: 5px;
+         width: 19px;
+      }
+
+      &.modal-inner-container { padding: 0 26px; }
+
+      &.modal-header {
+         background-image: url('../img/global/body-bg.png');
+         @include border-radius(8px 8px 0 0);
+         height: 58px;
+
+         h3 {
+            color: $red;
+            border-bottom: 2px solid $gray;
+            font-size: 20px;
+            padding: 15px 0 10px;
+         }
+      }
+
+      &.modal-body {
+         div.input {
+            padding: 0 0 18px;
+
+            &.short { width: 47%; }
+            &.long { width: 100%; }
+
+            p {
+               font-weight: bold;
+               margin: 0;
+               padding: 0 0 5px;
+            }
+            
+            input {
+               border: 1px solid #ccc;
+               @include border-radius(4px);
+               @include box-shadow(inset 2px 2px 5px #ECECEC);
+               color: black;
+               font-size: 28px;
+               height: 30px;
+               margin: 0;
+               outline: none;
+               padding: 5px;
+               width: 100%;
+
+               &:not(:focus) { color: #ccc; }
+            }
+         }
+      }
+
+      &.modal-footer {
+         background-image: url('../img/global/footer-bg.jpg');
+         @include border-radius(0 0 8px 8px);
+         height: 58px;
+         
+         p.msg {
+            color: white;
+            font-size: 14px;
+            padding: 20px 0;
+            text-align: center;
+         }
+      }
+   }
+}
+
+.modal-backdrop {
+   position: fixed;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   z-index: 1040;
+   background-color: white;
+   opacity: 0.8;
+   filter: alpha(opacity = 80);
+}
