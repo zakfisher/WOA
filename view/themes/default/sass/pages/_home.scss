@@ -11,83 +11,10 @@
  * -
  *********************************************/
 
-#container.home {
+#container[data-page=home] {
    #main-content {
-      #banner {
-         padding-bottom: 30px;
-         position: relative;
-         top: -135px;
 
-         div.inner-container {
-            div {
-               &.video, &.play {
-                  margin: 0 auto;
-                  position: relative;
-               }
+      div.inner-container { background: lime; height: 500px; }
 
-               &.get-promoted {
-                  background: url('../img/home/get-promoted.png') center top no-repeat;
-                  height: 151px;
-                  margin: 0 auto;
-                  width: 637px;
-               }
-
-               &.video {
-                  background: url('../img/home/video-bg.jpg') center top no-repeat;
-                  height: 376px;
-                  width: 933px;
-
-                  div {
-                     &.play {
-                        background: url('../img/home/play-btn.png') 0px 0px no-repeat;
-                        cursor: pointer;
-                        height: 224px;
-                        width: 244px;
-                        top: 68px;
-
-                        &:hover { background: url('../img/home/play-btn.png') 0px -224px no-repeat; }
-                     }
-
-                     &.iframe {
-                        background-color: black;
-                        position: relative;
-                        margin: 0 auto;
-                        top: -205px;
-                        width: 583px;
-                     }
-                  }
-               }
-
-               &.sign-up {
-                  display: block;
-                  font-size: 22px;
-                  font-weight: lighter;
-                  margin: 0 auto;
-                  padding: 10px 30px;
-                  text-align: center;
-                  width: 150px;
-               }
-            }
-
-            h2.tagline {
-               font-weight: normal;
-               font-size: 18px;
-               line-height: 26px;
-               margin: 0;
-               padding: 0 0 20px;
-               text-align: center;
-            }
-         }
-      }
-
-      #points-of-entry {
-         background: url('../img/global/body-bg.png') center top repeat-x white;
-         border-top: 1px solid black;
-         height: 343px;
-
-         div.inner-container {
-            div {}
-         }
-      }
    }
 }

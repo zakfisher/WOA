@@ -20,5 +20,4 @@ if (isset($ie_version) AND $ie_version == 7):
 <?php endif; ?>
 </head>
 <body>
-   <div id="container" data-theme="<?= $theme; ?>" data-page="<?= $page; ?>" class="<?= $page; ?>">
-      <div id="header">
+   <div id="container" data-theme="<?= $theme; ?>" data-page="<?= $page; ?>">
