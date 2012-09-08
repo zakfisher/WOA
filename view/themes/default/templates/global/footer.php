@@ -1,16 +1,32 @@
 <?php unset($_SESSION); session_destroy(); ?>
       <div id="footer">
+         <div class="top-shadow"></div>
          <div class="inner-container">
-            <!-- end .social-media -->
-            <p class="copyright">Copyright &copy; <?= date("Y"); ?> Anarchy Productions International LLC. All Rights Reserved.</p>
-            <div class="social-media">
-               <a href="http://www.facebook.com/UpMoRocks" target="_blank" class="site fb"></a>
+            <div class="social-media left">
+               <a href="#" target="_blank" class="fb"></a>
                <!-- end .fb -->
-               <a href="http://twitter.com/UPMO" target="_blank" class="site m twitter"></a>
+               <a href="#" target="_blank" class="twitter"></a>
                <!-- end .twitter -->
-               <a href="feed://feeds.feedburner.com/UpmoBlog" target="_blank" class="site m blog"></a>
+               <a href="#" target="_blank" class="rss"></a>
                <!-- end .blog -->
             </div>
+            <!-- end .social-media -->
+            <div class="footer-nav left">
+               <ul>
+                  <li>
+                     <a href="javascript:void(0);">Downloads</a>
+                  </li>
+                  <li class="border">
+                     <a href="javascript:void(0);">About</a>
+                  </li>
+                  <li>
+                     <a href="javascript:void(0);">Contact</a>
+                  </li>
+               </ul>
+            </div>
+            <!-- end .footer-nav -->
+            <p class="copyright right">Copyright &copy; <?= date("Y"); ?>, Anarchy Productions International LLC</p>
+            <div class="clr"></div>
          </div>
          <!-- end .inner-container -->
          <div class="footer-border"></div>

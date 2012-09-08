@@ -73,11 +73,13 @@ html { background: black; }
                      color: $gray;
                      font-size: 14px;
                      font-weight: bold;
+                     cursor: pointer;
                   }
 
                   div {
                      &.caret {
                         @include caret('down', $gray);
+                        cursor: pointer;
                      }
                   }
                }
@@ -89,12 +91,95 @@ html { background: black; }
 
    // Footer
    #footer {
+      background: white;
+
       div {
+
+         &.top-shadow {
+            background: url('../img/global/footer-shadow.png') 0 0 repeat-x;
+            height: 41px;
+            width: 100%;
+            position: relative;
+            top: -20px;
+         }
+
+         &.inner-container {
+
+            div {
+               &.social-media {
+                  background: url('../img/global/footer-shadow-vertical.png') right top no-repeat;
+                  height: 73px;
+                  width: 150px;
+                  position: relative;
+                  top: -15px;
+                  
+                  a {
+                     background: url('../img/global/social-media-sprite.jpg') 0 0 no-repeat;
+                     padding: 18px;
+                     float: left;
+                     margin-right: 10px;
+                     position: relative;
+                     top: 18px;
+   
+                     &.fb {
+                        background-position: 0 0;
+                        &:hover { background-position: 1px -37px; }
+                     }
+   
+                     &.twitter {
+                        background-position: -47px 0;
+                        &:hover { background-position: -46px -37px; }
+                     }
+   
+                     &.rss {
+                        background-position: -95px 0;
+                        &:hover { background-position: -95px -37px; }
+                     }
+                  }
+               }
+               
+               &.footer-nav {
+                  ul { 
+                     list-style-type: none;
+                     position: relative;
+                     top: 12px;
+                     left: 10px;
+                  
+                     li {
+                        display: inline;
+                        padding: 5px 10px;
+
+                        &.border {
+                           border-right: 1px solid $gray;
+                           border-left: 1px solid $gray;
+                        }
+
+                        a {
+                           color: #A5A5A5;
+                           font-weight: bold;
+                           font-size: 12px;
+
+                           &:hover { color: $darkGray; }
+                        }
+                     }
+                  }
+               }
+            }
+
+            p.copyright {
+               color: #a5a5a5;
+               font-size: 12px;
+               position: relative;
+               top: 12px;
+            }
+         }
+
          &.footer-border {
             height: 10px;
             width: 100%;
             @include black-gradient();
          }
+
       }
    }
 
