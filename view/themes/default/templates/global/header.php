@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-   <title>Upwardly Mobile :: Get Promoted</title>
-   <meta name="description" content="Upwardly Mobile, Inc. <?= date("Y"); ?>">
+   <title>World of Anarchy :: In a world of anarchy, anything can happen.</title>
+   <meta name="description" content="World of Anarchy <?= date("Y"); ?>">
    <link id="page_favicon" href="favicon.ico" rel="icon" type="image/x-icon">
 <?php foreach ($css as $path): ?>
    <link href="<?= $css_path . $path . '.css'; ?>" rel="stylesheet" type="text/css" media="screen, print" />

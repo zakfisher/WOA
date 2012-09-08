@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$pages = array('home', 'employees', 'managers', 'prices', 'about', 'legal');
+$pages = array('home');
 
 $uri = explode("/", $_SERVER['REQUEST_URI']);
 
@@ -9,14 +9,30 @@ $controller = null;
 $function = 'index';
 $params = array();
 
-define(BASE_URL, ($_SERVER['SERVER_NAME'] != 'www-zak.i.upmo.com') ? 'Location: http://www.upmo.com' : 'Location: http://www-zak.i.upmo.com');
+define(BASE_URL, ($uri[1] == 'dev') ? 'http://www.worldofanarchy.com/dev' : 'http://www.worldofanarchy.com');
 
-if (file_exists('controller/' . $uri[1] . '.php'))
+// Dev
+if ($uri[1] == 'dev')
 {
-   $controller = $uri[1];
-   $function = ($uri[2] == '') ? $function : $uri[2];
-   $params = $uri;
-   unset($params[0], $params[1], $params[2]);
+   if (file_exists('controller/' . $uri[2] . '.php'))
+   {
+      $controller = $uri[2];
+      $function = ($uri[3] == '') ? $function : $uri[3];
+      $params = $uri;
+      unset($params[0], $params[1], $params[2], $params[3]);
+   }
+}
+
+// Prod
+else
+{
+   if (file_exists('controller/' . $uri[1] . '.php'))
+   {
+      $controller = $uri[1];
+      $function = ($uri[2] == '') ? $function : $uri[2];
+      $params = $uri;
+      unset($params[0], $params[1], $params[2]);
+   }
 }
 
 // Call Method
@@ -30,7 +46,7 @@ if ($controller != null) {
       if ($controller == $p && $function == 'index')
       {
          $_SESSION['page'] = $p;
-         header(BASE_URL . '#!/' . $p);
+         header('Location: ' . BASE_URL . '#!/' . $p);
          exit;
       }
    }
@@ -41,7 +57,7 @@ if ($controller != null) {
    // If Method doesn't exist, BASE_URL to home page
    if (! method_exists($controller, $function))
    {
-      header(BASE_URL);
+      header('Location: ' . BASE_URL);
       exit;
    }
 
