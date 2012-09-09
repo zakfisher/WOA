@@ -178,7 +178,7 @@ WOA.navigation =
       {
          var env = window.location.pathname.split("/");
          var system = (env[1] == 'dev') ? '/dev/' : '/';
-         WOA.static.env = window.location.origin + system;
+         WOA.static.env = system;
       }
    },
    view :
