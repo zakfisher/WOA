@@ -277,6 +277,10 @@ WOA.navigation =
             WOA.static.page = $(e.target).attr('data-page');
             location.hash = '!/' + WOA.static.page;
 
+            $('body,html').animate({
+               scrollTop: 0
+            }, 800);
+
             $('#main-content').fadeTo(300, 0,
                function()
                {
