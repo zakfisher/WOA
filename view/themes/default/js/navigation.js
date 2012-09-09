@@ -113,7 +113,7 @@ WOA.navigation =
                function(data) {
                   WOA.navigation.model.setUserCache(data);
                }, 'json'
-            ).error(function() { alert('user not updated'); });
+            );
          }
       },
 

@@ -68,7 +68,7 @@ html { background: black; }
             font-size: 14px;
             color: white;
             position: relative;
-            top: 10px;
+            top: 9px;
             right: 20px;
 
             &:hover { color: orange; }
@@ -172,6 +172,24 @@ html { background: black; }
          position: relative;
          top: -43px;
          z-index: 4;
+
+         div.content {
+            min-height: 460px;
+
+            &.left {
+               margin-left: 4px;
+               width: 313px;
+
+               div.inner-container { width: 243px; }
+            }
+
+            &.right {
+               margin-right: 4px;
+               width: 692px;
+
+               div.inner-container { width: 612px; }
+            }
+         }
       }
 
       div.container {

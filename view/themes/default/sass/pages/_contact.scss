@@ -14,47 +14,5 @@
 #container[data-page=contact] {
    #main-content {
 
-      div.inner-container {
-         height: 940px;
-
-         div {
-
-            &.logo {
-               background: url('../img/home/logo.jpg') 0 0 no-repeat;
-               height: 583px;
-               margin: 0 auto;
-               width: 606px;
-               position: relative;
-               top: -90px;
-            }
-
-            &.text {
-               background: url('../img/home/text.jpg') 0 0 no-repeat;
-               height: 81px;
-               margin: 0 auto;
-               width: 662px;
-               position: relative;
-               top: -150px;
-
-               h1 {
-                  color: transparent;
-                  position: absolute;
-                  top: -99999px;
-               }
-               
-               p {
-                  color: #6a6969;
-                  font-size: 20px;
-                  font-weight: 300;
-                  position: absolute;
-                  right: 20px;
-                  bottom: -30px;
-               }
-            }
-
-         }
-
-      }
-
    }
 }
