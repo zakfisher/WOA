@@ -7,8 +7,8 @@
  *  Last Updated: 9/8/12
  */
 
-//if ($_COOKIE['dev'] == true)
-//{
+if ($_COOKIE['dev'] == true)
+{
    require_once('system/config.php');
 
    // Header
@@ -25,6 +25,6 @@
 
    // Footer
    require_once('view/themes/' . $theme . '/templates/global/footer.php');
-//}
-//
-//else print 'Access Not Allowed';
+}
+
+else print 'Access Not Allowed';

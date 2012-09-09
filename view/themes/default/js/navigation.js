@@ -371,8 +371,6 @@ WOA.navigation =
          var url = window.location.href.split("/");
          var redirect = false;
          var page = url[url.length - 1];
-         console.log(url);
-         console.log(page);
          $(url).each(function(i, v) {
             if (v == '#!' && $('a[data-page=' + page + ']').length > 0)
             {
