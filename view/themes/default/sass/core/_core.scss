@@ -164,6 +164,8 @@ html { background: black; }
    }
 
    // Main Content
+   #main-content { min-height: 600px; }
+
    &:not([data-page=home]) {
       #main-content {
          background: url("../img/global/container-bg.png") repeat-y;
@@ -174,20 +176,72 @@ html { background: black; }
          z-index: 4;
 
          div.content {
-            min-height: 460px;
+            min-height: 860px;
 
             &.left {
                margin-left: 4px;
                width: 313px;
 
-               div.inner-container { width: 243px; }
+               div.inner-container {
+                  width: 243px;
+
+                  div {
+                     &.logo {
+                        border-bottom: 1px solid #ccc;
+                        padding-bottom: 10px;
+                        width: 100%;
+                        position: relative;
+                        top: -30px;
+
+                        div.sprite {
+                           background: url('../img/global/logo-medium.png') center top no-repeat;
+                           height: 272px;
+                           margin: 0 auto;
+                           width: 272px;
+                           position: relative;
+                           left: -16px;
+                        }
+                     }
+                  }
+               }
             }
 
             &.right {
                margin-right: 4px;
                width: 692px;
 
-               div.inner-container { width: 612px; }
+               div.inner-container {
+                  width: 612px;
+
+                  div {
+                     &.header {
+                        h1 {
+                           color: black;
+                           font-size: 54px;
+                           border-bottom: 1px solid #CCC;
+                           padding-bottom: 20px;
+                        }
+
+                        h2 {
+                           color: $darkGray;
+                           font-size: 18px;
+                           font-weight: 300;
+                           padding: 10px 0;
+                           line-height: 26px;
+                           text-indent: 20px;
+                        }
+
+                        div.shadow {
+                           background: url('../img/global/right-content-horizontal-shadow.png') center top no-repeat;
+                           height: 9px;
+                           margin: 0 auto;
+                           width: 633px;
+                           position: relative;
+                           left: -8px;
+                        }
+                     }
+                  }
+               }
             }
          }
       }
