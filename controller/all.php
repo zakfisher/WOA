@@ -13,7 +13,15 @@ define(BASE_URL, ($uri[1] == 'dev') ? 'http://www.worldofanarchy.com/dev' : 'htt
 
 // User NOT Logged In
 if (!isset($_COOKIE['user'])) $_SESSION['logged_in'] = false;
-else $_SESSION['logged_in'] = true;
+else
+{
+   $user_obj = json_decode(stripcslashes($_COOKIE['user']));
+   $_SESSION['logged_in'] = true;
+   $_SESSION['user']['username'] = $user_obj->username;
+   $_SESSION['user']['first_name'] = $user_obj->first_name;
+   $_SESSION['user']['last_name'] = $user_obj->last_name;
+   $_SESSION['user']['access'] = $user_obj->access;
+}
 
 // Dev
 if ($uri[1] == 'dev')

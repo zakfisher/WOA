@@ -22,9 +22,6 @@
                   <li>
                      <a href="javascript:void(0);" data-page="contact">Contact</a>
                   </li>
-                  <li>
-                     <a href="javascript:void(0);" data-page="dashboard"></a>
-                  </li>
                </ul>
             </div>
             <!-- end .footer-nav -->

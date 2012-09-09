@@ -48,6 +48,29 @@ WOA.navigation =
          authenticateUser : function(data)
          {
             $.post(WOA.static.env + 'user/submit_login_form', data, WOA.navigation.view.login.postSuccess, 'json').error(WOA.navigation.view.login.postFail);
+         },
+
+         logout : function()
+         {
+            // Hide logged in nav, show default nav
+            var replaceDropdown = function() {
+               $('#navigation div.right div.link.sign-out').addClass('hidden');
+               $('#navigation div.right div.link.sign-in').removeClass('hidden');
+            };
+
+            setTimeout(replaceDropdown, 1000);
+
+            // Redirect to home page
+            $('#logo div.sprite').click();
+
+            // Clear User Cookie
+            WOA.navigation.model.deleteUserCache();
+
+            // Update Session
+            $.get(WOA.static.env + 'user/log_out');
+
+            // Hide Username
+            $('a.username').text('').addClass('hidden');
          }
       },
 
@@ -115,6 +138,7 @@ WOA.navigation =
       deleteUserCache : function()
       {
          $.cookie('user', null);
+         delete WOA.static.user;
       },
 
       /*************************************************************
@@ -208,15 +232,16 @@ WOA.navigation =
          },
 
          /*************************************************************
-          * Method - submitUserInput(e)
+          * Method - submitUserInput()
           *
           *    Prep user input for login submission
           *************************************************************/
-         submitUserInput : function(e)
+         submitUserInput : function()
          {
-            if (!$(e.target).hasClass('disabled'))
+            var button = $('#login-form div.btn.login');
+            if (!button.hasClass('disabled'))
             {
-               $(e.target).addClass('disabled');
+               button.addClass('disabled');
 
                // validate input
 
@@ -241,8 +266,19 @@ WOA.navigation =
             {
                WOA.navigation.model.setUserCache(data);
                $('#login-form div.btn.login').removeClass('disabled');
-               $('#login-form').parent().hide();
                $('a[data-page=dashboard]').click();
+
+               // Hide default nav, show logged in nav
+               $('#navigation div.right div.link.sign-in').addClass('hidden');
+               $('#navigation div.right div.link.sign-out').removeClass('hidden');
+
+               // Replace Form Values
+               $('#login-form input').val('');
+               $('#login-form input[name=un]').val('username');
+               $('#login-form input[name=pw-fake]').val('password');
+
+               // Show Username
+               $('a.username').text(WOA.static.user.username).removeClass('hidden');
             }
 
             // User NOT authenticated
@@ -261,6 +297,9 @@ WOA.navigation =
          {
             WOA.navigation.model.deleteUserCache();
             $('#login-form div.btn.login').removeClass('disabled');
+
+            // Append Error Message
+            $('#login-form p.error').text('Wrong un/pw');
          }
       },
 
@@ -328,18 +367,19 @@ WOA.navigation =
 
          // Check for secure pages
          WOA.navigation.model.resetUserData();
-         var target = (redirect) ? 'a[data-page=' + page + ']' : '#logo img';
+         var target = (redirect) ? 'a[data-page=' + page + ']' : '#logo div.sprite';
+
          switch (page)
          {
             case 'dashboard':
                // Check if logged in
                var data = WOA.navigation.model.checkUserCredentials();
-               target = (data.loggedIn == false) ? '#logo img' : target;
-               //console.log(data);
+               target = (data.loggedIn == false) ? '#logo div.sprite' : target;
                break;
             default:
-               $(target).click();
          }
+
+         $(target).click();
       }
    },
    controller :
@@ -368,11 +408,18 @@ WOA.navigation =
          // Focus on UN (login input)
          $(document).on('focus', '#login-form input[name=un]', WOA.navigation.view.login.UNInputFocus);
 
+         // Clear login error msg
+         $(document).on('focus', '#login-form input', function() { $('#login-form p.error').text(''); });
+
          // Blur on UN (login input)
          $(document).on('blur', '#login-form input[name=un]', WOA.navigation.view.login.UNInputBlur);
 
          // Submit Login Credentials
          $(document).on('click', '#login-form div.btn.login', WOA.navigation.view.login.submitUserInput);
+         $(document).on('keydown', '#login-form input:focus', function(e) { $('#login-form p.error').text(''); if (e.keyCode == 13) { WOA.navigation.view.login.submitUserInput(); } });
+
+         // Log Out
+         $(document).on('click', '#navigation div.right div.link.sign-out, #navigation div.right div.link.sign-out p', WOA.navigation.model.login.logout);
 
          /** Behaviors **/
 

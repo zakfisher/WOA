@@ -1,3 +1,4 @@
+<?php session_start(); ?>
          <div class="inner-container">
             <div class="logo"></div>
             <div class="text">
