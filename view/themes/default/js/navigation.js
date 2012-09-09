@@ -59,7 +59,7 @@ WOA.navigation =
       loadPage : function()
       {
          // Load View
-         $('#main-content').before(WOA.static.loading).addClass('hidden').load(WOA.static.env + 'view/themes/' + WOA.static.theme + '/templates/pages/' + WOA.static.page + '.php', WOA.navigation.view.showPage);
+         $('#main-content').before(WOA.static.loading).load(WOA.static.env + 'view/themes/' + WOA.static.theme + '/templates/pages/' + WOA.static.page + '.php', WOA.navigation.view.showPage);
       },
 
       /*************************************************************
@@ -277,7 +277,7 @@ WOA.navigation =
             WOA.static.page = $(e.target).attr('data-page');
             location.hash = '!/' + WOA.static.page;
 
-            $('#main-content, #footer').fadeOut('normal',
+            $('#main-content').fadeTo(300, 0,
                function()
                {
                   // Load Page
@@ -298,7 +298,7 @@ WOA.navigation =
       showPage : function()
       {
          // Show Page
-         setTimeout("$('#loading').remove();$('#main-content, #footer').fadeIn('normal').removeClass('hidden');", 700);
+         setTimeout("$('#loading').remove();$('#main-content').fadeTo(300, 1);", 700);
 
          // Update Session
          WOA.navigation.model.updateSession();

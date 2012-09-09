@@ -1,4 +1,3 @@
-      <div id="main-content">
          <div class="inner-container">
             <div class="logo"></div>
             <div class="text">
@@ -8,5 +7,3 @@
             <!-- end .text -->
          </div>
          <!-- end .inner-container -->
-      </div>
-      <!-- end #main-content -->
