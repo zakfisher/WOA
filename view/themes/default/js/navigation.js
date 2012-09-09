@@ -125,8 +125,11 @@ WOA.navigation =
       setUserCache : function(data)
       {
          var now = new Date();
-         var oneHourFromNow = now + 6000;
-         $.cookie('user', JSON.stringify(data.user), { expires : oneHourFromNow });
+         console.log(now);
+         var oneHourFromNow = now.getTime() + 3600000;
+         var expiration = new Date(oneHourFromNow);
+         console.log(expiration);
+         $.cookie('user', JSON.stringify(data.user), { expires : expiration });
          WOA.static.user = $.parseJSON($.cookie('user'));
          delete WOA.static.user.access;
       },
