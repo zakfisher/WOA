@@ -9,7 +9,7 @@ $controller = null;
 $function = 'index';
 $params = array();
 
-define(BASE_URL, ($uri[1] == 'dev') ? 'http://www.worldofanarchy.com/dev' : 'http://www.worldofanarchy.com');
+define(BASE_URL, ($uri[1] == 'dev') ? 'http://www.worldofanarchy.com/dev/' : 'http://www.worldofanarchy.com/');
 
 // User NOT Logged In
 if (!isset($_COOKIE['user'])) $_SESSION['logged_in'] = false;
