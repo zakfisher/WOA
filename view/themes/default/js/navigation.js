@@ -65,7 +65,7 @@ WOA.navigation =
             $('#logo div.sprite').click();
 
             // Hide Username
-            $('a.username').text('Logging Out');
+            $('a.username').text('Logging Out...').removeAttr('data-page').addClass('log-out');
 
             // Clear User Cookie
             WOA.navigation.model.deleteUserCache();
@@ -270,6 +270,11 @@ WOA.navigation =
             {
                WOA.navigation.model.setUserCache(data);
                $('#login-form div.btn.login').removeClass('disabled');
+
+               // Show Username
+               $('a.username').attr('data-page', 'dashboard').removeClass('log-out').text(WOA.static.user.username).fadeIn();
+
+               // Redirect to Dashboard
                $('a[data-page=dashboard]').click();
 
                // Hide default nav, show logged in nav
@@ -280,9 +285,6 @@ WOA.navigation =
                $('#login-form input').val('');
                $('#login-form input[name=un]').val('username');
                $('#login-form input[name=pw-fake]').val('password');
-
-               // Show Username
-               $('a.username').text(WOA.static.user.username).fadeIn();
             }
 
             // User NOT authenticated

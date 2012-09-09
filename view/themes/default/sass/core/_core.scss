@@ -72,6 +72,11 @@ html { background: black; }
             right: 20px;
 
             &:hover { color: orange; }
+
+            &.log-out {
+               cursor: default;
+               &:hover { color: white; }
+            }
          }
 
          div.right {
