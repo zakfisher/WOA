@@ -53,24 +53,25 @@ WOA.navigation =
          logout : function()
          {
             // Hide logged in nav, show default nav
-            var replaceDropdown = function() {
+            var resetNav = function() {
                $('#navigation div.right div.link.sign-out').addClass('hidden');
                $('#navigation div.right div.link.sign-in').removeClass('hidden');
+               $('a.username').fadeOut('normal');
             };
 
-            setTimeout(replaceDropdown, 1000);
+            setTimeout(resetNav, 3000);
 
             // Redirect to home page
             $('#logo div.sprite').click();
+
+            // Hide Username
+            $('a.username').text('Logged Out');
 
             // Clear User Cookie
             WOA.navigation.model.deleteUserCache();
 
             // Update Session
             $.get(WOA.static.env + 'user/log_out');
-
-            // Hide Username
-            $('a.username').text('').addClass('hidden');
          }
       },
 
@@ -278,7 +279,7 @@ WOA.navigation =
                $('#login-form input[name=pw-fake]').val('password');
 
                // Show Username
-               $('a.username').text(WOA.static.user.username).removeClass('hidden');
+               $('a.username').text(WOA.static.user.username).fadeIn();
             }
 
             // User NOT authenticated
