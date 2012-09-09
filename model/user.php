@@ -16,15 +16,10 @@ class User_Model extends DB {
 
       // Match Found
       if (count($results) > 0) {
-
          // Set session vars
-         $_SESSION['logged_in'] = true;
-         $_SESSION['user']['username'] = $results[0]['username'];
-         $_SESSION['user']['first_name'] = $results[0]['first_name'];
-         $_SESSION['user']['last_name'] = $results[0]['last_name'];
-         $_SESSION['user']['access'] = $results[0]['access'];
+         $this->set_user_session($results[0]);
 
-         JSON::print_json(array('response' => 'true'));
+         JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user']));
       }
 
       // Match NOT Found
@@ -34,5 +29,13 @@ class User_Model extends DB {
 
          JSON::print_json(array('response' => 'false'));
       }
+   }
+
+   function set_user_session($user_obj)
+   {
+      $_SESSION['user']['username'] = $user_obj['username'];
+      $_SESSION['user']['first_name'] = $user_obj['first_name'];
+      $_SESSION['user']['last_name'] = $user_obj['last_name'];
+      $_SESSION['user']['access'] = $user_obj['access'];
    }
 }

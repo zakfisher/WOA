@@ -6,4 +6,9 @@ class Login extends User_Model {
    {
       if ($_POST) { $this->authenticate_user($_POST); }
    }
+
+   function restore_user_session()
+   {
+
+   }
 }

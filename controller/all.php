@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$pages = array('home');
+$pages = array('home', 'dashboard');
 
 $uri = explode("/", $_SERVER['REQUEST_URI']);
 
@@ -45,8 +45,25 @@ if ($controller != null) {
    {
       if ($controller == $p && $function == 'index')
       {
+         $loadpage = true;
          $_SESSION['page'] = $p;
-         header('Location: ' . BASE_URL . '#!/' . $p);
+
+         // Check if user is logged in
+         if ($p == 'dashboard')
+         {
+            // User NOT Logged In
+            if (!isset($_COOKIE['user'])) $loadpage = false;
+         }
+
+         if ($loadpage == true)
+         {
+            header('Location: ' . BASE_URL . '#!/' . $p);
+         }
+         else
+         {
+            $_SESSION['page'] = 'home';
+            header('Location: ' . BASE_URL);
+         }
          exit;
       }
    }

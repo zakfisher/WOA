@@ -153,15 +153,15 @@ WOA.navigation =
           *************************************************************/
          postSuccess : function(data)
          {
+            console.log(typeof data.user);
+
             // User authenticated
-            if (data.response == 'true')
+            if (data.response == 'true' && typeof data.user == 'object')
             {
                var now = new Date();
                var oneHourFromNow = now + 6000;
-               $.cookie('logged_in', true, { expires: oneHourFromNow });
+               $.cookie('user', JSON.stringify(data.user), { expires : oneHourFromNow });
                $('#login-form div.btn.login').removeClass('disabled');
-
-
             }
 
             // User NOT authenticated
@@ -178,7 +178,7 @@ WOA.navigation =
           *************************************************************/
          postFail : function()
          {
-            $.cookie('logged_in', null);
+            $.cookie('user', null);
             $('#login-form div.btn.login').removeClass('disabled');
          }
       },
@@ -192,9 +192,6 @@ WOA.navigation =
       {
          if (WOA.static.page != $(e.target).attr('data-page'))
          {
-            // Hide Sub Nav
-            WOA.navigation.view.hideSubNav();
-
             // Update Nav Links
             WOA.static.page = $(e.target).attr('data-page');
             $('#navigation ul li a').removeClass('active');
@@ -260,11 +257,12 @@ WOA.navigation =
          WOA.static.page = $('#container').attr('data-page');
          WOA.static.theme = $('#container').attr('data-theme');
          WOA.static.loading = '<img id="loading" src="view/themes/' + WOA.static.theme + '/img/global/loading.gif" />';
+         if ($.cookie('user') != null) WOA.static.user = $.parseJSON($.cookie('user'));
 
          /** Handlers **/
 
          // Highlight Current Page Nav
-         $(document).on('click', '#logo.sprite', WOA.navigation.view.requestPage);
+         $(document).on('click', '#logo div.sprite', WOA.navigation.view.requestPage);
 
          // Focus on PW (login input)
          $(document).on('focus', '#login-form input[name=pw-fake]', WOA.navigation.view.login.PWInputFocus);
