@@ -18,7 +18,6 @@ class User_Model extends DB {
       if (count($results) > 0) {
          // Set session vars
          $this->set_user_session($results[0]);
-
          JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user']));
       }
 
@@ -26,13 +25,19 @@ class User_Model extends DB {
       else
       {
          $_SESSION['logged_in'] = false;
-
          JSON::print_json(array('response' => 'false'));
       }
    }
 
-   function set_user_session($user_obj)
+   function restore_user_session($user_obj)
    {
+      $this->set_user_session($user_obj);
+      JSON::print_json($_SESSION['user']);
+   }
+
+   private function set_user_session($user_obj)
+   {
+      $_SESSION['logged_in'] = true;
       $_SESSION['user']['username'] = $user_obj['username'];
       $_SESSION['user']['first_name'] = $user_obj['first_name'];
       $_SESSION['user']['last_name'] = $user_obj['last_name'];

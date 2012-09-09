@@ -11,6 +11,10 @@ $params = array();
 
 define(BASE_URL, ($uri[1] == 'dev') ? 'http://www.worldofanarchy.com/dev' : 'http://www.worldofanarchy.com');
 
+// User NOT Logged In
+if (!isset($_COOKIE['user'])) $_SESSION['logged_in'] = false;
+else $_SESSION['logged_in'] = true;
+
 // Dev
 if ($uri[1] == 'dev')
 {
@@ -49,10 +53,9 @@ if ($controller != null) {
          $_SESSION['page'] = $p;
 
          // Check if user is logged in
-         if ($p == 'dashboard')
+         if ($p == 'dashboard' AND $_SESSION['logged_in'] == false)
          {
-            // User NOT Logged In
-            if (!isset($_COOKIE['user'])) $loadpage = false;
+            $loadpage = false;
          }
 
          if ($loadpage == true)

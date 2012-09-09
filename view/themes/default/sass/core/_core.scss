@@ -21,6 +21,7 @@ html { background: black; }
 #container {
    background-image: url('../img/global/html-bg.png');
    padding-top: 38px;
+   min-height: 740px;
    width: 100%;
 
    div.inner-container {
@@ -140,6 +141,9 @@ html { background: black; }
       }
       
    }
+
+   // Main Content
+   #main-content { min-height: 640px; }
 
    // Footer
    #footer {

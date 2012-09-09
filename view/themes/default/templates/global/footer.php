@@ -14,13 +14,16 @@
             <div class="footer-nav left">
                <ul>
                   <li>
-                     <a href="javascript:void(0);">Downloads</a>
+                     <a href="javascript:void(0);" data-page="downloads">Downloads</a>
                   </li>
                   <li class="border">
-                     <a href="javascript:void(0);">About</a>
+                     <a href="javascript:void(0);" data-page="about">About</a>
                   </li>
                   <li>
-                     <a href="javascript:void(0);">Contact</a>
+                     <a href="javascript:void(0);" data-page="contact">Contact</a>
+                  </li>
+                  <li>
+                     <a href="javascript:void(0);" data-page="dashboard"></a>
                   </li>
                </ul>
             </div>

@@ -13,6 +13,10 @@
          >> authenticateUser
      >> loadPage
      >> updateSession
+     >> restoreUserData
+     >> setUserCache
+     >> deleteUserCache
+     >> setEnv
  * - View
      >> login
          >> PWInputFocus
@@ -42,10 +46,7 @@ WOA.navigation =
           *************************************************************/
          authenticateUser : function(data)
          {
-            var env = window.location.pathname.split("/");
-            var system = (env[1] == 'dev') ? '/dev/' : '/';
-
-            $.post(window.location.origin + system + 'login/submit_login_form', data, WOA.navigation.view.login.postSuccess, 'json').error(WOA.navigation.view.login.postFail);
+            $.post(WOA.static.env + 'user/submit_login_form', data, WOA.navigation.view.login.postSuccess, 'json').error(WOA.navigation.view.login.postFail);
          }
       },
 
@@ -57,7 +58,7 @@ WOA.navigation =
       loadPage : function()
       {
          // Load View
-         $('#main-content').before(WOA.static.loading).addClass('hidden').load('view/themes/' + WOA.static.theme + '/templates/pages/' + WOA.static.page + '.php', WOA.navigation.view.showPage);
+         $('#main-content').before(WOA.static.loading).addClass('hidden').load(WOA.static.env + 'view/themes/' + WOA.static.theme + '/templates/pages/' + WOA.static.page + '.php', WOA.navigation.view.showPage);
       },
 
       /*************************************************************
@@ -67,7 +68,64 @@ WOA.navigation =
        *************************************************************/
       updateSession : function()
       {
-         $.post('navigation/update_session_page', { page : WOA.static.page });
+         $.post(WOA.static.env + 'navigation/update_session_page', { page : WOA.static.page });
+      },
+
+      /*************************************************************
+       * Method - restoreUserData()
+       *
+       *    Resets User Cookie with accurate data (security precaution)
+       *    - Also caches user data
+       *************************************************************/
+      restoreUserData : function()
+      {
+         if ($.cookie('user') != null)
+         {
+            var data = $.parseJSON($.cookie('user'));
+
+            // Fetch user data
+            $.post(WOA.static.env + 'user/restore_user_data', data,
+               function(data) {
+                  WOA.navigation.model.setUserCache(data);
+               }, 'json'
+            ).error(function() { alert('user not updated'); });
+         }
+      },
+
+      /*************************************************************
+       * Method - setUserCache()
+       *
+       *    Create User Cookie (to expire in one hour)
+       *************************************************************/
+      setUserCache : function(data)
+      {
+         var now = new Date();
+         var oneHourFromNow = now + 6000;
+         $.cookie('user', JSON.stringify(data.user), { expires : oneHourFromNow });
+         WOA.static.user = $.parseJSON($.cookie('user'));
+         delete WOA.static.user.access;
+      },
+
+      /*************************************************************
+       * Method - deleteUserCache()
+       *
+       *    Delete User Cookie
+       *************************************************************/
+      deleteUserCache : function()
+      {
+         $.cookie('user', null);
+      },
+
+      /*************************************************************
+       * Method - setEnv()
+       *
+       *    Store site environment
+       *************************************************************/
+      setEnv : function()
+      {
+         var env = window.location.pathname.split("/");
+         var system = (env[1] == 'dev') ? '/dev/' : '/';
+         WOA.static.env = window.location.origin + system;
       }
    },
    view :
@@ -153,15 +211,13 @@ WOA.navigation =
           *************************************************************/
          postSuccess : function(data)
          {
-            console.log(typeof data.user);
-
             // User authenticated
             if (data.response == 'true' && typeof data.user == 'object')
             {
-               var now = new Date();
-               var oneHourFromNow = now + 6000;
-               $.cookie('user', JSON.stringify(data.user), { expires : oneHourFromNow });
+               WOA.navigation.model.setUserCache(data);
                $('#login-form div.btn.login').removeClass('disabled');
+               $('#login-form').parent().hide();
+               $('a[data-page=dashboard]').click();
             }
 
             // User NOT authenticated
@@ -178,7 +234,7 @@ WOA.navigation =
           *************************************************************/
          postFail : function()
          {
-            $.cookie('user', null);
+            WOA.navigation.model.deleteUserCache();
             $('#login-form div.btn.login').removeClass('disabled');
          }
       },
@@ -194,11 +250,9 @@ WOA.navigation =
          {
             // Update Nav Links
             WOA.static.page = $(e.target).attr('data-page');
-            $('#navigation ul li a').removeClass('active');
-            $('#navigation ul li a[data-page=' + WOA.static.page + ']').addClass('active');
             location.hash = '!/' + WOA.static.page;
 
-            $('#main-content').fadeOut('normal',
+            $('#main-content, #footer').fadeOut('normal',
                function()
                {
                   // Load Page
@@ -221,7 +275,7 @@ WOA.navigation =
        *************************************************************/
       showPage : function()
       {
-         setTimeout("$('#loading').remove();$('#main-content').fadeIn('normal').removeClass('hidden');", 700);
+         setTimeout("$('#loading').remove();$('#main-content, #footer').fadeIn('normal').removeClass('hidden');", 700);
       },
 
       /*************************************************************
@@ -235,14 +289,14 @@ WOA.navigation =
          var redirect = false;
          var page = url[url.length - 1];
          $(url).each(function(i, v) {
-            if (v == '#!' && $('#navigation li a[data-page=' + page + ']').length > 0)
+            if (v == '#!' && $('a[data-page=' + page + ']').length > 0)
             {
                redirect = true;
                return false;
             }
          });
 
-         var target = (redirect) ? '#navigation li a[data-page=' + page + ']' : '#logo img';
+         var target = (redirect) ? 'a[data-page=' + page + ']' : '#logo img';
          $(target).click();
       }
    },
@@ -257,12 +311,13 @@ WOA.navigation =
          WOA.static.page = $('#container').attr('data-page');
          WOA.static.theme = $('#container').attr('data-theme');
          WOA.static.loading = '<img id="loading" src="view/themes/' + WOA.static.theme + '/img/global/loading.gif" />';
-         if ($.cookie('user') != null) WOA.static.user = $.parseJSON($.cookie('user'));
+         WOA.navigation.model.setEnv();
+         WOA.navigation.model.restoreUserData();
 
          /** Handlers **/
 
          // Highlight Current Page Nav
-         $(document).on('click', '#logo div.sprite', WOA.navigation.view.requestPage);
+         $(document).on('click', '#logo div.sprite, a[data-page]', WOA.navigation.view.requestPage);
 
          // Focus on PW (login input)
          $(document).on('focus', '#login-form input[name=pw-fake]', WOA.navigation.view.login.PWInputFocus);
