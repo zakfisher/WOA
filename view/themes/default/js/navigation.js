@@ -65,7 +65,7 @@ WOA.navigation =
             $('#logo div.sprite').click();
 
             // Hide Username
-            $('a.username').text('Logged Out');
+            $('a.username').text('Logging Out');
 
             // Clear User Cookie
             WOA.navigation.model.deleteUserCache();
@@ -321,7 +321,7 @@ WOA.navigation =
                scrollTop: 0
             }, 800);
 
-            $('#main-content').fadeTo(300, 0,
+            $('#main-content, div.container').fadeTo(300, 0,
                function()
                {
                   // Load Page
@@ -342,7 +342,16 @@ WOA.navigation =
       showPage : function()
       {
          // Show Page
-         setTimeout("$('#loading').remove();$('#main-content').fadeTo(300, 1);", 700);
+         var revealPage = function()
+         {
+            $('#loading').remove();
+
+            var content = '#main-content';
+            content += (WOA.static.page != 'home') ? ', div.container' : '';
+            $(content).fadeTo(300, 1);
+         }
+
+         setTimeout(revealPage, 700);
 
          // Update Session
          WOA.navigation.model.updateSession();

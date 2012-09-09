@@ -11,6 +11,7 @@
  * - Scaffolding
  * - Header
  * - Navigation
+ * - Main Content
  * - Footer
  * - Loading
  *********************************************/
@@ -21,7 +22,6 @@ html { background: black; }
 #container {
    background-image: url('../img/global/html-bg.png');
    padding-top: 38px;
-   min-height: 740px;
    width: 100%;
 
    div.inner-container {
@@ -69,7 +69,7 @@ html { background: black; }
             color: white;
             position: relative;
             top: 10px;
-            left: 10px;
+            right: 20px;
 
             &:hover { color: orange; }
          }
@@ -81,8 +81,10 @@ html { background: black; }
                border-right: 1px solid #565656;
                cursor: pointer;
                height: 26px;
-               padding: 8px 26px 2px 18px;
                position: relative;
+
+               &.sign-in { padding: 8px 26px 2px 18px; }
+               &.sign-out { padding: 8px 24px 2px 18px; }
 
                p {
                   color: $gray;
@@ -162,11 +164,52 @@ html { background: black; }
    }
 
    // Main Content
-   #main-content { min-height: 640px; }
+   &:not([data-page=home]) {
+      #main-content {
+         background: url("../img/global/container-bg.png") repeat-y;
+         margin: 0px auto;
+         width: 1013px;
+         position: relative;
+         top: -43px;
+         z-index: 4;
+      }
+
+      div.container {
+         background: url('../img/global/header-bg.png');
+         height: 108px;
+         position: relative;
+         width: 100%;
+         z-index: 2;
+
+         div.sprite {
+            background: url("../img/global/container-sprite.png") 0 0 no-repeat;
+            height: 46px;
+            width: 1013px;
+            margin: 0 auto;
+            position: relative;
+         }
+
+         &.top {
+            border-bottom: 1px solid #C4C4C4;
+            div.sprite { top: 20px; }
+         }
+
+         &.bottom {
+            border-top: 1px solid #C4C4C4;
+            margin-top: -44px;
+
+            div.sprite {
+               background-position: 0 -46px;
+            }
+         }
+      }
+   }
 
    // Footer
    #footer {
       background: white;
+      position: relative;
+      z-index: 3;
 
       div {
 
@@ -263,7 +306,7 @@ html { background: black; }
    // Loading
    #loading {
       position: fixed;
-      top: 125px;
+      top: 175px;
       left: 50%;
       margin-left: -61px;
    }

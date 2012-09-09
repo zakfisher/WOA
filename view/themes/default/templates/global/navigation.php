@@ -6,9 +6,6 @@
                   <div class="sprite" data-page="home"></div>
                </div>
                <!-- end #logo -->
-
-               <a href="javascript:void(0);" data-page="dashboard" class="left username <?= ($_SESSION['logged_in'] == true) ? '' : 'hidden'; ?>"><?= $_SESSION['user']['username']; ?></a>
-
                <div class="right">
                   <div class="link left sign-in <?= ($_SESSION['logged_in'] != true) ? '' : 'hidden'; ?>">
                      <p class="left">Log In</p>
@@ -25,19 +22,22 @@
                      <!-- end .dropdown -->
                   </div>
                   <!-- end .sign-in -->
-
                   <div class="link left sign-out <?= ($_SESSION['logged_in'] == true) ? '' : 'hidden'; ?>">
                      <p class="left">Log Out</p>
                      <!-- end .dropdown -->
                   </div>
                   <!-- end .sign-out -->
-
                </div>
-               <!-- end .right.home -->
+               <!-- end .right -->
+               <a href="javascript:void(0);" data-page="dashboard" class="right username <?= ($_SESSION['logged_in'] == true) ? '' : 'hidden'; ?>"><?= $_SESSION['user']['username']; ?></a>
             </div>
             <!-- end .inner-container -->
          </div>
          <!-- end #navigation -->
       </div>
       <!-- end #header -->
+      <div class="container top">
+         <div class="sprite"></div>
+      </div>
+      <!-- end .container.top -->
       <div id="main-content">

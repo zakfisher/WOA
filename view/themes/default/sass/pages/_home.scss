@@ -12,6 +12,9 @@
  *********************************************/
 
 #container[data-page=home] {
+
+   div.container { display: none; }
+
    #main-content {
 
       div.inner-container {
