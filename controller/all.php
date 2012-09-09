@@ -58,13 +58,13 @@ if ($controller != null) {
       if ($controller == $p && $function == 'index')
       {
          $loadpage = true;
-         $_SESSION['page'] = $p;
 
          // Check if user is logged in
          if ($p == 'dashboard' AND $_SESSION['logged_in'] == false) $loadpage = false;
 
          if ($loadpage == true)
          {
+            $_SESSION['page'] = $p;
             header('Location: ' . BASE_URL . '#!/' . $p);
          }
          else

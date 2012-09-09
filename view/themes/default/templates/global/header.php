@@ -6,18 +6,20 @@
    <title>World of Anarchy :: In a world of anarchy, anything can happen.</title>
    <meta name="description" content="World of Anarchy <?= date("Y"); ?>">
    <link id="page_favicon" href="favicon.ico" rel="icon" type="image/x-icon">
+
+<?php
+// Check for IE 7 and below
+if (preg_match('/MSIE ([0-9].[0-9])/', $_SERVER['HTTP_USER_AGENT'], $reg) != 0) $ie_version = floatval($reg[1]);
+if (isset($ie_version) AND $ie_version < 9)
+{
+   print '<h2>This site requires IE9 or higher.<br/>Please upgrade your browser or use a different one (Firefox, Chrome, Opera, Safari).</h2>';
+   exit;
+}
+?>
+
 <?php foreach ($css as $path): ?>
    <link href="<?= $css_path . $path . '.css'; ?>" rel="stylesheet" type="text/css" media="screen, print" />
 <?php endforeach; ?>
-<?php
-// Check for IE 7 and below
-if (preg_match('/MSIE ([0-9].[0-9])/', $_SERVER['HTTP_USER_AGENT'], $reg) != 0):
-   $ie_version = floatval($reg[1]);
-endif;
-if (isset($ie_version) AND $ie_version == 7):
-?>
-   <link href="view/themes/default/css/ie<?= $ie_version; ?>.css" rel="stylesheet" type="text/css" media="screen, print" />
-<?php endif; ?>
 </head>
 <body>
    <div id="container" data-theme="<?= $theme; ?>" data-page="<?= $page; ?>">

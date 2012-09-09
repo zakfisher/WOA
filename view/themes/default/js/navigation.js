@@ -268,6 +268,7 @@ WOA.navigation =
             {
                WOA.navigation.model.setUserCache(data);
                $('#login-form div.btn.login').removeClass('disabled');
+               $('#login-form input').blur();
 
                // Show Username
                $('a.username').attr('data-page', 'dashboard').removeClass('log-out').text(WOA.static.user.username).fadeIn();

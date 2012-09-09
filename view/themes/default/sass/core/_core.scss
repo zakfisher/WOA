@@ -35,15 +35,19 @@ html { background: black; }
       // Navigation
       #navigation {
          border-bottom: 2px solid #d6d6d6;
-         height: 36px;
          position: fixed;
          width: 100%;
          top: 0px;
          z-index: 10;
-         @include box-shadow(0 0 30px 0 #B3B3B3);
-         @include black-gradient();
+         overflow: visible;
 
-         div.inner-container { width: 98%; }
+         div.inner-container {
+            padding: 0 1%;
+            @include box-shadow(0 0 30px 0 #B3B3B3);
+            @include black-gradient();
+            height: 36px;
+            width: 98%;
+         }
 
          #logo {
             border-left: 1px solid #565656;
