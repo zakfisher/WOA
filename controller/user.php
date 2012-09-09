@@ -11,4 +11,9 @@ class User extends User_Model {
    {
       if ($_POST) { $this->restore_user_session($_POST); }
    }
+
+   function test_login($un,$pw)
+   {
+      $this->authenticate_user(array('un'=>$un,'pw'=>$pw));
+   }
 }

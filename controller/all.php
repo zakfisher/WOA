@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$pages = array('home', 'dashboard');
+$pages = array('home', 'dashboard', 'downloads', 'about', 'contact');
 
 $uri = explode("/", $_SERVER['REQUEST_URI']);
 
@@ -53,10 +53,7 @@ if ($controller != null) {
          $_SESSION['page'] = $p;
 
          // Check if user is logged in
-         if ($p == 'dashboard' AND $_SESSION['logged_in'] == false)
-         {
-            $loadpage = false;
-         }
+         if ($p == 'dashboard' AND $_SESSION['logged_in'] == false) $loadpage = false;
 
          if ($loadpage == true)
          {

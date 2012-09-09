@@ -34,10 +34,7 @@ WOA.pages.Home =
        *************************************************************/
       init : function()
       {
-         WOA.pages.Home.video = '<iframe src="http://player.vimeo.com/video/34294918?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1" width="584" height="329" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-
          /** Handlers **/
-         $(document).on('click', '#banner div.inner-container div.video div.play', WOA.pages.Home.view.playVideo);
       }
    }
 };

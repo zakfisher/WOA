@@ -7,19 +7,24 @@
  *  Last Updated: 9/8/12
  */
 
-require_once('system/config.php');
+if ($_COOKIE['dev'] == true)
+{
+   require_once('system/config.php');
 
-// Header
-require_once('view/themes/' . $theme . '/templates/global/header.php');
+   // Header
+   require_once('view/themes/' . $theme . '/templates/global/header.php');
 
-// Navigation
-require_once('view/themes/' . $theme . '/templates/global/navigation.php');
+   // Navigation
+   require_once('view/themes/' . $theme . '/templates/global/navigation.php');
 
-// Main Content
-require_once('view/themes/' . $theme . '/templates/pages/' . $page . '.php');
+   // Main Content
+   require_once('view/themes/' . $theme . '/templates/pages/' . $page . '.php');
 
-// Modals
-require_once('view/themes/' . $theme . '/templates/modals/all.php');
+   // Modals
+   require_once('view/themes/' . $theme . '/templates/modals/all.php');
 
-// Footer
-require_once('view/themes/' . $theme . '/templates/global/footer.php');
+   // Footer
+   require_once('view/themes/' . $theme . '/templates/global/footer.php');
+}
+
+else print 'Access Not Allowed';

@@ -13,9 +13,10 @@
          >> authenticateUser
      >> loadPage
      >> updateSession
-     >> restoreUserData
+     >> resetUserData
      >> setUserCache
      >> deleteUserCache
+     >> checkUserCredentials
      >> setEnv
  * - View
      >> login
@@ -72,12 +73,12 @@ WOA.navigation =
       },
 
       /*************************************************************
-       * Method - restoreUserData()
+       * Method - resetUserData()
        *
        *    Resets User Cookie with accurate data (security precaution)
        *    - Also caches user data
        *************************************************************/
-      restoreUserData : function()
+      resetUserData : function()
       {
          if ($.cookie('user') != null)
          {
@@ -114,6 +115,30 @@ WOA.navigation =
       deleteUserCache : function()
       {
          $.cookie('user', null);
+      },
+
+      /*************************************************************
+       * Method - checkUserCredentials()
+       *
+       *    Check for login & access level
+       *************************************************************/
+      checkUserCredentials : function()
+      {
+         // Logged In
+         if ($.cookie('user') != null)
+         {
+            var data = $.parseJSON($.cookie('user'));
+            return {
+               loggedIn : true,
+               access : data.access
+            };
+         }
+
+         // Not Logged In
+         else
+         {
+            return { loggedIn : false };
+         }
       },
 
       /*************************************************************
@@ -260,9 +285,6 @@ WOA.navigation =
 
                   // Update #container attributes
                   $('#container').attr('data-page', WOA.static.page);
-
-                  // Update Session
-                  WOA.navigation.model.updateSession();
                }
             );
          }
@@ -275,7 +297,11 @@ WOA.navigation =
        *************************************************************/
       showPage : function()
       {
+         // Show Page
          setTimeout("$('#loading').remove();$('#main-content, #footer').fadeIn('normal').removeClass('hidden');", 700);
+
+         // Update Session
+         WOA.navigation.model.updateSession();
       },
 
       /*************************************************************
@@ -296,8 +322,20 @@ WOA.navigation =
             }
          });
 
+         // Check for secure pages
+         WOA.navigation.model.resetUserData();
          var target = (redirect) ? 'a[data-page=' + page + ']' : '#logo img';
-         $(target).click();
+         switch (page)
+         {
+            case 'dashboard':
+               // Check if logged in
+               var data = WOA.navigation.model.checkUserCredentials();
+               target = (data.loggedIn == false) ? '#logo img' : target;
+               //console.log(data);
+               break;
+            default:
+               $(target).click();
+         }
       }
    },
    controller :
@@ -311,8 +349,6 @@ WOA.navigation =
          WOA.static.page = $('#container').attr('data-page');
          WOA.static.theme = $('#container').attr('data-theme');
          WOA.static.loading = '<img id="loading" src="view/themes/' + WOA.static.theme + '/img/global/loading.gif" />';
-         WOA.navigation.model.setEnv();
-         WOA.navigation.model.restoreUserData();
 
          /** Handlers **/
 
@@ -335,6 +371,12 @@ WOA.navigation =
          $(document).on('click', '#login-form div.btn.login', WOA.navigation.view.login.submitUserInput);
 
          /** Behaviors **/
+
+         // Set Global Environment
+         WOA.navigation.model.setEnv();
+
+         // Refresh User Data (for security)
+         WOA.navigation.model.resetUserData();
 
          // Redirect by #! (on load)
          WOA.navigation.view.hashBangRedirect();
