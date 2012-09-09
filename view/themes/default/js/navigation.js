@@ -9,6 +9,8 @@
  *
  * Search Keys:
  * - Model
+     >> login
+         >> authenticateUser
      >> loadPage
      >> updateSession
  * - View
@@ -17,6 +19,9 @@
          >> PWInputBlur
          >> UNInputFocus
          >> UNInputBlur
+         >> submitUserInput
+         >> postSuccess
+         >> postFail
      >> requestPage
      >> showPage
      >> hashBangRedirect
@@ -29,6 +34,21 @@ WOA.navigation =
 {
    model :
    {
+      login : {
+         /*************************************************************
+          * Method - authenticateUser(data)
+          *
+          *    Refresh #container HTML with new view
+          *************************************************************/
+         authenticateUser : function(data)
+         {
+            var env = window.location.pathname.split("/");
+            var system = (env[1] == 'dev') ? '/dev/' : '/';
+
+            $.post(window.location.origin + system + 'login/submit_login_form', data, WOA.navigation.view.login.postSuccess, 'json').error(WOA.navigation.view.login.postFail);
+         }
+      },
+
       /*************************************************************
        * Method - loadPage()
        *
@@ -105,16 +125,61 @@ WOA.navigation =
          },
 
          /*************************************************************
-          * Method - submitUserInput()
+          * Method - submitUserInput(e)
           *
-          *    Replace un input val on blur (if blank)
+          *    Prep user input for login submission
           *************************************************************/
-         submitUserInput : function()
+         submitUserInput : function(e)
          {
-            var un = $('#login-form input[name=un]').val();
-            var pw = $('#login-form input[name=pw]').val();
+            if (!$(e.target).hasClass('disabled'))
+            {
+               $(e.target).addClass('disabled');
 
-            alert(un + ' ' + pw);
+               // validate input
+
+               var data = {
+                  un : $('#login-form input[name=un]').val(),
+                  pw : $('#login-form input[name=pw]').val()
+               };
+
+               WOA.navigation.model.login.authenticateUser(data);
+            }
+         },
+
+         /*************************************************************
+          * Method - postSuccess()
+          *
+          *    POST response successful
+          *************************************************************/
+         postSuccess : function(data)
+         {
+            // User authenticated
+            if (data.response == 'true')
+            {
+               var now = new Date();
+               var oneHourFromNow = now + 6000;
+               $.cookie('logged_in', true, { expires: oneHourFromNow });
+               $('#login-form div.btn.login').removeClass('disabled');
+
+
+            }
+
+            // User NOT authenticated
+            else
+            {
+               WOA.navigation.view.login.postFail();
+            }
+         },
+
+         /*************************************************************
+          * Method - postFail()
+          *
+          *    POST response unsuccessful
+          *************************************************************/
+         postFail : function()
+         {
+            $.cookie('logged_in', null);
+            $('#login-form div.btn.login').removeClass('disabled');
          }
       },
 

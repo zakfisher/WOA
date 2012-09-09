@@ -1,6 +1,6 @@
 <?php
 class DB {
-   function __construct() { }
+   function __construct() { session_start(); }
 
    private function query($query)
    {
@@ -47,6 +47,34 @@ class DB {
       // Compose SELECT x FROM y WHERE Query
       $values = implode(",", $array);
       $query = "SELECT " . $values . " FROM " . $table . " WHERE " . $column . " = '" . $value . "';";
+
+      // Execute Query
+      $result_set = $this->query($query);
+
+      // Return Results
+      while ($row = mysqli_fetch_array($result_set, MYSQL_ASSOC)) $rows[] = $row;
+      return $rows;
+   }
+
+   function select_from_where_and($array, $table, $column1, $value1, $column2, $value2)
+   {
+      // Compose SELECT x FROM y WHERE Query
+      $values = implode(",", $array);
+      $query = "SELECT " . $values . " FROM " . $table . " WHERE " . $column1 . " = '" . $value1 . "' AND " . $column2 . " = '" . $value2 . "';";
+
+      // Execute Query
+      $result_set = $this->query($query);
+
+      // Return Results
+      while ($row = mysqli_fetch_array($result_set, MYSQL_ASSOC)) $rows[] = $row;
+      return $rows;
+   }
+
+   function select_from_where_or($array, $table, $column1, $value1, $column2, $value2)
+   {
+      // Compose SELECT x FROM y WHERE Query
+      $values = implode(",", $array);
+      $query = "SELECT " . $values . " FROM " . $table . " WHERE " . $column1 . " = '" . $value1 . "' OR " . $column2 . " = '" . $value2 . "';";
 
       // Execute Query
       $result_set = $this->query($query);

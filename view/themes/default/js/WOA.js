@@ -23,6 +23,7 @@ $(function() {
    };
 
    /** Import JS Classes **/
+   $.getScript('view/themes/default/js/jquery/cookie.js');
    $.getScript('view/themes/default/js/navigation.js');
    $.getScript('view/themes/default/js/pages/all.js');
    $.getScript('view/themes/default/js/modals/all.js');
