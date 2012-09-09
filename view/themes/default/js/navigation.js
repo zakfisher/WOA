@@ -281,9 +281,9 @@ WOA.navigation =
                $('#navigation div.right div.link.sign-out').removeClass('hidden');
 
                // Replace Form Values
-               $('#login-form input').val('');
+               $('#login-form input[name=pw]').val('').hide();
                $('#login-form input[name=un]').val('username');
-               $('#login-form input[name=pw-fake]').val('password');
+               $('#login-form input[name=pw-fake]').val('password').show();
             }
 
             // User NOT authenticated
