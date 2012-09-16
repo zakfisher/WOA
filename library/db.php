@@ -28,6 +28,20 @@ class DB {
       print 'success';
    }
 
+   function update_where($table, $assoc_array, $column, $value)
+   {
+      // Compose UPDATE Query
+      foreach ($assoc_array as $key => $val)
+      {
+         $new_values[] = $key . " = '" . $val . "'";
+      }
+      $new_values = implode(",", $new_values);
+      $query = "UPDATE " . $table . " SET " . $new_values . " WHERE " . $column . " = " . $value . ";";
+
+      // Execute Query
+      $this->query($query);
+   }
+
    function select_from($array, $table)
    {
       // Compose SELECT x FROM Query

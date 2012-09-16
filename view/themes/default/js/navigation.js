@@ -9,24 +9,10 @@
  *
  * Search Keys:
  * - Model
-     >> login
-         >> authenticateUser
      >> loadPage
-     >> updateSession
-     >> resetUserData
-     >> setUserCache
-     >> deleteUserCache
-     >> checkUserCredentials
+     >> updateSessionPage
      >> setEnv
  * - View
-     >> login
-         >> PWInputFocus
-         >> PWInputBlur
-         >> UNInputFocus
-         >> UNInputBlur
-         >> submitUserInput
-         >> postSuccess
-         >> postFail
      >> requestPage
      >> showPage
      >> hashBangRedirect
@@ -39,42 +25,6 @@ WOA.navigation =
 {
    model :
    {
-      login : {
-         /*************************************************************
-          * Method - authenticateUser(data)
-          *
-          *    Refresh #container HTML with new view
-          *************************************************************/
-         authenticateUser : function(data)
-         {
-            $.post(WOA.static.env + 'user/submit_login_form', data, WOA.navigation.view.login.postSuccess, 'json').error(WOA.navigation.view.login.postFail);
-         },
-
-         logout : function()
-         {
-            // Hide logged in nav, show default nav
-            var resetNav = function() {
-               $('#navigation div.right div.link.sign-out').addClass('hidden');
-               $('#navigation div.right div.link.sign-in').removeClass('hidden');
-               $('a.username').fadeOut('normal');
-            };
-
-            setTimeout(resetNav, 3000);
-
-            // Redirect to home page
-            $('#logo div.sprite').click();
-
-            // Hide Username
-            $('a.username').text('Logging Out...').removeAttr('data-page').addClass('log-out');
-
-            // Clear User Cookie
-            WOA.navigation.model.deleteUserCache();
-
-            // Update Session
-            $.get(WOA.static.env + 'user/log_out');
-         }
-      },
-
       /*************************************************************
        * Method - loadPage()
        *
@@ -87,84 +37,13 @@ WOA.navigation =
       },
 
       /*************************************************************
-       * Method - updateSession()
+       * Method - updateSessionPage()
        *
        *    Update $_SESSION['page'] on AJAX page change
        *************************************************************/
-      updateSession : function()
+      updateSessionPage : function()
       {
          $.post(WOA.static.env + 'navigation/update_session_page', { page : WOA.static.page });
-      },
-
-      /*************************************************************
-       * Method - resetUserData()
-       *
-       *    Resets User Cookie with accurate data (security precaution)
-       *    - Also caches user data
-       *************************************************************/
-      resetUserData : function()
-      {
-         if ($.cookie('user') != null)
-         {
-            var data = $.parseJSON($.cookie('user'));
-
-            // Fetch user data
-            $.post(WOA.static.env + 'user/restore_user_data', data,
-               function(data) {
-                  WOA.navigation.model.setUserCache(data);
-               }, 'json'
-            );
-         }
-      },
-
-      /*************************************************************
-       * Method - setUserCache()
-       *
-       *    Create User Cookie (to expire in one hour)
-       *************************************************************/
-      setUserCache : function(data)
-      {
-         var now = new Date();
-         var oneHourFromNow = now.getTime() + 3600000;
-         var expiration = new Date(oneHourFromNow);
-         $.cookie('user', JSON.stringify(data.user), { expires : expiration });
-         WOA.static.user = $.parseJSON($.cookie('user'));
-         delete WOA.static.user.access;
-      },
-
-      /*************************************************************
-       * Method - deleteUserCache()
-       *
-       *    Delete User Cookie
-       *************************************************************/
-      deleteUserCache : function()
-      {
-         $.cookie('user', null);
-         delete WOA.static.user;
-      },
-
-      /*************************************************************
-       * Method - checkUserCredentials()
-       *
-       *    Check for login & access level
-       *************************************************************/
-      checkUserCredentials : function()
-      {
-         // Logged In
-         if ($.cookie('user') != null)
-         {
-            var data = $.parseJSON($.cookie('user'));
-            return {
-               loggedIn : true,
-               access : data.access
-            };
-         }
-
-         // Not Logged In
-         else
-         {
-            return { loggedIn : false };
-         }
       },
 
       /*************************************************************
@@ -175,139 +54,11 @@ WOA.navigation =
       setEnv : function()
       {
          var env = window.location.pathname.split("/");
-         var system = (env[1] == 'dev') ? '/dev/' : '/';
-         WOA.static.env = system;
+         WOA.static.env = (env[1] == 'dev') ? '/dev/' : '/';
       }
    },
    view :
    {
-      login : {
-         /*************************************************************
-          * Method - PWInputFocus(e)
-          *
-          *    Show real pw input on focus
-          *************************************************************/
-         PWInputFocus : function(e)
-         {
-            $('#login-form input[name=pw]').show().focus();
-            $(e.target).hide();
-         },
-
-         /*************************************************************
-          * Method - PWInputBlur(e)
-          *
-          *    Replace fake pw input on blur (if real pw is empty)
-          *************************************************************/
-         PWInputBlur : function(e)
-         {
-            if ($(e.target).val() == '')
-            {
-               $('#login-form input[name=pw-fake]').show().val('password');
-               $(e.target).hide();
-            }
-         },
-
-         /*************************************************************
-          * Method - UNInputFocus(e)
-          *
-          *    Clear un input val on focus
-          *************************************************************/
-         UNInputFocus : function(e)
-         {
-            if ($(e.target).val() == 'username')
-            {
-               $(e.target).val('');
-            }
-         },
-
-         /*************************************************************
-          * Method - UNInputBlur(e)
-          *
-          *    Replace un input val on blur (if blank)
-          *************************************************************/
-         UNInputBlur : function(e)
-         {
-            if ($(e.target).val() == '')
-            {
-               $(e.target).val('username');
-            }
-         },
-
-         /*************************************************************
-          * Method - submitUserInput()
-          *
-          *    Prep user input for login submission
-          *************************************************************/
-         submitUserInput : function()
-         {
-            var button = $('#login-form div.btn.login');
-            if (!button.hasClass('disabled'))
-            {
-               button.addClass('disabled');
-
-               // validate input
-
-               var data = {
-                  un : $('#login-form input[name=un]').val(),
-                  pw : $('#login-form input[name=pw]').val()
-               };
-
-               WOA.navigation.model.login.authenticateUser(data);
-            }
-         },
-
-         /*************************************************************
-          * Method - postSuccess()
-          *
-          *    POST response successful
-          *************************************************************/
-         postSuccess : function(data)
-         {
-            // User authenticated
-            if (data.response == 'true' && typeof data.user == 'object')
-            {
-               WOA.navigation.model.setUserCache(data);
-               $('#login-form div.btn.login').removeClass('disabled');
-               $('#login-form input').blur();
-
-               // Show Username
-               $('a.username').attr('data-page', 'dashboard').removeClass('log-out').text(WOA.static.user.username).fadeIn();
-
-               // Redirect to Dashboard
-               $('a[data-page=dashboard]').click();
-
-               // Hide default nav, show logged in nav
-               $('#navigation div.right div.link.sign-in').addClass('hidden');
-               $('#navigation div.right div.link.sign-out').removeClass('hidden');
-
-               // Replace Form Values
-               $('#login-form input[name=pw]').val('').hide();
-               $('#login-form input[name=un]').val('username');
-               $('#login-form input[name=pw-fake]').val('password').show();
-            }
-
-            // User NOT authenticated
-            else
-            {
-               WOA.navigation.view.login.postFail();
-            }
-         },
-
-         /*************************************************************
-          * Method - postFail()
-          *
-          *    POST response unsuccessful
-          *************************************************************/
-         postFail : function()
-         {
-            WOA.navigation.model.deleteUserCache();
-            $('#login-form div.btn.login').removeClass('disabled');
-
-            // Append Error Message
-            $('#login-form p.error').text('Wrong un/pw');
-         }
-      },
-
       /*************************************************************
        * Method - requestPage(e)
        *
@@ -358,7 +109,7 @@ WOA.navigation =
          setTimeout(revealPage, 700);
 
          // Update Session
-         WOA.navigation.model.updateSession();
+         WOA.navigation.model.updateSessionPage();
       },
 
       /*************************************************************
@@ -379,20 +130,8 @@ WOA.navigation =
             }
          });
 
-         // Check for secure pages
-         WOA.navigation.model.resetUserData();
+         // Redirect
          var target = (redirect) ? 'a[data-page=' + page + ']' : '#logo div.sprite';
-
-         switch (page)
-         {
-            case 'dashboard':
-               // Check if logged in
-               var data = WOA.navigation.model.checkUserCredentials();
-               target = (data.loggedIn == false) ? '#logo div.sprite' : target;
-               break;
-            default:
-         }
-
          $(target).click();
       }
    },
@@ -413,35 +152,10 @@ WOA.navigation =
          // Highlight Current Page Nav
          $(document).on('click', '#logo div.sprite, a[data-page]', WOA.navigation.view.requestPage);
 
-         // Focus on PW (login input)
-         $(document).on('focus', '#login-form input[name=pw-fake]', WOA.navigation.view.login.PWInputFocus);
-
-         // Blur on PW (login input)
-         $(document).on('blur', '#login-form input[name=pw]', WOA.navigation.view.login.PWInputBlur);
-
-         // Focus on UN (login input)
-         $(document).on('focus', '#login-form input[name=un]', WOA.navigation.view.login.UNInputFocus);
-
-         // Clear login error msg
-         $(document).on('focus', '#login-form input', function() { $('#login-form p.error').text(''); });
-
-         // Blur on UN (login input)
-         $(document).on('blur', '#login-form input[name=un]', WOA.navigation.view.login.UNInputBlur);
-
-         // Submit Login Credentials
-         $(document).on('click', '#login-form div.btn.login', WOA.navigation.view.login.submitUserInput);
-         $(document).on('keydown', '#login-form input:focus', function(e) { $('#login-form p.error').text(''); if (e.keyCode == 13) { WOA.navigation.view.login.submitUserInput(); } });
-
-         // Log Out
-         $(document).on('click', '#navigation div.right div.link.sign-out, #navigation div.right div.link.sign-out p', WOA.navigation.model.login.logout);
-
          /** Behaviors **/
 
          // Set Global Environment
          WOA.navigation.model.setEnv();
-
-         // Refresh User Data (for security)
-         WOA.navigation.model.resetUserData();
 
          // Redirect by #! (on load)
          WOA.navigation.view.hashBangRedirect();
