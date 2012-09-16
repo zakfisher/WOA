@@ -59,7 +59,6 @@ WOA.user =
          if ($.cookie('user') != null)
          {
             var data = $.parseJSON($.cookie('user'));
-            console.log(data);
 
             // Fetch user data
             $.post(WOA.static.env + 'user/refresh_user_session', data, WOA.user.model.setUserCache, 'json');
