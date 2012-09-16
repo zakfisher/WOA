@@ -93,13 +93,14 @@ WOA.user =
       {
          // Reset Cache
          WOA.user.model.deleteUserCache();
+         WOA.static.user = data.user;
+         delete WOA.static.user.access;
 
+         // Set User Cookie
          var now = new Date();
          var oneHourFromNow = now.getTime() + 3600000;
          var expiration = new Date(oneHourFromNow);
          $.cookie('user', JSON.stringify(data.user), { expires : expiration });
-         WOA.static.user = data.user;
-         delete WOA.static.user.access;
       },
 
       /*************************************************************
