@@ -9,13 +9,9 @@
  *
  * Search Keys:
  * - Model
-     >> loadPage
-     >> updateSessionPage
-     >> setEnv
+
  * - View
-     >> requestPage
-     >> showPage
-     >> hashBangRedirect
+
  * - Controller
      >> Init Global Variables
      >> Handlers
@@ -37,11 +33,11 @@ WOA.navigation =
       },
 
       /*************************************************************
-       * Method - updateSessionPage()
+       * Method - updateSession()
        *
        *    Update $_SESSION['page'] on AJAX page change
        *************************************************************/
-      updateSessionPage : function()
+      updateSession : function()
       {
          $.post(WOA.static.env + 'navigation/update_session_page', { page : WOA.static.page });
       },
@@ -54,7 +50,8 @@ WOA.navigation =
       setEnv : function()
       {
          var env = window.location.pathname.split("/");
-         WOA.static.env = (env[1] == 'dev') ? '/dev/' : '/';
+         var system = (env[1] == 'dev') ? '/dev/' : '/';
+         WOA.static.env = system;
       }
    },
    view :
@@ -109,7 +106,7 @@ WOA.navigation =
          setTimeout(revealPage, 700);
 
          // Update Session
-         WOA.navigation.model.updateSessionPage();
+         WOA.navigation.model.updateSession();
       },
 
       /*************************************************************
@@ -119,6 +116,9 @@ WOA.navigation =
        *************************************************************/
       hashBangRedirect : function()
       {
+         // Refresh Session & User Cache
+         WOA.user.model.refreshUser();
+
          var url = window.location.href.split("/");
          var redirect = false;
          var page = url[url.length - 1];
@@ -130,8 +130,21 @@ WOA.navigation =
             }
          });
 
-         // Redirect
          var target = (redirect) ? 'a[data-page=' + page + ']' : '#logo div.sprite';
+
+         switch (page)
+         {
+            case 'dashboard':
+               // Check if logged in
+               console.log('wftttt');
+               var loggedIn = WOA.user.model.loginCheck();
+               console.log(loggedIn);
+
+               target = (loggedIn != 'true') ? '#logo div.sprite' : target;
+               break;
+            default:
+         }
+
          $(target).click();
       }
    },
@@ -149,7 +162,7 @@ WOA.navigation =
 
          /** Handlers **/
 
-         // Highlight Current Page Nav
+         // Request Page
          $(document).on('click', '#logo div.sprite, a[data-page]', WOA.navigation.view.requestPage);
 
          /** Behaviors **/

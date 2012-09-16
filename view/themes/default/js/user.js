@@ -8,23 +8,7 @@
  * Copyright (c) Anarchy Productions International LLC, 2012
  *
  * Search Keys:
- * - Model
-     >> authenticateUser
-     >> refreshUser
-     >> setUserCache
-     >> deleteUserCache
-     >> checkUserCredentials
- * - View
-     >> PWInputFocus
-     >> PWInputBlur
-     >> UNInputFocus
-     >> UNInputBlur
-     >> login
-     >> loginSuccess
-     >> loginFail
- * - Controller
-     >> Handlers
-     >> Behaviors
+
  *********************************************/
 WOA.user =
 {
@@ -37,14 +21,9 @@ WOA.user =
        *************************************************************/
       authenticateUser : function(data)
       {
-         $.post(WOA.static.env + 'user/submit_login_form', data, WOA.user.view.loginSuccess, 'json').error(WOA.user.view.loginFail);
+         $.post(WOA.static.env + 'user/submit_login_form', data, WOA.user.view.postSuccess, 'json').error(WOA.user.view.postFail);
       },
 
-      /*************************************************************
-       * Method - logout()
-       *
-       *    Reset Navigation, Delete User Cache, Update Session
-       *************************************************************/
       logout : function()
       {
          // Hide logged in nav, show default nav
@@ -79,12 +58,11 @@ WOA.user =
       {
          if ($.cookie('user') != null)
          {
+            var data = $.parseJSON($.cookie('user'));
+            console.log(data);
+
             // Fetch user data
-            $.post(WOA.static.env + 'user/refresh_user', { token : $.cookie('user') },
-               function(data) {
-                  WOA.user.model.setUserCache(data);
-               }, 'json'
-            );
+            $.post(WOA.static.env + 'user/refresh_user_session', data, WOA.user.model.setUserCache, 'json');
          }
       },
 
@@ -95,15 +73,12 @@ WOA.user =
        *************************************************************/
       setUserCache : function(data)
       {
-         // Set User Cookie
          var now = new Date();
          var oneHourFromNow = now.getTime() + 3600000;
          var expiration = new Date(oneHourFromNow);
-         $.cookie('user', data.user.token, { expires : expiration });
-
-         // Cache User Data
+         $.cookie('user', JSON.stringify(data.user), { expires : expiration });
          WOA.static.user = data.user;
-         delete WOA.static.user.token;
+         delete WOA.static.user.access;
       },
 
       /*************************************************************
@@ -115,6 +90,17 @@ WOA.user =
       {
          $.cookie('user', null);
          delete WOA.static.user;
+      },
+
+      /*************************************************************
+       * Method - loginCheck()
+       *
+       *    Check for login
+       *************************************************************/
+      loginCheck : function()
+      {
+         // Logged In
+         if ($.cookie('user') != null) { return 'true'; }
       }
    },
    view :
@@ -171,11 +157,11 @@ WOA.user =
       },
 
       /*************************************************************
-       * Method - login()
+       * Method - submitUserInput()
        *
-       *    Create object for user authentication
+       *    Prep user input for login submission
        *************************************************************/
-      login : function()
+      submitUserInput : function()
       {
          var button = $('#login-form div.btn.login');
          if (!button.hasClass('disabled'))
@@ -194,11 +180,11 @@ WOA.user =
       },
 
       /*************************************************************
-       * Method - loginSuccess()
+       * Method - postSuccess()
        *
        *    POST response successful
        *************************************************************/
-      loginSuccess : function(data)
+      postSuccess : function(data)
       {
          // User authenticated
          if (data.response == 'true' && typeof data.user == 'object')
@@ -226,16 +212,16 @@ WOA.user =
          // User NOT authenticated
          else
          {
-            WOA.user.view.loginFail();
+            WOA.user.view.postFail();
          }
       },
 
       /*************************************************************
-       * Method - loginFail()
+       * Method - postFail()
        *
        *    POST response unsuccessful
        *************************************************************/
-      loginFail : function()
+      postFail : function()
       {
          WOA.user.model.deleteUserCache();
          $('#login-form div.btn.login').removeClass('disabled');
@@ -252,7 +238,6 @@ WOA.user =
       init : function()
       {
          /** Handlers **/
-
          // Focus on PW (login input)
          $(document).on('focus', '#login-form input[name=pw-fake]', WOA.user.view.PWInputFocus);
 
@@ -269,16 +254,11 @@ WOA.user =
          $(document).on('blur', '#login-form input[name=un]', WOA.user.view.UNInputBlur);
 
          // Submit Login Credentials
-         $(document).on('click', '#login-form div.btn.login', WOA.user.view.login);
-         $(document).on('keydown', '#login-form input:focus', function(e) { $('#login-form p.error').text(''); if (e.keyCode == 13) { WOA.user.view.login(); } });
+         $(document).on('click', '#login-form div.btn.login', WOA.user.view.submitUserInput);
+         $(document).on('keydown', '#login-form input:focus', function(e) { $('#login-form p.error').text(''); if (e.keyCode == 13) { WOA.user.view.submitUserInput(); } });
 
          // Log Out
          $(document).on('click', '#navigation div.right div.link.sign-out, #navigation div.right div.link.sign-out p', WOA.user.model.logout);
-
-         /** Behaviors **/
-
-         // Refresh User Data (for security)
-         WOA.user.model.refreshUser();
       }
    }
 };
