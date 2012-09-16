@@ -132,17 +132,12 @@ WOA.navigation =
 
          var target = (redirect) ? 'a[data-page=' + page + ']' : '#logo div.sprite';
 
-         switch (page)
+         // Check for User Pages
+         if ($.inArray(page, WOA.pages.User) != -1)
          {
-            case 'dashboard':
-               // Check if logged in
-               console.log('wftttt');
-               var loggedIn = WOA.user.model.loginCheck();
-               console.log(loggedIn);
-
-               target = (loggedIn != 'true') ? '#logo div.sprite' : target;
-               break;
-            default:
+            // Check if logged in
+            var loggedIn = WOA.user.model.loginCheck();
+            target = (loggedIn != 'true') ? '#logo div.sprite' : target;
          }
 
          $(target).click();

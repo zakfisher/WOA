@@ -1,4 +1,4 @@
-<?php session_start(); if ($_SESSION['logged_in'] != TRUE) { $_SESSION['page'] = 'home'; header('Location: ' . BASE_URL); } ?>
+<?php session_start(); ?>
          <div class="content left">
             <div class="inner-container">
                <div class="logo">

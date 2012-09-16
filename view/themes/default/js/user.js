@@ -98,6 +98,11 @@ WOA.user =
        *************************************************************/
       loginCheck : function()
       {
+
+         /*
+         NEED TO MAKE THIS MORE SECURE
+          */
+
          // Logged In
          if ($.cookie('user') != null) { return 'true'; }
       }

@@ -11,5 +11,7 @@
  * - Import Pages
  *********************************************/
 
+WOA.pages.User = ['dashboard'];
+
 /** Import Pages **/
 $.getScript('view/themes/default/js/pages/home.js');
