@@ -9,6 +9,26 @@
  *
  * Search Keys:
 
+ * - Model
+     >> authenticateUser
+     >> logout
+     >> refreshUser
+     >> setUserCache
+     >> deleteUserCache
+     >> loginCheck
+
+ * - View
+     >> PWInputFocus
+     >> PWInputBlur
+     >> UNInputFocus
+     >> UNInputBlur
+     >> submitUserInput
+     >> loginSuccess
+     >> loginFail
+
+ * - Controller
+     >> Handlers
+
  *********************************************/
 WOA.user =
 {
@@ -21,7 +41,7 @@ WOA.user =
        *************************************************************/
       authenticateUser : function(data)
       {
-         $.post(WOA.static.env + 'user/submit_login_form', data, WOA.user.view.postSuccess, 'json').error(WOA.user.view.postFail);
+         $.post(WOA.static.env + 'user/submit_login_form', data, WOA.user.view.loginSuccess, 'json').error(WOA.user.view.loginFail);
       },
 
       logout : function()
@@ -51,8 +71,7 @@ WOA.user =
       /*************************************************************
        * Method - refreshUser()
        *
-       *    Resets User Cookie with accurate data (security precaution)
-       *    - Also caches user data
+       *    Restores User Session (session is destroyed on page load)
        *************************************************************/
       refreshUser : function()
       {
@@ -72,6 +91,9 @@ WOA.user =
        *************************************************************/
       setUserCache : function(data)
       {
+         // Reset Cache
+         WOA.user.model.deleteUserCache();
+
          var now = new Date();
          var oneHourFromNow = now.getTime() + 3600000;
          var expiration = new Date(oneHourFromNow);
@@ -98,13 +120,14 @@ WOA.user =
        *************************************************************/
       loginCheck : function()
       {
-
-         /*
-         NEED TO MAKE THIS MORE SECURE
-          */
-
          // Logged In
-         if ($.cookie('user') != null) { return 'true'; }
+         if ($.cookie('user') != null)
+         {
+            /*
+             NEED TO MAKE THIS MORE SECURE
+             */
+            return 'true';
+         }
       }
    },
    view :
@@ -184,11 +207,11 @@ WOA.user =
       },
 
       /*************************************************************
-       * Method - postSuccess()
+       * Method - loginSuccess()
        *
        *    POST response successful
        *************************************************************/
-      postSuccess : function(data)
+      loginSuccess : function(data)
       {
          // User authenticated
          if (data.response == 'true' && typeof data.user == 'object')
@@ -216,16 +239,16 @@ WOA.user =
          // User NOT authenticated
          else
          {
-            WOA.user.view.postFail();
+            WOA.user.view.loginFail();
          }
       },
 
       /*************************************************************
-       * Method - postFail()
+       * Method - loginFail()
        *
        *    POST response unsuccessful
        *************************************************************/
-      postFail : function()
+      loginFail : function()
       {
          WOA.user.model.deleteUserCache();
          $('#login-form div.btn.login').removeClass('disabled');

@@ -8,9 +8,16 @@
  * Copyright (c) Anarchy Productions International LLC, 2012
  *
  * Search Keys:
+
  * - Model
+     >> loadPage
+     >> updateSession
+     >> setEnv
 
  * - View
+     >> requestPage
+     >> showPage
+     >> hashBangRedirect
 
  * - Controller
      >> Init Global Variables
@@ -133,7 +140,7 @@ WOA.navigation =
          var target = (redirect) ? 'a[data-page=' + page + ']' : '#logo div.sprite';
 
          // Check for User Pages
-         if ($.inArray(page, WOA.pages.User) != -1)
+         if ($.inArray(page, WOA.static.userPages) != -1)
          {
             // Check if logged in
             var loggedIn = WOA.user.model.loginCheck();
@@ -154,6 +161,7 @@ WOA.navigation =
          WOA.static.page = $('#container').attr('data-page');
          WOA.static.theme = $('#container').attr('data-theme');
          WOA.static.loading = '<img id="loading" src="view/themes/' + WOA.static.theme + '/img/global/loading.gif" />';
+         WOA.static.userPages = ['dashboard'];
 
          /** Handlers **/
 
