@@ -16,8 +16,7 @@
 
  * - View
      >> requestPage
-     >> showPage
-     >> hashBangRedirect
+     >> requestPage
 
  * - Controller
      >> Init Global Variables
@@ -143,11 +142,19 @@ WOA.navigation =
          if ($.inArray(page, WOA.static.userPages) != -1)
          {
             // Check if logged in
-            var loggedIn = WOA.user.model.loginCheck();
-            target = (loggedIn != 'true') ? '#logo div.sprite' : target;
+            if ($.cookie('user') != null)
+            {
+               $.get('user/login_check', function(data) {
+                  target = (data != 'true') ? '#logo div.sprite' : target;
+                  $(target).click();
+               }).error(function() { $('#logo div.sprite').click(); });
+            }
          }
-
-         $(target).click();
+         // Not User Page
+         else
+         {
+            $(target).click();
+         }
       }
    },
    controller :

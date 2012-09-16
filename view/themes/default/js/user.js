@@ -15,7 +15,6 @@
      >> refreshUser
      >> setUserCache
      >> deleteUserCache
-     >> loginCheck
 
  * - View
      >> PWInputFocus
@@ -112,23 +111,6 @@ WOA.user =
       {
          $.cookie('user', null);
          delete WOA.static.user;
-      },
-
-      /*************************************************************
-       * Method - loginCheck()
-       *
-       *    Check for login
-       *************************************************************/
-      loginCheck : function()
-      {
-         // Logged In
-         if ($.cookie('user') != null)
-         {
-            /*
-             NEED TO MAKE THIS MORE SECURE
-             */
-            return 'true';
-         }
       }
    },
    view :
