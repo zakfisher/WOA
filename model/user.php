@@ -34,18 +34,18 @@ class User_Model extends WOA {
       }
    }
 
-   function restore_user_session($user_obj)
+   function restore_user_session($user, $obj = null)
    {
-      $this->set_user_session($user_obj);
-      JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user']));
+      $this->set_user_session($user, $obj);
+      if ($obj == null) JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user']));
    }
 
-   private function set_user_session($user_obj)
+   private function set_user_session($user_obj, $obj = null)
    {
       $_SESSION['logged_in'] = true;
-      $_SESSION['user']['username'] = $user_obj['username'];
-      $_SESSION['user']['first_name'] = $user_obj['first_name'];
-      $_SESSION['user']['last_name'] = $user_obj['last_name'];
-      $_SESSION['user']['access'] = $user_obj['access'];
+      $_SESSION['user']['username']   = ($obj == null) ? $user_obj['username']   : $user_obj->username;
+      $_SESSION['user']['first_name'] = ($obj == null) ? $user_obj['first_name'] : $user_obj->first_name;
+      $_SESSION['user']['last_name']  = ($obj == null) ? $user_obj['last_name']  : $user_obj->last_name;
+      $_SESSION['user']['access']     = ($obj == null) ? $user_obj['access']     : $user_obj->access;
    }
 }
