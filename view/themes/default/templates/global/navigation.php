@@ -24,7 +24,6 @@
                   <!-- end .sign-in -->
                   <div class="link left sign-out <?= ($_SESSION['logged_in'] == true) ? '' : 'hidden'; ?>">
                      <p class="left">Log Out</p>
-                     <!-- end .dropdown -->
                   </div>
                   <!-- end .sign-out -->
                </div>
