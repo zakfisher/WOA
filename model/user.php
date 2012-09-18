@@ -1,6 +1,9 @@
 <?php
-class User_Model extends DB {
-   function __construct() { session_start(); }
+class User_Model extends WOA {
+
+   function __construct() {
+      parent::__construct();
+   }
 
    function authenticate_user($assoc_arr)
    {
@@ -12,7 +15,8 @@ class User_Model extends DB {
       extract($assoc_arr);
 
       // Fetch User from DB
-      $results = $this->select_from_where_and(array('*'), 'users', 'username', $un, 'password', $pw);
+      $db = new DB();
+      $results = $db->select_from_where_and(array('*'), 'users', 'username', $un, 'password', $pw);
 
       // Match Found
       if (count($results) > 0) {

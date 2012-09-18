@@ -4,11 +4,11 @@
  *  Project: WorldofAnarchy.com
  *
  *  Created: September 2012
- *  Last Updated: 9/8/12
+ *  Last Updated: 9/17/12
  */
 
-//if ($_COOKIE['dev'] == true)
-//{
+if ($_COOKIE['dev'] == true)
+{
    require_once('system/config.php');
 
    // Header
@@ -25,6 +25,6 @@
 
    // Footer
    require_once('view/themes/' . $theme . '/templates/global/footer.php');
-//}
-//
-//else print 'Access Denied';
+}
+
+else print 'Access Denied';

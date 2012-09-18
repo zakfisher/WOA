@@ -1,15 +1,27 @@
 <?php
-class User extends User_Model {
-   function __construct() { session_start(); }
+class User extends WOA {
+
+   function __construct() {
+      parent::__construct();
+      require_once('model/user.php');
+   }
 
    function submit_login_form()
    {
-      if ($_POST) { $this->authenticate_user($_POST); }
+      if ($_POST)
+      {
+         $user_model = new User_Model();
+         $user_model->authenticate_user($_POST);
+      }
    }
 
    function refresh_user_session()
    {
-      if ($_POST) { $this->restore_user_session($_POST); }
+      if ($_POST)
+      {
+         $user_model = new User_Model();
+         $user_model->restore_user_session($_POST);
+      }
    }
 
    function login_check()
