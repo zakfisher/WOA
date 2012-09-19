@@ -16,7 +16,9 @@
 
  * - View
      >> requestPage
-     >> requestPage
+     >> showPage
+     >> hashBangRedirect
+     >> requestSubPage
 
  * - Controller
      >> Init Global Variables
@@ -45,7 +47,9 @@ WOA.navigation =
        *************************************************************/
       updateSession : function()
       {
-         $.post(WOA.static.env + 'navigation/update_session_page', { page : WOA.static.page });
+         var data = { page : WOA.static.page };
+         if (typeof WOA.static.sub_page == 'undefined' && WOA.static.sub_page == null) { data.sub_page = WOA.static.sub_page; }
+         $.post(WOA.static.env + 'navigation/update_session_page', data);
       },
 
       /*************************************************************
@@ -103,18 +107,20 @@ WOA.navigation =
          if (WOA.static.sub_page != null)
          {
             // Check for User Pages
-            if ($.inArray(WOA.static.page, WOA.static.userPages) != -1)
+            switch (WOA.static.page)
             {
-               $.get('user/login_check', function(data) {
-                  // Logged In
-                  if (data == 'true') { $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php'); }
-                  // Not Logged In
-                  else { $('#logo div.sprite').click(); }
-               }).error(function() { $('#logo div.sprite').click(); });
+               case 'dashboard':
+                  $.get('user/login_check', function(data) {
+                     // Logged In
+                     if (data == 'true') { $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php'); }
+                     // Not Logged In
+                     else { $('#logo div.sprite').click(); }
+                  }).error(function() { $('#logo div.sprite').click(); });
+                  break;
+               default:
+               // Non-user pages
+               //else { $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php'); }
             }
-
-            // Non-user pages
-            else { $('#sub-page').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php'); }
          }
 
          // Show Page
@@ -157,7 +163,7 @@ WOA.navigation =
          var target = (redirect) ? 'a[data-page=' + page + ']' : '#logo div.sprite';
 
          // Check for User Pages
-         if ($.inArray(page, WOA.static.userPages) != -1)
+         if (page == 'dashboard')
          {
             // Check if logged in
             if ($.cookie('user') != null)
@@ -172,6 +178,33 @@ WOA.navigation =
          else
          {
             $(target).click();
+         }
+      },
+
+      /*************************************************************
+       * Method - requestSubPage(e)
+       *
+       *    Trigger sub page load
+       *************************************************************/
+      requestSubPage : function(e)
+      {
+         $('div.content.left ul.sub-nav li.active').removeClass('active');
+         $(e.target).addClass('active');
+
+         if (WOA.static.sub_page != $(e.target).attr('data-sub-page'))
+         {
+            // Update Nav Links
+            WOA.static.sub_page = $(e.target).attr('data-sub-page');
+//            location.hash = '!/' + WOA.static.page + '/' + WOA.static.sub_page;
+
+            // Update User Cookie
+            var data = $.parseJSON($.cookie('user'));
+            data.sub_page = WOA.static.sub_page;
+            $.cookie('user', JSON.stringify(data));
+
+            $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php');
+
+            WOA.navigation.model.updateSession();
          }
       }
    },
@@ -192,6 +225,9 @@ WOA.navigation =
 
          // Request Page
          $(document).on('click', '#logo div.sprite, a[data-page]', WOA.navigation.view.requestPage);
+
+         // Request Sub-page
+         $(document).on('click', 'div.content.left ul.sub-nav li', WOA.navigation.view.requestSubPage);
 
          /** Behaviors **/
 

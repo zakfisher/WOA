@@ -212,6 +212,35 @@ html { background: black; }
                         }
                      }
                   }
+
+                  ul.sub-nav {
+                     list-style-type: none;
+                     margin: 0 auto;
+                     position: relative;
+                     top: -20px;
+                     
+                     li {
+                        color: $gray;
+                        cursor: pointer;
+                        font-size: 20px;
+                        font-weight: 600;
+                        left: -3px;
+                        height: 17px;
+                        margin: 10px 0;
+                        padding: 21px;
+                        position: relative;
+                        width: 249px;
+
+                        &:hover, &.active { background: url('../img/navigation/sub-nav-bg-sprite.png') no-repeat; }
+
+                        &:hover:not(.active) {
+                           background-position: 0 -59px;
+                           color: black;
+                        }
+
+                        &.active { background-position: 0 0; }
+                     }
+                  }
                }
             }
 

@@ -1,7 +1,7 @@
 <?php session_start(); ?>
             <div class="inner-container">
                <div class="header">
-                  <h1>Contacts</h1>
+                  <h1>Admin Dashboard</h1>
                   <h2>The latest posts for all your projects.</h2>
                   <div class="shadow"></div>
                </div>
