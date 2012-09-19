@@ -83,16 +83,18 @@ WOA.navigation =
                scrollTop: 0
             }, 800);
 
-            $('#main-content, div.container').fadeTo(300, 0,
-               function()
-               {
-                  // Load Page
-                  WOA.navigation.model.loadPage();
+            // Update DOM & Load Page
+            var callback = function() {
+               // Load Page
+               WOA.navigation.model.loadPage();
 
-                  // Update #container attributes
-                  $('#container').attr('data-page', WOA.static.page);
-               }
-            );
+               // Update #container attributes
+               $('#container').attr('data-page', WOA.static.page);
+            };
+            setTimeout(callback, 300);
+
+            // Trigger Animation
+            $('#main-content, div.container').fadeTo(300, 0);
          }
       },
 
