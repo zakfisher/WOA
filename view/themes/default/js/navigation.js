@@ -109,20 +109,18 @@ WOA.navigation =
          if (WOA.static.sub_page != null)
          {
             // Check for User Pages
-            switch (WOA.static.page)
+            if ($.inArray(page, WOA.static.userPages) != -1)
             {
-               case 'dashboard':
-                  $.get('user/login_check', function(data) {
-                     // Logged In
-                     if (data == 'true') { $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php'); }
-                     // Not Logged In
-                     else { $('#logo div.sprite').click(); }
-                  }).error(function() { $('#logo div.sprite').click(); });
-                  break;
-               default:
-               // Non-user pages
-               //else { $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php'); }
+               $.get('user/login_check', function(data) {
+                  // Logged In
+                  if (data == 'true') { $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php'); }
+                  // Not Logged In
+                  else { $('#logo div.sprite').click(); }
+               }).error(function() { $('#logo div.sprite').click(); });
             }
+
+            // Non-user pages
+            //else { $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php'); }
          }
 
          // Show Page
@@ -165,7 +163,7 @@ WOA.navigation =
          var target = (redirect) ? 'a[data-page=' + page + ']' : '#logo div.sprite';
 
          // Check for User Pages
-         if (page == 'dashboard')
+         if ($.inArray(page, WOA.static.userPages) != -1)
          {
             // Check if logged in
             if ($.cookie('user') != null)
