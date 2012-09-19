@@ -21,9 +21,12 @@ class User_Model extends WOA {
       // Match Found
       if (count($results) > 0) {
 
+         $user = $results[0];
+         $user['sub_page'] = 'updates';
+
          // Set session vars
-         $this->set_user_session($results[0]);
-         JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user']));
+         $this->set_user_session($user);
+         JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user'], 'sub_page' => 'updates'));
       }
 
       // Match NOT Found
@@ -37,15 +40,16 @@ class User_Model extends WOA {
    function restore_user_session($user, $obj = null)
    {
       $this->set_user_session($user, $obj);
-      if ($obj == null) JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user']));
+      if ($obj == null) JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user'], 'sub_page' => $_SESSION['sub_page']));
    }
 
-   private function set_user_session($user_obj, $obj = null)
+   private function set_user_session($user, $obj = null)
    {
       $_SESSION['logged_in'] = true;
-      $_SESSION['user']['username']   = ($obj == null) ? $user_obj['username']   : $user_obj->username;
-      $_SESSION['user']['first_name'] = ($obj == null) ? $user_obj['first_name'] : $user_obj->first_name;
-      $_SESSION['user']['last_name']  = ($obj == null) ? $user_obj['last_name']  : $user_obj->last_name;
-      $_SESSION['user']['access']     = ($obj == null) ? $user_obj['access']     : $user_obj->access;
+      $_SESSION['sub_page']           = ($obj == null) ? $user['sub_page']   : $user->sub_page;
+      $_SESSION['user']['username']   = ($obj == null) ? $user['username']   : $user->username;
+      $_SESSION['user']['first_name'] = ($obj == null) ? $user['first_name'] : $user->first_name;
+      $_SESSION['user']['last_name']  = ($obj == null) ? $user['last_name']  : $user->last_name;
+      $_SESSION['user']['access']     = ($obj == null) ? $user['access']     : $user->access;
    }
 }

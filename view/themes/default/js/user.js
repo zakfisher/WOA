@@ -14,7 +14,6 @@
      >> logout
      >> refreshUser
      >> setUserCache
-     >> deleteUserCache
 
  * - View
      >> PWInputFocus
@@ -60,8 +59,9 @@ WOA.user =
          // Hide Username
          $('a.username').text('Logging Out...').removeAttr('data-page').addClass('log-out');
 
-         // Clear User Cookie
-         WOA.user.model.deleteUserCache();
+         // Clear User Cache
+         $.cookie('user', null);
+         delete WOA.static.user;
 
          // Update Session
          $.get(WOA.static.env + 'user/log_out');
@@ -90,27 +90,25 @@ WOA.user =
        *************************************************************/
       setUserCache : function(data)
       {
+
+
          // Reset Cache
-         WOA.user.model.deleteUserCache();
-         WOA.static.user = data.user;
-         delete WOA.static.user.access;
+         $.cookie('user', null);
+
+         if (typeof WOA.static.user != 'object') { WOA.static.user = {}; }
+         WOA.static.user.username   = data.user.username;
+         WOA.static.user.first_name = data.user.first_name;
+         WOA.static.user.last_name  = data.user.last_name;
+         WOA.static.sub_page        = data.sub_page;
+
+         // Store value in cookie (for refreshing session)
+         data.user.sub_page         = data.sub_page;
 
          // Set User Cookie
          var now = new Date();
          var oneHourFromNow = now.getTime() + 3600000;
          var expiration = new Date(oneHourFromNow);
          $.cookie('user', JSON.stringify(data.user), { expires : expiration });
-      },
-
-      /*************************************************************
-       * Method - deleteUserCache()
-       *
-       *    Delete User Cookie
-       *************************************************************/
-      deleteUserCache : function()
-      {
-         $.cookie('user', null);
-         delete WOA.static.user;
       }
    },
    view :
@@ -233,7 +231,7 @@ WOA.user =
        *************************************************************/
       loginFail : function()
       {
-         WOA.user.model.deleteUserCache();
+         $.cookie('user', null);
          $('#login-form div.btn.login').removeClass('disabled');
 
          // Append Error Message

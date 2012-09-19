@@ -99,6 +99,24 @@ WOA.navigation =
        *************************************************************/
       showPage : function()
       {
+         // If page contains sub-page, load it
+         if (WOA.static.sub_page != null)
+         {
+            // Check for User Pages
+            if ($.inArray(WOA.static.page, WOA.static.userPages) != -1)
+            {
+               $.get('user/login_check', function(data) {
+                  // Logged In
+                  if (data == 'true') { $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php'); }
+                  // Not Logged In
+                  else { $('#logo div.sprite').click(); }
+               }).error(function() { $('#logo div.sprite').click(); });
+            }
+
+            // Non-user pages
+            else { $('#sub-page').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php'); }
+         }
+
          // Show Page
          var revealPage = function()
          {
