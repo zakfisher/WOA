@@ -109,7 +109,7 @@ WOA.navigation =
          if (WOA.static.sub_page != null)
          {
             // Check for User Pages
-            if ($.inArray(page, WOA.static.userPages) != -1)
+            if ($.inArray(WOA.static.page, WOA.static.userPages) != -1)
             {
                $.get('user/login_check', function(data) {
                   // Logged In
