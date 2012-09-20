@@ -14,7 +14,7 @@
             <div class="footer-nav left">
                <ul>
                   <li>
-                     <a href="javascript:void(0);" data-page="downloads">Downloads</a>
+                     <a href="javascript:void(0);" data-page="music">Music</a>
                   </li>
                   <li class="border">
                      <a href="javascript:void(0);" data-page="about">About</a>

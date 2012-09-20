@@ -204,6 +204,8 @@ WOA.navigation =
 
             $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php');
 
+            window.scrollTo(0, 0);
+
             WOA.navigation.model.updateSession();
          }
       }

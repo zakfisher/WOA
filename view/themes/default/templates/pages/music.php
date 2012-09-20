@@ -12,8 +12,8 @@
          <div class="content right">
             <div class="inner-container">
                <div class="header">
-                  <h1>Downloads</h1>
-                  <h2>Find hours of FREE mixes by your favorite artists below :)</h2>
+                  <h1>Music</h1>
+                  <h2>Preview and download hours of FREE mixes by your favorite artists below :)</h2>
                   <div class="shadow"></div>
                </div>
                <!-- end .header -->
