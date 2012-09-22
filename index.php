@@ -4,7 +4,7 @@
  *  Project: WorldofAnarchy.com
  *
  *  Created: September 2012
- *  Last Updated: 9/18/12
+ *  Last Updated: 9/22/12
  */
 
 if ($_COOKIE['dev'] == true)

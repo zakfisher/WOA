@@ -1,4 +1,11 @@
-<?php session_start(); ?>
+<?php
+session_start();
+
+if (isset($_SESSION['dashboard']))
+{
+   $_SESSION['sub_page'] = $_SESSION['dashboard'][0];
+}
+?>
          <div class="content left">
             <div class="inner-container">
                <div class="logo">

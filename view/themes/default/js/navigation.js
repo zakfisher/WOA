@@ -16,9 +16,9 @@
 
  * - View
      >> requestPage
+     >> requestSubPage
      >> showPage
      >> hashBangRedirect
-     >> requestSubPage
 
  * - Controller
      >> Init Global Variables
@@ -77,11 +77,13 @@ WOA.navigation =
          {
             // Update Nav Links
             WOA.static.page = $(e.target).attr('data-page');
-            location.hash = '!/' + WOA.static.page;
 
-            $('body,html').animate({
-               scrollTop: 0
-            }, 800);
+            // Check for sub-page
+            var subPage = (WOA.static.sub_page != null && $.inArray(WOA.static.sub_page, WOA.static.user_pages[WOA.static.page]) != -1) ? '+' + WOA.static.sub_page : '';
+            location.hash = '!/' + WOA.static.page + subPage;
+
+            // Scroll to top
+            $('body,html').animate({ scrollTop: 0 }, 800);
 
             // Update DOM & Load Page
             var callback = function() {
@@ -99,6 +101,38 @@ WOA.navigation =
       },
 
       /*************************************************************
+       * Method - requestSubPage(e)
+       *
+       *    Trigger sub page load
+       *************************************************************/
+      requestSubPage : function(e)
+      {
+         $('div.content.left ul.sub-nav li.active').removeClass('active');
+         $(e.target).addClass('active');
+
+         if (WOA.static.sub_page != $(e.target).attr('data-sub-page'))
+         {
+            // Update Nav Links
+            WOA.static.sub_page = $(e.target).attr('data-sub-page');
+
+            // Add sub-page to URL
+            var subPage = (WOA.static.sub_page != null && $.inArray(WOA.static.sub_page, WOA.static.user_pages[WOA.static.page]) != -1) ? '+' + WOA.static.sub_page : '';
+            location.hash = '!/' + WOA.static.page + subPage;
+
+            // Update User Cookie
+            var data = $.parseJSON($.cookie('user'));
+            data.sub_page = WOA.static.sub_page;
+            $.cookie('user', JSON.stringify(data));
+
+            $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php');
+
+            window.scrollTo(0, 0);
+
+            WOA.navigation.model.updateSession();
+         }
+      },
+
+      /*************************************************************
        * Method - showPage()
        *
        *    Show page after load
@@ -109,7 +143,7 @@ WOA.navigation =
          if (WOA.static.sub_page != null)
          {
             // Check for User Pages
-            if ($.inArray(WOA.static.page, WOA.static.userPages) != -1)
+            if ($.inArray(WOA.static.page, WOA.static.user_pages) != -1)
             {
                $.get('user/login_check', function(data) {
                   // Logged In
@@ -150,20 +184,24 @@ WOA.navigation =
          WOA.user.model.refreshUser();
 
          var url = window.location.href.split("/");
-         var redirect = false;
          var page = url[url.length - 1];
-         $(url).each(function(i, v) {
-            if (v == '#!' && $('a[data-page=' + page + ']').length > 0)
-            {
-               redirect = true;
-               return false;
-            }
-         });
+
+         // Check for sub-pages
+         if (page.indexOf("+") != -1)
+         {
+            var params = page.split("+");
+            page = params[0];
+            WOA.static.sub_page = params[1];
+            //WOA.static.page_params = params.splice(1);
+         }
+
+         // Check for #! in URL AND if page link exists
+         var redirect = ($.inArray('#!', url) && $('a[data-page=' + page + ']').length > 0) ? true : false;
 
          var target = (redirect) ? 'a[data-page=' + page + ']' : '#logo div.sprite';
 
          // Check for User Pages
-         if ($.inArray(page, WOA.static.userPages) != -1)
+         if ($.inArray(page, WOA.static.user_pages) != -1)
          {
             // Check if logged in
             if ($.cookie('user') != null)
@@ -175,39 +213,7 @@ WOA.navigation =
             }
          }
          // Not User Page
-         else
-         {
-            $(target).click();
-         }
-      },
-
-      /*************************************************************
-       * Method - requestSubPage(e)
-       *
-       *    Trigger sub page load
-       *************************************************************/
-      requestSubPage : function(e)
-      {
-         $('div.content.left ul.sub-nav li.active').removeClass('active');
-         $(e.target).addClass('active');
-
-         if (WOA.static.sub_page != $(e.target).attr('data-sub-page'))
-         {
-            // Update Nav Links
-            WOA.static.sub_page = $(e.target).attr('data-sub-page');
-//            location.hash = '!/' + WOA.static.page + '/' + WOA.static.sub_page;
-
-            // Update User Cookie
-            var data = $.parseJSON($.cookie('user'));
-            data.sub_page = WOA.static.sub_page;
-            $.cookie('user', JSON.stringify(data));
-
-            $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php');
-
-            window.scrollTo(0, 0);
-
-            WOA.navigation.model.updateSession();
-         }
+         else { $(target).click(); }
       }
    },
    controller :
@@ -221,7 +227,8 @@ WOA.navigation =
          WOA.static.page = $('#container').attr('data-page');
          WOA.static.theme = $('#container').attr('data-theme');
          WOA.static.loading = '<img id="loading" src="view/themes/' + WOA.static.theme + '/img/global/loading.gif" />';
-         WOA.static.userPages = ['dashboard'];
+         WOA.static.user_pages = ['dashboard'];
+         WOA.static.user_pages.dashboard = ['updates', 'projects', 'contacts', 'site-emails', 'settings', 'admin'];
 
          /** Handlers **/
 

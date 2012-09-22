@@ -90,11 +90,10 @@ WOA.user =
        *************************************************************/
       setUserCache : function(data)
       {
-
-
          // Reset Cache
          $.cookie('user', null);
 
+         // Set JS User Cache
          if (typeof WOA.static.user != 'object') { WOA.static.user = {}; }
          WOA.static.user.username   = data.user.username;
          WOA.static.user.first_name = data.user.first_name;
@@ -102,7 +101,8 @@ WOA.user =
          WOA.static.sub_page        = data.sub_page;
 
          // Store value in cookie (for refreshing session)
-         data.user.sub_page         = data.sub_page;
+         var cookie = data.user;
+         cookie.sub_page = data.sub_page;
 
          // Set User Cookie
          var now = new Date();
