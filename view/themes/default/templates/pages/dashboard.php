@@ -1,10 +1,8 @@
 <?php
 session_start();
 
-if (isset($_SESSION['dashboard']))
-{
-   $_SESSION['sub_page'] = $_SESSION['dashboard'][0];
-}
+// Page Vars
+$_SESSION['sub_page'] = (isset($_SESSION['dashboard'])) ? $_SESSION['dashboard'][0] : $_SESSION['sub_page'];
 ?>
          <div class="content left">
             <div class="inner-container">

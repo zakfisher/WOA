@@ -15,9 +15,6 @@
                   <h1>Music</h1>
                   <h2>Preview and download hours of FREE mixes by your favorite artists below :)</h2>
                   <div class="shadow"></div>
-                  <pre>
-                     <?php print_r($_SESSION); ?>
-                  </pre>
                </div>
                <!-- end .header -->
             </div>
