@@ -192,7 +192,6 @@ WOA.navigation =
             var params = page.split("+");
             page = params[0];
             WOA.static.sub_page = params[1];
-            //WOA.static.page_params = params.splice(1);
          }
 
          // Check for #! in URL AND if page link exists
