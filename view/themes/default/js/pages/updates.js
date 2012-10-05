@@ -1,7 +1,7 @@
 /*********************************************
- * WOA Home Page Class
+ * WOA Updates Page Class
  *
- * Desc:  Javascript Home Page Object
+ * Desc:  Javascript Updates Page Object
  *
  * Creator: Zachary Fisher - zfisher@worldofanarchy.com
  *
@@ -12,10 +12,23 @@
  * - View
  * - Controller
  *********************************************/
-WOA.pages.Home =
+WOA.pages.Updates =
 {
    model : {},
-   view : {},
+   view : {
+      /*************************************************************
+       * Method - loadPage()
+       *
+       *    Build Post List
+       *************************************************************/
+      loadPage : function()
+      {
+         var data = {
+            test : 'halalala'
+         };
+         Handlebars.renderTemplate('template-updates-list', data, 'div.dynamic-content');
+      }
+   },
    controller :
    {
       /*************************************************************
@@ -28,5 +41,4 @@ WOA.pages.Home =
    }
 };
 
-// Initialize Instance
-WOA.pages.Home.controller.init();
+WOA.pages.Updates.controller.init();

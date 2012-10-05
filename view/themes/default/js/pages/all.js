@@ -13,3 +13,4 @@
 
 /** Import Pages **/
 $.getScript('view/themes/default/js/pages/home.js');
+$.getScript('view/themes/default/js/pages/updates.js');

@@ -14,7 +14,7 @@
 /** Init Global WOA Object **/
 WOA = {
    navigation : {},
-   user: {},
+   user : {},
    pages : {},
    modals : {},
    static : {}
