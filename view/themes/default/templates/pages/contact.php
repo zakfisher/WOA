@@ -14,7 +14,7 @@
                <div class="header">
                   <h1>Contact Us</h1>
                   <h2>Send us an email below.</h2>
-                  <div class="shadow"></div>
+                  <div class="shadow down"></div>
                </div>
                <!-- end .header -->
             </div>

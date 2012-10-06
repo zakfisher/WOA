@@ -1,12 +1,3 @@
-//Handlebars.registerHelper('each', function(context, block) {
-//   var ret = "";
-//   for(var i=0, j=context.length; i<j; i++) {
-//      context[i].index = i;
-//      ret = ret + block(context[i]);
-//   }
-//   return ret;
-//});
-
 Handlebars.renderTemplate = function(templateId, context, container, append)
 {
    var template = Handlebars.compile($('#' + templateId).html());
@@ -17,3 +8,8 @@ Handlebars.renderTemplate = function(templateId, context, container, append)
    else if (typeof append !== 'undefined' && append == 'after') { $(container).after($(template(context))); }
    else { $(container).html(template(context)); }
 };
+
+Handlebars.registerHelper('renderInnerTemplate', function(template, data) {
+   var template = Handlebars.compile($('#' + template).html());
+   return new Handlebars.SafeString(template(data));
+});

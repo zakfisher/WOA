@@ -74,6 +74,10 @@ WOA.navigation =
        *************************************************************/
       requestPage : function(e)
       {
+         // Highlight Active Page Link
+         $('li.page-link').removeClass('active');
+         $('li.page-link[data-page=' + $(e.target).attr('data-page') + ']').addClass('active');
+
          if (WOA.static.page != $(e.target).attr('data-page'))
          {
             // Update Nav Links
@@ -125,7 +129,7 @@ WOA.navigation =
             data.sub_page = WOA.static.sub_page;
             $.cookie('user', JSON.stringify(data));
 
-            $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php', WOA.navigation.view.initSubPage);
+            $('div.content.right').load('view/themes/default/templates/pages/' + WOA.static.page + '/' + WOA.static.sub_page + '.php', WOA.navigation.view.initSubPage);
 
             window.scrollTo(0, 0);
 
@@ -149,7 +153,7 @@ WOA.navigation =
                $.get('user/login_check', function(data) {
                   // Logged In
                   if (data == 'true') {
-                     $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php', WOA.navigation.view.initSubPage);
+                     $('div.content.right').load('view/themes/default/templates/pages/' + WOA.static.page + '/' + WOA.static.sub_page + '.php', WOA.navigation.view.initSubPage);
                   }
                   // Not Logged In
                   else { $('#logo div.sprite').click(); }
@@ -172,6 +176,8 @@ WOA.navigation =
 
          setTimeout(revealPage, 700);
 
+         if (WOA.static.page != 'dashboard') { $('li.page-link[data-page=' + WOA.static.page + ']').addClass('active'); }
+
          // Update Session
          WOA.navigation.model.updateSession();
       },
@@ -183,9 +189,24 @@ WOA.navigation =
        *************************************************************/
       initSubPage : function()
       {
-         var page = WOA.static.sub_page.substr(0, 1).toUpperCase() + WOA.static.sub_page.substr(1);
-         if (WOA.pages.hasOwnProperty(page)) { eval("WOA.pages." + page + ".view.loadPage();"); }
-//         console.log(page);
+         if (WOA.static.page == 'dashboard')
+         {
+            var page = WOA.static.sub_page.substr(0, 1).toUpperCase() + WOA.static.sub_page.substr(1);
+            if (WOA.pages.hasOwnProperty(page)) { eval("WOA.pages." + page + ".view.loadPage();"); }
+         }
+      },
+
+      /*************************************************************
+       * Method - triggerPageRequest()
+       *
+       *    Trigger page request from nav bar
+       *************************************************************/
+      triggerPageRequest : function(e)
+      {
+         $('li.page-link').removeClass('active');
+         var target = ($(e.target).is('li.page-link')) ? $(e.target) : $(e.target).parents('li.page-link');
+         var page = target.attr('data-page');
+         $('a[data-page=' + page + ']').click();
       },
 
       /*************************************************************
@@ -241,13 +262,15 @@ WOA.navigation =
          WOA.static.page = $('#container').attr('data-page');
          WOA.static.theme = $('#container').attr('data-theme');
          WOA.static.loading = '<img id="loading" src="view/themes/' + WOA.static.theme + '/img/global/loading.gif" />';
-         WOA.static.user_pages = ['dashboard'];
+         WOA.static.user_pages = ['dashboard', 'projects'];
          WOA.static.user_pages.dashboard = ['updates', 'projects', 'contacts', 'site-emails', 'settings', 'admin'];
+         WOA.static.user_pages.projects = ['overview', 'updates', 'biz-plan', 'contracts', 'partners'];
 
          /** Handlers **/
 
          // Request Page
          $(document).on('click', '#logo div.sprite, a[data-page]', WOA.navigation.view.requestPage);
+         $(document).on('click', 'ul.sub-pages li.page-link', WOA.navigation.view.triggerPageRequest);
 
          // Request Sub-page
          $(document).on('click', 'div.content.left ul.sub-nav li', WOA.navigation.view.requestSubPage);

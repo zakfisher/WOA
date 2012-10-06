@@ -20,7 +20,7 @@ $track = (isset($_SESSION['music'])) ? $_SESSION['music'][1] : 'Track Name';
                <div class="header">
                   <h1>Music</h1>
                   <h2>Preview and download hours of FREE mixes by your favorite artists below :)</h2>
-                  <div class="shadow"></div>
+                  <div class="shadow down"></div>
                   <?= $artist; ?>
                   <br/>
                   <?= $track; ?>

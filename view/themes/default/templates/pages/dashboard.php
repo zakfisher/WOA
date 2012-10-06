@@ -33,8 +33,8 @@ $_SESSION['sub_page'] = (isset($_SESSION['dashboard'])) ? $_SESSION['dashboard']
          </div>
          <!-- end .content.left -->
          <div class="content right">
-<?php if ($_SESSION['page'] == 'dashboard') require_once('view/themes/default/templates/pages/user/' . $_SESSION['sub_page'] . '.php'); ?>
+<?php if ($_SESSION['page'] == 'dashboard') require_once('dashboard/' . $_SESSION['sub_page'] . '.php'); ?>
          </div>
          <!-- end .content.right -->
          <div class="clr"></div>
-<?php require_once('user/updates-templates.php'); ?>
+<?php require_once('dashboard/templates.php'); ?>

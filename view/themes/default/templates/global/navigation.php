@@ -6,6 +6,17 @@
                   <div class="sprite" data-page="home"></div>
                </div>
                <!-- end #logo -->
+               <ul class="sub-pages left">
+                  <li class="page-link<?= $_SESSION['page'] == 'music' ? ' active' : ''; ?>" data-page="music">
+                     <a href="javascript:void(0);">Music</a>
+                  </li>
+                  <li class="page-link<?= $_SESSION['page'] == 'about' ? ' active' : ''; ?>" data-page="about">
+                     <a href="javascript:void(0);">About</a>
+                  </li>
+                  <li class="page-link<?= $_SESSION['page'] == 'contact' ? ' active' : ''; ?>" data-page="contact">
+                     <a href="javascript:void(0);">Contact</a>
+                  </li>
+               </ul>
                <div class="right">
                   <div class="link left sign-in <?= ($_SESSION['logged_in'] != true) ? '' : 'hidden'; ?>">
                      <p class="left">Log In</p>

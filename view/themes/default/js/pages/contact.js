@@ -1,7 +1,7 @@
 /*********************************************
- * WOA Updates Page Class
+ * WOA Contact Page Class
  *
- * Desc:  Javascript Updates Page Object
+ * Desc:  Javascript Contact Page Object
  *
  * Creator: Zachary Fisher - zfisher@worldofanarchy.com
  *
@@ -13,7 +13,7 @@
      >> loadPage
  * - Controller
  *********************************************/
-WOA.pages.Updates =
+WOA.pages.Contact =
 {
    model : {},
    view : {
@@ -29,7 +29,7 @@ WOA.pages.Updates =
             test : 'halalala',
             template : 'template-single-post'
          };
-         Handlebars.renderTemplate('template-updates-list', data, 'div.dynamic-content');
+//         Handlebars.renderTemplate('template-updates-list', data, 'div.dynamic-content');
       }
    },
    controller :
@@ -44,4 +44,4 @@ WOA.pages.Updates =
    }
 };
 
-WOA.pages.Updates.controller.init();
+WOA.pages.Contact.controller.init();
