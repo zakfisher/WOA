@@ -21,6 +21,11 @@ $gray: #e0e0e0;
 $darkGray: #5b5b5b;
 
 /** Mixins **/
+@mixin opacity($level) {
+   opacity: $level;
+   filter: alpha(opacity=($level * 100));
+}
+
 @mixin border-radius($radius) {
   border-radius: $radius;
   -moz-border-radius: $radius;

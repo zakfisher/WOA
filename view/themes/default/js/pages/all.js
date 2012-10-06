@@ -15,5 +15,5 @@
 $.getScript('view/themes/default/js/pages/home.js');
 $.getScript('view/themes/default/js/pages/music.js');
 $.getScript('view/themes/default/js/pages/about.js');
-$.getScript('view/themes/default/js/pages/updates.js');
 $.getScript('view/themes/default/js/pages/contact.js');
+$.getScript('view/themes/default/js/pages/updates.js');

@@ -10,6 +10,22 @@ Handlebars.renderTemplate = function(templateId, context, container, append)
 };
 
 Handlebars.registerHelper('renderInnerTemplate', function(template, data) {
-   var template = Handlebars.compile($('#' + template).html());
+   var template = Handlebars.compile($('#template-' + template).html());
+   return new Handlebars.SafeString(template(data));
+});
+
+Handlebars.registerHelper('renderPaginationTemplate', function(totalItems, itemsPerPage) {
+   var pageCount = Math.ceil(totalItems / itemsPerPage);
+   var data = {
+      item_count : totalItems,
+      page_count : pageCount
+   };
+
+   var template = Handlebars.compile($('#template-pagination').html());
+   return new Handlebars.SafeString(template(data));
+});
+
+Handlebars.registerHelper('renderSearchField', function(data) {
+   var template = Handlebars.compile($('#template-search-field').html());
    return new Handlebars.SafeString(template(data));
 });

@@ -26,9 +26,135 @@ WOA.pages.Updates =
       {
          // Load latest posts
          var data = {
-            test : 'halalala',
-            template : 'template-single-post'
+            list_items_template : 'updates-list-items',
+            posts : [
+               {
+                  id      : 1,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 2,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 3,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 1,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 2,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 3,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 1,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 2,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 3,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 1,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 2,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 3,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 1,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 2,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 3,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               }
+            ]
          };
+         data.pagination = {
+            template : 'pagination',
+            post_count : data.posts.length,
+            posts_per_page : 10
+         }
          Handlebars.renderTemplate('template-updates-list', data, 'div.dynamic-content');
       }
    },

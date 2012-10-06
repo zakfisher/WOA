@@ -148,8 +148,7 @@ WOA.navigation =
          if (WOA.static.sub_page != null)
          {
             // Check for User Pages
-            if ($.inArray(WOA.static.page, WOA.static.user_pages) != -1)
-            {
+            if ($.inArray(WOA.static.sub_page, WOA.static.user_pages[WOA.static.page]) != -1) {
                $.get('user/login_check', function(data) {
                   // Logged In
                   if (data == 'true') {
@@ -159,9 +158,11 @@ WOA.navigation =
                   else { $('#logo div.sprite').click(); }
                }).error(function() { $('#logo div.sprite').click(); });
             }
-
             // Non-user pages
-            //else { $('div.content.right').load('view/themes/default/templates/pages/user/' + WOA.static.sub_page + '.php'); }
+            else if ($.inArray(WOA.static.sub_page, WOA.static.public_pages[WOA.static.page]) != -1)
+            {
+               $('div.content.right').load('view/themes/default/templates/pages/' + WOA.static.page + '/' + WOA.static.sub_page + '.php', WOA.navigation.view.initSubPage);
+            }
          }
 
          // Show Page
@@ -262,7 +263,11 @@ WOA.navigation =
          WOA.static.page = $('#container').attr('data-page');
          WOA.static.theme = $('#container').attr('data-theme');
          WOA.static.loading = '<img id="loading" src="view/themes/' + WOA.static.theme + '/img/global/loading.gif" />';
-         WOA.static.user_pages = ['dashboard', 'projects'];
+         WOA.static.public_pages = {};
+         WOA.static.public_pages.music = [];
+         WOA.static.public_pages.about = [];
+         WOA.static.public_pages.contact = [];
+         WOA.static.user_pages = {};
          WOA.static.user_pages.dashboard = ['updates', 'projects', 'contacts', 'site-emails', 'settings', 'admin'];
          WOA.static.user_pages.projects = ['overview', 'updates', 'biz-plan', 'contracts', 'partners'];
 
@@ -284,7 +289,7 @@ WOA.navigation =
          WOA.navigation.view.hashBangRedirect();
 
          // Init Sub Page
-         if (WOA.static.page != 'home') { setTimeout(WOA.navigation.view.initSubPage, 300); }
+         if (WOA.static.page != 'home') { setTimeout(WOA.navigation.view.initSubPage, 1000); }
 
          // Redirect by #! (back/forward buttons)
          $(window).bind('hashchange', WOA.navigation.view.hashBangRedirect);

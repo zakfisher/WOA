@@ -185,7 +185,6 @@ html { background: black; }
                            color: black;
                            @include box-shadow(inset 0px 1px 3px 0 #ccc);
                            margin-bottom: 15px;
-                           outline: red;
 
                            &:not(:focus) { color: #CCC; }
 
@@ -235,7 +234,6 @@ html { background: black; }
          z-index: 4;
 
          div.content {
-            min-height: 860px;
 
             &.left {
                margin-left: 4px;
@@ -331,6 +329,149 @@ html { background: black; }
                            &.down { background-position: center -11px; }
                         }
                      }
+
+                     &.dynamic-content {
+
+                        div {
+
+                           &.page-loading {
+                              background: url('../img/global/page-loading.gif') center top no-repeat;
+                              height: 32px;
+                              width: 100px;
+                              margin: 0 auto;
+                              position: relative;
+                              top: 30px;
+                           }
+
+                           &.sub-page-actions {
+
+                              div.inner {
+                                 padding: 5px;
+
+                                 div {
+
+                                    &.search {
+
+                                       input {
+                                          width: 200px;
+                                          border: 1px solid #CCC;
+                                          @include border-radius(3px);
+                                          padding: 3px 30px 3px 5px;
+                                          font-size: 14px;
+                                          font-weight: bold;
+                                          color: black;
+                                          @include box-shadow(inset 0px 1px 3px 0 #ccc);
+                                          outline: none;
+                                       }
+
+                                       i.icon-search {
+                                          position: relative;
+                                          left: -24px;
+                                          top: 1px;
+                                          @include opacity(.5);
+                                       }
+
+                                    }
+
+                                    &.pagination {
+                                       margin: 0;
+
+                                       div.btn { margin: 0; }
+
+                                       div.tracker {
+                                          background-color: #EEE;
+                                          margin: 0 10px;
+                                          padding: 0 10px;
+                                          border: 1px solid #e0e0e0;
+                                          height: 24px;
+                                          @include border-radius(3px);
+
+                                          p {
+                                             font-size: 16px;
+                                             font-weight: bold;
+                                             margin: 0;
+                                             position: relative;
+                                             top: 2px;
+
+                                             span.current-page { font-size: 16px; }
+                                          }
+                                       }
+                                    }
+                                 }
+
+                              }
+
+                           }
+
+                           &.list-container {
+
+                              div.item {
+                                 cursor: pointer;
+                                 background-color: white;
+                                 border: 1px solid white;
+
+                                 &:hover {
+                                    background-color: #f2f2f2;
+                                    border: 1px solid #e0e0e0;
+                                 }
+
+                                 div.inner {
+                                    cursor: pointer;
+                                    padding: 10px 20px;
+
+                                    &:hover { div.arrow { background-position: -13px -22px; } }
+
+                                    div.item-content {
+                                       width: 96%;
+
+                                       div.title {
+
+                                          h1 {
+                                             font-weight: 300;
+                                             font-size: 22px;
+                                             padding: 0;
+                                          }
+
+                                       }
+
+                                       div.sub-info {
+                                          border-top: 1px solid white;
+
+                                          div.info {
+                                             padding: 10px;
+                                             border-left: 1px solid white;
+                                             border-right: 1px solid #e0e0e0;
+
+                                             &.first {
+                                                padding-left: 0;
+                                                border-left: none;
+                                             }
+
+                                             &.last {
+                                                border-right: none;
+                                             }
+                                          }
+
+                                       }
+
+                                    }
+
+                                    div.arrow {
+                                       background: url('../img/global/next-prev-arrow-sprite.png') -13px 0 no-repeat;
+                                       height: 18px;
+                                       position: relative;
+                                       top: 26px;
+                                       width: 11px;
+                                    }
+
+                                 }
+
+                              }
+
+                           }
+
+                        }
+                     }
                   }
                }
             }
@@ -363,7 +504,6 @@ html { background: black; }
 
             div.sprite {
                background-position: 0 -46px;
-               top: -43px;
             }
          }
       }
