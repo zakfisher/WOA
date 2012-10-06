@@ -27,7 +27,7 @@ WOA.pages.Updates =
          // Load latest posts
          var data = {
             list_items_template : 'updates-list-items',
-            posts : [
+            items : [
                {
                   id      : 1,
                   title   : 'Test Post',
@@ -38,7 +38,79 @@ WOA.pages.Updates =
                },
                {
                   id      : 2,
+                  title   : 'Testadfad Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 3,
+                  title   : 'ABCCC Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 1,
+                  title   : '324234234 Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 2,
                   title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 3,
+                  title   : 'Tesadfadft Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 1,
+                  title   : 'TZZZZFAER@#$#%@ Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 2,
+                  title   : 'Tadfast',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 3,
+                  title   : 'Test Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 1,
+                  title   : 'Tasdf2Post',
+                  author  : 'zfisher',
+                  project : 'Crazy Shit Project',
+                  time    : '11.12.12',
+                  content : {}
+               },
+               {
+                  id      : 2,
+                  title   : 'Testaaaaa Post',
                   author  : 'zfisher',
                   project : 'Crazy Shit Project',
                   time    : '11.12.12',
@@ -70,70 +142,6 @@ WOA.pages.Updates =
                },
                {
                   id      : 3,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  id      : 1,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  id      : 2,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  id      : 3,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  id      : 1,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  id      : 2,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  id      : 3,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  id      : 1,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  id      : 2,
                   title   : 'Test Post',
                   author  : 'zfisher',
                   project : 'Crazy Shit Project',
@@ -151,9 +159,11 @@ WOA.pages.Updates =
             ]
          };
          data.pagination = {
+            float : 'right',
+            extra_class : 'list-end',
             template : 'pagination',
-            post_count : data.posts.length,
-            posts_per_page : 10
+            item_count : data.items.length,
+            items_per_page : 5
          }
          Handlebars.renderTemplate('template-updates-list', data, 'div.dynamic-content');
       }

@@ -1,22 +1,15 @@
 /*********************************************
- * WOA Class
+ * WOA Utilities Class
  *
- * Desc:  Global Javascript WOA Object
+ * Desc:  Javascript Utilities Object
  *
  * Creator: Zachary Fisher - zfisher@worldofanarchy.com
  *
  * Copyright (c) Anarchy Productions International LLC, 2012
  *
  * Search Keys:
- * - Init Global WOA Object
+ * - Import Pages
  *********************************************/
 
-/** Init Global WOA Object **/
-WOA = {
-   navigation : {},
-   user : {},
-   pages : {},
-   modals : {},
-   static : {},
-   utilities : {}
-};
+/** Import Pages **/
+$.getScript('view/themes/default/js/utilities/pagination.js');
