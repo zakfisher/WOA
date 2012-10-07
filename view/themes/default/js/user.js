@@ -236,6 +236,19 @@ WOA.user =
 
          // Append Error Message
          $('#login-form p.error').text('Wrong un/pw');
+      },
+
+      /*************************************************************
+       * Method - setAutoLogout()
+       *
+       *    Log User out after 1 hour (when cookie expires)
+       *************************************************************/
+      setAutoLogout: function()
+      {
+         if (typeof WOA.static.user != 'undefined') {
+            if (typeof WOA.static.user.logout != 'undefined') { clearTimeout(WOA.static.user.logout); }
+            WOA.static.user.logout = setTimeout(WOA.user.model.logout, 3600000);
+         }
       }
    },
    controller :
@@ -264,6 +277,8 @@ WOA.user =
          // Submit Login Credentials
          $(document).on('click', '#login-form div.btn.login', WOA.user.view.submitUserInput);
          $(document).on('keydown', '#login-form input:focus', function(e) { $('#login-form p.error').text(''); if (e.keyCode == 13) { WOA.user.view.submitUserInput(); } });
+
+         $(document).on('mousemove', 'body', WOA.user.view.setAutoLogout);
 
          // Log Out
          $(document).on('click', '#navigation div.right div.link.sign-out, #navigation div.right div.link.sign-out p', WOA.user.model.logout);
