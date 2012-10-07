@@ -33,6 +33,22 @@ Handlebars.registerHelper('renderSearchField', function(data) {
    return new Handlebars.SafeString(template(data));
 });
 
+Handlebars.registerHelper('renderCurrentUser', function() {
+   return new Handlebars.SafeString(WOA.static.user.username);
+});
+
+Handlebars.registerHelper('renderCurrentDate', function() {
+   var today = new Date();
+   var month = today.getMonth();
+   month++;
+   var day = today.getDate();
+   var year = today.getFullYear();
+   year += '';
+   year = year.substr(2);
+   var date = month + '.' + day + '.' + year;
+   return new Handlebars.SafeString(date);
+});
+
 Handlebars.registerHelper('renderListItems', function(template, items, itemsPerPage) {
    var pages = [];
    var idx = 0;

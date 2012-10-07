@@ -35,11 +35,15 @@ WOA.pages.Updates =
                   project : 'Crazy Shit Project',
                   time    : '11.12.12',
                   content : {
-                     message : 'Justin Bieber and shit......',
+                     message : 'That\'s right! We got that little fucker to agree to the small fee of $1.5M just to come and make some little girls wet themselves. I know, none of us want to book the lil guy, BUT he does draw a crowd and money is money .... Anyway, here\’s some more text just to fill up some space and pretend that we\'re actually saying something slightly important.. but we’re really not .. like, at all.',
                      links : [
                         {
                            title : 'Business Plan',
-                           url : 'www.worldofanarchy.com'
+                           url : 'http://www.worldofanarchy.com'
+                        },
+                        {
+                           title : 'Other Page',
+                           url : 'http://www.worldofanarchy.com'
                         }
                      ],
                      comments : [
@@ -51,7 +55,7 @@ WOA.pages.Updates =
                         {
                            author : 'lferrieri',
                            time : '12.3.11',
-                           message : 'douchebags anonymous'
+                           message : 'That\'s right! We got that little fucker to agree to the small fee of $1.5M just to come and make some little girls wet themselves. I know, none of us want to book the lil guy, BUT he does draw a crowd and money is money .... Anyway, here\’s some more text just to fill up some space and pretend that we\'re actually saying something slightly important.. but we’re really not .. like, at all.'
                         }
                      ]
                   }
@@ -225,6 +229,33 @@ WOA.pages.Updates =
       backToListView : function(e)
       {
          $('div.dynamic-content').animate({ left : '0px' }, 300, function() { $('div.dynamic-content div.secondary-view').remove(); });
+      },
+
+      /*************************************************************
+       * Method - toggleCommentsCollapse(e)
+       *
+       *    Expand/Collapse Comments
+       *************************************************************/
+      toggleCommentsCollapse : function(e)
+      {
+         var icon = $(e.target);
+         var div = icon.parents('div.comments').find('span.collapseable');
+
+         // Collapse
+         if (icon.hasClass('icon-minus'))
+         {
+            icon.removeClass('icon-minus');
+            icon.addClass('icon-plus');
+            div.slideUp();
+         }
+
+         // Expand
+         else
+         {
+            icon.removeClass('icon-plus');
+            icon.addClass('icon-minus');
+            div.slideDown();
+         }
       }
    },
    controller :
@@ -237,6 +268,7 @@ WOA.pages.Updates =
          /** Handlers **/
          $(document).on('click', 'div.dynamic-content div.list-container.updates div.item', WOA.pages.Updates.view.displayPost);
          $(document).on('click', 'div.dynamic-content div.secondary-view div.go-back', WOA.pages.Updates.view.backToListView);
+         $(document).on('click', 'div.dynamic-content div.secondary-view div.post-content div.comments i', WOA.pages.Updates.view.toggleCommentsCollapse);
       }
    }
 };

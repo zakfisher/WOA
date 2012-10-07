@@ -28,6 +28,196 @@
                width: 612px;
                float: left;
             }
+
+            div.secondary-view {
+
+               div.btn { margin: 0; }
+
+               div.post-content {
+
+                  div {
+
+                     &.header {
+
+                        div.inner {
+                           padding: 5px 10px 10px;
+                           width: 592px;
+
+                           div.title {
+                              h1 {
+                                 font-weight: 500;
+                                 font-size: 22px;
+                                 padding: 0;
+                              }
+                           }
+
+                           div.sub-info {
+                              border-top: 1px solid white;
+
+                              div.info {
+                                 font-weight: bold;
+                                 color: #5b5b5b;
+                                 font-size: 12px;
+                                 padding: 10px 15px 7px;
+                                 border-left: 1px solid white;
+                                 border-right: 1px solid $gray;
+
+                                 &.first {
+                                    padding-left: 0;
+                                    border-left: none;
+                                 }
+
+                                 &.last {
+                                    border-right: none;
+                                 }
+                              }
+                           }
+                        }
+
+                     }
+
+                     &.message {
+                        p {
+                           color: $darkGray;
+                           font-size: 16px;
+                           line-height: 24px;
+                           margin: 10px 15px 15px;
+                        }
+                     }
+
+                     &.links {
+                        padding-bottom: 10px;
+
+                        div.header {
+                           background-color: #f0f0f0;
+                           border: 1px solid $gray;
+
+                           p {
+                              font-weight: bold;
+                              font-size: 14px;
+                              margin: 0;
+                              padding: 5px 15px;
+                              color: $darkGray;
+                           }
+                        }
+
+                        ul {
+                           padding: 0;
+                           margin: 5px 15px;
+                           list-style-type: none;
+
+                           li {
+                              padding: 3px 0;
+
+                              a {
+                                 font-size: 16px;
+                                 color: $pink;
+
+                                 &:hover {
+                                    color: black;
+                                    text-decoration: underline;
+                                 }
+                              }
+                           }
+                        }
+
+                     }
+
+                     &.comments {
+
+                        div.header {
+                           background-color: #f0f0f0;
+                           border: 1px solid $gray;
+
+                           p {
+                              font-weight: bold;
+                              font-size: 14px;
+                              margin: 0;
+                              padding: 5px 15px;
+                              color: $darkGray;
+                           }
+
+                           i {
+                              height: 20px;
+                              width: 20px;
+                              cursor: pointer;
+                              position: relative;
+                              top: 4px;
+                              right: 3px;
+
+                              &.icon-minus { background-position: -430px -94px; }
+                              &.icon-plus { background-position: -404px -94px; }
+                           }
+                        }
+
+                        div.body {
+                           width: 612px;
+
+                           div.single-comment, div.add-comment {
+                              padding: 15px 0;
+                              border-bottom: 1px solid $gray;
+
+                              div.meta-info {
+                                 width: 110px;
+
+                                 p {
+                                    font-size: 14px;
+                                    font-weight: bold;
+                                    color: $darkGray;
+                                    text-align: right;
+                                    padding-right: 10px;
+                                    margin: 3px 0;
+
+                                    &.first {
+                                       border-bottom: 1px solid $gray;
+                                       padding-bottom: 3px;
+                                    }
+                                 }
+                              }
+
+                              div.comment-text {
+                                 border-left: 1px solid $gray;
+                                 min-height: 50px;
+                                 width: 501px;
+
+                                 p {
+                                    font-size: 14px;
+                                    color: $darkGray;
+                                    text-align: left;
+                                    padding: 0 10px;
+                                 }
+
+                                 div.inner {
+                                    padding: 0 10px;
+
+                                    textarea[name=message] {
+                                       width: 450px;
+                                       border: 1px solid #CCC;
+                                       @include border-radius(3px);
+                                       padding: 3px 25px 3px 5px;
+                                       font-size: 14px;
+                                       font-weight: bold;
+                                       color: black;
+                                       @include box-shadow(inset 0px 1px 3px 0 #ccc);
+                                       outline: none;
+                                       resize: none;
+                                    }
+                                 }
+                              }
+
+                           }
+
+                           div.button { padding: 10px 0; }
+
+                        }
+
+                     }
+
+                  }
+
+               }
+
+            }
          }
 
       }
