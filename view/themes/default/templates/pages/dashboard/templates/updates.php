@@ -5,7 +5,9 @@
             <div class="sub-page-actions">
                <div class="inner">
                   {{renderSearchField}}
+                  <span class="page-nav">
                   {{renderPaginationTemplate pagination.item_count pagination.items_per_page pagination.float}}
+                  </span>
                   <div class="clr"></div>
                </div>
                <div class="shadow"></div>
@@ -15,6 +17,18 @@
                <div class="shadow down"></div>
                {{renderPaginationTemplate pagination.item_count pagination.items_per_page pagination.extra_class}}
             </div>
+         </script>
+
+         <!-- Result Set List -->
+         <script id="template-results-list" type="text/x-handlebars-template">
+            {{renderListItems list_items_template items pagination.items_per_page}}
+            <div class="shadow down"></div>
+            {{renderPaginationTemplate pagination.item_count pagination.items_per_page pagination.extra_class}}
+         </script>
+
+         <!-- Results Pagination -->
+         <script id="template-results-pagination" type="text/x-handlebars-template">
+         {{renderPaginationTemplate item_count items_per_page float}}
          </script>
 
          <!-- List Items -->
@@ -52,7 +66,7 @@
          <!-- Pagination View -->
          <script id="template-pagination" type="text/x-handlebars-template">
             <div class="pagination{{#if extra_class}} {{extra_class}}{{/if}}">
-               <div class="btn btn-inverse next right">Next <i class="icon-white icon-arrow-right"></i></div>
+               <div class="btn btn-inverse next right{{#if one_page}} disabled{{/if}}">Next <i class="icon-white icon-arrow-right"></i></div>
                <div class="tracker right">
                   <p><span class="current-page">1</span> / <span class="total-pages">{{page_count}}</span></p>
                </div>
@@ -63,7 +77,7 @@
          <!-- Search Field -->
          <script id="template-search-field" type="text/x-handlebars-template">
             <div class="search left">
-               <input type="text" placeholder="search" name="search" />
+               <input type="text" placeholder="search" name="search" {{#if value}}value="{{value}}" {{/if}}/>
                <i class="icon-search"></i>
             </div>
          </script>

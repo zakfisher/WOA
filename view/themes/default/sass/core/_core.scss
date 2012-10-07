@@ -392,7 +392,7 @@ html { background: black; }
                                           width: 200px;
                                           border: 1px solid #CCC;
                                           @include border-radius(3px);
-                                          padding: 3px 30px 3px 5px;
+                                          padding: 3px 25px 3px 5px;
                                           font-size: 14px;
                                           font-weight: bold;
                                           color: black;
@@ -417,6 +417,12 @@ html { background: black; }
                            &.list-container {
                               position: relative;
                               top: -1px;
+
+                              p.no-results {
+                                 text-align: center;
+                                 font-weight: bold;
+                                 padding-top: 30px;
+                              }
 
                               div.item {
                                  cursor: pointer;

@@ -22,6 +22,8 @@ Handlebars.registerHelper('renderPaginationTemplate', function(totalItems, items
       extra_class : extraClass
    };
 
+   if (data.page_count <= 1) { data.one_page = true; }
+
    var template = Handlebars.compile($('#template-pagination').html());
    return new Handlebars.SafeString(template(data));
 });

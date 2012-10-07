@@ -63,7 +63,7 @@ WOA.pages.Updates =
                {
                   id      : 2,
                   title   : 'Test Post',
-                  author  : 'zfisher',
+                  author  : 'santosh',
                   project : 'Crazy Shit Project',
                   time    : '11.12.12',
                   content : {}
@@ -71,7 +71,7 @@ WOA.pages.Updates =
                {
                   id      : 3,
                   title   : 'Tesadfadft Post',
-                  author  : 'zfisher',
+                  author  : 'santosh',
                   project : 'Crazy Shit Project',
                   time    : '11.12.12',
                   content : {}
@@ -87,7 +87,7 @@ WOA.pages.Updates =
                {
                   id      : 2,
                   title   : 'Tadfast',
-                  author  : 'zfisher',
+                  author  : 'santosh',
                   project : 'Crazy Shit Project',
                   time    : '11.12.12',
                   content : {}
@@ -103,7 +103,7 @@ WOA.pages.Updates =
                {
                   id      : 1,
                   title   : 'Tasdf2Post',
-                  author  : 'zfisher',
+                  author  : 'santosh',
                   project : 'Crazy Shit Project',
                   time    : '11.12.12',
                   content : {}
@@ -111,7 +111,7 @@ WOA.pages.Updates =
                {
                   id      : 2,
                   title   : 'Testaaaaa Post',
-                  author  : 'zfisher',
+                  author  : 'santosh',
                   project : 'Crazy Shit Project',
                   time    : '11.12.12',
                   content : {}
@@ -135,7 +135,7 @@ WOA.pages.Updates =
                {
                   id      : 2,
                   title   : 'Test Post',
-                  author  : 'zfisher',
+                  author  : 'santosh',
                   project : 'Crazy Shit Project',
                   time    : '11.12.12',
                   content : {}
@@ -166,6 +166,9 @@ WOA.pages.Updates =
             items_per_page : 5
          }
          Handlebars.renderTemplate('template-updates-list', data, 'div.dynamic-content');
+
+         // Cache Result Set
+         WOA.static.list_cache = data;
       }
    },
    controller :

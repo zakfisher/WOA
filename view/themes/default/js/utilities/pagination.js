@@ -71,6 +71,57 @@ WOA.utilities.Pagination =
             list.find('span.page-set').addClass('hidden');
             list.find('span.page-set[data-list-page=' + prevPage + ']').removeClass('hidden');
          }
+      },
+
+      /*************************************************************
+       * Method - executeSearch(e)
+       *
+       *    Search & Display Result Set
+       *************************************************************/
+      executeSearch : function(e)
+      {
+         var searchValue = $(e.target).val();
+
+         // Create New Result Set
+         if (searchValue != '')
+         {
+            var resultSet = {
+               list_items_template : WOA.static.list_cache.list_items_template,
+               pagination : {
+                  extra_class : WOA.static.list_cache.pagination.extra_class,
+                  float : WOA.static.list_cache.pagination.float,
+                  items_per_page : WOA.static.list_cache.pagination.items_per_page
+               },
+               items : []
+            };
+
+            $(WOA.static.list_cache.items).each(function(i, v) {
+               var val = searchValue.toLowerCase();
+               if ((v.author.toLowerCase().indexOf(val) != -1 ) || (v.title.toLowerCase().indexOf(val) != -1 ) || (v.project.toLowerCase().indexOf(val) != -1 )) { resultSet.items.push(v); }
+            });
+
+            resultSet.pagination.item_count = resultSet.items.length;
+
+            // Results Found
+            if (resultSet.items.length > 0)
+            {
+               Handlebars.renderTemplate('template-results-list', resultSet, 'div.list-container');
+               Handlebars.renderTemplate('template-results-pagination', resultSet.pagination, 'div.sub-page-actions span.page-nav');
+            }
+
+            // No Results Found
+            else
+            {
+               $('div.list-container').html('<p class="no-results">No Results Found.</p>');
+               $('div.pagination').remove();
+            }
+         }
+
+         // Default back to cached results
+         else {
+            Handlebars.renderTemplate('template-updates-list', WOA.static.list_cache, 'div.dynamic-content');
+            $('div.dynamic-content input[name=search]').focus();
+         }
       }
    },
    controller :
@@ -83,6 +134,7 @@ WOA.utilities.Pagination =
          /** Handlers **/
          $(document).on('click', 'div.pagination .next', WOA.utilities.Pagination.view.showNextPage);
          $(document).on('click', 'div.pagination .prev', WOA.utilities.Pagination.view.showPrevPage);
+         $(document).on('keyup', 'div.dynamic-content input[name=search]', WOA.utilities.Pagination.view.executeSearch);
       }
    }
 };
