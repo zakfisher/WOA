@@ -2,9 +2,7 @@
 session_start();
 
 // Page Vars
-//$dashboard_pages = ['updates', 'projects', 'contacts', 'site-emails', 'settings', 'admin'];
 $_SESSION['sub_page'] = (isset($_SESSION['dashboard'])) ? $_SESSION['dashboard'][0] : $_SESSION['sub_page'];
-//if (!in_array($_SESSION['sub_page'], $dashboard_pages)) $_SESSION['sub_page'] = 'updates';
 ?>
          <div class="content left">
             <div class="inner-container">

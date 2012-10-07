@@ -119,7 +119,7 @@ WOA.utilities.Pagination =
 
          // Default back to cached results
          else {
-            Handlebars.renderTemplate('template-updates-list', WOA.static.list_cache, 'div.dynamic-content');
+            Handlebars.renderTemplate('template-list', WOA.static.list_cache, 'div.dynamic-content');
             $('div.dynamic-content input[name=search]').focus();
          }
       }

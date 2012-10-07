@@ -14,5 +14,23 @@
 #container[data-page=dashboard] {
    #main-content {
 
+      div.dynamic-shell {
+         min-height: 100px;
+         overflow: hidden;
+         width: 612px;
+
+         div.dynamic-content {
+            position: relative;
+            width: 1262px;
+
+            div.main-view, div.secondary-view {
+               position: relative;
+               width: 612px;
+               float: left;
+            }
+         }
+
+      }
+
    }
 }
