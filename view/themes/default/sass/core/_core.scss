@@ -477,6 +477,11 @@ html { background: black; }
                                              &.last {
                                                 border-right: none;
                                              }
+
+                                             &.only {
+                                                border: none;
+                                                padding-left: 0;
+                                             }
                                           }
 
                                        }

@@ -113,7 +113,7 @@
                <h1>{{task}}</h1>
             </div>
             <div class="sub-info">
-               <div class="info left last">{{sub_info}}</div>
+               <div class="info left only">{{sub_info}}</div>
             </div>
          </script>
 
