@@ -1,7 +1,7 @@
 /*********************************************
- * WOA Projects Page Class
+ * WOA Admin Page Class
  *
- * Desc:  Javascript Projects Page Object
+ * Desc:  Javascript Admin Page Object
  *
  * Creator: Zachary Fisher - zfisher@worldofanarchy.com
  *
@@ -13,48 +13,38 @@
      >> loadPage
  * - Controller
  *********************************************/
-WOA.pages.Projects =
+WOA.pages.Admin =
 {
    model : {},
    view : {
       /*************************************************************
        * Method - loadPage()
        *
-       *    Build Project List
+       *    Build Post List
        *************************************************************/
       loadPage : function()
       {
-         // Load projects
+         // Load admin data
          var data = {
-            type : 'projects',
+            type : 'admin',
             items : [
                {
-                  template : 'projects-list-items',
-                  id      : 44,
-                  project : 'Crazy Shit Project',
-                  last_updated    : '1.1.12',
-                  user_count : 5
+                  template : 'admin-list-items',
+                  id      : 1,
+                  task : 'Manage Users',
+                  sub_info : 'Total Users: 34'
                },
                {
-                  template : 'projects-list-items',
-                  id      : 4,
-                  project : 'haslslsls Project',
-                  last_updated    : '11.18.12',
-                  user_count : 15
+                  template : 'admin-list-items',
+                  id      : 2,
+                  task : 'Manage Contracts',
+                  sub_info : 'Total Contracts: 34'
                },
                {
-                  template : 'projects-list-items',
-                  id      : 224,
-                  project : 'ABCC Project',
-                  last_updated    : '10.12.10',
-                  user_count : 3
-               },
-               {
-                  template : 'projects-list-items',
-                  id      : 5,
-                  project : '234t Project',
-                  last_updated    : '9.12.12',
-                  user_count : 2
+                  template : 'admin-list-items',
+                  id      : 3,
+                  task : 'Manage Projects',
+                  sub_info : 'Total Projects: 34'
                }
             ]
          };
@@ -92,4 +82,4 @@ WOA.pages.Projects =
    }
 };
 
-WOA.pages.Projects.controller.init();
+WOA.pages.Admin.controller.init();

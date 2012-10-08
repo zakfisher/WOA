@@ -101,6 +101,8 @@ WOA.utilities.Pagination =
                      if ((v.author.toLowerCase().indexOf(val) != -1 ) || (v.title.toLowerCase().indexOf(val) != -1 ) || (v.project.toLowerCase().indexOf(val) != -1 )) { resultSet.items.push(v); }
                   case 'projects':
                      if (v.project.toLowerCase().indexOf(val) != -1 ) { resultSet.items.push(v); }
+                  case 'contacts':
+                     if ((v.first_name.toLowerCase().indexOf(val) != -1 ) || (v.last_name.toLowerCase().indexOf(val) != -1 ) || (v.title.toLowerCase().indexOf(val) != -1 ) || (v.company.toLowerCase().indexOf(val) != -1 )) { resultSet.items.push(v); }
                   default:
                }
             });
