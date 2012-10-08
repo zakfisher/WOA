@@ -26,9 +26,10 @@ WOA.pages.Updates =
       {
          // Load latest posts
          var data = {
-            list_items_template : 'updates-list-items',
+            type : 'updates',
             items : [
                {
+                  template : 'updates-list-items',
                   id      : 44,
                   title   : 'Test Post',
                   author  : 'zfisher',
@@ -61,6 +62,7 @@ WOA.pages.Updates =
                   }
                },
                {
+                  template : 'updates-list-items',
                   id      : 2,
                   title   : 'Testadfad Post',
                   author  : 'zfisher',
@@ -69,6 +71,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 3,
                   title   : 'ABCCC Post',
                   author  : 'zfisher',
@@ -77,6 +80,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 4,
                   title   : '324234234 Post',
                   author  : 'zfisher',
@@ -85,6 +89,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 5,
                   title   : 'Test Post',
                   author  : 'santosh',
@@ -93,6 +98,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 6,
                   title   : 'Tesadfadft Post',
                   author  : 'santosh',
@@ -101,6 +107,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 7,
                   title   : 'TZZZZFAER@#$#%@ Post',
                   author  : 'zfisher',
@@ -109,6 +116,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 8,
                   title   : 'Tadfast',
                   author  : 'santosh',
@@ -117,6 +125,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 9,
                   title   : 'Test Post',
                   author  : 'zfisher',
@@ -125,6 +134,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 10,
                   title   : 'Tasdf2Post',
                   author  : 'santosh',
@@ -133,6 +143,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 11,
                   title   : 'Testaaaaa Post',
                   author  : 'santosh',
@@ -141,6 +152,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 12,
                   title   : 'Test Post',
                   author  : 'zfisher',
@@ -149,6 +161,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 13,
                   title   : 'Test Post',
                   author  : 'zfisher',
@@ -157,6 +170,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 14,
                   title   : 'Test Post',
                   author  : 'santosh',
@@ -165,6 +179,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 15,
                   title   : 'Test Post',
                   author  : 'zfisher',
@@ -173,6 +188,7 @@ WOA.pages.Updates =
                   content : {}
                },
                {
+                  template : 'updates-list-items',
                   id      : 16,
                   title   : 'Test Post',
                   author  : 'zfisher',
@@ -215,7 +231,7 @@ WOA.pages.Updates =
          var postId = item.attr('data-id');
          var post = WOA.static.list_cache.items[WOA.static.list_cache.item_index[postId]];
 
-         console.log(post);
+         //console.log(post);
 
          Handlebars.renderTemplate('template-single-post', post, 'div.dynamic-content', 'append');
          $('div.dynamic-content').animate({ left : '-612px' }, 300);

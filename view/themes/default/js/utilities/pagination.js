@@ -86,7 +86,6 @@ WOA.utilities.Pagination =
          if (searchValue != '')
          {
             var resultSet = {
-               list_items_template : WOA.static.list_cache.list_items_template,
                pagination : {
                   extra_class : WOA.static.list_cache.pagination.extra_class,
                   float : WOA.static.list_cache.pagination.float,
@@ -97,7 +96,13 @@ WOA.utilities.Pagination =
 
             $(WOA.static.list_cache.items).each(function(i, v) {
                var val = searchValue.toLowerCase();
-               if ((v.author.toLowerCase().indexOf(val) != -1 ) || (v.title.toLowerCase().indexOf(val) != -1 ) || (v.project.toLowerCase().indexOf(val) != -1 )) { resultSet.items.push(v); }
+               switch (WOA.static.list_cache.type) {
+                  case 'updates':
+                     if ((v.author.toLowerCase().indexOf(val) != -1 ) || (v.title.toLowerCase().indexOf(val) != -1 ) || (v.project.toLowerCase().indexOf(val) != -1 )) { resultSet.items.push(v); }
+                  case 'projects':
+                     if (v.project.toLowerCase().indexOf(val) != -1 ) { resultSet.items.push(v); }
+                  default:
+               }
             });
 
             resultSet.pagination.item_count = resultSet.items.length;

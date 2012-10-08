@@ -49,7 +49,7 @@ Handlebars.registerHelper('renderCurrentDate', function() {
    return new Handlebars.SafeString(date);
 });
 
-Handlebars.registerHelper('renderListItems', function(template, items, itemsPerPage) {
+Handlebars.registerHelper('renderListItems', function(items, itemsPerPage) {
    var pages = [];
    var idx = 0;
    $(items).each(function(i, v) {
@@ -64,6 +64,6 @@ Handlebars.registerHelper('renderListItems', function(template, items, itemsPerP
    });
 
    var data = { pages : pages };
-   var template = Handlebars.compile($('#template-' + template).html());
+   var template = Handlebars.compile($('#template-list-items').html());
    return new Handlebars.SafeString(template(data));
 });

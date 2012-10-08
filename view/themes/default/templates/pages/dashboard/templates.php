@@ -13,8 +13,8 @@
                   </div>
                   <div class="shadow"></div>
                </div>
-               <div class="list-container updates clr">
-                  {{renderListItems list_items_template items pagination.items_per_page}}
+               <div class="list-container {{type}} clr">
+                  {{renderListItems items pagination.items_per_page}}
                   <div class="shadow down"></div>
                   {{renderPaginationTemplate pagination.item_count pagination.items_per_page pagination.extra_class}}
                </div>
@@ -42,7 +42,7 @@
 
          <!-- Result Set List -->
          <script id="template-results-list" type="text/x-handlebars-template">
-            {{renderListItems list_items_template items pagination.items_per_page}}
+            {{renderListItems items pagination.items_per_page}}
             <div class="shadow down"></div>
             {{renderPaginationTemplate pagination.item_count pagination.items_per_page pagination.extra_class}}
          </script>
@@ -52,22 +52,15 @@
             {{renderPaginationTemplate item_count items_per_page float}}
          </script>
 
-         <!-- Updates List Items -->
-         <script id="template-updates-list-items" type="text/x-handlebars-template">
+         <!-- List Items View -->
+         <script id="template-list-items" type="text/x-handlebars-template">
             {{#each pages}}
             <span data-list-page="{{page_number}}" class="page-set{{#if hidden}} hidden{{/if}}">
                {{#each items}}
                <div class="item" data-id="{{id}}">
                   <div class="inner">
                      <div class="item-content left">
-                        <div class="title">
-                           <h1>{{title}}</h1>
-                        </div>
-                        <div class="sub-info">
-                           <div class="info left first">{{time}}</div>
-                           <div class="info left">{{author}}</div>
-                           <div class="info left last">{{project}}</div>
-                        </div>
+                        {{renderInnerTemplate template this}}
                      </div>
                      <div class="arrow right"></div>
                      <div class="clr"></div>
@@ -77,6 +70,29 @@
             </span>
             {{/each}}
             <div class="clr"></div>
+         </script>
+
+         <!-- Updates Items -->
+         <script id="template-updates-list-items" type="text/x-handlebars-template">
+            <div class="title">
+               <h1>{{title}}</h1>
+            </div>
+            <div class="sub-info">
+               <div class="info left first">{{time}}</div>
+               <div class="info left">{{author}}</div>
+               <div class="info left last">{{project}}</div>
+            </div>
+         </script>
+
+         <!-- Projects Items -->
+         <script id="template-projects-list-items" type="text/x-handlebars-template">
+            <div class="title">
+               <h1>{{project}}</h1>
+            </div>
+            <div class="sub-info">
+               <div class="info left first">Last Updated: {{last_updated}}</div>
+               <div class="info left last">Users: {{user_count}}</div>
+            </div>
          </script>
 
          <!-- Single Post View -->

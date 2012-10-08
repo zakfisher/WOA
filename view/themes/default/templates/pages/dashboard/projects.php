@@ -2,8 +2,15 @@
             <div class="inner-container">
                <div class="header">
                   <h1>Projects</h1>
-                  <h2>Find and manage company projects.</h2>
-                  <div class="shadow"></div>
+                  <h2>Find and manage your projects.</h2>
+                  <div class="shadow down"></div>
+                  <div class="dynamic-shell">
+                     <div class="dynamic-content">
+                        <div class="page-loading"></div>
+                     </div>
+                     <!-- end .dynamic-content -->
+                  </div>
+                  <!-- end .dynamic-shell -->
                </div>
                <!-- end .header -->
             </div>
