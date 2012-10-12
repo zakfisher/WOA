@@ -92,7 +92,7 @@ WOA.pages.Updates =
                   template : 'updates-list-items',
                   id      : 5,
                   title   : 'Test Post',
-                  author  : 'santosh',
+                  author  : 'sdevanagondi',
                   project : 'Crazy Shit Project',
                   time    : '11.12.12',
                   content : {}

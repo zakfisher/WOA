@@ -321,7 +321,7 @@ html { background: black; }
 
                         div.shadow {
                            background: url('../img/global/right-content-horizontal-shadow.png') center top no-repeat;
-                           height: 9px;
+                           height: 8px;
                            margin: 0 auto;
                            width: 633px;
                            position: relative;
@@ -416,7 +416,8 @@ html { background: black; }
 
                            &.list-container {
                               position: relative;
-                              top: -1px;
+
+                              &:not(.admin) { top: -1px; }
 
                               p.no-results {
                                  text-align: center;
