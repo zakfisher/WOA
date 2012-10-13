@@ -15,14 +15,35 @@
  *********************************************/
 WOA.pages.Projects =
 {
-   model : {},
+   model : {
+      /*************************************************************
+       * Method - getProjects()
+       *
+       *    Fetch Projects Data
+       *************************************************************/
+      getProjects : function()
+      {
+         $.get(WOA.static.env + 'test/test/abc', function(data) { WOA.pages.Projects.view.showPage(data); });
+      }
+   },
    view : {
       /*************************************************************
        * Method - loadPage()
        *
-       *    Build Project List
+       *    Init Page Logic
+       *    - Fetch Projects Data
        *************************************************************/
       loadPage : function()
+      {
+         WOA.pages.Projects.model.getProjects();
+      },
+
+      /*************************************************************
+       * Method - showPage(data)
+       *
+       *    Display Page
+       *************************************************************/
+      showPage : function(data)
       {
          // Load projects
          var data = {

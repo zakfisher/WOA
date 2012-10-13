@@ -9,20 +9,43 @@
  *
  * Search Keys:
  * - Model
+     >> getUpdates
  * - View
      >> loadPage
+     >> showPage
  * - Controller
  *********************************************/
 WOA.pages.Updates =
 {
-   model : {},
+   model : {
+      /*************************************************************
+       * Method - getUpdates()
+       *
+       *    Fetch Updates Data
+       *************************************************************/
+      getUpdates : function()
+      {
+         $.get(WOA.static.env + 'test/test/abc', function(data) { WOA.pages.Updates.view.showPage(data); });
+      }
+   },
    view : {
       /*************************************************************
        * Method - loadPage()
        *
-       *    Build Post List
+       *    Init Page Logic
+       *    - Fetch Updates Data
        *************************************************************/
       loadPage : function()
+      {
+         WOA.pages.Updates.model.getUpdates();
+      },
+
+      /*************************************************************
+       * Method - showPage(data)
+       *
+       *    Display Page
+       *************************************************************/
+      showPage : function(data)
       {
          // Load latest posts
          var data = {
