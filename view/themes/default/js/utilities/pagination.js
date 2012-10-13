@@ -78,9 +78,12 @@ WOA.utilities.Pagination =
        *
        *    Search & Display Result Set
        *************************************************************/
-      executeSearch : function(e)
+      executeSearch : function(e, customSearch)
       {
-         var searchValue = $(e.target).val();
+         console.log(customSearch);
+
+         var searchValue = (typeof customSearch == 'undefined') ? $(e.target).val() : customSearch;
+         if (typeof customSearch != 'undefined' && customSearch == 'all') { searchValue = ''; }
 
          // Create New Result Set
          if (searchValue != '')
@@ -105,7 +108,7 @@ WOA.utilities.Pagination =
                      if (v.project.toLowerCase().indexOf(val) != -1 ) { resultSet.items.push(v); }
                      break;
                   case 'contacts':
-                     if ((v.first_name.toLowerCase().indexOf(val) != -1 ) || (v.last_name.toLowerCase().indexOf(val) != -1 ) || (v.title.toLowerCase().indexOf(val) != -1 ) || (v.company.toLowerCase().indexOf(val) != -1 )) { resultSet.items.push(v); }
+                     if ((v.first_name.toLowerCase().indexOf(val) != -1 ) || (v.last_name.toLowerCase().indexOf(val) != -1 ) || (v.title.toLowerCase().indexOf(val) != -1 ) || (v.company.toLowerCase().indexOf(val) != -1 ) || (v.type.toLowerCase().indexOf(val) != -1 )) { resultSet.items.push(v); }
                      break;
                   default:
                }
@@ -140,25 +143,63 @@ WOA.utilities.Pagination =
       },
 
       /*************************************************************
-       * Method - toggleFilterDisplay(e)
+       * Method - executeFilter(e)
        *
-       *    Show/Hide Filter By dropdown
+       *    Filter Results
        *************************************************************/
-      toggleFilterDisplay : function(e)
+      executeFilter : function(e)
+      {
+         var filter = ($(e.target).is('.li')) ? $(e.target).attr('data-filter') : $(e.target).parents('.li').attr('data-filter');
+         WOA.utilities.Pagination.view.executeSearch(null, filter);
+         if (filter != 'all') { $('div.dynamic-content input[name=search]').val(filter); }
+      },
+
+      /*************************************************************
+       * Method - showFilterDropdown(e)
+       *
+       *    Show Filter Dropdown Menu
+       *************************************************************/
+      showFilterDropdown : function(e)
       {
          var button = ($(e.target).is('.btn')) ? $(e.target) : $(e.target).parents('.btn');
          var dropdown = button.siblings('.dropdown-menu');
-         if (button.hasClass('active'))
-         {
-            button.removeClass('active');
-            dropdown.hide();
-         }
-         else
-         {
-            button.addClass('active');
-            dropdown.show();
-         }
+         button.addClass('active');
+         dropdown.show();
+      },
 
+      /*************************************************************
+       * Method - hideFilterDropdown()
+       *
+       *    Hide Filter Dropdown Menu
+       *************************************************************/
+      hideFilterDropdown : function(e)
+      {
+         var dropdown = ($(e.target).is('.dropdown-menu')) ? $(e.target) : $(e.target).parents('.dropdown-menu');
+         var button = dropdown.siblings('.btn');
+         button.removeClass('active');
+         dropdown.hide();
+      },
+
+      /*************************************************************
+       * Method - stopDropdownTimeout()
+       *
+       *    Stop Dropdown Timeout
+       *************************************************************/
+      stopDropdownTimeout : function()
+      {
+         clearTimeout(WOA.static.hide_dropdown_timeout);
+         delete WOA.static.hide_dropdown_timeout;
+      },
+
+      /*************************************************************
+       * Method - startDropdownTimeout()
+       *
+       *    Start Dropdown Timeout
+       *************************************************************/
+      startDropdownTimeout : function()
+      {
+         var t = function() { $('.btn').removeClass('active'); $('.dropdown-menu').hide(); }
+         WOA.static.hide_dropdown_timeout = setTimeout(t, 500);
       }
    },
    controller :
@@ -172,7 +213,11 @@ WOA.utilities.Pagination =
          $(document).on('click', 'div.pagination .next', WOA.utilities.Pagination.view.showNextPage);
          $(document).on('click', 'div.pagination .prev', WOA.utilities.Pagination.view.showPrevPage);
          $(document).on('keyup', 'div.dynamic-content input[name=search]', WOA.utilities.Pagination.view.executeSearch);
-         $(document).on('click', 'div.dynamic-content div.filter-by div.btn.toggle-options', WOA.utilities.Pagination.view.toggleFilterDisplay);
+         $(document).on('mouseover', 'div.dynamic-content div.filter-by div.btn.toggle-options', WOA.utilities.Pagination.view.showFilterDropdown);
+         $(document).on('mouseleave', 'div.dynamic-content div.filter-by div.btn.toggle-options', WOA.utilities.Pagination.view.startDropdownTimeout);
+         $(document).on('mouseenter', 'div.dynamic-content div.filter-by div.dropdown-menu', WOA.utilities.Pagination.view.stopDropdownTimeout);
+         $(document).on('mouseleave', 'div.dynamic-content div.filter-by div.dropdown-menu', WOA.utilities.Pagination.view.hideFilterDropdown);
+         $(document).on('click', 'div.dynamic-content div.filter-by div.dropdown-menu div.li', WOA.utilities.Pagination.view.executeFilter)
       }
    }
 };

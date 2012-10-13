@@ -98,6 +98,24 @@ WOA.pages.Projects =
 
          // Render List Template
          Handlebars.renderTemplate('template-list', data, 'div.dynamic-content');
+      },
+
+      /*************************************************************
+       * Method - displaySingleProject(e)
+       *
+       *    Render Single Project View
+       *************************************************************/
+      displaySingleProject : function(e)
+      {
+         var item = ($(e.target).is('.item')) ? $(e.target) : $(e.target).parents('.item');
+         var id = item.attr('data-id');
+
+         var project = WOA.static.list_cache.items[WOA.static.list_cache.item_index[id]];
+
+         console.log(project);
+
+//         Handlebars.renderTemplate('template-single-post', project, 'div.dynamic-content', 'append');
+//         $('div.dynamic-content').animate({ left : '-612px' }, 300);
       }
    },
    controller :
@@ -109,6 +127,8 @@ WOA.pages.Projects =
       {
          /** Handlers **/
 
+         // View Single Project
+         $(document).on('click', 'div.dynamic-content div.list-container.projects div.item', WOA.pages.Projects.view.displaySingleProject);
       }
    }
 };
