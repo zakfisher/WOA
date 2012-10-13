@@ -91,7 +91,8 @@ WOA.utilities.Pagination =
                   float : WOA.static.list_cache.pagination.float,
                   items_per_page : WOA.static.list_cache.pagination.items_per_page
                },
-               items : []
+               items : [],
+               type : WOA.static.list_cache.type
             };
 
             $(WOA.static.list_cache.items).each(function(i, v) {
@@ -130,7 +131,10 @@ WOA.utilities.Pagination =
          // Default back to cached results
          else
          {
-            Handlebars.renderTemplate('template-list', WOA.static.list_cache, 'div.dynamic-content');
+            var template = 'template-list';
+            template = (WOA.static.list_cache.type == 'contacts') ? 'template-contacts-list' : template;
+
+            Handlebars.renderTemplate(template, WOA.static.list_cache, 'div.dynamic-content');
             $('div.dynamic-content input[name=search]').focus();
          }
       },
