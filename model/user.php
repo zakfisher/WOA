@@ -50,6 +50,7 @@ class User_Model extends WOA {
       $_SESSION['user']['username']   = ($obj == null) ? $user['username']   : $user->username;
       $_SESSION['user']['first_name'] = ($obj == null) ? $user['first_name'] : $user->first_name;
       $_SESSION['user']['last_name']  = ($obj == null) ? $user['last_name']  : $user->last_name;
+      $_SESSION['user']['email']      = ($obj == null) ? $user['email']      : $user->email;
       $_SESSION['user']['access']     = ($obj == null) ? $user['access']     : $user->access;
    }
 }

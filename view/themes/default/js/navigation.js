@@ -289,7 +289,7 @@ WOA.navigation =
          WOA.navigation.view.hashBangRedirect();
 
          // Init Sub Page
-         if (WOA.static.page != 'home') { setTimeout(WOA.navigation.view.initSubPage, 1000); }
+         if (WOA.static.page != 'home') { setTimeout(WOA.navigation.view.initSubPage, 2000); }
 
          // Redirect by #! (back/forward buttons)
          $(window).bind('hashchange', WOA.navigation.view.hashBangRedirect);
