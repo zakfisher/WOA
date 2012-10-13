@@ -36,7 +36,7 @@
                                     <div class="clr"></div>
                                  </div>
                               </div>
-                              <div class="item">
+                              <div class="item last">
                                  <div class="inner">
                                     <div class="item-content left">
                                        <div class="title">

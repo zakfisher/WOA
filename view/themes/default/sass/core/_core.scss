@@ -485,6 +485,7 @@ html { background: black; }
                                  cursor: pointer;
                                  background-color: white;
                                  &:not(:last-child) { border-bottom: 1px dashed #e0e0e0; }
+                                 &.last { border-bottom: none; }
 
                                  &:hover {
                                     background-color: #f2f2f2;
