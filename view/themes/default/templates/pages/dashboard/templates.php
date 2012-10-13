@@ -21,6 +21,40 @@
             </div>
          </script>
 
+         <!-- Contacts List View -->
+         <script id="template-contacts-list" type="text/x-handlebars-template">
+            <div class="main-view">
+               <div class="sub-page-actions">
+                  <div class="inner">
+                     <div class="btn btn-inverse left add-contact mr10">New Contact <i class="icon-white icon-plus"></i></div>
+                     {{renderSearchField}}
+                     <div class="filter-by right">
+                        <div class="btn toggle-options">
+                           <p class="left">Filter By</p>
+                           <div class="caret"></div>
+                        </div>
+                        <div class="dropdown-menu">
+                           <div class="list">
+                              <div class="li" data-filter="all">
+                                 <p>All</p>
+                              </div>
+                              {{renderContactTypes items}}
+                              <div class="clr"></div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="clr"></div>
+                  </div>
+                  <div class="shadow"></div>
+               </div>
+               <div class="list-container {{type}} clr">
+                  {{renderListItems items pagination.items_per_page}}
+                  <div class="shadow down"></div>
+                  {{renderPaginationTemplate pagination.item_count pagination.items_per_page pagination.extra_class}}
+               </div>
+            </div>
+         </script>
+
          <!-- Pagination View -->
          <script id="template-pagination" type="text/x-handlebars-template">
             <div class="pagination{{#if extra_class}} {{extra_class}}{{/if}}">

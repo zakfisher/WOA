@@ -128,10 +128,33 @@ WOA.utilities.Pagination =
          }
 
          // Default back to cached results
-         else {
+         else
+         {
             Handlebars.renderTemplate('template-list', WOA.static.list_cache, 'div.dynamic-content');
             $('div.dynamic-content input[name=search]').focus();
          }
+      },
+
+      /*************************************************************
+       * Method - toggleFilterDisplay(e)
+       *
+       *    Show/Hide Filter By dropdown
+       *************************************************************/
+      toggleFilterDisplay : function(e)
+      {
+         var button = ($(e.target).is('.btn')) ? $(e.target) : $(e.target).parents('.btn');
+         var dropdown = button.siblings('.dropdown-menu');
+         if (button.hasClass('active'))
+         {
+            button.removeClass('active');
+            dropdown.hide();
+         }
+         else
+         {
+            button.addClass('active');
+            dropdown.show();
+         }
+
       }
    },
    controller :
@@ -145,6 +168,7 @@ WOA.utilities.Pagination =
          $(document).on('click', 'div.pagination .next', WOA.utilities.Pagination.view.showNextPage);
          $(document).on('click', 'div.pagination .prev', WOA.utilities.Pagination.view.showPrevPage);
          $(document).on('keyup', 'div.dynamic-content input[name=search]', WOA.utilities.Pagination.view.executeSearch);
+         $(document).on('click', 'div.dynamic-content div.filter-by div.btn.toggle-options', WOA.utilities.Pagination.view.toggleFilterDisplay);
       }
    }
 };

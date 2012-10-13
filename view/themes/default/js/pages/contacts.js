@@ -123,7 +123,7 @@ WOA.pages.Contacts =
             WOA.static.list_cache = data;
 
             // Render List Template
-            Handlebars.renderTemplate('template-list', data, 'div.dynamic-content');
+            Handlebars.renderTemplate('template-contacts-list', data, 'div.dynamic-content');
 
          });
       }

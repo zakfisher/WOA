@@ -335,6 +335,8 @@ html { background: black; }
 
                         div {
 
+                           &.mr10 { margin-right: 10px; }
+
                            &.page-loading {
                               background: url('../img/global/page-loading.gif') center top no-repeat;
                               height: 32px;
@@ -386,6 +388,8 @@ html { background: black; }
 
                                  div {
 
+                                    &.btn { margin-bottom: 0; }
+
                                     &.search {
 
                                        input {
@@ -405,6 +409,58 @@ html { background: black; }
                                           left: -24px;
                                           top: 1px;
                                           @include opacity(.5);
+                                       }
+
+                                    }
+
+                                    &.filter-by {
+
+                                       div.btn {
+
+                                          p {
+                                             cursor: pointer;
+                                             margin: 0;
+                                          }
+
+                                          div.caret {
+                                             cursor: pointer;
+                                             @include caret('down', black);
+                                             top: 0px;
+                                             left: 4px;
+                                          }
+
+                                       }
+
+                                       div.dropdown-menu {
+                                          display: none;
+                                          background-color: white;
+                                          border: 1px solid $gray;
+                                          padding: 10px;
+                                          @include box-shadow(0px 1px 3px 0 #ccc);
+                                          @include border-radius(8px);
+                                          position: absolute;
+                                          z-index: 10;
+                                          right: 5px;
+                                          margin-top: 5px;
+
+                                          div.list {
+                                             width: 150px;
+
+                                             div.li {
+                                                cursor: pointer;
+                                                padding: 5px;
+
+                                                &:hover {
+                                                   background-color: #eee;
+                                                }
+
+                                                p {
+                                                   cursor: pointer;
+                                                   margin: 0;
+                                                }
+                                             }
+
+                                          }
                                        }
 
                                     }
@@ -428,12 +484,10 @@ html { background: black; }
                               div.item {
                                  cursor: pointer;
                                  background-color: white;
-                                 border: 1px solid white;
-                                 border-bottom: 1px dashed #e0e0e0;
+                                 &:not(:last-child) { border-bottom: 1px dashed #e0e0e0; }
 
                                  &:hover {
                                     background-color: #f2f2f2;
-                                    border: 1px solid $gray;
                                  }
 
                                  div.inner {

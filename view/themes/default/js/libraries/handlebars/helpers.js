@@ -33,6 +33,18 @@ Handlebars.registerHelper('renderSearchField', function(data) {
    return new Handlebars.SafeString(template(data));
 });
 
+Handlebars.registerHelper('renderContactTypes', function(data) {
+   var items = '';
+   var types = [];
+   $(data).each(function(i, v) {
+      if ($.inArray(v.type, types) == -1) {
+         types.push(v.type);
+         items += '<div class="li" data-filter="' + v.type + '"><p>' + ((v.type.substr(0, 1).toUpperCase()) + v.type.substr(1).toLowerCase()) + '</p></div>';
+      }
+   });
+   return new Handlebars.SafeString(items);
+});
+
 Handlebars.registerHelper('renderCurrentUser', function() {
    return new Handlebars.SafeString(WOA.static.user.username);
 });
