@@ -98,6 +98,7 @@ WOA.user =
          WOA.static.user.username   = data.user.username;
          WOA.static.user.first_name = data.user.first_name;
          WOA.static.user.last_name  = data.user.last_name;
+         WOA.static.user.email      = data.user.email;
          WOA.static.sub_page        = data.sub_page;
 
          // Store value in cookie (for refreshing session)
@@ -278,6 +279,7 @@ WOA.user =
          $(document).on('click', '#login-form div.btn.login', WOA.user.view.submitUserInput);
          $(document).on('keydown', '#login-form input:focus', function(e) { $('#login-form p.error').text(''); if (e.keyCode == 13) { WOA.user.view.submitUserInput(); } });
 
+         // Set Automatic Logout
          $(document).on('mousemove', 'body', WOA.user.view.setAutoLogout);
 
          // Log Out

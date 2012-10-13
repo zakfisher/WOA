@@ -5,6 +5,14 @@ session_start();
 
 // url: /page/subpage/param1
 $test = (isset($_SESSION['dashboard'])) ? $_SESSION['dashboard'][1] : 'testing....';
+$items = array(
+   'username'   => array('Username',         $_SESSION['user']['username'],   'left'),
+   'email'      => array('Email',            $_SESSION['user']['email'],      'right'),
+   'first_name' => array('First Name',       $_SESSION['user']['first_name'], 'left'),
+   'last_name'  => array('Last Name',        $_SESSION['user']['last_name'],  'right'),
+   'password'   => array('Password',         'password',                      'left'),
+   'confirm_pw' => array('Confirm Password', 'password',                      'right')
+);
 ?>
             <div class="inner-container">
                <div class="header">
@@ -15,37 +23,20 @@ $test = (isset($_SESSION['dashboard'])) ? $_SESSION['dashboard'][1] : 'testing..
                      <div class="dynamic-content">
                         <div class="main-view">
                            <div class="form">
-                              <div class="input left">
-                                 <p>Username</p>
-                                 <input type="text" name="username" value="<?= $_SESSION['user']['username']; ?>" />
+                              <?php foreach ($items as $key => $item): ?>
+                              <div class="input <?= $item[2]; ?>">
+                                 <p><?= $item[0]; ?></p>
+                                 <input type="<?= ($item[1] == 'password') ? 'password' : 'text'; ?>" name="<?= $key; ?>" value="<?= ($item[1] == 'password') ? '' : $item[1]; ?>" />
                               </div>
-                              <div class="input right">
-                                 <p>Email</p>
-                                 <input type="text" name="email" value="<?= $_SESSION['user']['email']; ?>" />
-                              </div>
+                              <?php if ($item[2] == 'right'): ?>
                               <div class="clr"></div>
-                              <div class="input left">
-                                 <p>First Name</p>
-                                 <input type="text" name="first_name" value="<?= $_SESSION['user']['first_name']; ?>" />
-                              </div>
-                              <div class="input right">
-                                 <p>Last Name</p>
-                                 <input type="text" name="last_name" value="<?= $_SESSION['user']['last_name']; ?>" />
-                              </div>
-                              <div class="clr"></div>
-                              <div class="input left">
-                                 <p>Password</p>
-                                 <input type="password" name="password" />
-                              </div>
-                              <div class="input right">
-                                 <p>Confirm Password</p>
-                                 <input type="password" name="confirm_pw" />
-                              </div>
-                              <div class="clr"></div>
+                              <?php endif; ?>
+                              <?php endforeach; ?>
                            </div>
                            <!-- end .form -->
-                           <div class="submit-form right">
-                              <div class="btn btn-inverse save-changes">Save Changes</div>
+                           <div class="submit-form">
+                              <p class="error left"></p>
+                              <div class="btn btn-inverse change-settings right">Save Changes</div>
                            </div>
                            <!-- end .submit-form -->
                         </div>

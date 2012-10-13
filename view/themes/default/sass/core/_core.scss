@@ -594,7 +594,17 @@ html { background: black; }
 
                            }
 
-                           &.submit-form { padding-top: 10px; }
+                           &.submit-form {
+                              padding-top: 10px;
+                              width: 100%;
+
+                              p {
+                                 font-size: 14px;
+
+                                 &.error { color: red; }
+                                 &.success { color: green; }
+                              }
+                           }
 
                         }
                      }

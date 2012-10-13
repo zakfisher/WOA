@@ -31,6 +31,20 @@ class User extends WOA {
       else return $login_status;
    }
 
+   function update_user_info()
+   {
+      if ($this->login_check('return') == 'true')
+      {
+         if ($_POST)
+         {
+            $user_model = new User_Model();
+            $user_model->update_user($_POST);
+         }
+      }
+
+      else JSON::print_json(array('error' => 'You are not logged in.'));
+   }
+
    function log_out()
    {
       $_SESSION['logged_in'] = false;
