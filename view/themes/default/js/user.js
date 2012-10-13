@@ -51,7 +51,7 @@ WOA.user =
             $('a.username').fadeOut('normal');
          };
 
-         setTimeout(resetNav, 3000);
+         setTimeout(resetNav, 1000);
 
          // Redirect to home page
          $('#logo div.sprite').click();
