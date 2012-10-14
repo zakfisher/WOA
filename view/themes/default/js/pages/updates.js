@@ -25,7 +25,6 @@ WOA.pages.Updates =
        *************************************************************/
       getAllUpdates : function()
       {
-         alert('all');
          $.get(WOA.static.env + 'test/test/abc', function(data) { WOA.pages.Updates.view.showPage(data); });
       },
 
@@ -36,7 +35,6 @@ WOA.pages.Updates =
        *************************************************************/
       getProjectUpdates : function()
       {
-         alert('project');
          $.get(WOA.static.env + 'test/test/abc', function(data) { WOA.pages.Updates.view.showPage(data); });
       }
    },

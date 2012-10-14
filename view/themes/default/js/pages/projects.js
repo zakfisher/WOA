@@ -238,7 +238,7 @@ WOA.pages.Projects =
          $('div.btn.back-to-dashboard').attr('data-sub-page', 'projects');
 
          // Default to Overview
-         WOA.pages.Projects.view.displaySingleProjectSubPage('overview');
+         WOA.pages.Projects.view.displaySingleProjectSubPage(null, 'overview');
       },
 
       /*************************************************************
@@ -246,13 +246,23 @@ WOA.pages.Projects =
        *
        *    Display Single Project Sub Page
        *************************************************************/
-      displaySingleProjectSubPage : function(page)
+      displaySingleProjectSubPage : function(e, page)
       {
-         WOA.static.sub_page = page;
-         $('li[data-sub-page=overview]').addClass('active');
+         // Direct Page Request
+         WOA.static.sub_page = (e == null && typeof page != 'undefined') ? page : WOA.static.sub_page;
+
+         // User Click Page Request
+         if (e != null && typeof page == 'undefined') { WOA.static.sub_page = ($(e.target).is('li')) ? $(e.target).attr('data-sub-page') : $(e.target).parents('li').attr('data-sub-page'); }
+
+         // Display Page
+         $('div.content.left ul.sub-nav li.active').removeClass('active');
+         $('li[data-sub-page=' + WOA.static.sub_page + ']').addClass('active');
          var data = WOA.static.project[WOA.static.sub_page];
-         data.sub_text = WOA.static.current_project.project;
+         data.project = WOA.static.current_project.project;
          Handlebars.renderTemplate('template-project-wrapper', data, 'div.content.right div.header');
+
+         // Init Sub Page
+         WOA.navigation.view.initSubPage();
       }
    },
    controller :
@@ -265,17 +275,17 @@ WOA.pages.Projects =
          WOA.static.project = {
             overview : {
                shadow_down : true,
-               title : 'Overview'
+               title : 'Project Overview'
             },
             updates : {
                shadow_down : true,
-               title : 'Updates'
+               title : 'Project Updates'
             },
             biz_plan : {
                shadow_down : true,
                title : 'Business Plan'
             },
-            contacts : {
+            contracts : {
                shadow_down : true,
                title : 'Contracts'
             },
@@ -288,6 +298,9 @@ WOA.pages.Projects =
 
          // View Single Project
          $(document).on('click', 'div.dynamic-content div.list-container.projects div.item', WOA.pages.Projects.view.displaySingleProject);
+
+         // View Sub Page
+         $(document).on('click', 'ul.sub-nav.sub-page li', WOA.pages.Projects.view.displaySingleProjectSubPage);
       }
    }
 };

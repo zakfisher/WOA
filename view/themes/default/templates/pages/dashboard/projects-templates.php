@@ -10,7 +10,7 @@
          <!-- Single Project Wrapper -->
          <script id="template-project-wrapper" type="text/x-handlebars-template">
             <h1>{{title}}</h1>
-            <h2>{{sub_text}}</h2>
+            <h2><b>{{project}}</b></h2>
             <div class="shadow{{#if shadow_down}} down{{/if}}"></div>
             <div class="dynamic-shell">
                <div class="dynamic-content">

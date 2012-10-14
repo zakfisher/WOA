@@ -153,22 +153,26 @@ WOA.navigation =
        *************************************************************/
       requestSubPage : function(e)
       {
-         $('div.content.left ul.sub-nav li.active').removeClass('active');
-         $(e.target).addClass('active');
+         // Only do this for parent pages (dashboard, music, etc.)
+         // Ignore sub pages (single project, etc.)
+         if ($('span.sub-page-nav').hasClass('hidden')) {
+            $('div.content.left ul.sub-nav li.active').removeClass('active');
+            $(e.target).addClass('active');
 
-         if (WOA.static.sub_page != $(e.target).attr('data-sub-page'))
-         {
-            // Update Nav Links
-            WOA.static.sub_page = $(e.target).attr('data-sub-page');
+            if (WOA.static.sub_page != $(e.target).attr('data-sub-page'))
+            {
+               // Update Nav Links
+               WOA.static.sub_page = $(e.target).attr('data-sub-page');
 
-            // Render Container View
-            Handlebars.renderTemplate('template-sub-page-wrapper', WOA.static[WOA.static.page][WOA.static.sub_page], 'div.content.right');
+               // Render Container View
+               Handlebars.renderTemplate('template-sub-page-wrapper', WOA.static[WOA.static.page][WOA.static.sub_page], 'div.content.right');
 
-            // Update Session
-            WOA.navigation.model.updateSession();
+               // Update Session
+               WOA.navigation.model.updateSession();
+            }
+
+            if ($('div.page-loading').length > 0) { WOA.navigation.view.initSubPage(); }
          }
-
-         if ($('div.page-loading').length > 0) { WOA.navigation.view.initSubPage(); }
       },
 
       /*************************************************************
