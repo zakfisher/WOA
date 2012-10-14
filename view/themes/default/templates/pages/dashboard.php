@@ -1,9 +1,4 @@
-<?php
-session_start();
-
-// Page Vars
-$_SESSION['sub_page'] = (isset($_SESSION['dashboard'])) ? $_SESSION['dashboard'][0] : $_SESSION['sub_page'];
-?>
+<?php session_start(); ?>
          <div class="content left">
             <div class="inner-container">
                <div class="logo">
@@ -17,7 +12,7 @@ $_SESSION['sub_page'] = (isset($_SESSION['dashboard'])) ? $_SESSION['dashboard']
                      <li data-sub-page="projects"<?= ($_SESSION['sub_page'] == 'projects') ? ' class="active"' : ''; ?>>Projects</li>
                      <li data-sub-page="settings"<?= ($_SESSION['sub_page'] == 'settings') ? ' class="active"' : ''; ?>>Settings</li>
                      <li data-sub-page="contacts"<?= ($_SESSION['sub_page'] == 'contacts') ? ' class="active"' : ''; ?>>Contacts</li>
-                     <li data-sub-page="site-emails"<?= ($_SESSION['sub_page'] == 'site-emails') ? ' class="active"' : ''; ?>>Site Emails</li>
+                     <li data-sub-page="site_emails"<?= ($_SESSION['sub_page'] == 'site-emails') ? ' class="active"' : ''; ?>>Site Emails</li>
                      <li data-sub-page="admin"<?= ($_SESSION['sub_page'] == 'admin') ? ' class="active"' : ''; ?>>Admin</li>
 <?php endif; ?>
 <?php if ($_SESSION['user']['access'] != 'admin'): ?>
@@ -33,7 +28,7 @@ $_SESSION['sub_page'] = (isset($_SESSION['dashboard'])) ? $_SESSION['dashboard']
          </div>
          <!-- end .content.left -->
          <div class="content right">
-<?php if ($_SESSION['page'] == 'dashboard') require_once('dashboard/' . $_SESSION['sub_page'] . '.php'); ?>
+            <div class="content-loading"></div>
          </div>
          <!-- end .content.right -->
          <div class="clr"></div>

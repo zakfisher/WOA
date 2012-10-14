@@ -297,6 +297,13 @@ html { background: black; }
                margin-right: 4px;
                width: 692px;
 
+               div.content-loading {
+                  background: url('../img/global/content-loading.gif') center top no-repeat;
+                  height: 128px;
+                  width: 128px;
+                  margin: 80px auto;
+               }
+
                div.inner-container {
                   width: 612px;
 

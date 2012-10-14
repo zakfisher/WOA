@@ -26,7 +26,7 @@ class User_Model extends WOA {
 
          // Set session vars
          $this->set_user_session($user);
-         JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user'], 'sub_page' => 'updates'));
+         JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user']));
       }
 
       // Match NOT Found
@@ -40,13 +40,12 @@ class User_Model extends WOA {
    function restore_user_session($user, $obj = null)
    {
       $this->set_user_session($user, $obj);
-      if ($obj == null) JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user'], 'sub_page' => $_SESSION['sub_page']));
+      if ($obj == null) JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user']));
    }
 
    private function set_user_session($user, $obj = null)
    {
       $_SESSION['logged_in'] = true;
-      $_SESSION['sub_page']           = ($obj == null) ? $user['sub_page']   : $user->sub_page;
       $_SESSION['user']['user_id']    = ($obj == null) ? $user['user_id']    : $user->user_id;
       $_SESSION['user']['username']   = ($obj == null) ? $user['username']   : $user->username;
       $_SESSION['user']['first_name'] = ($obj == null) ? $user['first_name'] : $user->first_name;

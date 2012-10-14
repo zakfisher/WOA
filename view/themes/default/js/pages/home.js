@@ -15,7 +15,9 @@
 WOA.pages.Home =
 {
    model : {},
-   view : {},
+   view : {
+      loadPage : function() {}
+   },
    controller :
    {
       /*************************************************************

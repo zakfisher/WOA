@@ -99,12 +99,9 @@ WOA.user =
          WOA.static.user.first_name = data.user.first_name;
          WOA.static.user.last_name  = data.user.last_name;
          WOA.static.user.email      = data.user.email;
-         WOA.static.sub_page        = data.sub_page;
 
          // Store value in cookie (for refreshing session)
          var cookie = data.user;
-         cookie.page = data.page;
-         cookie.sub_page = data.sub_page;
 
          // Set User Cookie
          var now = new Date();

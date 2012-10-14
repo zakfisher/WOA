@@ -80,8 +80,6 @@ WOA.utilities.Pagination =
        *************************************************************/
       executeSearch : function(e, customSearch)
       {
-         console.log(customSearch);
-
          var searchValue = (typeof customSearch == 'undefined') ? $(e.target).val() : customSearch;
          if (typeof customSearch != 'undefined' && customSearch == 'all') { searchValue = ''; }
 
