@@ -33,6 +33,4 @@
          <!-- end .content.right -->
          <div class="clr"></div>
 <?php require_once('dashboard/templates.php'); ?>
-<?php
-if ($_SESSION['user']['access'] == 'admin') require_once('dashboard/admin-templates.php');
-?>
+<?php if ($_SESSION['user']['access'] == 'admin') require_once('dashboard/admin-templates.php'); ?>

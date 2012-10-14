@@ -115,8 +115,7 @@ WOA.navigation =
             $('#main-content, div.container').fadeTo(300, 0);
          }
 
-         // Page triggered from server (already on page)
-         else { setTimeout(WOA.navigation.view.initPage, 300); }
+         if ($('div.content-loading').length > 0) { setTimeout(WOA.navigation.view.initPage, 300); }
       },
 
       /*************************************************************

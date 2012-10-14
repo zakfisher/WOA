@@ -64,6 +64,7 @@ WOA.pages.Dashboard =
                sub_text : 'Find and manage your projects.'
             },
             settings : {
+               shadow_down : true,
                title : 'Settings',
                sub_text : 'Update your account information.'
             },

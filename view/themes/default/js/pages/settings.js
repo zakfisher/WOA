@@ -17,6 +17,16 @@ WOA.pages.Settings =
 {
    model : {
       /*************************************************************
+       * Method - loadForm(data)
+       *
+       *    Load form onto page
+       *************************************************************/
+      loadForm : function()
+      {
+         $('div.dynamic-content').load('view/themes/' + WOA.static.theme + '/templates/pages/dashboard/settings.php');
+      },
+
+      /*************************************************************
        * Method - submitChanges(data)
        *
        *    POST user data
@@ -32,7 +42,9 @@ WOA.pages.Settings =
        *
        *    Init Page Logic
        *************************************************************/
-      loadPage : function() {},
+      loadPage : function() {
+         WOA.pages.Settings.model.loadForm();
+      },
 
       /*************************************************************
        * Method - validateForm(e)
