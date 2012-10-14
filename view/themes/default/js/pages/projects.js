@@ -35,7 +35,19 @@ WOA.pages.Projects =
        *************************************************************/
       loadPage : function()
       {
+         // Dashboard (list)
          WOA.pages.Projects.model.getProjects();
+      },
+
+      /*************************************************************
+       * Method - loadSubPage()
+       *
+       *    Load Sub Page (default = overview)
+       *************************************************************/
+      loadSubPage : function()
+      {
+         if ($.inArray(WOA.static.sub_page, WOA.static.user_pages['projects']) == -1) { WOA.static.sub_page = 'overview'; }
+         $('div.content.right').load('view/themes/default/templates/pages/' + WOA.static.page + '/' + WOA.static.sub_page + '.php');
       },
 
       /*************************************************************
@@ -103,19 +115,18 @@ WOA.pages.Projects =
       /*************************************************************
        * Method - displaySingleProject(e)
        *
-       *    Render Single Project View
+       *    Redirect to Single Project View
        *************************************************************/
       displaySingleProject : function(e)
       {
          var item = ($(e.target).is('.item')) ? $(e.target) : $(e.target).parents('.item');
          var id = item.attr('data-id');
-
          var project = WOA.static.list_cache.items[WOA.static.list_cache.item_index[id]];
 
          console.log(project);
 
-//         Handlebars.renderTemplate('template-single-post', project, 'div.dynamic-content', 'append');
-//         $('div.dynamic-content').animate({ left : '-612px' }, 300);
+         // Cache Project
+         WOA.static.current_project = project;
       }
    },
    controller :

@@ -3,6 +3,7 @@ session_start();
 
 // Page Vars
 $_SESSION['sub_page'] = (isset($_SESSION['projects'])) ? $_SESSION['projects'][0] : $_SESSION['sub_page'];
+if (! file_exists('projects/' . $_SESSION['sub_page'] . '.php')) $_SESSION['sub_page'] = 'overview';
 ?>
          <div class="content left">
             <div class="inner-container">
@@ -31,6 +32,9 @@ $_SESSION['sub_page'] = (isset($_SESSION['projects'])) ? $_SESSION['projects'][0
             <!-- end .inner-container -->
          </div>
          <!-- end .content.left -->
+            <pre>
+               <?php print_r($_SESSION); ?>
+            </pre>
          <div class="content right">
 <?php if ($_SESSION['page'] == 'projects') require_once('projects/' . $_SESSION['sub_page'] . '.php'); ?>
          </div>

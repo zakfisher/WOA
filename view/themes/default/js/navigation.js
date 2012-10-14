@@ -85,6 +85,7 @@ WOA.navigation =
 
             // Check for sub-page
             var subPage = (WOA.static.sub_page != null && $.inArray(WOA.static.sub_page, WOA.static.user_pages[WOA.static.page]) != -1) ? '+' + WOA.static.sub_page : '';
+
             location.hash = '!/' + WOA.static.page + subPage;
 
             // Scroll to top
@@ -158,6 +159,7 @@ WOA.navigation =
                   else { $('#logo div.sprite').click(); }
                }).error(function() { $('#logo div.sprite').click(); });
             }
+
             // Non-user pages
             else if ($.inArray(WOA.static.sub_page, WOA.static.public_pages[WOA.static.page]) != -1)
             {
@@ -269,7 +271,6 @@ WOA.navigation =
          WOA.static.public_pages.contact = [];
          WOA.static.user_pages = {};
          WOA.static.user_pages.dashboard = ['updates', 'projects', 'contacts', 'site-emails', 'settings', 'admin'];
-         WOA.static.user_pages.projects = ['overview', 'updates', 'biz-plan', 'contracts', 'partners'];
 
          /** Handlers **/
 

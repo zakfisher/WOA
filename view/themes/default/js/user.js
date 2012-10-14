@@ -103,6 +103,7 @@ WOA.user =
 
          // Store value in cookie (for refreshing session)
          var cookie = data.user;
+         cookie.page = data.page;
          cookie.sub_page = data.sub_page;
 
          // Set User Cookie
