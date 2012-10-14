@@ -99,6 +99,7 @@ WOA.pages.Dashboard =
                sub_text : 'Find and manage company contacts.'
             },
             site_emails : {
+               shadow_down : true,
                title : 'Site Emails',
                sub_text : 'Review emails sent to WOA from website visitors.'
             },
