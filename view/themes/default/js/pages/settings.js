@@ -17,16 +17,6 @@ WOA.pages.Settings =
 {
    model : {
       /*************************************************************
-       * Method - loadForm(data)
-       *
-       *    Load form onto page
-       *************************************************************/
-      loadForm : function()
-      {
-         $('div.dynamic-content').load('view/themes/' + WOA.static.theme + '/templates/pages/dashboard/settings.php');
-      },
-
-      /*************************************************************
        * Method - submitChanges(data)
        *
        *    POST user data
@@ -43,7 +33,46 @@ WOA.pages.Settings =
        *    Init Page Logic
        *************************************************************/
       loadPage : function() {
-         WOA.pages.Settings.model.loadForm();
+         var data = {
+            fields : [
+               {
+                  title : 'Username',
+                  name  : 'username',
+                  value : WOA.static.user.username
+               },
+               {
+                  right : true,
+                  title : 'Email',
+                  name  : 'email',
+                  value : WOA.static.user.email
+               },
+               {
+                  title : 'First Name',
+                  name  : 'first_name',
+                  value : WOA.static.user.first_name
+               },
+               {
+                  right : true,
+                  title : 'Last Name',
+                  name  : 'last_name',
+                  value : WOA.static.user.last_name
+               },
+               {
+                  password: true,
+                  title : 'Password',
+                  name  : 'password'
+               },
+               {
+                  password: true,
+                  right : true,
+                  title : 'Confirm Password',
+                  name  : 'confirm_pw'
+               }
+            ]
+         };
+
+         // Render List Template
+         Handlebars.renderTemplate('template-settings-fields', data, 'div.dynamic-content');
       },
 
       /*************************************************************

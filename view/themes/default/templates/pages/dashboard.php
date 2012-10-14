@@ -32,5 +32,10 @@
          </div>
          <!-- end .content.right -->
          <div class="clr"></div>
-<?php require_once('dashboard/templates.php'); ?>
-<?php if ($_SESSION['user']['access'] == 'admin') require_once('dashboard/admin-templates.php'); ?>
+<?php
+$templates = array('wrapper', 'list', 'updates', 'projects', 'settings');
+$admin_templates = array('admin', 'contacts');
+foreach ($templates as $template) require_once('dashboard/' . $template . '-templates.php');
+if ($_SESSION['user']['access'] == 'admin')
+   foreach ($admin_templates as $template) require_once('dashboard/' . $template . '-templates.php');
+?>

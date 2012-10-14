@@ -49,6 +49,7 @@ WOA.pages.Updates =
       {
          // Load latest posts
          var data = {
+            posts : true,
             type : 'updates',
             items : [
                {

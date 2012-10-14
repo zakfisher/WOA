@@ -127,6 +127,11 @@ WOA.pages.Projects =
 
          // Cache Project
          WOA.static.current_project = project;
+
+         // Display Project Side Nav
+
+
+         // Default to Overview
       }
    },
    controller :
