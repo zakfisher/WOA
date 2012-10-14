@@ -21,4 +21,5 @@ $.getScript('view/themes/default/js/pages/updates.js');
 $.getScript('view/themes/default/js/pages/projects.js');
 $.getScript('view/themes/default/js/pages/settings.js');
 $.getScript('view/themes/default/js/pages/contacts.js');
+$.getScript('view/themes/default/js/pages/site-emails.js');
 $.getScript('view/themes/default/js/pages/admin.js');

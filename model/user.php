@@ -60,7 +60,6 @@ class User_Model extends WOA {
       $text = new Text();
       foreach ($assoc_arr as $key => $value) $assoc_arr[$key] = $text->sanitize_string($value);
 
-      // Update into DB
       $db = new DB();
 
       // Check for existing username
@@ -85,6 +84,7 @@ class User_Model extends WOA {
          }
       }
 
+      // Update into DB
       $db->update_where('users', $assoc_arr, 'user_id', $_SESSION['user']['user_id']);
 
       // Update Session

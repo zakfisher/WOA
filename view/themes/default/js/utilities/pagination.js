@@ -133,8 +133,6 @@ WOA.utilities.Pagination =
          else
          {
             var template = 'template-list';
-            template = (WOA.static.list_cache.type == 'contacts') ? 'template-contacts-list' : template;
-
             Handlebars.renderTemplate(template, WOA.static.list_cache, 'div.dynamic-content');
             $('div.dynamic-content input[name=search]').focus();
          }
