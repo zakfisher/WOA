@@ -40,17 +40,6 @@ WOA.pages.Projects =
       },
 
       /*************************************************************
-       * Method - loadSubPage()
-       *
-       *    Load Sub Page (default = overview)
-       *************************************************************/
-      loadSubPage : function()
-      {
-         if ($.inArray(WOA.static.sub_page, WOA.static.user_pages['projects']) == -1) { WOA.static.sub_page = 'overview'; }
-         $('div.content.right').load('view/themes/default/templates/pages/' + WOA.static.page + '/' + WOA.static.sub_page + '.php');
-      },
-
-      /*************************************************************
        * Method - showPage(data)
        *
        *    Display Page
@@ -62,25 +51,139 @@ WOA.pages.Projects =
             type : 'projects',
             items : [
                {
+                  // Investor
                   template : 'projects-list-items',
                   id      : 44,
                   project : 'Crazy Shit Project',
                   last_updated    : '1.1.12',
-                  user_count : 5
+                  user_count : 5,
+                  sub_nav : [
+                     {
+                        sub_page : 'overview',
+                        title : 'Overview'
+                     },
+                     {
+                        sub_page : 'updates',
+                        title : 'Updates'
+                     },
+                     {
+                        sub_page : 'biz_plan',
+                        title : 'Business Plan'
+                     },
+                     {
+                        sub_page : 'contracts',
+                        title : 'Contracts'
+                     }
+                  ],
+                  contracts : [
+                     {
+                        template : 'contracts-nda',
+                        id : 22,
+                        title : 'This Guys NDA',
+                        extra : {}
+                     }
+                  ]
                },
                {
+                  // Admin
                   template : 'projects-list-items',
                   id      : 4,
                   project : 'haslslsls Project',
                   last_updated    : '11.18.12',
-                  user_count : 15
+                  user_count : 15,
+                  sub_nav : [
+                     {
+                        sub_page : 'overview',
+                        title : 'Overview'
+                     },
+                     {
+                        sub_page : 'updates',
+                        title : 'Updates'
+                     },
+                     {
+                        sub_page : 'biz_plan',
+                        title : 'Business Plan'
+                     },
+                     {
+                        sub_page : 'partners',
+                        title : 'Partners'
+                     }
+                  ],
+                  partners : [
+                     {
+                        template : 'contacts-list-items',
+                        id      : 3,
+                        first_name : 'Mr',
+                        last_name : 'Halal',
+                        type : 'Vendor',
+                        title : 'General Manager',
+                        company : 'Habibs Restaurant',
+                        contracts : [
+                           {
+                              template : 'contracts-nda',
+                              id : 22,
+                              title : 'This Guys NDA',
+                              extra : {}
+                           }
+                        ]
+                     },
+                     {
+                        template : 'contacts-list-items',
+                        id      : 4,
+                        first_name : 'Tooth',
+                        last_name : 'Fairy',
+                        type : 'Investor',
+                        title : 'Banker',
+                        company : 'Magic Co.',
+                        contracts : [
+                           {
+                              template : 'contracts-nda',
+                              id : 22,
+                              title : 'This Guys NDA',
+                              extra : {}
+                           }
+                        ]
+                     },
+                     {
+                        template : 'contacts-list-items',
+                        id      : 11,
+                        first_name : 'Mantots',
+                        last_name : 'Andgondi',
+                        type : 'Accountant',
+                        title : 'Business Banking Specialist',
+                        company : 'Wells Fargo',
+                        contracts : [
+                           {
+                              template : 'contracts-nda',
+                              id : 22,
+                              title : 'This Guys NDA',
+                              extra : {}
+                           }
+                        ]
+                     }
+                  ]
                },
                {
+                  // Other
                   template : 'projects-list-items',
                   id      : 224,
                   project : 'ABCC Project',
                   last_updated    : '10.12.10',
-                  user_count : 3
+                  user_count : 3,
+                  sub_nav : [
+                     {
+                        sub_page : 'overview',
+                        title : 'Overview'
+                     },
+                     {
+                        sub_page : 'updates',
+                        title : 'Updates'
+                     },
+                     {
+                        sub_page : 'contracts',
+                        title : 'Contracts'
+                     }
+                  ]
                },
                {
                   template : 'projects-list-items',
@@ -128,10 +231,28 @@ WOA.pages.Projects =
          // Cache Project
          WOA.static.current_project = project;
 
-         // Display Project Side Nav
-
+         // Display Project Sub Nav
+         $('div.content.left ul.sub-nav.default').addClass('hidden');
+         Handlebars.renderTemplate('template-project-sub-nav', project.sub_nav, 'div.content.left ul.sub-nav.sub-page');
+         $('span.sub-page-nav').removeClass('hidden');
+         $('div.btn.back-to-dashboard').attr('data-sub-page', 'projects');
 
          // Default to Overview
+         WOA.pages.Projects.view.displaySingleProjectSubPage('overview');
+      },
+
+      /*************************************************************
+       * Method - displaySingleProjectSubPage(page)
+       *
+       *    Display Single Project Sub Page
+       *************************************************************/
+      displaySingleProjectSubPage : function(page)
+      {
+         WOA.static.sub_page = page;
+         $('li[data-sub-page=overview]').addClass('active');
+         var data = WOA.static.project[WOA.static.sub_page];
+         data.sub_text = WOA.static.current_project.project;
+         Handlebars.renderTemplate('template-project-wrapper', data, 'div.content.right div.header');
       }
    },
    controller :
@@ -141,6 +262,28 @@ WOA.pages.Projects =
        *************************************************************/
       init : function()
       {
+         WOA.static.project = {
+            overview : {
+               shadow_down : true,
+               title : 'Overview'
+            },
+            updates : {
+               shadow_down : true,
+               title : 'Updates'
+            },
+            biz_plan : {
+               shadow_down : true,
+               title : 'Business Plan'
+            },
+            contacts : {
+               shadow_down : true,
+               title : 'Contracts'
+            },
+            partners : {
+               shadow_down : true,
+               title : 'Partners'
+            }
+         };
          /** Handlers **/
 
          // View Single Project

@@ -9,7 +9,7 @@
  *
  * Search Keys:
  * - Model
-     >> getUpdates
+     >> getAllUpdates
  * - View
      >> loadPage
      >> showPage
@@ -19,12 +19,24 @@ WOA.pages.Updates =
 {
    model : {
       /*************************************************************
-       * Method - getUpdates()
+       * Method - getAllUpdates()
        *
-       *    Fetch Updates Data
+       *    Fetch All Updates Data
        *************************************************************/
-      getUpdates : function()
+      getAllUpdates : function()
       {
+         alert('all');
+         $.get(WOA.static.env + 'test/test/abc', function(data) { WOA.pages.Updates.view.showPage(data); });
+      },
+
+      /*************************************************************
+       * Method - getProjectUpdates()
+       *
+       *    Fetch Project Updates Data
+       *************************************************************/
+      getProjectUpdates : function()
+      {
+         alert('project');
          $.get(WOA.static.env + 'test/test/abc', function(data) { WOA.pages.Updates.view.showPage(data); });
       }
    },
@@ -37,7 +49,11 @@ WOA.pages.Updates =
        *************************************************************/
       loadPage : function()
       {
-         WOA.pages.Updates.model.getUpdates();
+         // All Updates
+         if ($('span.sub-page-nav').hasClass('hidden')) { WOA.pages.Updates.model.getAllUpdates(); }
+
+         // Project Updates
+         else { WOA.pages.Updates.model.getProjectUpdates(); }
       },
 
       /*************************************************************

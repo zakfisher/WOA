@@ -43,6 +43,31 @@ WOA.pages.Dashboard =
             // Not Logged In
             else { $('#logo div.sprite').click(); }
          }).error(function() { $('#logo div.sprite').click(); });
+      },
+
+      /*************************************************************
+       * Method - backToDashboard(e)
+       *
+       *    Go back to dashboard
+       *************************************************************/
+      backToDashboard : function(e)
+      {
+         var button = ($(e.target).is('.btn')) ? $(e.target) : $(e.target).parents('.btn');
+         var subPage = button.attr('data-sub-page');
+         button.attr('data-sub-page', '');
+         WOA.static.sub_page = subPage;
+
+         // Display Dashboard Sub Nav
+         $('div.content.left ul.sub-nav.default').removeClass('hidden');
+         $('span.sub-page-nav').addClass('hidden');
+
+         // Display Previous Sub Page
+         $('ul.sub-nav.default li[data-sub-page=' + subPage + ']').addClass('active');
+         Handlebars.renderTemplate('template-sub-page-wrapper', WOA.static.dashboard[WOA.static.sub_page], 'div.content.right');
+
+         // Request Sub Page
+         $('div.content.left ul.sub-nav li[data-sub-page=' + WOA.static.sub_page + ']').click();
+
       }
    },
    controller :
@@ -83,8 +108,9 @@ WOA.pages.Dashboard =
                sub_text : 'Manage user accounts and more.'
             }
          };
-         /** Handlers **/
 
+         /** Handlers **/
+         $(document).on('click', 'div.btn.back-to-dashboard', WOA.pages.Dashboard.view.backToDashboard);
       }
    }
 };
