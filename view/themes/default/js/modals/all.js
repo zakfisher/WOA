@@ -27,8 +27,8 @@ WOA.modals =
       showModal : function(e)
       {
          WOA.modals.view.hideModal();
-         var id = $(e.target).attr('id').substr(5);
-         $('#' + id).show();
+         Handlebars.renderTemplate('template-modal-wrapper', WOA.static.modals[$(e.target).attr('data-modal')], 'body', 'append');
+         $('#' + WOA.static.modals[$(e.target).attr('data-modal')].template).show();
       },
 
       /*************************************************************
@@ -38,7 +38,7 @@ WOA.modals =
        *************************************************************/
       hideModal : function()
       {
-         $('div.modal').parent().hide();
+         $('div.modal-parent').remove();
       }
    },
    controller :
@@ -48,17 +48,20 @@ WOA.modals =
        *************************************************************/
       init : function()
       {
+         WOA.static.modals = {
+            forgot_password : {
+               template : 'forgot-password-modal'
+            }
+         };
+
          /** Handlers **/
 
          // Show Modal
          $(document).on('click', '.show-modal', WOA.modals.view.showModal);
 
          // Hide Modal
-         $(document).on('click', 'div.modal .close, div.modal-backdrop', WOA.modals.view.hideModal);
+         $(document).on('click', 'div.modal .close, div.modal-backdrop, div.modal .x', WOA.modals.view.hideModal);
          $(document).on('keydown', 'body', function(e) { if (e.keyCode == 27) { WOA.modals.view.hideModal(); } });
-
-         // Terms & Conditions
-         $(document).on('click', '#terms-modal div.go-back', function() { $('#show-sign-up-modal').click(); });
       }
    }
 };

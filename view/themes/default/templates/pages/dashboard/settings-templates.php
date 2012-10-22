@@ -6,7 +6,7 @@
                <div class="form">
                   {{#each fields}}
                   <div class="input {{#if right}}right{{else}}left{{/if}}">
-                     <p><{{title}}</p>
+                     <p>{{title}}</p>
                      <input type="{{#if password}}password{{else}}text{{/if}}" name="{{name}}" value="{{value}}" />
                   </div>
                   {{#if right}}

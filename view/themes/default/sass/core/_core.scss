@@ -38,7 +38,7 @@ html { background: black; }
          position: fixed;
          width: 100%;
          top: 0px;
-         z-index: 10;
+         z-index: 10000;
          overflow: visible;
 
          div.inner-container {
@@ -179,12 +179,12 @@ html { background: black; }
                            width: 160px;
                            border: 1px solid #CCC;
                            @include border-radius(3px);
-                           padding: 5px;
+                           padding: 3px 5px;
                            font-size: 14px;
                            font-weight: bold;
                            color: black;
                            @include box-shadow(inset 0px 1px 3px 0 #ccc);
-                           margin-bottom: 15px;
+                           margin-bottom: 10px;
 
                            &:not(:focus) { color: #CCC; }
 
@@ -193,10 +193,20 @@ html { background: black; }
                         
                         p.error {
                            color: red;
+                           cursor: default;
                            font-weight: 500;
-                           font-size: 14px;
+                           font-size: 12px;
                            position: absolute;
-                           top: 86px;
+                           top: 103px;
+                           width: 190px;
+                        }
+
+                        p.forgot-password {
+                           font-size: 12px;
+                           top: 4px;
+                           color: $darkGray;
+
+                           &:hover { color: black; }
                         }
                      }
                   }

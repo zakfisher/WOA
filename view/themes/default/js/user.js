@@ -170,6 +170,7 @@ WOA.user =
        *************************************************************/
       submitUserInput : function()
       {
+         WOA.modals.view.hideModal();
          var button = $('#login-form div.btn.login');
          if (!button.hasClass('disabled'))
          {
@@ -234,7 +235,7 @@ WOA.user =
          $('#login-form div.btn.login').removeClass('disabled');
 
          // Append Error Message
-         $('#login-form p.error').text('Wrong un/pw');
+         $('#login-form p.error').text('Wrong username or password.');
       },
 
       /*************************************************************

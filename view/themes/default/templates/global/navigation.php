@@ -26,6 +26,7 @@
                            <input type="text" name="un" value="username" />
                            <input type="text" name="pw-fake" value="password" />
                            <input type="password" name="pw" />
+                           <p data-modal="forgot_password" class="left forgot-password show-modal">Forgot Password?</p>
                            <div class="btn btn-inverse right login">Log In</div>
                            <p class="error"></p>
                         </div>
