@@ -70,5 +70,4 @@ WOA.modals =
 WOA.modals.controller.init();
 
 /** Import Modals **/
-//$.getScript('view/themes/default/js/modals/login.js');
-//$.getScript('view/themes/default/js/modals/sign-up.js');
+$.getScript('view/themes/default/js/modals/forgot-password.js');

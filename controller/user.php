@@ -15,6 +15,15 @@ class User extends WOA {
       }
    }
 
+   function reset_user_password()
+   {
+      if ($_POST)
+      {
+         $user_model = new User_Model();
+         $user_model->reset_password($_POST);
+      }
+   }
+
    function refresh_user_session()
    {
       if ($_POST)

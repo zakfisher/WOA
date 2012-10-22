@@ -22,11 +22,11 @@
                   <div id="reset-password-form" class="form">
                      <div class="input long">
                         <p class="label">Email</p>
-                        <input type="text" name="email" />
+                        <input type="text" name="email" maxlength="140" />
                      </div>
                      <div class="input long">
                         <p class="label">Confirm Email</p>
-                        <input type="text" name="confirm_email" />
+                        <input type="text" name="confirm_email" maxlength="140" />
                      </div>
                   </div>
                   <!-- end #reset-password-form -->
@@ -35,6 +35,7 @@
             </div>
             <div class="modal-footer">
                <div class="inner">
+                  <p class="left error"></p>
                   <a href="javascript:void(0);" class="btn x">Cancel</a>
                   <a id="reset-password" href="javascript:void(0);" class="btn btn-inverse">Reset Password</a>
                </div>

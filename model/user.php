@@ -91,4 +91,33 @@ class User_Model extends WOA {
       foreach ($assoc_arr as $key => $value) $_SESSION['user'][$key] = $assoc_arr[$key];
       JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user'], 'sub_page' => $_SESSION['sub_page']));
    }
+
+   function reset_password($assoc_arr)
+   {
+      $text = new Text();
+      $db = new DB();
+      $email = new Email();
+
+      // Sanitize User Input
+      $assoc_arr['email'] = $text->sanitize_string($assoc_arr['email']);
+
+      // Find Existing User
+      $results = $db->select_from_where(array('*'), 'users', 'email', $assoc_arr['email']);
+
+      // Match Found
+      if (count($results) > 0) {
+         $user = $results[0];
+
+         // Change User PW
+         $new_pw = $text->random_string();
+         $db->update_where('users', array('password' => $new_pw), 'user_id', $user['user_id']);
+
+         // Send Email
+         $msg = 'Your password has been reset.<br/><br/>Username: ' . $user['username'] . '<br/><br/>Password: ' . $new_pw;
+         $email->send($user['email'], 'World Of Anarchy', 'Password Reset', $msg);
+      }
+
+      // Match Not Found
+      else JSON::print_json(array('error' => 'Account not found.'));
+   }
 }
