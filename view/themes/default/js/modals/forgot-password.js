@@ -9,7 +9,12 @@
  *
  * Search Keys:
  * - Model
+ *   >> sendRequest
  * - View
+ *   >> submitResetForm
+ *   >> clearErrorMsg
+ *   >> resetSuccess
+ *   >> resetFail
  * - Controller
  *********************************************/
 WOA.modals.ForgotPassword =
@@ -94,11 +99,11 @@ WOA.modals.ForgotPassword =
          $('#reset-password').removeClass('disabled');
       },
       /*************************************************************
-       * Method - resetFail(data)
+       * Method - resetFail()
        *
-       *    AJAX Success
+       *    AJAX Fail
        *************************************************************/
-      resetFail : function(data)
+      resetFail : function()
       {
          $('div.modal-footer p.error').text('Unable to process request.');
          $('#reset-password').removeClass('disabled');
