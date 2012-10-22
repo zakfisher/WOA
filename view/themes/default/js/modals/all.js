@@ -49,9 +49,7 @@ WOA.modals =
       init : function()
       {
          WOA.static.modals = {
-            forgot_password : {
-               template : 'forgot-password-modal'
-            }
+            forgot_password : { template : 'forgot-password-modal' }
          };
 
          /** Handlers **/

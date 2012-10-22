@@ -1,10 +1,4 @@
-<?php
-session_start();
-
-// Page Vars
-$artist = (isset($_SESSION['music'])) ? $_SESSION['music'][0] : 'Artist Name';
-$track = (isset($_SESSION['music'])) ? $_SESSION['music'][1] : 'Track Name';
-?>
+<?php session_start(); ?>
          <div class="content left">
             <div class="inner-container">
                <div class="logo">
@@ -21,9 +15,13 @@ $track = (isset($_SESSION['music'])) ? $_SESSION['music'][1] : 'Track Name';
                   <h1>Music</h1>
                   <h2>Preview and download hours of FREE mixes by your favorite artists below :)</h2>
                   <div class="shadow down"></div>
-                  <?= $artist; ?>
-                  <br/>
-                  <?= $track; ?>
+                  <div class="dynamic-shell">
+                     <div class="dynamic-content">
+                        <div class="page-loading"></div>
+                     </div>
+                     <!-- end .dynamic-content -->
+                  </div>
+                  <!-- end .dynamic-shell -->
                </div>
                <!-- end .header -->
             </div>

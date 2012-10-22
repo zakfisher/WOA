@@ -26,8 +26,8 @@ WOA.pages.Music =
       {
          // Load latest posts
          var data = {
-            test : 'halalala',
-            template : 'template-single-post'
+            title : 'Music',
+            sub_text : 'template-single-post'
          };
 //         Handlebars.renderTemplate('template-updates-list', data, 'div.dynamic-content');
       }
