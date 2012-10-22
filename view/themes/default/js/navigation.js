@@ -221,7 +221,9 @@ WOA.navigation =
          WOA.user.model.refreshUser();
 
          var url = window.location.href.split("/");
-         var page = url[url.length - 1];
+         var idx = $.inArray('#!', url) ? (url.indexOf("#!") + 1) : (url.length - 1);
+         var page = url[idx];
+         page = (page == 'http:') ? 'home' : page;
 
          // Check for #! in URL AND if page link exists
          var redirect = ($.inArray('#!', url) && $('a[data-page=' + page + ']').length > 0) ? true : false;
