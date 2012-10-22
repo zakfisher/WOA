@@ -37,7 +37,7 @@ WOA.pages.Site_emails =
        *************************************************************/
       loadPage : function()
       {
-         WOA.pages.Contacts.model.getContacts();
+         //WOA.pages.Contacts.model.getContacts();
       },
 
       /*************************************************************

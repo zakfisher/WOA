@@ -85,7 +85,6 @@ WOA.modals.ForgotPassword =
        *************************************************************/
       resetSuccess : function(data)
       {
-         console.log(data);
          var msg = $('div.modal-footer p.error');
          if (typeof data.error == 'undefined')
          {
