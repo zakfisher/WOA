@@ -62,6 +62,7 @@ WOA.user =
          // Clear User Cache
          $.cookie('user', null);
          delete WOA.static.user;
+         delete WOA.static.list_cache;
 
          // Update Session
          $.get(WOA.static.env + 'user/log_out');
@@ -176,14 +177,24 @@ WOA.user =
          {
             button.addClass('disabled');
 
-            // validate input
+            var username = $('#login-form input[name=un]').val();
+            var password = $('#login-form input[name=pw]').val();
+            var emptyFields = (username == '' || username == 'username' || password == '');
 
-            var data = {
-               un : $('#login-form input[name=un]').val(),
-               pw : $('#login-form input[name=pw]').val()
-            };
+            if (!emptyFields)
+            {
+               var data = {
+                  un : username,
+                  pw : password
+               };
 
-            WOA.user.model.authenticateUser(data);
+               WOA.user.model.authenticateUser(data);
+            }
+
+            else {
+               $('#login-form p.error').text('Fill out all fields.');
+               button.removeClass('disabled');
+            }
          }
       },
 
