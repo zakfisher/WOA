@@ -127,23 +127,32 @@ class User_Model extends WOA {
       $text = new Text();
       $updates = array();
 
-      // Return ALL Updates (for this user)
-      if ($project_id === null) $posts = $db->select_from_where(array('*'), 'posts', 'user_id', $_SESSION['user']['user_id']);
+      // Return ALL Updates (all projects for this user)
+      if ($project_id === null)
+      {
+         $all_posts = $db->select_from(array('*'), 'posts');
+         foreach ($all_posts as $post)
+         {
+            // Find associated project, then check if user has access
+            $access = $db->select_from_where_and(array('access'), 'project_users', 'user_id', $_SESSION['user']['user_id'], 'proj_id', $post['project_id']);
 
-      // Return Updates for this Project
-      else {
-         //$posts = $db->select_from_where(array('*'), 'posts', 'user_id', $_SESSION['user']['user_id']);
+            // No Access = Remove from List
+            if (count($access) != 0) $posts[] = $post;
+         }
       }
+
+      // Return Updates for this Project (if user has access)
+      else $posts = $db->select_from_where(array('*'), 'posts', 'project_id', $project_id);
 
       // Set Post Values (add comments and links)
       foreach ($posts as $post)
       {
          // Post Values
-         $project = $db->select_from_where(array('title'), 'projects', 'id', $post['project_id']);
+         $project = $db->select_from_where(array('project'), 'projects', 'id', $post['project_id']);
          $author = $db->select_from_where(array('username'), 'users', 'user_id', $post['user_id']);
          $post['time'] = $text->format_post_date($post['time']);
          $post['template'] = 'updates-list-items';
-         $post['project'] = $project[0]['title'];
+         $post['project'] = $project[0]['project'];
          $post['author'] = $author[0]['username'];
          $post['content']['message'] = $post['message'];
 
@@ -182,5 +191,55 @@ class User_Model extends WOA {
       }
 
       JSON::print_json($updates);
+   }
+
+   function get_user_projects()
+   {
+      $db = new DB();
+      $all_projects = array();
+
+      $projects = $db->select_from(array('*'), 'projects');
+      foreach ($projects as $project)
+      {
+         // Return Project ONLY if User has Access
+         $access = $db->select_from_where_and(array('access'), 'project_users', 'user_id', $_SESSION['user']['user_id'], 'proj_id', $project['id']);
+         if (count($access) != 0)
+         {
+            $access = $access[0]['access'];
+
+            $project['template'] = 'projects-list-items';
+            $user_count = $db->select_from_where(array('count(*)'), 'project_users', 'proj_id', $project['id']);
+            $project['user_count'] = $user_count[0]['count(*)'];
+            $project['sub_nav'] = array();
+
+            switch ($access) {
+               case 'admin':
+                  $project['sub_nav'][] = array('sub_page' => 'overview', 'title' => 'Overview');
+                  $project['sub_nav'][] = array('sub_page' => 'updates',  'title' => 'Updates');
+                  $project['sub_nav'][] = array('sub_page' => 'biz_plan', 'title' => 'Business Plan');
+                  $project['sub_nav'][] = array('sub_page' => 'partners', 'title' => 'Partners');
+                  $project['partners'] = array();
+                  break;
+               case 'high':
+                  $project['sub_nav'][] = array('sub_page' => 'overview',  'title' => 'Overview');
+                  $project['sub_nav'][] = array('sub_page' => 'updates',   'title' => 'Updates');
+                  $project['sub_nav'][] = array('sub_page' => 'biz_plan',  'title' => 'Business Plan');
+                  $project['sub_nav'][] = array('sub_page' => 'contracts', 'title' => 'Contracts');
+                  $project['contracts'] = array();
+                  break;
+               case 'low':
+                  $project['sub_nav'][] = array('sub_page' => 'overview',  'title' => 'Overview');
+                  $project['sub_nav'][] = array('sub_page' => 'updates',   'title' => 'Updates');
+                  $project['sub_nav'][] = array('sub_page' => 'contracts', 'title' => 'Contracts');
+                  $project['contracts'] = array();
+                  break;
+               default:
+            }
+
+            $all_projects[] = $project;
+         }
+      }
+
+      JSON::print_json($all_projects);
    }
 }
