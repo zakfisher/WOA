@@ -120,4 +120,67 @@ class User_Model extends WOA {
       // Match Not Found
       else JSON::print_json(array('error' => 'Account not found.'));
    }
+
+   function get_updates_data($project_id)
+   {
+      $db = new DB();
+      $text = new Text();
+      $updates = array();
+
+      // Return ALL Updates (for this user)
+      if ($project_id === null) $posts = $db->select_from_where(array('*'), 'posts', 'user_id', $_SESSION['user']['user_id']);
+
+      // Return Updates for this Project
+      else {
+         //$posts = $db->select_from_where(array('*'), 'posts', 'user_id', $_SESSION['user']['user_id']);
+      }
+
+      // Set Post Values (add comments and links)
+      foreach ($posts as $post)
+      {
+         // Post Values
+         $project = $db->select_from_where(array('title'), 'projects', 'id', $post['project_id']);
+         $author = $db->select_from_where(array('username'), 'users', 'user_id', $post['user_id']);
+         $post['time'] = $text->format_post_date($post['time']);
+         $post['template'] = 'updates-list-items';
+         $post['project'] = $project[0]['title'];
+         $post['author'] = $author[0]['username'];
+         $post['content']['message'] = $post['message'];
+
+         //if ($post['links'] !== null) $post['content'][] = $post['links'];
+
+         unset($post['project_id']);
+         unset($post['user_id']);
+         unset($post['message']);
+
+         // Links
+         $links = $db->select_from_where(array('*'), 'post_links', 'post_id', $post['id']);
+         foreach ($links as $link)
+         {
+            unset($link['id']);
+            unset($link['post_id']);
+
+            $post['content']['links'][] = $link;
+         }
+
+         // Comments
+         $comments = $db->select_from_where(array('*'), 'comments', 'post_id', $post['id']);
+         foreach ($comments as $comment)
+         {
+            $comment_author = $db->select_from_where(array('username'), 'users', 'user_id', $comment['user_id']);
+            $comment['author'] = $comment_author[0]['username'];
+            $comment['time'] = $text->format_post_date($comment['time']);
+
+            unset($comment['post_id']);
+            unset($comment['user_id']);
+            unset($comment['id']);
+
+            $post['content']['comments'][] = $comment;
+         }
+
+         $updates[] = $post;
+      }
+
+      JSON::print_json($updates);
+   }
 }

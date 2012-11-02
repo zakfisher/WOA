@@ -10,6 +10,7 @@
  * Search Keys:
  * - Model
      >> getAllUpdates
+     >> getProjectUpdates
  * - View
      >> loadPage
      >> showPage
@@ -25,7 +26,7 @@ WOA.pages.Updates =
        *************************************************************/
       getAllUpdates : function()
       {
-         $.get(WOA.static.env + 'test/test/abc', function(data) { WOA.pages.Updates.view.showPage(data); });
+         $.get(WOA.static.env + 'user/get_updates', function(data) { WOA.pages.Updates.view.showPage(data); });
       },
 
       /*************************************************************
@@ -35,7 +36,7 @@ WOA.pages.Updates =
        *************************************************************/
       getProjectUpdates : function()
       {
-         $.get(WOA.static.env + 'test/test/abc', function(data) { WOA.pages.Updates.view.showPage(data); });
+         $.get(WOA.static.env + 'user/get_updates/' + WOA.static.current_project.id, function(data) { WOA.pages.Updates.view.showPage(data); });
       }
    },
    view : {
@@ -59,182 +60,13 @@ WOA.pages.Updates =
        *
        *    Display Page
        *************************************************************/
-      showPage : function(data)
+      showPage : function(updates)
       {
          // Load latest posts
          var data = {
             posts : true,
             type : 'updates',
-            items : [
-               {
-                  template : 'updates-list-items',
-                  id      : 44,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {
-                     message : 'That\'s right! We got that little fucker to agree to the small fee of $1.5M just to come and make some little girls wet themselves. I know, none of us want to book the lil guy, BUT he does draw a crowd and money is money .... Anyway, here\’s some more text just to fill up some space and pretend that we\'re actually saying something slightly important.. but we’re really not .. like, at all.',
-                     links : [
-                        {
-                           title : 'Business Plan',
-                           url : 'http://www.worldofanarchy.com'
-                        },
-                        {
-                           title : 'Other Page',
-                           url : 'http://www.worldofanarchy.com'
-                        }
-                     ],
-                     comments : [
-                        {
-                           author : 'santosh',
-                           time : '12.3.11',
-                           message : 'this is hella sick or whatever'
-                        },
-                        {
-                           author : 'lferrieri',
-                           time : '12.3.11',
-                           message : 'That\'s right! We got that little fucker to agree to the small fee of $1.5M just to come and make some little girls wet themselves. I know, none of us want to book the lil guy, BUT he does draw a crowd and money is money .... Anyway, here\’s some more text just to fill up some space and pretend that we\'re actually saying something slightly important.. but we’re really not .. like, at all.'
-                        }
-                     ]
-                  }
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 2,
-                  title   : 'Testadfad Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 3,
-                  title   : 'ABCCC Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 4,
-                  title   : '324234234 Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 5,
-                  title   : 'Test Post',
-                  author  : 'sdevanagondi',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 6,
-                  title   : 'Tesadfadft Post',
-                  author  : 'santosh',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 7,
-                  title   : 'TZZZZFAER@#$#%@ Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 8,
-                  title   : 'Tadfast',
-                  author  : 'santosh',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 9,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 10,
-                  title   : 'Tasdf2Post',
-                  author  : 'santosh',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 11,
-                  title   : 'Testaaaaa Post',
-                  author  : 'santosh',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 12,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 13,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 14,
-                  title   : 'Test Post',
-                  author  : 'santosh',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 15,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               },
-               {
-                  template : 'updates-list-items',
-                  id      : 16,
-                  title   : 'Test Post',
-                  author  : 'zfisher',
-                  project : 'Crazy Shit Project',
-                  time    : '11.12.12',
-                  content : {}
-               }
-            ]
+            items : updates
          };
          data.pagination = {
             float : 'right',

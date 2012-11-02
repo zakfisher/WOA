@@ -14,4 +14,16 @@ class Text {
       }
       return $randomString;
    }
+
+   function format_post_date($timestamp)
+   {
+      $year = substr($timestamp, 2, 2);
+      $month = substr($timestamp, 5, 2);
+      if (substr($month, 0, 1) == 0) $month = substr($month, 1, 1);
+      $day = substr($timestamp, 8, 2);
+      if (substr($day, 0, 1) == 0) $day = substr($day, 1, 1);
+      $timestamp = $month . '.' . $day . '.' . $year;
+
+      return $timestamp;
+   }
 }
