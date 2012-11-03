@@ -59,13 +59,4 @@ class User extends WOA {
       $_SESSION['logged_in'] = false;
       unset($_SESSION['user']);
    }
-
-   function get_updates($project_id = null)
-   {
-      if ($this->login_check('return') == 'true')
-      {
-         $user_model = new User_Model();
-         $user_model->get_updates_data($project_id);
-      }
-   }
 }

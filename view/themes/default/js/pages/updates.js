@@ -26,7 +26,7 @@ WOA.pages.Updates =
        *************************************************************/
       getAllUpdates : function()
       {
-         $.get(WOA.static.env + 'user/get_updates', function(data) { WOA.pages.Updates.view.showPage(data); });
+         $.get(WOA.static.env + 'updates/get_updates', WOA.pages.Updates.view.showPage);
       },
 
       /*************************************************************
@@ -36,7 +36,7 @@ WOA.pages.Updates =
        *************************************************************/
       getProjectUpdates : function()
       {
-         $.get(WOA.static.env + 'user/get_updates/' + WOA.static.current_project.id, function(data) { WOA.pages.Updates.view.showPage(data); });
+         $.get(WOA.static.env + 'updates/get_updates/' + WOA.static.current_project.id, WOA.pages.Updates.view.showPage);
       }
    },
    view : {
