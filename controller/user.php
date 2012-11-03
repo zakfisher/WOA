@@ -68,13 +68,4 @@ class User extends WOA {
          $user_model->get_updates_data($project_id);
       }
    }
-
-   function get_projects()
-   {
-      if ($this->login_check('return') == 'true')
-      {
-         $user_model = new User_Model();
-         $user_model->get_user_projects();
-      }
-   }
 }

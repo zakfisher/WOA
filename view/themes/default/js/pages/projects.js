@@ -23,7 +23,7 @@ WOA.pages.Projects =
        *************************************************************/
       getProjects : function()
       {
-         $.get(WOA.static.env + 'user/get_projects', function(data) { WOA.pages.Projects.view.showPage(data); });
+         $.get(WOA.static.env + 'projects/get_projects', function(data) { WOA.pages.Projects.view.showPage(data); });
       }
    },
    view : {
