@@ -40,8 +40,6 @@ class Updates_Model extends WOA {
          $post['author'] = $author[0]['username'];
          $post['content']['message'] = $post['message'];
 
-         //if ($post['links'] !== null) $post['content'][] = $post['links'];
-
          unset($post['project_id']);
          unset($post['user_id']);
          unset($post['message']);

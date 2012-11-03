@@ -25,7 +25,7 @@ WOA.pages.Contacts =
        *************************************************************/
       getContacts : function()
       {
-         $.get(WOA.static.env + 'test/test/abc', WOA.pages.Contacts.view.showPage);
+         $.get(WOA.static.env + 'contacts/get_contacts', WOA.pages.Contacts.view.showPage);
       }
    },
    view : {
@@ -45,86 +45,13 @@ WOA.pages.Contacts =
        *
        *    Display Page
        *************************************************************/
-      showPage : function(data)
+      showPage : function(contacts)
       {
          // Load contacts
          var data = {
             contacts : true,
             type : 'contacts',
-            items : [
-               {
-                  template : 'contacts-list-items',
-                  id      : 44,
-                  first_name : 'Jimmy',
-                  last_name : 'Smoothsocks',
-                  type : 'Investor',
-                  title : 'Venture Capitalist',
-                  company : 'VC Funding, Inc.'
-               },
-               {
-                  template : 'contacts-list-items',
-                  id      : 3,
-                  first_name : 'Mr',
-                  last_name : 'Halal',
-                  type : 'Vendor',
-                  title : 'General Manager',
-                  company : 'Habibs Restaurant'
-               },
-               {
-                  template : 'contacts-list-items',
-                  id      : 4,
-                  first_name : 'Tooth',
-                  last_name : 'Fairy',
-                  type : 'Investor',
-                  title : 'Banker',
-                  company : 'Magic Co.'
-               },
-               {
-                  template : 'contacts-list-items',
-                  id      : 11,
-                  first_name : 'Mantots',
-                  last_name : 'Andgondi',
-                  type : 'Accountant',
-                  title : 'Business Banking Specialist',
-                  company : 'Wells Fargo'
-               },
-               {
-                  template : 'contacts-list-items',
-                  id      : 454,
-                  first_name : 'Toats',
-                  last_name : 'McGoats',
-                  type : 'Investor',
-                  title : 'Venture Capitalist',
-                  company : 'VC Funding, Inc.'
-               },
-               {
-                  template : 'contacts-list-items',
-                  id      : 444,
-                  first_name : 'Shitty',
-                  last_name : 'Smellman',
-                  type : 'Investor',
-                  title : 'Venture Capitalist',
-                  company : 'VC Funding, Inc.'
-               },
-               {
-                  template : 'contacts-list-items',
-                  id      : 474,
-                  first_name : 'Tim',
-                  last_name : 'Hucklebury',
-                  type : 'Investor',
-                  title : 'Greeter',
-                  company : 'Walmart'
-               },
-               {
-                  template : 'contacts-list-items',
-                  id      : 484,
-                  first_name : 'Fat',
-                  last_name : 'Sausage',
-                  type : 'Artist',
-                  title : 'Manager',
-                  company : 'Bookings'
-               }
-            ]
+            items : contacts
          };
          data.pagination = {
             float : 'right',

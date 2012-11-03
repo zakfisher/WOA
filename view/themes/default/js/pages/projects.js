@@ -39,157 +39,152 @@ WOA.pages.Projects =
          WOA.pages.Projects.model.getProjects();
       },
 
-
-//      [
-//      {
-//         // High Access
-//         template : 'projects-list-items',
-//         id      : 44,
-//         project : 'Crazy Shit Project',
-//         last_updated    : '1.1.12',
-//         user_count : 5,
-//         sub_nav : [
-//            {
-//               sub_page : 'overview',
-//               title : 'Overview'
-//            },
-//            {
-//               sub_page : 'updates',
-//               title : 'Updates'
-//            },
-//            {
-//               sub_page : 'biz_plan',
-//               title : 'Business Plan'
-//            },
-//            {
-//               sub_page : 'contracts',
-//               title : 'Contracts'
-//            }
-//         ],
-//         contracts : [
-//            {
-//               template : 'contracts-nda',
-//               id : 22,
-//               title : 'This Guys NDA',
-//               extra : {}
-//            }
-//         ]
-//      },
-//      {
-//         // Admin Access
-//         template : 'projects-list-items',
-//         id      : 4,
-//         project : 'haslslsls Project',
-//         last_updated    : '11.18.12',
-//         user_count : 15,
-//         sub_nav : [
-//            {
-//               sub_page : 'overview',
-//               title : 'Overview'
-//            },
-//            {
-//               sub_page : 'updates',
-//               title : 'Updates'
-//            },
-//            {
-//               sub_page : 'biz_plan',
-//               title : 'Business Plan'
-//            },
-//            {
-//               sub_page : 'partners',
-//               title : 'Partners'
-//            }
-//         ],
-//         partners : [
-//            {
-//               template : 'contacts-list-items',
-//               id      : 3,
-//               first_name : 'Mr',
-//               last_name : 'Halal',
-//               type : 'Vendor',
-//               title : 'General Manager',
-//               company : 'Habibs Restaurant',
-//               contracts : [
-//                  {
-//                     template : 'contracts-nda',
-//                     id : 22,
-//                     title : 'This Guys NDA',
-//                     extra : {}
-//                  }
-//               ]
-//            },
-//            {
-//               template : 'contacts-list-items',
-//               id      : 4,
-//               first_name : 'Tooth',
-//               last_name : 'Fairy',
-//               type : 'Investor',
-//               title : 'Banker',
-//               company : 'Magic Co.',
-//               contracts : [
-//                  {
-//                     template : 'contracts-nda',
-//                     id : 22,
-//                     title : 'This Guys NDA',
-//                     extra : {}
-//                  }
-//               ]
-//            },
-//            {
-//               template : 'contacts-list-items',
-//               id      : 11,
-//               first_name : 'Mantots',
-//               last_name : 'Andgondi',
-//               type : 'Accountant',
-//               title : 'Business Banking Specialist',
-//               company : 'Wells Fargo',
-//               contracts : [
-//                  {
-//                     template : 'contracts-nda',
-//                     id : 22,
-//                     title : 'This Guys NDA',
-//                     extra : {}
-//                  }
-//               ]
-//            }
-//         ]
-//      },
-//      {
-//         // Low Access
-//         template : 'projects-list-items',
-//         id      : 224,
-//         project : 'ABCC Project',
-//         last_updated    : '10.12.10',
-//         user_count : 3,
-//         sub_nav : [
-//            {
-//               sub_page : 'overview',
-//               title : 'Overview'
-//            },
-//            {
-//               sub_page : 'updates',
-//               title : 'Updates'
-//            },
-//            {
-//               sub_page : 'contracts',
-//               title : 'Contracts'
-//            }
-//         ]
-//      },
-//      {
-//         template : 'projects-list-items',
-//         id      : 5,
-//         project : '234t Project',
-//         last_updated    : '9.12.12',
-//         user_count : 2
-//      }
-//      ]
-
-
-
-
-
-
+/*
+      [
+      {
+         // High Access
+         template : 'projects-list-items',
+         id      : 44,
+         project : 'Crazy Shit Project',
+         last_updated    : '1.1.12',
+         user_count : 5,
+         sub_nav : [
+            {
+               sub_page : 'overview',
+               title : 'Overview'
+            },
+            {
+               sub_page : 'updates',
+               title : 'Updates'
+            },
+            {
+               sub_page : 'biz_plan',
+               title : 'Business Plan'
+            },
+            {
+               sub_page : 'contracts',
+               title : 'Contracts'
+            }
+         ],
+         contracts : [
+            {
+               template : 'contracts-nda',
+               id : 22,
+               title : 'This Guys NDA',
+               extra : {}
+            }
+         ]
+      },
+      {
+         // Admin Access
+         template : 'projects-list-items',
+         id      : 4,
+         project : 'haslslsls Project',
+         last_updated    : '11.18.12',
+         user_count : 15,
+         sub_nav : [
+            {
+               sub_page : 'overview',
+               title : 'Overview'
+            },
+            {
+               sub_page : 'updates',
+               title : 'Updates'
+            },
+            {
+               sub_page : 'biz_plan',
+               title : 'Business Plan'
+            },
+            {
+               sub_page : 'partners',
+               title : 'Partners'
+            }
+         ],
+         partners : [
+            {
+               template : 'contacts-list-items',
+               id      : 3,
+               first_name : 'Mr',
+               last_name : 'Halal',
+               type : 'Vendor',
+               title : 'General Manager',
+               company : 'Habibs Restaurant',
+               contracts : [
+                  {
+                     template : 'contracts-nda',
+                     id : 22,
+                     title : 'This Guys NDA',
+                     extra : {}
+                  }
+               ]
+            },
+            {
+               template : 'contacts-list-items',
+               id      : 4,
+               first_name : 'Tooth',
+               last_name : 'Fairy',
+               type : 'Investor',
+               title : 'Banker',
+               company : 'Magic Co.',
+               contracts : [
+                  {
+                     template : 'contracts-nda',
+                     id : 22,
+                     title : 'This Guys NDA',
+                     extra : {}
+                  }
+               ]
+            },
+            {
+               template : 'contacts-list-items',
+               id      : 11,
+               first_name : 'Mantots',
+               last_name : 'Andgondi',
+               type : 'Accountant',
+               title : 'Business Banking Specialist',
+               company : 'Wells Fargo',
+               contracts : [
+                  {
+                     template : 'contracts-nda',
+                     id : 22,
+                     title : 'This Guys NDA',
+                     extra : {}
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         // Low Access
+         template : 'projects-list-items',
+         id      : 224,
+         project : 'ABCC Project',
+         last_updated    : '10.12.10',
+         user_count : 3,
+         sub_nav : [
+            {
+               sub_page : 'overview',
+               title : 'Overview'
+            },
+            {
+               sub_page : 'updates',
+               title : 'Updates'
+            },
+            {
+               sub_page : 'contracts',
+               title : 'Contracts'
+            }
+         ]
+      },
+      {
+         template : 'projects-list-items',
+         id      : 5,
+         project : '234t Project',
+         last_updated    : '9.12.12',
+         user_count : 2
+      }
+      ]
+   */
 
       /*************************************************************
        * Method - showPage(data)
