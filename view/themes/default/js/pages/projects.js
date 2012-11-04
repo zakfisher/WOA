@@ -195,6 +195,7 @@ WOA.pages.Projects =
       {
          // Load projects
          var data = {
+            projects : true,
             type : 'projects',
             items : projects
          };

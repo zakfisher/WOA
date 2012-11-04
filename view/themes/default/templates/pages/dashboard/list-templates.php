@@ -8,6 +8,11 @@
                      {{#if posts}}
                      <div class="btn btn-inverse left mr10 add-post">New Post <i class="icon-white icon-plus"></i></div>
                      {{/if}}
+<?php if ($_SESSION['user']['access'] == 'admin'): ?>
+                     {{#if projects}}
+                     <div class="btn btn-inverse left add-project mr10">New Project <i class="icon-white icon-plus"></i></div>
+                     {{/if}}
+<?php endif; ?>
                      {{#if contacts}}
                      <div class="btn btn-inverse left add-contact mr10">New Contact <i class="icon-white icon-plus"></i></div>
                      {{/if}}
