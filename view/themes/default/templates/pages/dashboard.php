@@ -39,7 +39,7 @@
          <!-- end .content.right -->
          <div class="clr"></div>
 <?php
-$templates = array('wrapper', 'list', 'updates', 'projects', 'settings');
+$templates = array('wrapper', 'list', 'updates', 'projects', 'settings', 'site-emails');
 $admin_templates = array('admin', 'contacts');
 foreach ($templates as $template) require_once('dashboard/' . $template . '-templates.php');
 if ($_SESSION['user']['access'] == 'admin')

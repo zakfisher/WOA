@@ -9,7 +9,7 @@
  *
  * Search Keys:
  * - Model
-     >> getSite_emails
+     >> getSiteEmails
  * - View
      >> loadPage
      >> showPage
@@ -19,11 +19,11 @@ WOA.pages.Site_emails =
 {
    model : {
       /*************************************************************
-       * Method - getSite_emails()
+       * Method - getSiteEmails()
        *
        *    Fetch Site_emails Data
        *************************************************************/
-      getSite_emails : function()
+      getSiteEmails : function()
       {
          $.get(WOA.static.env + 'test/test/abc', WOA.pages.Site_emails.view.showPage);
       }
@@ -37,7 +37,7 @@ WOA.pages.Site_emails =
        *************************************************************/
       loadPage : function()
       {
-         //WOA.pages.Contacts.model.getContacts();
+         WOA.pages.Site_emails.model.getSiteEmails();
       },
 
       /*************************************************************
@@ -49,80 +49,32 @@ WOA.pages.Site_emails =
       {
          // Load contacts
          var data = {
-            contacts : true,
-            type : 'contacts',
+            site_emails : true,
+            type : 'site-emails',
             items : [
                {
-                  template : 'contacts-list-items',
-                  id      : 44,
-                  first_name : 'Jimmy',
-                  last_name : 'Smoothsocks',
-                  type : 'Investor',
-                  title : 'Venture Capitalist',
-                  company : 'VC Funding, Inc.'
+                  template : 'site-emails-list-items',
+                  id : 44,
+                  subject : 'A Question for WOA..',
+                  sender : 'email_address@fake_domain.com',
+                  message : '[11/4/12 1:08 PM] Failed to collect files: Connection closed without indication.',
+                  time : '10.2.12'
                },
                {
-                  template : 'contacts-list-items',
-                  id      : 3,
-                  first_name : 'Mr',
-                  last_name : 'Halal',
-                  type : 'Vendor',
-                  title : 'General Manager',
-                  company : 'Habibs Restaurant'
+                  template : 'site-emails-list-items',
+                  id : 43,
+                  subject : 'Another Question for WOA..',
+                  sender : '12345@fake_domain.com',
+                  message : '[11/4/12 1:08 PM] Failed to collect files: Connection closed without indication.',
+                  time : '8.22.12'
                },
                {
-                  template : 'contacts-list-items',
-                  id      : 4,
-                  first_name : 'Tooth',
-                  last_name : 'Fairy',
-                  type : 'Investor',
-                  title : 'Banker',
-                  company : 'Magic Co.'
-               },
-               {
-                  template : 'contacts-list-items',
-                  id      : 11,
-                  first_name : 'Mantots',
-                  last_name : 'Andgondi',
-                  type : 'Accountant',
-                  title : 'Business Banking Specialist',
-                  company : 'Wells Fargo'
-               },
-               {
-                  template : 'contacts-list-items',
-                  id      : 454,
-                  first_name : 'Toats',
-                  last_name : 'McGoats',
-                  type : 'Investor',
-                  title : 'Venture Capitalist',
-                  company : 'VC Funding, Inc.'
-               },
-               {
-                  template : 'contacts-list-items',
-                  id      : 444,
-                  first_name : 'Shitty',
-                  last_name : 'Smellman',
-                  type : 'Investor',
-                  title : 'Venture Capitalist',
-                  company : 'VC Funding, Inc.'
-               },
-               {
-                  template : 'contacts-list-items',
-                  id      : 474,
-                  first_name : 'Tim',
-                  last_name : 'Hucklebury',
-                  type : 'Investor',
-                  title : 'Greeter',
-                  company : 'Walmart'
-               },
-               {
-                  template : 'contacts-list-items',
-                  id      : 484,
-                  first_name : 'Fat',
-                  last_name : 'Sausage',
-                  type : 'Artist',
-                  title : 'Manager',
-                  company : 'Bookings'
+                  template : 'site-emails-list-items',
+                  id : 424,
+                  subject : 'WTF is Rickorish?',
+                  sender : 'email_address2323@fake_domain.com',
+                  message : '[11/4/12 1:08 PM] Failed to collect files: Connection closed without indication.',
+                  time : '6.12.12'
                }
             ]
          };

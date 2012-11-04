@@ -108,6 +108,9 @@ WOA.utilities.Pagination =
                   case 'contacts':
                      if ((v.first_name.toLowerCase().indexOf(val) != -1 ) || (v.last_name.toLowerCase().indexOf(val) != -1 ) || (v.title.toLowerCase().indexOf(val) != -1 ) || (v.company.toLowerCase().indexOf(val) != -1 ) || (v.type.toLowerCase().indexOf(val) != -1 )) { resultSet.items.push(v); }
                      break;
+                  case 'site-emails':
+                     if ((v.subject.toLowerCase().indexOf(val) != -1) || (v.sender.toLowerCase().indexOf(val) != -1) ) { resultSet.items.push(v); }
+                     break;
                   default:
                }
             });

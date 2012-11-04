@@ -105,7 +105,7 @@ WOA.pages.Dashboard =
             },
             admin : {
                admin : true,
-               title : 'Admin Dashboard',
+               title : 'Admin Panel',
                sub_text : 'Manage user accounts and more.'
             }
          };
