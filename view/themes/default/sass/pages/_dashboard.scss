@@ -44,7 +44,7 @@
                min-height: 500px;
             }
 
-            div.secondary-view {
+            div.secondary-view, div.main-view {
 
                div.btn { margin: 0; }
 
@@ -58,12 +58,28 @@
                            padding: 5px 10px 10px;
                            width: 592px;
 
+                           &.mb5 { padding-bottom: 5px; }
+
                            div.title {
-                              h1 {
+
+                              h1, input[type=text] {
                                  font-weight: 500;
                                  font-size: 22px;
-                                 padding: 0;
                               }
+
+                              h1 { padding: 0; }
+
+                              input[type=text] {
+                                 color: #ccc;
+                                 border: none;
+                                 outline: none;
+                                 border-bottom: 1px solid #CCC;
+                                 padding: 0 0 5px;
+                                 width: 100%;
+
+                                 &:focus { color: black; }
+                              }
+
                            }
 
                            div.sub-info {
@@ -97,11 +113,29 @@
                      }
 
                      &.message {
+
+                        &.text { padding: 20px 10px; }
+
                         p {
                            color: $darkGray;
                            font-size: 16px;
                            line-height: 24px;
                            margin: 10px 15px 15px;
+                        }
+
+                        textarea {
+                           width: 570px;
+                           border: 1px solid #CCC;
+                           @include border-radius(3px);
+                           padding: 10px;
+                           font-size: 16px;
+                           font-weight: 300;
+                           color: #ccc;
+                           @include box-shadow(inset 0px 1px 3px 0 #ccc);
+                           outline: none;
+                           resize: none;
+
+                           &:focus { color: black; }
                         }
                      }
 
@@ -111,6 +145,7 @@
                         div.header {
                            background-color: #f0f0f0;
                            border: 1px solid $gray;
+                           margin: 0 10px;
 
                            p {
                               font-weight: bold;
@@ -141,7 +176,52 @@
                            }
                         }
 
+                        div.inner {
+
+                           li {
+                              margin: 0;
+                              padding: 10px 0;
+
+                              div.delete-link {
+                                 padding: 4px 0 0;
+                                 width: 24px;
+                                 height: 18px;
+                              }
+
+                              p {
+                                 margin: 0;
+                                 padding: 2px 0 0 5px;
+                                 font-size: 16px;
+                              }
+
+                           }
+
+                           div.add-link {
+                              padding: 10px;
+
+                              input[type=text] {
+                                 outline: none;
+                                 width: 220px;
+                                 border: 1px solid #CCC;
+                                 @include border-radius(3px);
+                                 padding: 3px 5px;
+                                 font-size: 14px;
+                                 font-weight: bold;
+                                 color: black;
+                                 @include box-shadow(inset 0px 1px 3px 0 #ccc);
+                                 margin-bottom: 10px;
+
+                                 &:not(:focus) { color: #CCC; }
+
+                                 &.mr15 { margin-right: 15px; }
+                              }
+
+                           }
+                        }
+
                      }
+
+                     &.submit-cancel div.inner { padding: 10px 220px; }
 
                      &.comments {
 

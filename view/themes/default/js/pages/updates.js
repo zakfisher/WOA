@@ -68,13 +68,14 @@ WOA.pages.Updates =
             type : 'updates',
             items : updates
          };
+
          data.pagination = {
             float : 'right',
             extra_class : 'list-end',
             template : 'pagination',
             item_count : data.items.length,
             items_per_page : 5
-         }
+         };
 
          // Cache Indexes for Single Post Reference
          data.item_index = {};
@@ -100,11 +101,69 @@ WOA.pages.Updates =
          var item = ($(e.target).is('div.item')) ? $(e.target) : $(e.target).parents('div.item');
          var postId = item.attr('data-id');
          var post = WOA.static.list_cache.items[WOA.static.list_cache.item_index[postId]];
-
-         //console.log(post);
+         WOA.static.current_post = post;
 
          Handlebars.renderTemplate('template-single-post', post, 'div.dynamic-content', 'append');
          $('div.dynamic-content').animate({ left : '-612px' }, 300);
+      },
+
+      /*************************************************************
+       * Method - editPost()
+       *
+       *    Display Edit Post Form
+       *************************************************************/
+      editPost : function()
+      {
+         // Update Page Header
+         var h1 = $('div.content.right div.header h1.title');
+         WOA.static.current_post_h1 = h1.text();
+         WOA.static.current_post_h2 = h1.siblings('h2').text();
+         WOA.static.current_post.editMode = true;
+
+         var page = $('div.content.right');
+         h1.text('Edit Post');
+         h1.siblings('h2').html("<b>" + WOA.static.current_post.title + "</b>");
+         Handlebars.renderTemplate('template-add-edit-post', WOA.static.current_post, 'div.secondary-view');
+         page.find('div.post-content div.header div.title input[type=text]').focus();
+      },
+
+      /*************************************************************
+       * Method - addPost()
+       *
+       *    Display Add Post Form
+       *************************************************************/
+      addPost : function()
+      {
+         // Update Page Header
+         var h1 = $('div.content.right div.header h1.title');
+         WOA.static.current_post_h1 = h1.text();
+         WOA.static.current_post_h2 = h1.siblings('h2').text();
+         var data = { addMode : true };
+
+         var page = $('div.content.right');
+         h1.text('Add Post');
+         h1.siblings('h2').html("Enter post data below.");
+         Handlebars.renderTemplate('template-add-edit-post', data, 'div.main-view');
+         page.find('div.post-content div.header div.title input[type=text]').focus();
+      },
+
+      /*************************************************************
+       * Method - backToPost()
+       *
+       *    Display Single Post View
+       *************************************************************/
+      backToPost : function()
+      {
+         // Update Page Header
+         var h1 = $('div.content.right div.header h1.title');
+         h1.text(WOA.static.current_post_h1);
+         h1.siblings('h2').html(WOA.static.current_post_h2);
+
+         var post = WOA.static.current_post;
+         delete WOA.static.current_post.editMode;
+         delete WOA.static.current_post.addMode;
+
+         Handlebars.renderTemplate('template-single-post', post, 'div.secondary-view');
       },
 
       /*************************************************************
@@ -115,6 +174,9 @@ WOA.pages.Updates =
       backToListView : function(e)
       {
          $('div.dynamic-content').animate({ left : '0px' }, 300, function() { $('div.dynamic-content div.secondary-view').remove(); });
+         delete WOA.static.current_post;
+         delete WOA.static.current_post_h1;
+         delete WOA.static.current_post_h2;
       },
 
       /*************************************************************
@@ -155,6 +217,9 @@ WOA.pages.Updates =
          $(document).on('click', 'div.dynamic-content div.list-container.updates div.item', WOA.pages.Updates.view.displayPost);
          $(document).on('click', 'div.dynamic-content div.secondary-view div.go-back', WOA.pages.Updates.view.backToListView);
          $(document).on('click', 'div.dynamic-content div.secondary-view div.post-content div.comments i', WOA.pages.Updates.view.toggleCommentsCollapse);
+         $(document).on('click', 'div.dynamic-content div.sub-page-actions div.add-post', WOA.pages.Updates.view.addPost);
+         $(document).on('click', 'div.dynamic-content div.sub-page-actions div.edit', WOA.pages.Updates.view.editPost);
+         $(document).on('click', 'div.dynamic-content div.submit-cancel div.cancel', WOA.pages.Updates.view.backToPost);
       }
    }
 };

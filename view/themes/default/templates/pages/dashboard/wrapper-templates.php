@@ -4,7 +4,7 @@
          <script id="template-sub-page-wrapper" type="text/x-handlebars-template">
             <div class="inner-container">
                <div class="header">
-                  <h1>{{title}}</h1>
+                  <h1 class="title">{{title}}</h1>
                   <h2>{{sub_text}}</h2>
                   <div class="shadow{{#if shadow_down}} down{{/if}}"></div>
                   <div class="dynamic-shell">

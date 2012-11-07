@@ -161,7 +161,7 @@ WOA.navigation =
                // Update Nav Links
                WOA.static.sub_page = $(e.target).attr('data-sub-page');
 
-               // Render Container View
+               // Render Template
                Handlebars.renderTemplate('template-sub-page-wrapper', WOA.static[WOA.static.page][WOA.static.sub_page], 'div.content.right');
 
                // Update Session

@@ -46,13 +46,7 @@ class Updates_Model extends WOA {
 
          // Links
          $links = $db->select_from_where(array('*'), 'post_links', 'post_id', $post['id']);
-         foreach ($links as $link)
-         {
-            unset($link['id']);
-            unset($link['post_id']);
-
-            $post['content']['links'][] = $link;
-         }
+         foreach ($links as $link) $post['content']['links'][] = $link;
 
          // Comments
          $comments = $db->select_from_where(array('*'), 'comments', 'post_id', $post['id']);
