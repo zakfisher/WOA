@@ -129,7 +129,6 @@
                            @include border-radius(3px);
                            padding: 10px;
                            font-size: 16px;
-                           font-weight: 300;
                            color: #ccc;
                            @include box-shadow(inset 0px 1px 3px 0 #ccc);
                            outline: none;
@@ -140,7 +139,6 @@
                      }
 
                      &.links {
-                        padding-bottom: 10px;
 
                         div.header {
                            background-color: #f0f0f0;
@@ -180,7 +178,7 @@
 
                            li {
                               margin: 0;
-                              padding: 10px 0;
+                              padding: 10px 0 0;
 
                               div.delete-link {
                                  padding: 4px 0 0;
@@ -224,6 +222,7 @@
                      &.submit-cancel div.inner { padding: 10px 220px; }
 
                      &.comments {
+                        padding: 0 10px;
 
                         div.header {
                            background-color: #f0f0f0;
@@ -251,7 +250,7 @@
                         }
 
                         div.body {
-                           width: 612px;
+                           width: 592px;
 
                            div.single-comment, div.add-comment {
                               padding: 15px 0;
@@ -278,7 +277,7 @@
                               div.comment-text {
                                  border-left: 1px solid $gray;
                                  min-height: 50px;
-                                 width: 501px;
+                                 width: 481px;
 
                                  p {
                                     font-size: 14px;
@@ -291,7 +290,7 @@
                                     padding: 0 10px;
 
                                     textarea[name=message] {
-                                       width: 450px;
+                                       width: 440px;
                                        border: 1px solid #CCC;
                                        @include border-radius(3px);
                                        padding: 3px 25px 3px 5px;
