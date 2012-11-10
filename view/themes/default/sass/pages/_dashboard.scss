@@ -63,11 +63,14 @@
                            div.title {
 
                               h1, input[type=text] {
-                                 font-weight: 500;
+                                 font-weight: 400;
                                  font-size: 22px;
                               }
 
-                              h1 { padding: 0; }
+                              h1 {
+                                 color: $pink;
+                                 padding: 0;
+                              }
 
                               input[type=text] {
                                  color: #ccc;
@@ -77,7 +80,7 @@
                                  padding: 0 0 5px;
                                  width: 100%;
 
-                                 &:focus { color: black; }
+                                 &:focus { color: $pink; }
                               }
 
                            }
