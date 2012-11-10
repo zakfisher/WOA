@@ -37,6 +37,16 @@ WOA.pages.Updates =
       getProjectUpdates : function()
       {
          $.get(WOA.static.env + 'updates/get_updates/' + WOA.static.current_project.id, WOA.pages.Updates.view.showPage);
+      },
+
+      /*************************************************************
+       * Method - submitPostUpdate()
+       *
+       *    Fetch Project Updates Data
+       *************************************************************/
+      submitPostUpdate : function()
+      {
+         $.post(WOA.static.env + 'updates/submit_post_update/', WOA.static.current_post, WOA.pages.Updates.view.updatePostSuccess).error(WOA.pages.Updates.view.updatePostError);
       }
    },
    view : {
@@ -167,6 +177,17 @@ WOA.pages.Updates =
       },
 
       /*************************************************************
+       * Method - backToPostFromNew()
+       *
+       *    Display Post List View
+       *************************************************************/
+      backToPostFromNew : function()
+      {
+         // Render List View
+         Handlebars.renderTemplate('template-list', WOA.static.list_cache, 'div.dynamic-content');
+      },
+
+      /*************************************************************
        * Method - backToListView(e)
        *
        *    Show List View
@@ -177,6 +198,143 @@ WOA.pages.Updates =
          delete WOA.static.current_post;
          delete WOA.static.current_post_h1;
          delete WOA.static.current_post_h2;
+      },
+
+      /*************************************************************
+       * Method - updatePost()
+       *
+       *    Update Post Cache and Issue AJAX Request
+       *************************************************************/
+      updatePost : function()
+      {
+         var postId = WOA.static.current_post.id;
+         var form = $('div.post-content');
+         var title = form.find('div.header div.title input').val();
+         var message = form.find('div.message textarea').val();
+         var links = form.find('div.links ul li');
+         var update = form.find('div.submit-cancel div.update');
+
+         if (!update.hasClass('disabled')) {
+
+            // Update Cached Post
+            WOA.static.current_post.title = title;
+            WOA.static.current_post.content.message = message;
+
+            // Add/Update Links
+            if (links.length > 0) {
+               WOA.static.current_post.content.links = [];
+               $(links).each(function(i,v) {
+                  var link = {
+                     post_id : postId,
+                     title : $(v).find('a').text(),
+                     url : $(v).find('a').attr('href')
+                  };
+                  WOA.static.current_post.content.links.push(link);
+               });
+            }
+
+            // Remove Links
+            else { delete WOA.static.current_post.content.links; }
+
+            // Updated Cached List & List Title
+            WOA.static.list_cache.items[WOA.static.list_cache.item_index[postId]] = WOA.static.current_post;
+            $('div.list-container div.item[data-id=' + postId + '] div.title h1').text(title);
+
+            // Issue AJAX
+            update.addClass('disabled');
+            WOA.pages.Updates.model.submitPostUpdate();
+         }
+      },
+
+      /*************************************************************
+       * Method - updatePostError()
+       *
+       *    Display AJAX Error
+       *************************************************************/
+      updatePostError : function()
+      {
+         $('div.submit-cancel div.update').removeClass('disabled');
+         $('div.post-content p.error').text('Unable to update post.');
+      },
+
+      /*************************************************************
+       * Method - updatePostSuccess()
+       *
+       *    Display AJAX Success
+       *************************************************************/
+      updatePostSuccess : function(data)
+      {
+         console.log(data);
+         WOA.pages.Updates.view.backToPost();
+      },
+
+      /*************************************************************
+       * Method - addLink()
+       *
+       *    Add Link to Add/Edit Post Form
+       *************************************************************/
+      addLink : function()
+      {
+         var links = $('div.links');
+         var ul = links.find('ul');
+         var titleInput = links.find('div.add-link input[name=title]');
+         var title = titleInput.val();
+         var urlInput = links.find('div.add-link input[name=url]');
+         var url = urlInput.val();
+
+         // Add UL if it doesn't exist
+         if (ul.length == 0) {
+            links.find('div.add-link').before("<ul></ul>");
+            ul = links.find('ul');
+         }
+
+         // Validate Input & Render Link List Item
+         if (title.trim() != '' && url.trim() != '' && title != 'Title' && url != 'URL') {
+            var li = {
+               title : title,
+               url : url
+            };
+            Handlebars.renderTemplate('template-add-link', li, ul, 'append');
+            titleInput.val('Title');
+            urlInput.val('URL');
+         }
+      },
+
+      /*************************************************************
+       * Method - deleteLink(e)
+       *
+       *    Delete Link from Add/Edit Post Form
+       *************************************************************/
+      deleteLink : function(e)
+      {
+         var li = $(e.target).parents ('li');
+         li.remove();
+      },
+
+      /*************************************************************
+       * Method - addLinkFocus(e)
+       *
+       *    Clear Input Values on Focus
+       *************************************************************/
+      addLinkFocus : function(e)
+      {
+         var input = $(e.target);
+         if (input.val().toLowerCase() == input.attr('name').toLowerCase()) { input.val(''); }
+      },
+
+      /*************************************************************
+       * Method - addLinkBlur(e)
+       *
+       *    Replace Input Values on Focus
+       *************************************************************/
+      addLinkBlur : function(e)
+      {
+         var input = $(e.target);
+         var name = input.attr('name');
+         if (input.val() == '') {
+            if (name == 'title') { input.val('Title'); }
+            else if (name == 'url') { input.val('URL'); }
+         }
       },
 
       /*************************************************************
@@ -220,6 +378,12 @@ WOA.pages.Updates =
          $(document).on('click', 'div.dynamic-content div.sub-page-actions div.add-post', WOA.pages.Updates.view.addPost);
          $(document).on('click', 'div.dynamic-content div.sub-page-actions div.edit', WOA.pages.Updates.view.editPost);
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.cancel', WOA.pages.Updates.view.backToPost);
+         $(document).on('click', 'div.dynamic-content div.submit-cancel div.cancel-new', WOA.pages.Updates.view.backToPostFromNew);
+         $(document).on('click', 'div.dynamic-content div.submit-cancel div.update', WOA.pages.Updates.view.updatePost);
+         $(document).on('click', 'div.dynamic-content div.add-link div.add', WOA.pages.Updates.view.addLink);
+         $(document).on('focus', 'div.dynamic-content div.add-link input', WOA.pages.Updates.view.addLinkFocus);
+         $(document).on('blur',  'div.dynamic-content div.add-link input', WOA.pages.Updates.view.addLinkBlur);
+         $(document).on('click', 'div.dynamic-content div.links ul li div.delete-link', WOA.pages.Updates.view.deleteLink);
       }
    }
 };

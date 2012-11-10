@@ -79,3 +79,8 @@ Handlebars.registerHelper('renderListItems', function(items, itemsPerPage) {
    var template = Handlebars.compile($('#template-list-items').html());
    return new Handlebars.SafeString(template(data));
 });
+
+Handlebars.registerHelper('renderLinkItem', function(data) {
+   var template = Handlebars.compile($('#template-add-link').html());
+   return new Handlebars.SafeString(template(data));
+});

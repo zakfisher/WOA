@@ -6,7 +6,7 @@ class Updates extends WOA {
       require_once('model/updates.php');
    }
 
-   function get_updates($project_id = null)
+   public function get_updates($project_id = null)
    {
       if ($this->login_check('return') == 'true')
       {
@@ -15,4 +15,14 @@ class Updates extends WOA {
       }
    }
 
+   public function submit_post_update() {
+      if ($this->login_check('return') == 'true')
+      {
+         if ($_POST)
+         {
+            $updates_model = new Updates_Model();
+            $updates_model->update_post($_POST);
+         }
+      }
+   }
 }

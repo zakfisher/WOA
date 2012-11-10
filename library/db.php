@@ -28,20 +28,6 @@ class DB {
       print 'success';
    }
 
-   function update_where($table, $assoc_array, $column, $value)
-   {
-      // Compose UPDATE Query
-      foreach ($assoc_array as $key => $val)
-      {
-         $new_values[] = $key . " = '" . $val . "'";
-      }
-      $new_values = implode(",", $new_values);
-      $query = "UPDATE " . $table . " SET " . $new_values . " WHERE " . $column . " = " . $value . ";";
-
-      // Execute Query
-      $this->query($query);
-   }
-
    function select_from($array, $table)
    {
       // Compose SELECT x FROM Query
@@ -96,5 +82,28 @@ class DB {
       // Return Results
       while ($row = mysqli_fetch_array($result_set, MYSQL_ASSOC)) $rows[] = $row;
       return $rows;
+   }
+
+   function update_where($table, $assoc_array, $column, $value)
+   {
+      // Compose UPDATE Query
+      foreach ($assoc_array as $key => $val)
+      {
+         $new_values[] = $key . " = '" . $val . "'";
+      }
+      $new_values = implode(",", $new_values);
+      $query = "UPDATE " . $table . " SET " . $new_values . " WHERE " . $column . " = " . $value . ";";
+
+      // Execute Query
+      $this->query($query);
+   }
+
+   function delete_from_where($table, $column, $value)
+   {
+      // Compose DELETE Query
+      $query = "DELETE FROM " . $table . " WHERE " . $column . " = " . $value . ";";
+
+      // Execute Query
+      $this->query($query);
    }
 }

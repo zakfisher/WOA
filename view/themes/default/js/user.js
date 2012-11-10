@@ -105,10 +105,11 @@ WOA.user =
          var cookie = data.user;
 
          // Set User Cookie
-         var now = new Date();
-         var oneHourFromNow = now.getTime() + 3600000;
-         var expiration = new Date(oneHourFromNow);
-         $.cookie('user', JSON.stringify(data.user), { expires : expiration });
+//         var now = new Date();
+//         var oneHourFromNow = now.getTime() + 3600000;
+//         var expiration = new Date(oneHourFromNow);
+//         $.cookie('user', JSON.stringify(data.user), { expires : expiration });
+         $.cookie('user', JSON.stringify(data.user));
       }
    },
    view :
@@ -290,7 +291,7 @@ WOA.user =
          $(document).on('keydown', '#login-form input:focus', function(e) { $('#login-form p.error').text(''); if (e.keyCode == 13) { WOA.user.view.submitUserInput(); } });
 
          // Set Automatic Logout
-         $(document).on('mousemove', 'body', WOA.user.view.setAutoLogout);
+         //$(document).on('mousemove', 'body', WOA.user.view.setAutoLogout);
 
          // Log Out
          $(document).on('click', '#navigation div.right div.link.sign-out, #navigation div.right div.link.sign-out p', WOA.user.model.logout);

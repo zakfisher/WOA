@@ -133,6 +133,7 @@
                            @include box-shadow(inset 0px 1px 3px 0 #ccc);
                            outline: none;
                            resize: none;
+                           line-height: 22px;
 
                            &:focus { color: black; }
                         }
@@ -160,7 +161,7 @@
                            list-style-type: none;
 
                            li {
-                              padding: 3px 0;
+                              padding: 5px 0;
 
                               a {
                                  font-size: 16px;
@@ -186,10 +187,10 @@
                                  height: 18px;
                               }
 
-                              p {
-                                 margin: 0;
-                                 padding: 2px 0 0 5px;
-                                 font-size: 16px;
+                              a {
+                                 position: relative;
+                                 top: 3px;
+                                 left: 5px;
                               }
 
                            }
@@ -217,6 +218,12 @@
                            }
                         }
 
+                        p.error {
+                           text-align: center;
+                           padding-top: 10px;
+                           color: red;
+                           font-size: 14px;
+                        }
                      }
 
                      &.submit-cancel div.inner { padding: 10px 220px; }

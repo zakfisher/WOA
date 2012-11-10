@@ -150,11 +150,7 @@
                      {{#if content.links}}
                      <ul>
                         {{#each content.links}}
-                        <li data-link-id="{{id}}">
-                           <div class="btn btn-inverse delete-link left clr"><i class="icon-white icon-remove"></i></div>
-                           <p class="left" data-url="{{url}}">{{title}}</p>
-                           <div class="clr"></div>
-                        </li>
+                        {{renderLinkItem this}}
                         {{/each}}
                         <div class="clr"></div>
                      </ul>
@@ -169,10 +165,20 @@
                   <div class="shadow down"></div>
                   <div class="submit-cancel clr">
                      <div class="inner">
-                        <div class="btn btn-inverse submit left"><i class="icon-white icon-ok"></i> {{#if addMode}}Submit{{else}}Update{{/if}}</div>
-                        <div class="btn btn-inverse cancel right"><i class="icon-white icon-remove"></i> Cancel</div>
+                        <div class="btn btn-inverse {{#if addMode}}add-new{{else}}update{{/if}} left"><i class="icon-white icon-ok"></i> {{#if addMode}}Submit{{else}}Update{{/if}}</div>
+                        <div class="btn btn-inverse {{#if addMode}}cancel-new{{else}}cancel{{/if}} right"><i class="icon-white icon-remove"></i> Cancel</div>
                      </div>
                   </div>
+                  <p class="error clr"></p>
                </div>
             </div>
+         </script>
+
+         <!-- New Link List Item -->
+         <script id="template-add-link" type="text/x-handlebars-template">
+            <li data-link-id="{{id}}">
+               <div class="btn btn-inverse delete-link left clr"><i class="icon-white icon-remove"></i></div>
+               <a href="{{url}}" target="_blank">{{title}}</a>
+               <div class="clr"></div>
+            </li>
          </script>

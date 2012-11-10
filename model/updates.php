@@ -68,4 +68,34 @@ class Updates_Model extends WOA {
 
       JSON::print_json($updates);
    }
+
+   function update_post($data)
+   {
+      $id = $data['id'];
+      $db = new DB();
+
+      // Security Check
+      if ($data['author'] == $_SESSION['user']['username'])
+      {
+         // Update posts Table
+         $post_data = array(
+            'title' => $data['title'],
+            'message' => $data['content']['message']
+         );
+         $db->update_where('posts', $post_data, 'id', $id);
+
+         // Update post_links
+         $db->delete_from_where('post_links', 'post_id', $id);
+         $links = $data['content']['links'];
+         foreach ($links as $link)
+         {
+            $link_data = array (
+               'post_id' => $id,
+               'title' => $link['title'],
+               'url' => $link['url']
+            );
+            $db->insert_into('post_links', $link_data);
+         }
+      }
+   }
 }
