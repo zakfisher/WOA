@@ -24,8 +24,6 @@ class DB {
 
       // Execute Query
       $this->query($query);
-
-      print 'success';
    }
 
    function select_from($array, $table)
@@ -42,11 +40,39 @@ class DB {
       return $rows;
    }
 
+   function select_from_order_by($array, $table, $field)
+   {
+      // Compose SELECT x FROM Query
+      $values = implode(",", $array);
+      $query = "SELECT " . $values . " FROM " . $table . " ORDER BY " . $field . ";";
+
+      // Execute Query
+      $result_set = $this->query($query);
+
+      // Return Results
+      while ($row = mysqli_fetch_array($result_set, MYSQL_ASSOC)) $rows[] = $row;
+      return $rows;
+   }
+
    function select_from_where($array, $table, $column, $value)
    {
       // Compose SELECT x FROM y WHERE Query
       $values = implode(",", $array);
       $query = "SELECT " . $values . " FROM " . $table . " WHERE " . $column . " = '" . $value . "';";
+
+      // Execute Query
+      $result_set = $this->query($query);
+
+      // Return Results
+      while ($row = mysqli_fetch_array($result_set, MYSQL_ASSOC)) $rows[] = $row;
+      return $rows;
+   }
+
+   function select_from_where_order_by($array, $table, $column, $value, $field)
+   {
+      // Compose SELECT x FROM y WHERE Query
+      $values = implode(",", $array);
+      $query = "SELECT " . $values . " FROM " . $table . " WHERE " . $column . " = '" . $value . "' ORDER BY " . $field . ";";
 
       // Execute Query
       $result_set = $this->query($query);

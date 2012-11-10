@@ -25,4 +25,15 @@ class Updates extends WOA {
          }
       }
    }
+
+   public function submit_new_post() {
+      if ($this->login_check('return') == 'true')
+      {
+         if ($_POST)
+         {
+            $updates_model = new Updates_Model();
+            $updates_model->add_post($_POST);
+         }
+      }
+   }
 }

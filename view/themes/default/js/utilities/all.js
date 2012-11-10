@@ -13,3 +13,4 @@
 
 /** Import Pages **/
 $.getScript('view/themes/default/js/utilities/pagination.js');
+$.getScript('view/themes/default/js/utilities/time.js');

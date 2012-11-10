@@ -129,7 +129,13 @@
                            {{/if}}
                         </div>
                         <div class="info left last">
-                           {{#if addMode}}Project Name...
+                           {{#if addMode}}
+                           <select>
+                              <option selected disabled>Choose Project</option>
+                              {{#each projects}}
+                              <option value="{{id}}" data-project="{{project}}">{{project}}</option>
+                              {{/each}}
+                           </select>
                            {{else}}
                            {{project}}
                            {{/if}}

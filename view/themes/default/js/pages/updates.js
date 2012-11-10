@@ -24,30 +24,29 @@ WOA.pages.Updates =
        *
        *    Fetch All Updates Data
        *************************************************************/
-      getAllUpdates : function()
-      {
-         $.get(WOA.static.env + 'updates/get_updates', WOA.pages.Updates.view.showPage);
-      },
+      getAllUpdates : function() { $.get(WOA.static.env + 'updates/get_updates', WOA.pages.Updates.view.showPage); },
 
       /*************************************************************
        * Method - getProjectUpdates()
        *
        *    Fetch Project Updates Data
        *************************************************************/
-      getProjectUpdates : function()
-      {
-         $.get(WOA.static.env + 'updates/get_updates/' + WOA.static.current_project.id, WOA.pages.Updates.view.showPage);
-      },
+      getProjectUpdates : function() { $.get(WOA.static.env + 'updates/get_updates/' + WOA.static.current_project.id, WOA.pages.Updates.view.showPage); },
 
       /*************************************************************
        * Method - submitPostUpdate()
        *
-       *    Fetch Project Updates Data
+       *    Update Current Post
        *************************************************************/
       submitPostUpdate : function()
-      {
-         $.post(WOA.static.env + 'updates/submit_post_update/', WOA.static.current_post, WOA.pages.Updates.view.updatePostSuccess).error(WOA.pages.Updates.view.updatePostError);
-      }
+      { $.post(WOA.static.env + 'updates/submit_post_update/', WOA.static.current_post, WOA.pages.Updates.view.updatePostSuccess).error(WOA.pages.Updates.view.updatePostError); },
+
+      /*************************************************************
+       * Method - submitPostAdd()
+       *
+       *    Add New Post
+       *************************************************************/
+      submitPostAdd : function() { $.post(WOA.static.env + 'updates/submit_new_post/', WOA.static.current_post, WOA.pages.Updates.view.addPostSuccess).error(WOA.pages.Updates.view.addPostError); }
    },
    view : {
       /*************************************************************
@@ -138,18 +137,38 @@ WOA.pages.Updates =
       },
 
       /*************************************************************
-       * Method - addPost()
+       * Method - addPostForm()
        *
        *    Display Add Post Form
        *************************************************************/
-      addPost : function()
+      addPostForm : function()
       {
          // Update Page Header
          var h1 = $('div.content.right div.header h1.title');
          WOA.static.current_post_h1 = h1.text();
          WOA.static.current_post_h2 = h1.siblings('h2').text();
-         var data = { addMode : true };
 
+         // Render Project List
+         var projects = [];
+         var projArr = [];
+         for (var i in WOA.static.list_cache.items)
+         {
+            var item = WOA.static.list_cache.items[i];
+            var project = {
+               project : item.project,
+               id : item.project_id
+            };
+            if ($.inArray(item.project, projects) == -1) {
+               projects.push(item.project);
+               projArr.push(project);
+            }
+         }
+
+         // Display Form
+         var data = {
+            addMode : true,
+            projects : projArr
+         };
          var page = $('div.content.right');
          h1.text('Add Post');
          h1.siblings('h2').html("Enter post data below.");
@@ -247,6 +266,83 @@ WOA.pages.Updates =
       },
 
       /*************************************************************
+       * Method - addPost()
+       *
+       *    Add to Post Cache and Issue AJAX Request
+       *************************************************************/
+      addPost : function()
+      {
+         var form = $('div.post-content');
+         var title = form.find('div.header div.title input').val();
+         var message = form.find('div.message textarea').val();
+         var links = form.find('div.links ul li');
+         var add = form.find('div.submit-cancel div.add-new');
+         var project = form.find('div.header option:selected');
+         var p_id = project.val();
+         var p_name = project.attr('data-project');
+
+         if (!add.hasClass('disabled') && p_name != 'undefined' && title != 'Add Post Title' && message != 'Add your message...') {
+
+            // Cache Post
+            WOA.static.current_post = {
+               author     : WOA.static.user.username,
+               project    : p_name,
+               project_id : p_id,
+               template   : 'updates-list-items',
+               time       : WOA.utilities.Time.model.renderCurrentDate(),
+               title      : title,
+               content    : { message : message }
+            };
+
+            // Add Links
+            if (links.length > 0) {
+               WOA.static.current_post.content.links = [];
+               $(links).each(function(i,v) {
+                  var link = {
+                     title : $(v).find('a').text(),
+                     url : $(v).find('a').attr('href')
+                  };
+                  WOA.static.current_post.content.links.push(link);
+               });
+            }
+
+            // Issue AJAX
+            add.addClass('disabled');
+            WOA.pages.Updates.model.submitPostAdd();
+         }
+      },
+
+      /*************************************************************
+       * Method - addPostError()
+       *
+       *   Add AJAX Error
+       *************************************************************/
+      addPostError : function()
+      {
+         $('div.submit-cancel div.add-new').removeClass('disabled');
+         $('div.post-content p.error').text('Unable to add post.');
+      },
+
+      /*************************************************************
+       * Method - addPostSuccess()
+       *
+       *    Display AJAX Success
+       *************************************************************/
+      addPostSuccess : function(data)
+      {
+         console.log(data);
+         WOA.static.current_post = data;
+
+         // Update List Cache
+         var items = [data];
+         $(WOA.static.list_cache.items).each(function(i,v) { items.push(v); });
+         WOA.static.list_cache.items = items;
+
+         // Display List
+         WOA.pages.Updates.view.showPage(items);
+      },
+
+      /*************************************************************
        * Method - updatePostError()
        *
        *    Display AJAX Error
@@ -264,7 +360,6 @@ WOA.pages.Updates =
        *************************************************************/
       updatePostSuccess : function(data)
       {
-         console.log(data);
          WOA.pages.Updates.view.backToPost();
       },
 
@@ -375,11 +470,12 @@ WOA.pages.Updates =
          $(document).on('click', 'div.dynamic-content div.list-container.updates div.item', WOA.pages.Updates.view.displayPost);
          $(document).on('click', 'div.dynamic-content div.secondary-view div.go-back', WOA.pages.Updates.view.backToListView);
          $(document).on('click', 'div.dynamic-content div.secondary-view div.post-content div.comments i', WOA.pages.Updates.view.toggleCommentsCollapse);
-         $(document).on('click', 'div.dynamic-content div.sub-page-actions div.add-post', WOA.pages.Updates.view.addPost);
+         $(document).on('click', 'div.dynamic-content div.sub-page-actions div.add-post', WOA.pages.Updates.view.addPostForm);
          $(document).on('click', 'div.dynamic-content div.sub-page-actions div.edit', WOA.pages.Updates.view.editPost);
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.cancel', WOA.pages.Updates.view.backToPost);
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.cancel-new', WOA.pages.Updates.view.backToPostFromNew);
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.update', WOA.pages.Updates.view.updatePost);
+         $(document).on('click', 'div.dynamic-content div.submit-cancel div.add-new', WOA.pages.Updates.view.addPost);
          $(document).on('click', 'div.dynamic-content div.add-link div.add', WOA.pages.Updates.view.addLink);
          $(document).on('focus', 'div.dynamic-content div.add-link input', WOA.pages.Updates.view.addLinkFocus);
          $(document).on('blur',  'div.dynamic-content div.add-link input', WOA.pages.Updates.view.addLinkBlur);
