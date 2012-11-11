@@ -21,10 +21,14 @@ WOA.pages.Projects =
        *
        *    Fetch Projects Data
        *************************************************************/
-      getProjects : function()
-      {
-         $.get(WOA.static.env + 'projects/get_projects', function(data) { WOA.pages.Projects.view.showPage(data); });
-      }
+      getProjects : function() { $.get(WOA.static.env + 'projects/get_projects', function(data) { WOA.pages.Projects.view.showPage(data); }); },
+
+      /*************************************************************
+       * Method - getProjectNames(callback)
+       *
+       *    Fetch Project Names
+       *************************************************************/
+      getProjectNames : function(callback) { $.get(WOA.static.env + 'projects/get_project_names', callback); }
    },
    view : {
       /*************************************************************

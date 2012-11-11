@@ -5,7 +5,7 @@ class Projects_Model extends WOA {
       parent::__construct();
    }
 
-   function get_user_projects()
+   public function get_user_projects()
    {
       $db = new DB();
       $all_projects = array();
@@ -54,4 +54,20 @@ class Projects_Model extends WOA {
 
       JSON::print_json($all_projects);
    }
+
+   public function get_user_project_names()
+   {
+      $db = new DB();
+      $project_names = array();
+
+      $results = $db->select_from_where(array('*'), 'project_users', 'user_id', $_SESSION['user']['user_id']);
+      foreach ($results as $row)
+      {
+         $p_name = $db->select_from_where(array('project'), 'projects', 'id', $row['proj_id']);
+         $project_names[] = array('project' => $p_name[0]['project'], 'id' => $row['proj_id']);
+      }
+
+      JSON::print_json($project_names);
+   }
+
 }

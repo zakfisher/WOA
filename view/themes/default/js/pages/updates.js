@@ -148,32 +148,21 @@ WOA.pages.Updates =
          WOA.static.current_post_h1 = h1.text();
          WOA.static.current_post_h2 = h1.siblings('h2').text();
 
-         // Render Project List
-         var projects = [];
-         var projArr = [];
-         for (var i in WOA.static.list_cache.items)
-         {
-            var item = WOA.static.list_cache.items[i];
-            var project = {
-               project : item.project,
-               id : item.project_id
-            };
-            if ($.inArray(item.project, projects) == -1) {
-               projects.push(item.project);
-               projArr.push(project);
-            }
-         }
-
          // Display Form
-         var data = {
-            addMode : true,
-            projects : projArr
-         };
-         var page = $('div.content.right');
-         h1.text('Add Post');
-         h1.siblings('h2').html("Enter post data below.");
-         Handlebars.renderTemplate('template-add-edit-post', data, 'div.main-view');
-         page.find('div.post-content div.header div.title input[type=text]').focus();
+         var displayForm = function(projects)
+         {
+            console.log(projects);
+            var data = {
+               addMode : true,
+               projects : projects
+            };
+            var page = $('div.content.right');
+            h1.text('Add Post');
+            h1.siblings('h2').html("Enter post data below.");
+            Handlebars.renderTemplate('template-add-edit-post', data, 'div.main-view');
+            page.find('div.post-content div.header div.title input[type=text]').focus();
+         }
+         WOA.pages.Projects.model.getProjectNames(displayForm);
       },
 
       /*************************************************************
