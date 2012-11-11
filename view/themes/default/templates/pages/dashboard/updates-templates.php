@@ -161,7 +161,7 @@
                         <div class="clr"></div>
                      </ul>
                      {{/if}}
-                     <div class="add-link">
+                     <div class="add-link clr">
                         <input class="left mr15" type="text" value="Title" name="title" />
                         <input class="left" type="text" value="URL" name="url" />
                         <div class="btn btn-inverse add right"><i class="icon-white icon-plus"></i> Add Link</div>

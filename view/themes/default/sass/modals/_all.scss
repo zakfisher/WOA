@@ -141,10 +141,11 @@
 
 /* Confirm Post Delete */
 #confirm-post-delete-modal {
+
    .modal {
       width: 400px;
-      margin-left: -200px;
-      top: 160px;
+      margin-left: -50px;
+      top: 310px;
 
       .modal-footer {
          text-align: center;
@@ -152,5 +153,7 @@
          a { margin: 0 5px; }
       }
    }
+
+   .modal-backdrop { @include opacity(0); }
 
 }

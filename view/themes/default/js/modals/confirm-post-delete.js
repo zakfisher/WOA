@@ -60,6 +60,7 @@ WOA.modals.DeletePost =
          h1.siblings('h2').html(WOA.static.current_post_h2);
 
          // Display List
+         WOA.modals.DeletePost.view.unfadeContent();
          WOA.pages.Updates.view.backToListView();
       },
 
@@ -71,6 +72,16 @@ WOA.modals.DeletePost =
       deletePostFail : function()
       {
 
+      },
+
+      /*************************************************************
+       * Method - unfadeContent()
+       *
+       *    Unfade Content on Modal Backdrop Click
+       *************************************************************/
+      unfadeContent : function()
+      {
+         $('div.dynamic-shell').removeClass('faded');
       }
    },
    controller :
@@ -82,6 +93,8 @@ WOA.modals.DeletePost =
       {
          /** Handlers **/
          $(document).on('click', '#confirm-post-delete', WOA.modals.DeletePost.view.deletePost);
+         $(document).on('click', '#confirm-post-delete-modal div.modal-backdrop, #confirm-post-delete-modal div.modal-footer .x, #confirm-post-delete-modal div.modal-header div.close', WOA.modals.DeletePost.view.unfadeContent);
+         $(document).on('keydown', 'body', function(e) { if (e.keyCode == 27) { WOA.modals.DeletePost.view.unfadeContent(); } });
       }
    }
 };

@@ -151,7 +151,6 @@ WOA.pages.Updates =
          // Display Form
          var displayForm = function(projects)
          {
-            console.log(projects);
             var data = {
                addMode : true,
                projects : projects
@@ -399,6 +398,18 @@ WOA.pages.Updates =
       },
 
       /*************************************************************
+       * Method - addLink()
+       *
+       *    Trigger Add Link to Add/Edit Post Form
+       *************************************************************/
+      addLinkTrigger : function(e) {
+         if (e.keyCode == 13) {
+            WOA.pages.Updates.view.addLink();
+            $('div.dynamic-content div.add-link input:first-child').focus();
+         }
+      },
+
+      /*************************************************************
        * Method - deleteLink(e)
        *
        *    Delete Link from Add/Edit Post Form
@@ -504,6 +515,16 @@ WOA.pages.Updates =
             icon.addClass('icon-minus');
             div.slideDown();
          }
+      },
+
+      /*************************************************************
+       * Method - fadeContent()
+       *
+       *    Fade Content for Delete Post Modal
+       *************************************************************/
+      fadeContent : function()
+      {
+         $('div.dynamic-shell').addClass('faded');
       }
    },
    controller :
@@ -523,7 +544,9 @@ WOA.pages.Updates =
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.cancel-new', WOA.pages.Updates.view.backToPostFromNew);
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.update', WOA.pages.Updates.view.updatePost);
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.add-new', WOA.pages.Updates.view.addPost);
+         $(document).on('click', 'div.dynamic-content div.submit-cancel div.delete-post', WOA.pages.Updates.view.fadeContent);
          $(document).on('click', 'div.dynamic-content div.add-link div.add', WOA.pages.Updates.view.addLink);
+         $(document).on('keydown', 'div.dynamic-content div.add-link input', WOA.pages.Updates.view.addLinkTrigger);
          $(document).on('focus', 'div.dynamic-content div.add-link input', WOA.pages.Updates.view.addLinkFocus);
          $(document).on('blur',  'div.dynamic-content div.add-link input', WOA.pages.Updates.view.addLinkBlur);
          $(document).on('click', 'div.dynamic-content div.links ul li div.delete-link', WOA.pages.Updates.view.deleteLink);

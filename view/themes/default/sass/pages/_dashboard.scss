@@ -33,6 +33,8 @@
          overflow: hidden;
          width: 612px;
 
+         &.faded { @include opacity(.3); }
+
          div.dynamic-content {
             position: relative;
             width: 1262px;
@@ -160,7 +162,7 @@
 
                         ul {
                            padding: 0;
-                           margin: 5px 15px;
+                           margin: 0 15px;
                            list-style-type: none;
 
                            li {
@@ -181,8 +183,9 @@
                         div.inner {
 
                            li {
-                              margin: 0;
-                              padding: 10px 0 0;
+                              margin: 0 20px;
+                              padding: 11px 0;
+                              float: left;
 
                               div.delete-link {
                                  padding: 4px 0 0;
