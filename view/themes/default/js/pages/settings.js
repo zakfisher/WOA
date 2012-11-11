@@ -154,6 +154,7 @@ WOA.pages.Settings =
          // Success
          else {
             // Update User Cache
+            if (typeof data.user.password !== 'undefined') { delete data.user.password; }
             WOA.user.model.setUserCache(data);
 
             console.log(data);
