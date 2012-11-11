@@ -69,3 +69,4 @@ WOA.modals.controller.init();
 
 /** Import Modals **/
 $.getScript('view/themes/default/js/modals/forgot-password.js');
+$.getScript('view/themes/default/js/modals/confirm-post-delete.js');

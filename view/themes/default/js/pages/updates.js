@@ -313,6 +313,16 @@ WOA.pages.Updates =
       },
 
       /*************************************************************
+       * Method - deletePost()
+       *
+       *    Delete from Post Cache and Issue AJAX Request
+       *************************************************************/
+      deletePost : function()
+      {
+
+      },
+
+      /*************************************************************
        * Method - addPostError()
        *
        *   Add AJAX Error
@@ -433,6 +443,50 @@ WOA.pages.Updates =
       },
 
       /*************************************************************
+       * Method - postTitleFocus(e)
+       *
+       *    Clear Input Values on Focus
+       *************************************************************/
+      postTitleFocus : function(e)
+      {
+         var input = $(e.target);
+         if (input.val() == 'Add Post Title') { input.val(''); }
+      },
+
+      /*************************************************************
+       * Method - addLinkBlur(e)
+       *
+       *    Replace Input Values on Focus
+       *************************************************************/
+      postTitleBlur : function(e)
+      {
+         var input = $(e.target);
+         if (input.val().trim() == '') { input.val('Add Post Title'); }
+      },
+
+      /*************************************************************
+       * Method - postTitleFocus(e)
+       *
+       *    Clear Textarea Values on Focus
+       *************************************************************/
+      postMessageFocus : function(e)
+      {
+         var input = $(e.target);
+         if (input.val() == 'Add your message...') { input.val(''); }
+      },
+
+      /*************************************************************
+       * Method - addMessageBlur(e)
+       *
+       *    Replace Textarea Values on Focus
+       *************************************************************/
+      postMessageBlur : function(e)
+      {
+         var input = $(e.target);
+         if (input.val().trim() == '') { input.val('Add your message...'); }
+      },
+
+      /*************************************************************
        * Method - toggleCommentsCollapse(e)
        *
        *    Expand/Collapse Comments
@@ -476,10 +530,15 @@ WOA.pages.Updates =
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.cancel-new', WOA.pages.Updates.view.backToPostFromNew);
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.update', WOA.pages.Updates.view.updatePost);
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.add-new', WOA.pages.Updates.view.addPost);
+         $(document).on('click', 'div.dynamic-content div.submit-cancel div.delete-post', WOA.pages.Updates.view.deletePost);
          $(document).on('click', 'div.dynamic-content div.add-link div.add', WOA.pages.Updates.view.addLink);
          $(document).on('focus', 'div.dynamic-content div.add-link input', WOA.pages.Updates.view.addLinkFocus);
          $(document).on('blur',  'div.dynamic-content div.add-link input', WOA.pages.Updates.view.addLinkBlur);
          $(document).on('click', 'div.dynamic-content div.links ul li div.delete-link', WOA.pages.Updates.view.deleteLink);
+         $(document).on('focus', 'div.dynamic-content div.post-content div.header div.title input', WOA.pages.Updates.view.postTitleFocus);
+         $(document).on('blur',  'div.dynamic-content div.post-content div.header div.title input', WOA.pages.Updates.view.postTitleBlur);
+         $(document).on('focus', 'div.dynamic-content div.post-content div.message textarea', WOA.pages.Updates.view.postMessageFocus);
+         $(document).on('blur',  'div.dynamic-content div.post-content div.message textarea', WOA.pages.Updates.view.postMessageBlur);
       }
    }
 };

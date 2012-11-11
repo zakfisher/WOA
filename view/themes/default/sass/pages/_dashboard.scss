@@ -229,7 +229,11 @@
                         }
                      }
 
-                     &.submit-cancel div.inner { padding: 10px 220px; }
+                     &.submit-cancel div.inner {
+                        padding: 10px;
+
+                        div.cancel, div.cancel-new { margin-right: 10px; }
+                     }
 
                      &.comments {
                         padding: 0 10px;
