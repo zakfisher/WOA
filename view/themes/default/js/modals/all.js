@@ -49,7 +49,8 @@ WOA.modals =
       init : function()
       {
          WOA.static.modals = {
-            forgot_password : { template : 'forgot-password-modal' }
+            forgot_password : { template : 'forgot-password-modal' },
+            confirm_post_delete : { template : 'confirm-post-delete-modal' }
          };
 
          /** Handlers **/

@@ -86,6 +86,9 @@ WOA.navigation =
        *************************************************************/
       requestPage : function(e)
       {
+         // Hide Modal
+         $('div.modal-parent').remove();
+
          // Highlight Active Page Link
          $('li.page-link').removeClass('active');
          $('li.page-link[data-page=' + $(e.target).attr('data-page') + ']').addClass('active');

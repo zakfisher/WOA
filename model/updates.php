@@ -150,4 +150,12 @@ class Updates_Model extends WOA {
          JSON::print_json($post);
       }
    }
+
+   public function delete_post($post_id)
+   {
+      $db = new DB();
+      $db->delete_from_where('posts', 'id', $post_id);
+      $db->delete_from_where('post_links', 'post_id', $post_id);
+      $db->delete_from_where('comments', 'post_id', $post_id);
+   }
 }

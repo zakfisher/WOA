@@ -36,4 +36,13 @@ class Updates extends WOA {
          }
       }
    }
+
+   public function submit_delete_post($post_id, $username)
+   {
+      if ($this->login_check('return') == 'true' AND $username == $_SESSION['user']['username'])
+      {
+         $updates_model = new Updates_Model();
+         $updates_model->delete_post($post_id);
+      }
+   }
 }

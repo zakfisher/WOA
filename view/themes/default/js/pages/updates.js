@@ -202,6 +202,11 @@ WOA.pages.Updates =
        *************************************************************/
       backToPostFromNew : function()
       {
+         // Update Page Header
+         var h1 = $('div.content.right div.header h1.title');
+         h1.text(WOA.static.current_post_h1);
+         h1.siblings('h2').html(WOA.static.current_post_h2);
+
          // Render List View
          Handlebars.renderTemplate('template-list', WOA.static.list_cache, 'div.dynamic-content');
       },
@@ -313,16 +318,6 @@ WOA.pages.Updates =
       },
 
       /*************************************************************
-       * Method - deletePost()
-       *
-       *    Delete from Post Cache and Issue AJAX Request
-       *************************************************************/
-      deletePost : function()
-      {
-
-      },
-
-      /*************************************************************
        * Method - addPostError()
        *
        *   Add AJAX Error
@@ -340,13 +335,17 @@ WOA.pages.Updates =
        *************************************************************/
       addPostSuccess : function(data)
       {
-         console.log(data);
          WOA.static.current_post = data;
 
          // Update List Cache
          var items = [data];
          $(WOA.static.list_cache.items).each(function(i,v) { items.push(v); });
          WOA.static.list_cache.items = items;
+
+         // Update Page Header
+         var h1 = $('div.content.right div.header h1.title');
+         h1.text(WOA.static.current_post_h1);
+         h1.siblings('h2').html(WOA.static.current_post_h2);
 
          // Display List
          WOA.pages.Updates.view.showPage(items);
@@ -368,8 +367,13 @@ WOA.pages.Updates =
        *
        *    Display AJAX Success
        *************************************************************/
-      updatePostSuccess : function(data)
+      updatePostSuccess : function()
       {
+         // Update Page Header
+         var h1 = $('div.content.right div.header h1.title');
+         h1.text(WOA.static.current_post_h1);
+         h1.siblings('h2').html(WOA.static.current_post_h2);
+
          WOA.pages.Updates.view.backToPost();
       },
 
@@ -530,7 +534,6 @@ WOA.pages.Updates =
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.cancel-new', WOA.pages.Updates.view.backToPostFromNew);
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.update', WOA.pages.Updates.view.updatePost);
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.add-new', WOA.pages.Updates.view.addPost);
-         $(document).on('click', 'div.dynamic-content div.submit-cancel div.delete-post', WOA.pages.Updates.view.deletePost);
          $(document).on('click', 'div.dynamic-content div.add-link div.add', WOA.pages.Updates.view.addLink);
          $(document).on('focus', 'div.dynamic-content div.add-link input', WOA.pages.Updates.view.addLinkFocus);
          $(document).on('blur',  'div.dynamic-content div.add-link input', WOA.pages.Updates.view.addLinkBlur);

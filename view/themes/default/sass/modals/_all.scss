@@ -138,3 +138,19 @@
    }
 
 }
+
+/* Confirm Post Delete */
+#confirm-post-delete-modal {
+   .modal {
+      width: 400px;
+      margin-left: -200px;
+      top: 160px;
+
+      .modal-footer {
+         text-align: center;
+
+         a { margin: 0 5px; }
+      }
+   }
+
+}

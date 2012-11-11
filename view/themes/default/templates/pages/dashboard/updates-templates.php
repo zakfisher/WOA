@@ -171,7 +171,7 @@
                   <div class="shadow down"></div>
                   <div class="submit-cancel clr">
                      <div class="inner">
-                        {{#if editMode}}<div class="btn btn-danger left delete-post show-modal" data-modal="forgot_password"><i class="icon-white icon-trash"></i> Delete Post</div>{{/if}}
+                        {{#if editMode}}<div class="btn btn-danger left delete-post show-modal" data-modal="confirm_post_delete"><i class="icon-white icon-trash"></i> Delete Post</div>{{/if}}
                         <div class="btn btn-inverse {{#if addMode}}add-new{{else}}update{{/if}} right"><i class="icon-white icon-ok"></i> {{#if addMode}}Submit{{else}}Update{{/if}}</div>
                         <div class="btn {{#if addMode}}cancel-new{{else}}cancel{{/if}} right"><i class="icon-remove"></i> Cancel</div>
                      </div>

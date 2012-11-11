@@ -41,3 +41,24 @@
                </div>
             </div>
          </script>
+
+         <!-- Confirm Post Delete Modal -->
+         <script id="template-confirm-post-delete-modal" type="text/x-handlebars-template">
+            <div class="modal-header">
+               <h2 class="left">Confirm Post Delete</h2>
+               <div class="close right">x</div>
+            </div>
+            <div class="modal-body">
+               <div class="inner">
+                  <p class="disclaimer">Do you really want to delete this post?</p>
+               </div>
+               <!-- end .inner -->
+            </div>
+            <div class="modal-footer">
+               <div class="inner">
+                  <p class="left error"></p>
+                  <a href="javascript:void(0);" class="btn btn-danger" id="confirm-post-delete"><i class="icon-white icon-trash"></i> Delete</a>
+                  <a href="javascript:void(0);" class="btn x"><i class="icon-remove"></i> Cancel</a>
+               </div>
+            </div>
+         </script>

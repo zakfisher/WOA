@@ -16,17 +16,62 @@ WOA.modals.DeletePost =
 {
    model : {
       /*************************************************************
-       * Method - sendRequest(data)
+       * Method - submitPostDelete(data)
        *
-       *    Issue POST Request with User Email
+       *    Issue GET Request with Post ID
        *************************************************************/
-      sendRequest : function(data)
+      submitPostDelete : function()
       {
-
+         $.get(WOA.static.env + 'updates/submit_delete_post/' + WOA.static.current_post.id + '/' + WOA.static.user.username, WOA.modals.DeletePost.view.deletePostSuccess).error(WOA.modals.DeletePost.view.deletePostFail);
       }
    },
    view : {
+      /*************************************************************
+       * Method - deletePost()
+       *
+       *    Prep for AJAX
+       *************************************************************/
+      deletePost : function()
+      {
+         var button = $('#confirm-post-delete');
+         if (!button.hasClass('disabled'))
+         {
+            button.addClass('disabled');
+            WOA.modals.DeletePost.model.submitPostDelete();
+         }
+      },
 
+      /*************************************************************
+       * Method - deletePostSuccess()
+       *
+       *    AJAX Success - Update Cache
+       *************************************************************/
+      deletePostSuccess : function()
+      {
+         WOA.modals.view.hideModal();
+
+         // Clear Cache
+         WOA.static.list_cache.items.splice(WOA.static.list_cache.item_index[WOA.static.current_post.id], 1);
+         WOA.pages.Updates.view.showPage(WOA.static.list_cache.items);
+
+         // Update Page Header
+         var h1 = $('div.content.right div.header h1.title');
+         h1.text(WOA.static.current_post_h1);
+         h1.siblings('h2').html(WOA.static.current_post_h2);
+
+         // Display List
+         WOA.pages.Updates.view.backToListView();
+      },
+
+      /*************************************************************
+       * Method - deletePostFail()
+       *
+       *    AJAX Fail
+       *************************************************************/
+      deletePostFail : function()
+      {
+
+      }
    },
    controller :
    {
@@ -36,7 +81,7 @@ WOA.modals.DeletePost =
       init : function()
       {
          /** Handlers **/
-
+         $(document).on('click', '#confirm-post-delete', WOA.modals.DeletePost.view.deletePost);
       }
    }
 };
