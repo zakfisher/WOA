@@ -297,7 +297,10 @@ html { background: black; }
                            color: black;
                         }
 
-                        &.active { background-position: 0 0; }
+                        &.active {
+                           background-position: 0 0;
+                           color: white;
+                        }
                      }
                   }
                }

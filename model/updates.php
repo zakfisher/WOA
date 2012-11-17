@@ -158,4 +158,23 @@ class Updates_Model extends WOA {
       $db->delete_from_where('post_links', 'post_id', $post_id);
       $db->delete_from_where('comments', 'post_id', $post_id);
    }
+
+   public function add_comment($data)
+   {
+      $db = new DB();
+      $text = new Text();
+
+      $data['message'] = $text->sanitize_string($data['message']);
+
+      // Update comments
+      $comment_data = array(
+         'user_id' => $_SESSION['user']['user_id'],
+         'message' => $data['message'],
+         'post_id' => $data['post_id']
+      );
+      $db->insert_into('comments', $comment_data);
+
+      // Return Comment Object
+      print $data['message'];
+   }
 }

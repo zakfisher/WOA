@@ -45,4 +45,15 @@ class Updates extends WOA {
          $updates_model->delete_post($post_id);
       }
    }
+
+   public function submit_new_comment() {
+      if ($this->login_check('return') == 'true')
+      {
+         if ($_POST)
+         {
+            $updates_model = new Updates_Model();
+            $updates_model->add_comment($_POST);
+         }
+      }
+   }
 }

@@ -38,15 +38,21 @@ WOA.pages.Updates =
        *
        *    Update Current Post
        *************************************************************/
-      submitPostUpdate : function()
-      { $.post(WOA.static.env + 'updates/submit_post_update/', WOA.static.current_post, WOA.pages.Updates.view.updatePostSuccess).error(WOA.pages.Updates.view.updatePostError); },
+      submitPostUpdate : function() { $.post(WOA.static.env + 'updates/submit_post_update/', WOA.static.current_post, WOA.pages.Updates.view.updatePostSuccess).error(WOA.pages.Updates.view.updatePostError); },
 
       /*************************************************************
        * Method - submitPostAdd()
        *
        *    Add New Post
        *************************************************************/
-      submitPostAdd : function() { $.post(WOA.static.env + 'updates/submit_new_post/', WOA.static.current_post, WOA.pages.Updates.view.addPostSuccess).error(WOA.pages.Updates.view.addPostError); }
+      submitPostAdd : function() { $.post(WOA.static.env + 'updates/submit_new_post/', WOA.static.current_post, WOA.pages.Updates.view.addPostSuccess).error(WOA.pages.Updates.view.addPostError); },
+
+      /*************************************************************
+       * Method - submitComment()
+       *
+       *    Add New Comment
+       *************************************************************/
+      submitComment : function(data) { $.post(WOA.static.env + 'updates/submit_new_comment/', data, WOA.pages.Updates.view.addCommentSuccess).error(WOA.pages.Updates.view.addCommentFail); }
    },
    view : {
       /*************************************************************
@@ -133,7 +139,6 @@ WOA.pages.Updates =
          h1.text('Edit Post');
          h1.siblings('h2').html("<b>" + WOA.static.current_post.title + "</b>");
          Handlebars.renderTemplate('template-add-edit-post', WOA.static.current_post, 'div.secondary-view');
-         page.find('div.post-content div.header div.title input[type=text]').focus();
       },
 
       /*************************************************************
@@ -159,7 +164,6 @@ WOA.pages.Updates =
             h1.text('Add Post');
             h1.siblings('h2').html("Enter post data below.");
             Handlebars.renderTemplate('template-add-edit-post', data, 'div.main-view');
-            page.find('div.post-content div.header div.title input[type=text]').focus();
          }
          WOA.pages.Projects.model.getProjectNames(displayForm);
       },
@@ -518,6 +522,105 @@ WOA.pages.Updates =
       },
 
       /*************************************************************
+       * Method - commentBlur(e)
+       *
+       *    Replace Textarea Value on Focus
+       *************************************************************/
+      commentBlur : function(e)
+      {
+         var input = $(e.target);
+         if (input.val().trim() == '') { input.val('Add your comment...'); }
+      },
+
+      /*************************************************************
+       * Method - commentFocus(e)
+       *
+       *    Clear Textarea Values on Focus
+       *************************************************************/
+      commentFocus : function(e)
+      {
+         var input = $(e.target);
+         if (input.val() == 'Add your comment...') { input.val(''); }
+      },
+
+      /*************************************************************
+       * Method - addComment(e)
+       *
+       *    Validate User Input and Create POST Object
+       *************************************************************/
+      addComment : function(e)
+      {
+         var button = $('div.submit-comment');
+         if (!button.hasClass('disabled'))
+         {
+            var div = $('div.add-comment');
+            var comment = div.find('textarea[name=comment]').val();
+
+            // Validated
+            if (comment != '' && comment != 'Add your comment...')
+            {
+               var data = {
+                  post_id : WOA.static.current_post.id,
+                  message : comment
+               };
+
+               button.addClass('disabled');
+               WOA.pages.Updates.model.submitComment(data);
+            }
+
+            // Empty Field
+            else {}
+         }
+      },
+
+      /*************************************************************
+       * Method - addCommentSuccess(data)
+       *
+       *    Comment Added, Update Cache
+       *************************************************************/
+      addCommentSuccess : function(data)
+      {
+         // Clear Field and Enable Button
+         var div = $('div.add-comment');
+         div.find('textarea[name=comment]').val('Add your comment...');
+         $('div.submit-comment').removeClass('disabled');
+
+         // Prep Comment
+         var comment = {
+            author : WOA.static.user.username,
+            time : WOA.utilities.Time.model.renderCurrentDate(),
+            message : data
+         };
+
+         // 1st Comment
+         if (typeof WOA.static.current_post.content.comments === 'undefined')
+         {
+            WOA.static.current_post.content.comments = [comment];
+         }
+
+         // Not 1st Comment
+         else
+         {
+            WOA.static.current_post.content.comments.push(comment);
+         }
+
+         // Append New Comment
+         Handlebars.renderTemplate('template-single-comment', comment, 'div.comments span.collapseable', 'append');
+      },
+
+      /*************************************************************
+       * Method - addCommentFail(data)
+       *
+       *    Comment NOT Added
+       *************************************************************/
+      addCommentFail : function(data)
+      {
+         var div = $('div.add-comment');
+         div.find('textarea[name=comment]').val('');
+         $('div.submit-comment').removeClass('disabled');
+      },
+
+      /*************************************************************
        * Method - fadeContent()
        *
        *    Fade Content for Delete Post Modal
@@ -537,7 +640,6 @@ WOA.pages.Updates =
          /** Handlers **/
          $(document).on('click', 'div.dynamic-content div.list-container.updates div.item', WOA.pages.Updates.view.displayPost);
          $(document).on('click', 'div.dynamic-content div.secondary-view div.go-back', WOA.pages.Updates.view.backToListView);
-         $(document).on('click', 'div.dynamic-content div.secondary-view div.post-content div.comments i', WOA.pages.Updates.view.toggleCommentsCollapse);
          $(document).on('click', 'div.dynamic-content div.sub-page-actions div.add-post', WOA.pages.Updates.view.addPostForm);
          $(document).on('click', 'div.dynamic-content div.sub-page-actions div.edit', WOA.pages.Updates.view.editPost);
          $(document).on('click', 'div.dynamic-content div.submit-cancel div.cancel', WOA.pages.Updates.view.backToPost);
@@ -554,6 +656,10 @@ WOA.pages.Updates =
          $(document).on('blur',  'div.dynamic-content div.post-content div.header div.title input', WOA.pages.Updates.view.postTitleBlur);
          $(document).on('focus', 'div.dynamic-content div.post-content div.message textarea', WOA.pages.Updates.view.postMessageFocus);
          $(document).on('blur',  'div.dynamic-content div.post-content div.message textarea', WOA.pages.Updates.view.postMessageBlur);
+         $(document).on('click', 'div.dynamic-content div.secondary-view div.post-content div.comments i', WOA.pages.Updates.view.toggleCommentsCollapse);
+         $(document).on('focus', 'div.dynamic-content div.add-comment textarea[name=comment]', WOA.pages.Updates.view.commentFocus);
+         $(document).on('blur',  'div.dynamic-content div.add-comment textarea[name=comment]', WOA.pages.Updates.view.commentBlur);
+         $(document).on('click', 'div.dynamic-content div.submit-comment', WOA.pages.Updates.view.addComment);
       }
    }
 };

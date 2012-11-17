@@ -17,13 +17,13 @@ if (! file_exists('projects/' . $_SESSION['sub_page'] . '.php')) $_SESSION['sub_
                      <li data-sub-page="overview"<?= ($_SESSION['sub_page'] == 'overview') ? ' class="active"' : ''; ?>>Overview</li>
                      <li data-sub-page="updates"<?= ($_SESSION['sub_page'] == 'updates') ? ' class="active"' : ''; ?>>Updates</li>
 <?php if ($_SESSION['user']['access'] == 'admin'): ?>
-                     <li data-sub-page="biz-plan"<?= ($_SESSION['sub_page'] == 'biz-plan') ? ' class="active"' : ''; ?>>Business Plan</li>
                      <li data-sub-page="partners"<?= ($_SESSION['sub_page'] == 'partners') ? ' class="active"' : ''; ?>>Partners</li>
+                     <li data-sub-page="biz-plan"<?= ($_SESSION['sub_page'] == 'biz-plan') ? ' class="active"' : ''; ?>>Business Plan</li>
 
 <?php endif; ?>
 <?php if ($_SESSION['user']['access'] == 'partner'): ?>
-                     <li data-sub-page="biz-plan"<?= ($_SESSION['sub_page'] == 'biz-plan') ? ' class="active"' : ''; ?>>Business Plan</li>
                      <li data-sub-page="contracts"<?= ($_SESSION['sub_page'] == 'contracts') ? ' class="active"' : ''; ?>>Contracts</li>
+                     <li data-sub-page="biz-plan"<?= ($_SESSION['sub_page'] == 'biz-plan') ? ' class="active"' : ''; ?>>Business Plan</li>
 <?php endif; ?>
                   </ul>
                </div>

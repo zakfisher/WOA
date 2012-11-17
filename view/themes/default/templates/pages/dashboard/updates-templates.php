@@ -72,7 +72,7 @@
                            <div class="single-comment clr">
                               <div class="meta-info left">
                                  <p class="first">{{author}}</p>
-                                 <p>{{time}}</p>
+                                 <p class="date">{{time}}</p>
                               </div>
                               <div class="comment-text right">
                                  <p>{{message}}</p>
@@ -88,7 +88,7 @@
                            </div>
                            <div class="comment-text right">
                               <div class="inner">
-                                 <textarea name="message" placeholder="add your comment..." rows="3"></textarea>
+                                 <textarea name="comment" rows="3">Add your comment...</textarea>
                               </div>
                            </div>
                            <div class="clr"></div>
@@ -158,7 +158,6 @@
                         {{#each content.links}}
                         {{renderLinkItem this}}
                         {{/each}}
-                        <div class="clr"></div>
                      </ul>
                      {{/if}}
                      <div class="add-link clr">
@@ -188,4 +187,18 @@
                <a href="{{url}}" target="_blank">{{title}}</a>
                <div class="clr"></div>
             </li>
+         </script>
+
+         <!-- Single Comment -->
+         <script id="template-single-comment" type="text/x-handlebars-template">
+            <div class="single-comment clr">
+               <div class="meta-info left">
+                  <p class="first">{{author}}</p>
+                  <p class="date">{{time}}</p>
+               </div>
+               <div class="comment-text right">
+                  <p>{{message}}</p>
+               </div>
+               <div class="clr"></div>
+            </div>
          </script>

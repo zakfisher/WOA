@@ -306,7 +306,7 @@
                                  div.inner {
                                     padding: 0 10px;
 
-                                    textarea[name=message] {
+                                    textarea[name=comment] {
                                        width: 440px;
                                        border: 1px solid #CCC;
                                        @include border-radius(3px);
@@ -317,6 +317,8 @@
                                        @include box-shadow(inset 0px 1px 3px 0 #ccc);
                                        outline: none;
                                        resize: none;
+
+                                       &:not(:focus) { color: #CCC; }
                                     }
                                  }
                               }
