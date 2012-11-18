@@ -164,8 +164,6 @@ class Updates_Model extends WOA {
       $db = new DB();
       $text = new Text();
 
-      $data['message'] = $text->sanitize_string($data['message']);
-
       // Update comments
       $comment_data = array(
          'user_id' => $_SESSION['user']['user_id'],
@@ -175,6 +173,6 @@ class Updates_Model extends WOA {
       $db->insert_into('comments', $comment_data);
 
       // Return Comment Object
-      print $data['message'];
+      print $text->sanitize_string($data['message']);
    }
 }
