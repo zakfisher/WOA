@@ -242,9 +242,9 @@ WOA.pages.Projects =
 
          // Display Project Sub Nav
          $('div.content.left ul.sub-nav.default').addClass('hidden');
-         Handlebars.renderTemplate('template-project-sub-nav', project.sub_nav, 'div.content.left ul.sub-nav.sub-page');
          $('span.sub-page-nav').removeClass('hidden');
          $('div.btn.back-to-dashboard').attr('data-sub-page', 'projects');
+         Handlebars.renderTemplate('template-project-sub-nav', project.sub_nav, 'div.content.left ul.sub-nav.sub-page');
 
          // Default to Overview
          WOA.pages.Projects.view.displaySingleProjectSubPage(null, 'overview');
