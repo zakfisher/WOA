@@ -63,6 +63,8 @@ WOA.user =
          $.cookie('user', null);
          delete WOA.static.user;
          delete WOA.static.list_cache;
+         delete WOA.static.current_post;
+         delete WOA.static.current_project;
 
          // Update Session
          $.get(WOA.static.env + 'user/log_out');
