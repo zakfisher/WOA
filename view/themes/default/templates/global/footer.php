@@ -40,6 +40,6 @@
 <script type='text/javascript' src='<?= $js_path . $path . '.js'; ?>'></script>
 <?php endforeach; ?>
 <script type="text/javascript">
-// Google Analytics
+    // Google Analytics
 </script>
 </html>

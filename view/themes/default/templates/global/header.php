@@ -18,6 +18,7 @@ if (isset($ie_version) AND $ie_version < 9)
 <?php foreach ($css as $path): ?>
 <link href="<?= $css_path . $path . '.css'; ?>" rel="stylesheet" type="text/css" media="screen, print" />
 <?php endforeach; ?>
+<link rel="stylesheet" href="view/themes/default/js/libraries/signature/build/jquery.signaturepad.css">
 </head>
 <body>
    <div id="container" data-theme="<?= $theme; ?>" data-page="<?= $page; ?>">

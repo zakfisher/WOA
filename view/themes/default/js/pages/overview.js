@@ -33,7 +33,9 @@ WOA.pages.Overview =
       loadPage : function()
       {
          // Dashboard (list)
-         WOA.pages.Projects.model.getProjects();
+         //WOA.pages.Projects.model.getProjects();
+          Handlebars.renderTemplate('template-add-signature', {}, 'div.dynamic-content');
+          $('.sigPad').signaturePad();
       },
 
       /*************************************************************
