@@ -21,14 +21,14 @@ WOA.pages.Projects =
        *
        *    Fetch Projects Data
        *************************************************************/
-      getProjects : function() { $.get(WOA.static.env + 'projects/get_projects', WOA.pages.Projects.view.showPage); },
+      getProjects : function() { $.get('projects/get_projects', WOA.pages.Projects.view.showPage); },
 
       /*************************************************************
        * Method - getProjectNames(callback)
        *
        *    Fetch Project Names
        *************************************************************/
-      getProjectNames : function(callback) { $.get(WOA.static.env + 'projects/get_project_names', callback); }
+      getProjectNames : function(callback) { $.get('projects/get_project_names', callback); }
    },
    view : {
       /*************************************************************
@@ -42,153 +42,6 @@ WOA.pages.Projects =
          // Dashboard (list)
          WOA.pages.Projects.model.getProjects();
       },
-
-/*
-      [
-      {
-         // High Access
-         template : 'projects-list-items',
-         id      : 44,
-         project : 'Crazy Shit Project',
-         last_updated    : '1.1.12',
-         user_count : 5,
-         sub_nav : [
-            {
-               sub_page : 'overview',
-               title : 'Overview'
-            },
-            {
-               sub_page : 'updates',
-               title : 'Updates'
-            },
-            {
-               sub_page : 'biz_plan',
-               title : 'Business Plan'
-            },
-            {
-               sub_page : 'contracts',
-               title : 'Contracts'
-            }
-         ],
-         contracts : [
-            {
-               template : 'contracts-nda',
-               id : 22,
-               title : 'This Guys NDA',
-               extra : {}
-            }
-         ]
-      },
-      {
-         // Admin Access
-         template : 'projects-list-items',
-         id      : 4,
-         project : 'haslslsls Project',
-         last_updated    : '11.18.12',
-         user_count : 15,
-         sub_nav : [
-            {
-               sub_page : 'overview',
-               title : 'Overview'
-            },
-            {
-               sub_page : 'updates',
-               title : 'Updates'
-            },
-            {
-               sub_page : 'biz_plan',
-               title : 'Business Plan'
-            },
-            {
-               sub_page : 'partners',
-               title : 'Partners'
-            }
-         ],
-         partners : [
-            {
-               template : 'contacts-list-items',
-               id      : 3,
-               first_name : 'Mr',
-               last_name : 'Halal',
-               type : 'Vendor',
-               title : 'General Manager',
-               company : 'Habibs Restaurant',
-               contracts : [
-                  {
-                     template : 'contracts-nda',
-                     id : 22,
-                     title : 'This Guys NDA',
-                     extra : {}
-                  }
-               ]
-            },
-            {
-               template : 'contacts-list-items',
-               id      : 4,
-               first_name : 'Tooth',
-               last_name : 'Fairy',
-               type : 'Investor',
-               title : 'Banker',
-               company : 'Magic Co.',
-               contracts : [
-                  {
-                     template : 'contracts-nda',
-                     id : 22,
-                     title : 'This Guys NDA',
-                     extra : {}
-                  }
-               ]
-            },
-            {
-               template : 'contacts-list-items',
-               id      : 11,
-               first_name : 'Mantots',
-               last_name : 'Andgondi',
-               type : 'Accountant',
-               title : 'Business Banking Specialist',
-               company : 'Wells Fargo',
-               contracts : [
-                  {
-                     template : 'contracts-nda',
-                     id : 22,
-                     title : 'This Guys NDA',
-                     extra : {}
-                  }
-               ]
-            }
-         ]
-      },
-      {
-         // Low Access
-         template : 'projects-list-items',
-         id      : 224,
-         project : 'ABCC Project',
-         last_updated    : '10.12.10',
-         user_count : 3,
-         sub_nav : [
-            {
-               sub_page : 'overview',
-               title : 'Overview'
-            },
-            {
-               sub_page : 'updates',
-               title : 'Updates'
-            },
-            {
-               sub_page : 'contracts',
-               title : 'Contracts'
-            }
-         ]
-      },
-      {
-         template : 'projects-list-items',
-         id      : 5,
-         project : '234t Project',
-         last_updated    : '9.12.12',
-         user_count : 2
-      }
-      ]
-   */
 
       /*************************************************************
        * Method - showPage(data)
@@ -217,11 +70,16 @@ WOA.pages.Projects =
             data.item_index[v.id] = i;
          });
 
+         if (data.items.length < 6) { data.noSearch = true; }
+
          // Cache Result Set
          WOA.static.list_cache = data;
 
          // Render List Template
          Handlebars.renderTemplate('template-list', data, 'div.dynamic-content');
+
+         // Update Styles
+         if ($('div.sub-page-actions').length == 0) { $('div.content.right div.header div.shadow.first').removeClass('down'); }
       },
 
       /*************************************************************

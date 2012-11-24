@@ -81,12 +81,12 @@ WOA.pages.Dashboard =
             updates : {
                shadow_down : true,
                title : 'Updates',
-               sub_text : 'The latest updates for all your projects.'
+               sub_text : 'Get the latest on all your projects.'
             },
             projects : {
                shadow_down : true,
                title : 'Projects',
-               sub_text : 'Find and manage your projects.'
+               sub_text : 'Access and manage your projects.'
             },
             settings : {
                shadow_down : true,

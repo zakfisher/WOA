@@ -24,7 +24,7 @@ WOA.pages.Music =
        *************************************************************/
       getTracks : function()
       {
-         $.get(WOA.static.env + 'music/all_tracks', WOA.pages.Music.view.showPage).error();
+         $.get('music/all_tracks', WOA.pages.Music.view.showPage).error();
       }
    },
    view : {

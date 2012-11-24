@@ -6,7 +6,7 @@
                <div class="header">
                   <h1 class="title">{{title}}</h1>
                   <h2>{{sub_text}}</h2>
-                  <div class="shadow{{#if shadow_down}} down{{/if}}"></div>
+                  <div class="shadow{{#if shadow_down}} down{{/if}} first"></div>
                   <div class="dynamic-shell">
                      <div class="dynamic-content">
                         {{#if admin}}

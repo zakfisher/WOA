@@ -22,7 +22,7 @@ WOA.modals.DeletePost =
        *************************************************************/
       submitPostDelete : function()
       {
-         $.get(WOA.static.env + 'updates/submit_delete_post/' + WOA.static.current_post.id + '/' + WOA.static.user.username, WOA.modals.DeletePost.view.deletePostSuccess).error(WOA.modals.DeletePost.view.deletePostFail);
+         $.get('updates/submit_delete_post/' + WOA.static.current_post.id + '/' + WOA.static.user.username, WOA.modals.DeletePost.view.deletePostSuccess).error(WOA.modals.DeletePost.view.deletePostFail);
       }
    },
    view : {

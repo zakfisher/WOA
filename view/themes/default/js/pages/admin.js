@@ -25,7 +25,7 @@ WOA.pages.Admin =
        *************************************************************/
       getAdminData : function()
       {
-         $.get(WOA.static.env + 'test/test/abc', function(data) { WOA.pages.Admin.view.showPage(data); });
+         $.get(WOA.static.env + 'test/test/abc', WOA.pages.Admin.view.showPage);
       }
    },
    view : {

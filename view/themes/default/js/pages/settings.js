@@ -23,7 +23,7 @@ WOA.pages.Settings =
        *************************************************************/
       submitChanges : function(data)
       {
-         $.post(WOA.static.env + 'user/update_user_info', data, WOA.pages.Settings.view.updateSuccess).error(WOA.pages.Settings.view.updateFail);
+         $.post('user/update_user_info', data, WOA.pages.Settings.view.updateSuccess).error(WOA.pages.Settings.view.updateFail);
       }
    },
    view : {
@@ -38,7 +38,8 @@ WOA.pages.Settings =
                {
                   title : 'Username',
                   name  : 'username',
-                  value : WOA.static.user.username
+                  value : WOA.static.user.username,
+                  maxlength : 10
                },
                {
                   right : true,

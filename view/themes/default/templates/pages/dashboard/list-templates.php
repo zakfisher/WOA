@@ -3,6 +3,9 @@
          <!-- List View -->
          <script id="template-list" type="text/x-handlebars-template">
             <div class="main-view">
+               <?php if ($_SESSION['user']['access'] != 'admin'): ?>
+               {{#unless noSearch}}
+               <?php endif; ?>
                <div class="sub-page-actions">
                   <div class="inner">
                      {{#if posts}}
@@ -16,7 +19,9 @@
                      {{#if contacts}}
                      <div class="btn btn-inverse left add-contact mr10">New Contact <i class="icon-white icon-plus"></i></div>
                      {{/if}}
+                     {{#unless noSearch}}
                      {{renderSearchField}}
+                     {{/unless}}
                      {{#if filter}}
                      <div class="filter-by right">
                         <div class="btn toggle-options">
@@ -47,6 +52,9 @@
                   </div>
                   <div class="shadow"></div>
                </div>
+               <?php if ($_SESSION['user']['access'] != 'admin'): ?>
+               {{/unless}}
+               <?php endif; ?>
                <div class="list-container {{type}} clr">
                   {{renderListItems items pagination.items_per_page}}
                   <div class="shadow down"></div>

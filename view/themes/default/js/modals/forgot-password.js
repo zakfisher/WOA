@@ -27,7 +27,7 @@ WOA.modals.ForgotPassword =
        *************************************************************/
       sendRequest : function(data)
       {
-         $.post(WOA.static.env + 'user/reset_user_password', data, WOA.modals.ForgotPassword.view.resetSuccess).error(WOA.modals.ForgotPassword.view.resetFail);
+         $.post('user/reset_user_password', data, WOA.modals.ForgotPassword.view.resetSuccess).error(WOA.modals.ForgotPassword.view.resetFail);
       }
    },
    view : {

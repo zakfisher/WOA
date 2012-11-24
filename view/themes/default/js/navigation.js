@@ -37,7 +37,7 @@ WOA.navigation =
       loadPage : function()
       {
          // Load View
-         $('#main-content').before(WOA.static.loading).load(WOA.static.env + 'view/themes/' + WOA.static.theme + '/templates/pages/' + WOA.static.page + '.php', WOA.navigation.view.showPage);
+         $('#main-content').before(WOA.static.loading).load('view/themes/' + WOA.static.theme + '/templates/pages/' + WOA.static.page + '.php', WOA.navigation.view.showPage);
       },
 
       /*************************************************************
@@ -49,19 +49,7 @@ WOA.navigation =
       {
          var data = { page : WOA.static.page };
          if (typeof WOA.static.sub_page == 'undefined' && WOA.static.sub_page == null) { data.sub_page = WOA.static.sub_page; }
-         $.post(WOA.static.env + 'navigation/update_session_page', data);
-      },
-
-      /*************************************************************
-       * Method - setEnv()
-       *
-       *    Store site environment
-       *************************************************************/
-      setEnv : function()
-      {
-         var env = window.location.pathname.split("/");
-         var system = (env[1] == 'dev') ? '/dev/' : '/';
-         WOA.static.env = system;
+         $.post('navigation/update_session_page', data);
       }
    },
    view :
@@ -271,9 +259,6 @@ WOA.navigation =
          $(document).on('click', 'div.content.left ul.sub-nav li', WOA.navigation.view.requestSubPage);
 
          /** Behaviors **/
-
-         // Set Global Environment
-         WOA.navigation.model.setEnv();
 
          // Redirect by #! (on load)
          WOA.navigation.view.hashBangRedirect();

@@ -39,7 +39,7 @@ WOA.user =
        *************************************************************/
       authenticateUser : function(data)
       {
-         $.post(WOA.static.env + 'user/submit_login_form', data, WOA.user.view.loginSuccess, 'json').error(WOA.user.view.loginFail);
+         $.post('user/submit_login_form', data, WOA.user.view.loginSuccess, 'json').error(WOA.user.view.loginFail);
       },
 
       logout : function()
@@ -67,7 +67,7 @@ WOA.user =
          delete WOA.static.current_project;
 
          // Update Session
-         $.get(WOA.static.env + 'user/log_out');
+         $.get('user/log_out');
       },
 
       /*************************************************************
@@ -82,7 +82,7 @@ WOA.user =
             var data = $.parseJSON($.cookie('user'));
 
             // Fetch user data
-            $.post(WOA.static.env + 'user/refresh_user_session', data, WOA.user.model.setUserCache, 'json');
+            $.post('user/refresh_user_session', data, WOA.user.model.setUserCache, 'json');
          }
       },
 

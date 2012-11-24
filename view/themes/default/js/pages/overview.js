@@ -21,7 +21,7 @@ WOA.pages.Overview =
        *
        *    Fetch Project Names
        *************************************************************/
-      getProjectNames : function(callback) { $.get(WOA.static.env + 'projects/get_project_names', callback); }
+      getProjectNames : function(callback) { $.get('projects/get_project_names', callback); }
    },
    view : {
       /*************************************************************

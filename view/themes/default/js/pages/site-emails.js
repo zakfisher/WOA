@@ -25,7 +25,7 @@ WOA.pages.Site_emails =
        *************************************************************/
       getSiteEmails : function()
       {
-         $.get(WOA.static.env + 'test/test/abc', WOA.pages.Site_emails.view.showPage);
+         $.get('test/test/abc', WOA.pages.Site_emails.view.showPage);
       }
    },
    view : {

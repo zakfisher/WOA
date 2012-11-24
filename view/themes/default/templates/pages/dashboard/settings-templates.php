@@ -7,7 +7,7 @@
                   {{#each fields}}
                   <div class="input {{#if right}}right{{else}}left{{/if}}">
                      <p>{{title}}</p>
-                     <input type="{{#if password}}password{{else}}text{{/if}}" name="{{name}}" value="{{value}}" />
+                     <input type="{{#if password}}password{{else}}text{{/if}}" name="{{name}}" value="{{value}}" {{#if maxlength}} maxlength="{{maxlength}}" {{/if}}/>
                   </div>
                   {{#if right}}
                   <div class="clr"></div>

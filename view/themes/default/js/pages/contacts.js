@@ -25,7 +25,7 @@ WOA.pages.Contacts =
        *************************************************************/
       getContacts : function()
       {
-         $.get(WOA.static.env + 'contacts/get_contacts', WOA.pages.Contacts.view.showPage);
+         $.get('contacts/get_contacts', WOA.pages.Contacts.view.showPage);
       }
    },
    view : {

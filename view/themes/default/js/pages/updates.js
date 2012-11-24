@@ -26,28 +26,28 @@ WOA.pages.Updates =
        *
        *    Fetch All Updates Data
        *************************************************************/
-      getAllUpdates : function() { $.get(WOA.static.env + 'updates/get_updates', WOA.pages.Updates.view.showPage); },
+      getAllUpdates : function() { $.get('updates/get_updates', WOA.pages.Updates.view.showPage); },
 
       /*************************************************************
        * Method - submitPostUpdate()
        *
        *    Update Current Post
        *************************************************************/
-      submitPostUpdate : function() { $.post(WOA.static.env + 'updates/submit_post_update/', WOA.static.current_post, WOA.pages.Updates.view.updatePostSuccess).error(WOA.pages.Updates.view.updatePostError); },
+      submitPostUpdate : function() { $.post('updates/submit_post_update/', WOA.static.current_post, WOA.pages.Updates.view.updatePostSuccess).error(WOA.pages.Updates.view.updatePostError); },
 
       /*************************************************************
        * Method - submitPostAdd()
        *
        *    Add New Post
        *************************************************************/
-      submitPostAdd : function() { $.post(WOA.static.env + 'updates/submit_new_post/', WOA.static.current_post, WOA.pages.Updates.view.addPostSuccess).error(WOA.pages.Updates.view.addPostError); },
+      submitPostAdd : function() { $.post('updates/submit_new_post/', WOA.static.current_post, WOA.pages.Updates.view.addPostSuccess).error(WOA.pages.Updates.view.addPostError); },
 
       /*************************************************************
        * Method - submitComment()
        *
        *    Add New Comment
        *************************************************************/
-      submitComment : function(data) { $.post(WOA.static.env + 'updates/submit_new_comment/', data, WOA.pages.Updates.view.addCommentSuccess).error(WOA.pages.Updates.view.addCommentFail); }
+      submitComment : function(data) { $.post('updates/submit_new_comment/', data, WOA.pages.Updates.view.addCommentSuccess).error(WOA.pages.Updates.view.addCommentFail); }
    },
    view : {
       /*************************************************************
