@@ -44,9 +44,11 @@
                         </div>
                      </div>
                      {{else}}
+                     {{#unless projects}}
                      <span class="page-nav">
                      {{renderPaginationTemplate pagination.item_count pagination.items_per_page pagination.float}}
                      </span>
+                     {{/unless}}
                      {{/if}}
                      <div class="clr"></div>
                   </div>
