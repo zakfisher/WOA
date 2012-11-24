@@ -1,9 +1,9 @@
 <?php
-class Test {
-   function __construct()
-   {
+class Test extends WOA {
 
-   }
+    function __construct() {
+        parent::__construct();
+    }
 
    function test($string = null) {
       if ($string != null)

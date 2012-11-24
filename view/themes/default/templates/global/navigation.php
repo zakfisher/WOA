@@ -41,7 +41,6 @@
                </div>
                <!-- end .right -->
                <a href="javascript:void(0);" data-page="dashboard" class="right username <?= ($_SESSION['logged_in'] == true) ? '' : 'hidden'; ?>"><?= $_SESSION['user']['username']; ?></a>
-               <a href="javascript:void(0);" data-page="projects" class="hidden"></a>
             </div>
             <!-- end .inner-container -->
          </div>

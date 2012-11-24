@@ -153,7 +153,6 @@ WOA.pages.Updates =
                addMode : true,
                projects : projects
             };
-            var page = $('div.content.right');
             h1.text('Add Post');
             h1.siblings('h2').html("Enter post data below.");
             Handlebars.renderTemplate('template-add-edit-post', data, 'div.main-view');
