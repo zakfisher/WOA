@@ -50,6 +50,7 @@ WOA.pages.Contacts =
          // Load contacts
          var data = {
             contacts : true,
+            filter : true,
             type : 'contacts',
             items : contacts
          };

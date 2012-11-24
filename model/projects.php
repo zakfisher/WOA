@@ -27,21 +27,18 @@ class Projects_Model extends WOA {
             switch ($access) {
                case 'admin':
                   $project['sub_nav'][] = array('sub_page' => 'overview', 'title' => 'Overview');
-                  $project['sub_nav'][] = array('sub_page' => 'updates',  'title' => 'Updates');
                   $project['sub_nav'][] = array('sub_page' => 'partners', 'title' => 'Partners');
                   $project['sub_nav'][] = array('sub_page' => 'biz_plan', 'title' => 'Business Plan');
                   $project['partners'] = array();
                   break;
                case 'high':
                   $project['sub_nav'][] = array('sub_page' => 'overview',  'title' => 'Overview');
-                  $project['sub_nav'][] = array('sub_page' => 'updates',   'title' => 'Updates');
                   $project['sub_nav'][] = array('sub_page' => 'contracts', 'title' => 'Contracts');
                   $project['sub_nav'][] = array('sub_page' => 'biz_plan',  'title' => 'Business Plan');
                   $project['contracts'] = array();
                   break;
                case 'low':
                   $project['sub_nav'][] = array('sub_page' => 'overview',  'title' => 'Overview');
-                  $project['sub_nav'][] = array('sub_page' => 'updates',   'title' => 'Updates');
                   $project['sub_nav'][] = array('sub_page' => 'contracts', 'title' => 'Contracts');
                   $project['contracts'] = array();
                   break;

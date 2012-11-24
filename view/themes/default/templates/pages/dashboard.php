@@ -42,6 +42,5 @@
 $templates = array('wrapper', 'list', 'updates', 'projects', 'settings', 'biz-plan', 'contracts');
 $admin_templates = array('admin', 'contacts', 'site-emails');
 foreach ($templates as $template) require_once('dashboard/' . $template . '-templates.php');
-if ($_SESSION['user']['access'] == 'admin')
-   foreach ($admin_templates as $template) require_once('dashboard/' . $template . '-templates.php');
+if ($_SESSION['user']['access'] == 'admin') foreach ($admin_templates as $template) require_once('dashboard/' . $template . '-templates.php');
 ?>

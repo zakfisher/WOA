@@ -10,7 +10,9 @@
  * Search Keys:
  * - Model
      >> getAllUpdates
-     >> getProjectUpdates
+     >> submitPostUpdate
+     >> submitPostAdd
+     >> submitComment
  * - View
      >> loadPage
      >> showPage
@@ -25,13 +27,6 @@ WOA.pages.Updates =
        *    Fetch All Updates Data
        *************************************************************/
       getAllUpdates : function() { $.get(WOA.static.env + 'updates/get_updates', WOA.pages.Updates.view.showPage); },
-
-      /*************************************************************
-       * Method - getProjectUpdates()
-       *
-       *    Fetch Project Updates Data
-       *************************************************************/
-      getProjectUpdates : function() { $.get(WOA.static.env + 'updates/get_updates/' + WOA.static.current_project.id, WOA.pages.Updates.view.showPage); },
 
       /*************************************************************
        * Method - submitPostUpdate()
@@ -64,10 +59,7 @@ WOA.pages.Updates =
       loadPage : function()
       {
          // All Updates
-         if ($('span.sub-page-nav').hasClass('hidden')) { WOA.pages.Updates.model.getAllUpdates(); }
-
-         // Project Updates
-         else { WOA.pages.Updates.model.getProjectUpdates(); }
+         WOA.pages.Updates.model.getAllUpdates();
       },
 
       /*************************************************************
@@ -80,6 +72,7 @@ WOA.pages.Updates =
          // Load latest posts
          var data = {
             posts : true,
+            filter : true,
             type : 'updates',
             items : updates
          };

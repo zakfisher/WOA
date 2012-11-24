@@ -8,16 +8,16 @@
                      {{#if posts}}
                      <div class="btn btn-inverse left mr10 add-post">New Post <i class="icon-white icon-plus"></i></div>
                      {{/if}}
-<?php if ($_SESSION['user']['access'] == 'admin'): ?>
+                     <?php if ($_SESSION['user']['access'] == 'admin'): ?>
                      {{#if projects}}
                      <div class="btn btn-inverse left add-project mr10">New Project <i class="icon-white icon-plus"></i></div>
                      {{/if}}
-<?php endif; ?>
+                     <?php endif; ?>
                      {{#if contacts}}
                      <div class="btn btn-inverse left add-contact mr10">New Contact <i class="icon-white icon-plus"></i></div>
                      {{/if}}
                      {{renderSearchField}}
-                     {{#if contacts}}
+                     {{#if filter}}
                      <div class="filter-by right">
                         <div class="btn toggle-options">
                            <p class="left">Filter By</p>
@@ -28,7 +28,12 @@
                               <div class="li" data-filter="all">
                                  <p>All</p>
                               </div>
+                              {{#if contacts}}
                               {{renderContactTypes items}}
+                              {{/if}}
+                              {{#if posts}}
+                              {{renderProjectFilter items}}
+                              {{/if}}
                               <div class="clr"></div>
                            </div>
                         </div>

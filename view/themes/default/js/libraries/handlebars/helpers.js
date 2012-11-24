@@ -45,6 +45,18 @@ Handlebars.registerHelper('renderContactTypes', function(data) {
    return new Handlebars.SafeString(items);
 });
 
+Handlebars.registerHelper('renderProjectFilter', function(data) {
+    var items = '';
+    var projects = [];
+    $(data).each(function(i, v) {
+        if ($.inArray(v.project, projects) == -1) {
+            projects.push(v.project);
+            items += '<div class="li" data-filter="' + v.project + '"><p>' + v.project + '</p></div>';
+        }
+    });
+    return new Handlebars.SafeString(items);
+});
+
 Handlebars.registerHelper('renderCurrentUser', function() {
    return new Handlebars.SafeString(WOA.static.user.username);
 });
