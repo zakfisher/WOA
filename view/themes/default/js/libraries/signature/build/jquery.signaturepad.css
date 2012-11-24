@@ -152,10 +152,6 @@
   border: 1px solid #ccc;
 }
 
-.sigWrapper.current {
-  border-color: #666;
-}
-
 .signed .sigWrapper {
   border: 0;
 }
@@ -203,15 +199,4 @@
 
   color: #000;
   font: italic normal 1em/1.375 Georgia,Times,serif;
-}
-
-p.error {
-  display: block;
-  margin: 0.5em 0;
-  padding: 0.4em;
-
-  background-color: #f33;
-
-  color: #fff;
-  font-weight: bold;
 }
