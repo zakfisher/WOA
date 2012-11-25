@@ -594,6 +594,11 @@ html { background: black; }
                                  &.input {
                                     padding: 10px 0;
 
+                                    &.message {
+                                       margin-top: 0;
+                                       padding-bottom: 30px;
+                                    }
+
                                     p {
                                        font-size: 18px;
                                        color: $pink;

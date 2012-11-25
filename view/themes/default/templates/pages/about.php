@@ -15,6 +15,20 @@
                   <h1>About Us</h1>
                   <h2>What is the World of Anarchy?</h2>
                   <div class="shadow down"></div>
+                  <div class="dynamic-shell">
+                     <div class="dynamic-content">
+                        <div class="main-view">
+                           <div class="public-content">
+                              <p>Need to get content and figure out side-nav</p>
+                           </div>
+                           <!-- end .public-content -->
+                        </div>
+                        <!-- end .main-view -->
+                        <div class="secondary-view"></div>
+                     </div>
+                     <!-- end .dynamic-content -->
+                  </div>
+                  <!-- end .dynamic-shell -->
                </div>
                <!-- end .header -->
             </div>

@@ -13,7 +13,7 @@
             <div class="inner-container">
                <div class="header">
                   <h1>Music</h1>
-                  <h2>Preview and download hours of FREE mixes by your favorite artists below :)</h2>
+                  <h2>Download hours of free mixes by your favorite artists :)</h2>
                   <div class="shadow down"></div>
                   <div class="dynamic-shell">
                      <div class="dynamic-content">
