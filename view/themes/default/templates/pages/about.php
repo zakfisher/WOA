@@ -13,7 +13,7 @@
             <div class="inner-container">
                <div class="header">
                   <h1>About Us</h1>
-                  <h2>World of Anarchy is comprised of a creative group of entrepreneurs, specializing in event production and multimedia services.</h2>
+                  <h2>What is the World of Anarchy?</h2>
                   <div class="shadow down"></div>
                </div>
                <!-- end .header -->
