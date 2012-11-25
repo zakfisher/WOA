@@ -274,7 +274,7 @@
                               border-bottom: 1px solid $gray;
 
                               div.meta-info {
-                                 width: 110px;
+                                 width: 120px;
 
                                  p {
                                     font-size: 14px;
@@ -294,7 +294,7 @@
                               div.comment-text {
                                  border-left: 1px solid $gray;
                                  min-height: 50px;
-                                 width: 481px;
+                                 width: 471px;
 
                                  p {
                                     font-size: 14px;
@@ -307,7 +307,7 @@
                                     padding: 0 10px;
 
                                     textarea[name=comment] {
-                                       width: 440px;
+                                       width: 430px;
                                        border: 1px solid #CCC;
                                        @include border-radius(3px);
                                        padding: 3px 25px 3px 5px;
