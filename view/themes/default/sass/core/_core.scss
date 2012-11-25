@@ -598,6 +598,8 @@ html { background: black; }
                                        padding-bottom: 20px;
                                     }
 
+                                    &.wide input { width: 560px; }
+
                                     p {
                                        font-size: 18px;
                                        color: $pink;

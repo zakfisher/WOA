@@ -63,8 +63,11 @@ WOA.user =
          // Clear User Cache
          $.cookie('user_key', null);
          delete WOA.static.user;
+         delete WOA.static.sub_page;
          delete WOA.static.list_cache;
          delete WOA.static.current_post;
+         delete WOA.static.current_post_h1;
+         delete WOA.static.current_post_h2;
          delete WOA.static.current_project;
 
          // Update Session & Delete Cache

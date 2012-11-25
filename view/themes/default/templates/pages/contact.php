@@ -27,6 +27,11 @@
                                  <p>Email</p>
                                  <input type="text" name="email">
                               </div>
+                              <div class="clr"></div>
+                              <div class="input wide">
+                                 <p>Subject</p>
+                                 <input type="text" name="subject">
+                              </div>
                               <div class="input message">
                                  <p>Message</p>
                                  <textarea name="message" rows="8"></textarea>
