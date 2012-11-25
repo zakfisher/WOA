@@ -6,7 +6,7 @@ class Emails extends WOA {
       require_once('model/emails.php');
    }
 
-   function get_emails()
+   public function get_emails()
    {
       if ($this->login_check('return') == 'true' && $_SESSION['user']['access'] == 'admin')
       {

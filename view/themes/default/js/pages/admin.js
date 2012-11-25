@@ -25,7 +25,7 @@ WOA.pages.Admin =
        *************************************************************/
       getAdminData : function()
       {
-         $.get(WOA.static.env + 'test/test/abc', WOA.pages.Admin.view.showPage);
+         $.get('admin/get_stats', WOA.pages.Admin.view.showPage);
       }
    },
    view : {
@@ -47,26 +47,26 @@ WOA.pages.Admin =
        *************************************************************/
       showPage : function(data)
       {
-         var data = {
+         var context = {
             items : [
                {
                   task : 'Manage Users',
-                  total : 34
+                  total : data.user_count
                },
                {
                   task : 'Manage Contracts',
-                  total : 23
+                  total : data.contract_count
                },
                {
                   task : 'Manage Projects',
-                  total : 4,
+                  total : data.project_count,
                   last : true
                }
             ]
          };
 
          // Render List Template
-         Handlebars.renderTemplate('template-admin-list-items', data, 'div.list-container.admin');
+         Handlebars.renderTemplate('template-admin-list-items', context, 'div.list-container.admin');
       }
    },
    controller :
