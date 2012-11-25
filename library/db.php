@@ -1,5 +1,5 @@
 <?php
-class DB {
+class DB extends WOA {
    function __construct() { session_start(); }
 
    private function query($query)

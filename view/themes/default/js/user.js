@@ -66,7 +66,6 @@ WOA.user =
          delete WOA.static.list_cache;
          delete WOA.static.current_post;
          delete WOA.static.current_project;
-         delete WOA.static.sub_page;
 
          // Update Session & Delete Cache
          $.get('user/log_out');

@@ -147,6 +147,7 @@ WOA.pages.Settings =
        *    Settings were updated
        *************************************************************/
       updateSuccess : function(data) {
+
          $('div.submit-form div.btn.change-settings').removeClass('disabled');
 
          // Error
@@ -157,8 +158,6 @@ WOA.pages.Settings =
             // Update User Cache
             if (typeof data.user.password !== 'undefined') { delete data.user.password; }
             WOA.user.model.setUserCache(data);
-
-            console.log(data);
 
             // Display Success Message
             $('div.submit-form p').addClass('success').removeClass('error').text('Settings updated successfully.');

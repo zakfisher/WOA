@@ -20,7 +20,6 @@ class User_Model extends WOA {
       if (count($results) > 0) {
 
          $user = $results[0];
-         $user['sub_page'] = 'updates';
 
          // Set session vars
          $this->set_user_session($user);
@@ -118,7 +117,11 @@ class User_Model extends WOA {
       foreach ($assoc_arr as $key => $value) $_SESSION['user'][$key] = $assoc_arr[$key];
       $response = $_SESSION['user'];
       unset($response['password']);
-      JSON::print_json(array('response' => 'true', 'user' => $response, 'sub_page' => $_SESSION['sub_page']));
+
+      // Update User Cache
+      $db->update_where('user_cache', array('user_data' => json_encode($response)), 'user_id', $_SESSION['user']['user_id']);
+
+      JSON::print_json(array('response' => 'true', 'user' => $response));
    }
 
    public function reset_password($assoc_arr)
