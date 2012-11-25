@@ -95,7 +95,6 @@ WOA.user =
          // Set JS User Cache
          if (typeof WOA.static.user != 'object') { WOA.static.user = {}; }
          if (data.user.username !== null) {
-             console.log(data);
             WOA.static.user.username   = data.user.username;
             WOA.static.user.first_name = data.user.first_name;
             WOA.static.user.last_name  = data.user.last_name;
