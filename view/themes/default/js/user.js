@@ -61,13 +61,14 @@ WOA.user =
          $('a.username').text('Logging Out...').removeAttr('data-page').addClass('log-out');
 
          // Clear User Cache
-         $.cookie('user', null);
+         $.cookie('user_key', null);
          delete WOA.static.user;
          delete WOA.static.list_cache;
          delete WOA.static.current_post;
          delete WOA.static.current_project;
+         delete WOA.static.sub_page;
 
-         // Update Session
+         // Update Session & Delete Cache
          $.get('user/log_out');
       },
 
@@ -78,12 +79,10 @@ WOA.user =
        *************************************************************/
       refreshUser : function()
       {
-         if ($.cookie('user') != null)
+         if ($.cookie('user_key') != null)
          {
-            var data = $.parseJSON($.cookie('user'));
-
             // Fetch user data
-            $.post('user/refresh_user_session', data, WOA.user.model.setUserCache, 'json');
+            $.post('user/refresh_user_session', { data_key : $.cookie('user_key')}, WOA.user.model.setUserCache, 'json');
          }
       },
 
@@ -94,9 +93,6 @@ WOA.user =
        *************************************************************/
       setUserCache : function(data)
       {
-         // Reset Cache
-         $.cookie('user', null);
-
          // Set JS User Cache
          if (typeof WOA.static.user != 'object') { WOA.static.user = {}; }
          WOA.static.user.username   = data.user.username;
@@ -104,11 +100,11 @@ WOA.user =
          WOA.static.user.last_name  = data.user.last_name;
          WOA.static.user.email      = data.user.email;
 
-         // Store value in cookie (for refreshing session)
-         var cookie = data.user;
-
-         // Set User Cookie
-         $.cookie('user', JSON.stringify(data.user));
+         // Reset Cache
+         if (typeof data.data_key !== 'undefined') {
+             $.cookie('user_key', null);
+             $.cookie('user_key', data.data_key);
+         }
       }
    },
    view :
@@ -209,7 +205,10 @@ WOA.user =
          // User authenticated
          if (data.response == 'true' && typeof data.user == 'object')
          {
+
+
             WOA.user.model.setUserCache(data);
+
             var form = $('#login-form');
             form.find('div.btn.login').removeClass('disabled');
             form.find('input').blur();
@@ -242,11 +241,14 @@ WOA.user =
        *************************************************************/
       loginFail : function()
       {
-         $.cookie('user', null);
-         $('#login-form div.btn.login').removeClass('disabled');
+         // Delete User Key Cookie
+         $.cookie('user_key', null);
+
+         var form = $('#login-form');
+         form.find('div.btn.login').removeClass('disabled');
 
          // Append Error Message
-         $('#login-form p.error').text('Wrong username or password.');
+         form.find('p.error').text('Wrong username or password.');
       },
 
       /*************************************************************

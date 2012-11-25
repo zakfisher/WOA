@@ -6,4 +6,10 @@ class JSON {
       header('Content-type: application/json');
       print json_encode($data);
    }
+
+   function print_array($array) {
+       print "<pre>";
+       print_r($array);
+       print "</pre>";
+   }
 }

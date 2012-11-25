@@ -1,11 +1,9 @@
 <?php
 class User_Model extends WOA {
 
-   function __construct() {
-      parent::__construct();
-   }
+   function __construct() { parent::__construct(); }
 
-   function authenticate_user($assoc_arr)
+   public function authenticate_user($assoc_arr)
    {
       // Sanitize User Input
       $text = new Text();
@@ -26,7 +24,13 @@ class User_Model extends WOA {
 
          // Set session vars
          $this->set_user_session($user);
-         JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user']));
+
+         // Generate User Data Key & Cache User Data
+         $data_key = sha1($text->random_number(5));
+         $db->insert_into('user_cache', array('user_id' => $_SESSION['user']['user_id'],'data_key' => $data_key, 'user_data' => json_encode($_SESSION['user']) ));
+
+         // Return Data
+         JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user'], 'data_key' => $data_key));
       }
 
       // Match NOT Found
@@ -37,24 +41,46 @@ class User_Model extends WOA {
       }
    }
 
-   function restore_user_session($user, $obj = null)
+   public function restore_user_session($user_key, $json = false)
    {
-      $this->set_user_session($user, $obj);
-      if ($obj == null) JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user']));
+      // Fetch User Data
+      $db = new DB();
+      $results = $db->select_from_where(array('user_data'), 'user_cache', 'data_key', $user_key);
+      $user = json_decode($results[0]['user_data']);
+
+      // Reset Session
+      $this->set_user_session($user);
+
+      // From AJAX, return JSON
+      if ($json) JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user']));
    }
 
-   private function set_user_session($user, $obj = null)
+   private function set_user_session($user)
    {
+       // Array
+       if (gettype($user) == 'array') {
+           $_SESSION['user']['user_id']    = $user['user_id'];
+           $_SESSION['user']['username']   = $user['username'];
+           $_SESSION['user']['first_name'] = $user['first_name'];
+           $_SESSION['user']['last_name']  = $user['last_name'];
+           $_SESSION['user']['email']      = $user['email'];
+           $_SESSION['user']['access']     = $user['access'];
+       }
+
+       // Object
+       else {
+           $_SESSION['user']['user_id']    = $user->user_id;
+           $_SESSION['user']['username']   = $user->username;
+           $_SESSION['user']['first_name'] = $user->first_name;
+           $_SESSION['user']['last_name']  = $user->last_name;
+           $_SESSION['user']['email']      = $user->email;
+           $_SESSION['user']['access']     = $user->access;
+       }
+
       $_SESSION['logged_in'] = true;
-      $_SESSION['user']['user_id']    = ($obj == null) ? $user['user_id']    : $user->user_id;
-      $_SESSION['user']['username']   = ($obj == null) ? $user['username']   : $user->username;
-      $_SESSION['user']['first_name'] = ($obj == null) ? $user['first_name'] : $user->first_name;
-      $_SESSION['user']['last_name']  = ($obj == null) ? $user['last_name']  : $user->last_name;
-      $_SESSION['user']['email']      = ($obj == null) ? $user['email']      : $user->email;
-      $_SESSION['user']['access']     = ($obj == null) ? $user['access']     : $user->access;
    }
 
-   function update_user($assoc_arr)
+   public function update_user($assoc_arr)
    {
       // Sanitize User Input
       $text = new Text();
@@ -95,7 +121,7 @@ class User_Model extends WOA {
       JSON::print_json(array('response' => 'true', 'user' => $response, 'sub_page' => $_SESSION['sub_page']));
    }
 
-   function reset_password($assoc_arr)
+   public function reset_password($assoc_arr)
    {
       $text = new Text();
       $db = new DB();
@@ -122,5 +148,15 @@ class User_Model extends WOA {
 
       // Match Not Found
       else JSON::print_json(array('error' => 'Account not found.'));
+   }
+
+   public function delete_user_cache()
+   {
+      $db = new DB();
+      $user_id = $_SESSION['user']['user_id'];
+      $db->delete_from_where('user_cache', 'user_id', $user_id);
+
+      unset($_SESSION['user']);
+      unset($_SESSION['logged_in']);
    }
 }

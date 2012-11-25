@@ -216,7 +216,7 @@ WOA.navigation =
          if (page == 'dashboard')
          {
             // Check if logged in
-            if ($.cookie('user') != null)
+            if ($.cookie('user_key') != null)
             {
                $.get('user/login_check', function(data) {
                   target = (data != 'true') ? '#logo div.sprite' : target;

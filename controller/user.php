@@ -29,7 +29,7 @@ class User extends WOA {
       if ($_POST)
       {
          $user_model = new User_Model();
-         $user_model->restore_user_session($_POST);
+         $user_model->restore_user_session($_POST['data_key'], true);
       }
    }
 
@@ -49,7 +49,7 @@ class User extends WOA {
 
    function log_out()
    {
-      $_SESSION['logged_in'] = false;
-      unset($_SESSION['user']);
+      $user_model = new User_Model();
+      $user_model->delete_user_cache();
    }
 }

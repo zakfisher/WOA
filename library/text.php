@@ -2,11 +2,11 @@
 class Text {
    function __construct() { }
 
-   function sanitize_string($str) {
+   public function sanitize_string($str) {
       return strip_tags(htmlentities(stripslashes($str)));
    }
 
-   function random_string($length = 10) {
+   public function random_string($length = 10) {
       $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
       $randomString = '';
       for ($i = 0; $i < $length; $i++) {
@@ -15,7 +15,16 @@ class Text {
       return $randomString;
    }
 
-   function format_post_date($timestamp)
+   public function random_number($length = 10) {
+       $characters = '0123456789';
+       $randomNumber = '';
+       for ($i = 0; $i < $length; $i++) {
+           $randomNumber .= $characters[rand(0, strlen($characters) - 1)];
+       }
+       return (int)$randomNumber;
+   }
+
+   public function format_post_date($timestamp)
    {
       $year = substr($timestamp, 2, 2);
       $month = substr($timestamp, 5, 2);
