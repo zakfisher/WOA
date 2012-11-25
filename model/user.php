@@ -27,6 +27,10 @@ class User_Model extends WOA {
          // Generate User Data Key & Cache User Data
          $data_key = sha1($text->random_number(5));
          $data_key = substr($data_key, 0, 16);
+
+         // Overwrite User Cache (if logged in from multiple locations)
+         $user_cache_result = $db->select_from_where(array('*'), 'user_cache', 'user_id', $_SESSION['user']['user_id']);
+         if (count($user_cache_result) > 0) { $db->delete_from_where('user_cache', 'user_id', $_SESSION['user']['user_id']); }
          $db->insert_into('user_cache', array('user_id' => $_SESSION['user']['user_id'],'data_key' => $data_key, 'user_data' => json_encode($_SESSION['user']) ));
 
          // Return Data

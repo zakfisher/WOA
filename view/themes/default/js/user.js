@@ -94,10 +94,14 @@ WOA.user =
       {
          // Set JS User Cache
          if (typeof WOA.static.user != 'object') { WOA.static.user = {}; }
-         WOA.static.user.username   = data.user.username;
-         WOA.static.user.first_name = data.user.first_name;
-         WOA.static.user.last_name  = data.user.last_name;
-         WOA.static.user.email      = data.user.email;
+         if (data.user.username !== null) {
+             console.log(data);
+            WOA.static.user.username   = data.user.username;
+            WOA.static.user.first_name = data.user.first_name;
+            WOA.static.user.last_name  = data.user.last_name;
+            WOA.static.user.email      = data.user.email;
+         }
+         else { WOA.user.model.logout(); }
 
          // Reset Cache
          if (typeof data.data_key !== 'undefined') {
