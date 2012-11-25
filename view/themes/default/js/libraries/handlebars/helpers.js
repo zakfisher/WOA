@@ -96,3 +96,12 @@ Handlebars.registerHelper('renderLinkItem', function(data) {
    var template = Handlebars.compile($('#template-add-link').html());
    return new Handlebars.SafeString(template(data));
 });
+
+Handlebars.registerHelper('renderPostMessage', function(html) {
+    return new Handlebars.SafeString(html);
+});
+
+Handlebars.registerHelper('renderPostMessageText', function(html) {
+    html = html.replace(/<br\/>/g,'\n');
+    return new Handlebars.SafeString(html);
+});

@@ -92,8 +92,6 @@ WOA.pages.Updates =
                 if (v.author == WOA.static.user.username) { v.owner = true; }
             });
 
-            if (data.items.length < 6) { data.noSearch = true; }
-
             // Cache Result Set
             WOA.static.list_cache = data;
 
@@ -226,6 +224,7 @@ WOA.pages.Updates =
             var form = $('div.post-content');
             var title = form.find('div.header div.title input').val();
             var message = form.find('div.message textarea').val();
+            message = message.replace(/\n/g,'<br/>');
             var links = form.find('div.links ul li');
             var update = form.find('div.submit-cancel div.update');
 
@@ -271,6 +270,7 @@ WOA.pages.Updates =
             var form = $('div.post-content');
             var title = form.find('div.header div.title input').val();
             var message = form.find('div.message textarea').val();
+            message = message.replace(/\n/g,'<br/>');
             var links = form.find('div.links ul li');
             var add = form.find('div.submit-cancel div.add-new');
             var project = form.find('div.header option:selected');
