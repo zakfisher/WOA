@@ -587,7 +587,7 @@ html { background: black; }
                               border-bottom: 1px solid #e0e0e0;
                               padding: 10px 20px 0;
 
-                              &.settings { padding: 0; }
+                              &.settings { padding-top: 0; }
 
                               div {
 
@@ -595,9 +595,9 @@ html { background: black; }
                                     padding: 10px 0;
 
                                     p {
-                                       color: red;
-                                       font-size: 18px;color: $darkGray;
-                                       font-weight: 500;
+                                       font-size: 18px;
+                                       color: $pink;
+                                       font-weight: 400;
                                     }
 
                                     input {
@@ -610,6 +610,7 @@ html { background: black; }
                                        color: black;
                                        @include box-shadow(inset 0px 1px 3px 0 #ccc);
                                        margin-bottom: 15px;
+                                       outline: none;
 
                                        &:not(:focus) { color: #CCC; }
                                     }
