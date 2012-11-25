@@ -26,6 +26,7 @@ class User_Model extends WOA {
 
          // Generate User Data Key & Cache User Data
          $data_key = sha1($text->random_number(5));
+         $data_key = substr($data_key, 16);
          $db->insert_into('user_cache', array('user_id' => $_SESSION['user']['user_id'],'data_key' => $data_key, 'user_data' => json_encode($_SESSION['user']) ));
 
          // Return Data
