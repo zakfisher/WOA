@@ -12,14 +12,11 @@
  * - Model
      >> loadPage
      >> updateSession
-     >> setEnv
-
  * - View
      >> requestPage
      >> requestSubPage
      >> showPage
-     >> hashBangRedirect
-
+     >> hashBangRedirects
  * - Controller
      >> Init Global Variables
      >> Handlers
@@ -178,14 +175,8 @@ WOA.navigation =
                clearInterval(int);
             };
             if (WOA.pages.hasOwnProperty(page)) {
-               if ($('div.content-loading').length > 0)
-               {
-                  showPage();
-               }
-               else if ($('div.page-loading').length > 0)
-               {
-                  showPage();
-               }
+               if ($('div.content-loading').length > 0) { showPage(); }
+               else if ($('div.page-loading').length > 0) { showPage(); }
             }
          }, 300);
       },

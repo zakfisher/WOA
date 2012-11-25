@@ -16,7 +16,7 @@ class User_Model extends WOA {
 
       // Fetch User from DB
       $db = new DB();
-      $results = $db->select_from_where_and(array('*'), 'users', 'username', $un, 'password', $pw);
+      $results = $db->select_from_where_and(array('*'), 'users', 'username', $un, 'password', sha1($pw));
 
       // Match Found
       if (count($results) > 0) {
@@ -85,11 +85,14 @@ class User_Model extends WOA {
       }
 
       // Update into DB
+      if (isset($assoc_arr['password'])) $assoc_arr['password'] = sha1($assoc_arr['password']);
       $db->update_where('users', $assoc_arr, 'user_id', $_SESSION['user']['user_id']);
 
       // Update Session
       foreach ($assoc_arr as $key => $value) $_SESSION['user'][$key] = $assoc_arr[$key];
-      JSON::print_json(array('response' => 'true', 'user' => $_SESSION['user'], 'sub_page' => $_SESSION['sub_page']));
+      $response = $_SESSION['user'];
+      unset($response['password']);
+      JSON::print_json(array('response' => 'true', 'user' => $response, 'sub_page' => $_SESSION['sub_page']));
    }
 
    function reset_password($assoc_arr)
@@ -110,7 +113,7 @@ class User_Model extends WOA {
 
          // Change User PW
          $new_pw = $text->random_string();
-         $db->update_where('users', array('password' => $new_pw), 'user_id', $user['user_id']);
+         $db->update_where('users', array('password' => sha1($new_pw)), 'user_id', $user['user_id']);
 
          // Send Email
          $msg = 'Your password has been reset.<br/><br/>Username: ' . $user['username'] . '<br/><br/>Password: ' . $new_pw;

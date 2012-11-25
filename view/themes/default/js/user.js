@@ -46,8 +46,9 @@ WOA.user =
       {
          // Hide logged in nav, show default nav
          var resetNav = function() {
-            $('#navigation div.right div.link.sign-out').addClass('hidden');
-            $('#navigation div.right div.link.sign-in').removeClass('hidden');
+            var nav = $('#navigation');
+            nav.find('div.right div.link.sign-out').addClass('hidden');
+            nav.find('div.right div.link.sign-in').removeClass('hidden');
             $('a.username').fadeOut('normal');
          };
 
@@ -107,10 +108,6 @@ WOA.user =
          var cookie = data.user;
 
          // Set User Cookie
-//         var now = new Date();
-//         var oneHourFromNow = now.getTime() + 3600000;
-//         var expiration = new Date(oneHourFromNow);
-//         $.cookie('user', JSON.stringify(data.user), { expires : expiration });
          $.cookie('user', JSON.stringify(data.user));
       }
    },
@@ -175,13 +172,14 @@ WOA.user =
       submitUserInput : function()
       {
          WOA.modals.view.hideModal();
-         var button = $('#login-form div.btn.login');
+         var form = $('#login-form');
+         var button = form.find('div.btn.login');
          if (!button.hasClass('disabled'))
          {
             button.addClass('disabled');
 
-            var username = $('#login-form input[name=un]').val();
-            var password = $('#login-form input[name=pw]').val();
+            var username = form.find('input[name=un]').val();
+            var password = form.find('input[name=pw]').val();
             var emptyFields = (username == '' || username == 'username' || password == '');
 
             if (!emptyFields)
@@ -195,7 +193,7 @@ WOA.user =
             }
 
             else {
-               $('#login-form p.error').text('Fill out all fields.');
+                form.find('p.error').text('Fill out all fields.');
                button.removeClass('disabled');
             }
          }
@@ -212,8 +210,9 @@ WOA.user =
          if (data.response == 'true' && typeof data.user == 'object')
          {
             WOA.user.model.setUserCache(data);
-            $('#login-form div.btn.login').removeClass('disabled');
-            $('#login-form input').blur();
+            var form = $('#login-form');
+            form.find('div.btn.login').removeClass('disabled');
+            form.find('input').blur();
 
             // Show Username
             $('a.username').attr('data-page', 'dashboard').removeClass('log-out').text(WOA.static.user.username).fadeIn();
@@ -222,20 +221,18 @@ WOA.user =
             $('a[data-page=dashboard]').click();
 
             // Hide default nav, show logged in nav
-            $('#navigation div.right div.link.sign-in').addClass('hidden');
-            $('#navigation div.right div.link.sign-out').removeClass('hidden');
+            var nav = $('#navigation');
+            nav.find('div.right div.link.sign-in').addClass('hidden');
+            nav.find('div.right div.link.sign-out').removeClass('hidden');
 
             // Replace Form Values
-            $('#login-form input[name=pw]').val('').hide();
-            $('#login-form input[name=un]').val('username');
-            $('#login-form input[name=pw-fake]').val('password').show();
+            form.find('input[name=pw]').val('').hide();
+            form.find('input[name=un]').val('username');
+            form.find('input[name=pw-fake]').val('password').show();
          }
 
          // User NOT authenticated
-         else
-         {
-            WOA.user.view.loginFail();
-         }
+         else { WOA.user.view.loginFail(); }
       },
 
       /*************************************************************
