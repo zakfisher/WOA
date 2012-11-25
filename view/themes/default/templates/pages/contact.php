@@ -34,6 +34,7 @@
                               <div class="clr"></div>
                            </div>
                            <!-- end.form -->
+                           <div class="shadow"></div>
                            <div class="submit-form">
                               <p class="error left"></p>
                               <div class="btn btn-inverse send-email right"><i class="icon-white icon-envelope"></i> Send Email</div>

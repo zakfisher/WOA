@@ -15,6 +15,7 @@
                   {{/each}}
                </div>
                <!-- end .form -->
+               <div class="shadow"></div>
                <div class="submit-form">
                   <p class="error left"></p>
                   <div class="btn btn-inverse change-settings right">Save Changes</div>
