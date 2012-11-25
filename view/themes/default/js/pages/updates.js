@@ -382,14 +382,13 @@ WOA.pages.Updates =
             var urlInput = links.find('div.add-link input[name=url]');
             var url = urlInput.val();
 
-            // Add UL if it doesn't exist
-            if (ul.length == 0) {
-                links.find('div.add-link').before("<ul></ul>");
-                ul = links.find('ul');
-            }
-
             // Validate Input & Render Link List Item
             if (title.trim() != '' && url.trim() != '' && title != 'Title' && url != 'URL') {
+                // Add UL if it doesn't exist
+                if (ul.length == 0) {
+                    links.find('div.add-link').before("<ul></ul>");
+                    ul = links.find('ul');
+                }
                 var li = {
                     title : title,
                     url : url
@@ -419,8 +418,9 @@ WOA.pages.Updates =
          *************************************************************/
         deleteLink : function(e)
         {
-            var li = $(e.target).parents ('li');
+            var li = $(e.target).parents('li');
             li.remove();
+            if ($('div.links li').length == 0) { $('div.links ul').remove(); }
         },
 
         /*************************************************************

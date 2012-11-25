@@ -146,7 +146,7 @@
                   <div class="shadow"></div>
                </div>
                <div class="message text">
-                  <textarea rows=5>{{#if addMode}}Add your message...{{else}}{{renderPostMessageText content.message}}{{/if}}</textarea>
+                  <textarea rows="10">{{#if addMode}}Add your message...{{else}}{{renderPostMessageText content.message}}{{/if}}</textarea>
                </div>
                <div class="links">
                   <div class="header">
