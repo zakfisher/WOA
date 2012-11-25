@@ -114,6 +114,7 @@ WOA.pages.Updates =
             var post = WOA.static.list_cache.items[WOA.static.list_cache.item_index[postId]];
             WOA.static.current_post = post;
 
+            $('div.content.right div.header div.shadow.first').addClass('down');
             Handlebars.renderTemplate('template-single-post', post, 'div.dynamic-content', 'append');
             $('div.dynamic-content').animate({ left : '-612px' }, 300);
         },
@@ -205,7 +206,10 @@ WOA.pages.Updates =
          *************************************************************/
         backToListView : function(e)
         {
-            $('div.dynamic-content').animate({ left : '0px' }, 300, function() { $('div.dynamic-content div.secondary-view').remove(); });
+            $('div.dynamic-content').animate({ left : '0px' }, 300, function() {
+                $('div.dynamic-content div.secondary-view').remove();
+                if ($('div.sub-page-actions').length == 0) { $('div.content.right div.header div.shadow.first').removeClass('down'); }
+            });
             delete WOA.static.current_post;
             delete WOA.static.current_post_h1;
             delete WOA.static.current_post_h2;
