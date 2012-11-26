@@ -22,7 +22,7 @@
                   <div class="inner">
                      <div class="btn btn-inverse go-back left"><i class="icon-white icon-arrow-left"></i> Back</div>
                      {{#if owner}}
-                     <div class="btn btn-inverse edit right">Edit <i class="icon-white icon-pencil"></i></div>
+                     <div class="btn btn-inverse edit right"><i class="icon-white icon-pencil"></i> Edit</div>
                      {{/if}}
                      <div class="clr"></div>
                   </div>
@@ -94,7 +94,7 @@
                            <div class="clr"></div>
                         </div>
                         <div class="button">
-                           <div class="btn btn-inverse right submit-comment">Comment</div>
+                           <div class="btn btn-inverse right submit-comment"><i class="icon-white icon-comment"></i> Comment</div>
                         </div>
                      </div>
                   </div>

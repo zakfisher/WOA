@@ -123,8 +123,8 @@
 
                         p {
                            color: $darkGray;
-                           font-size: 16px;
-                           line-height: 24px;
+                           font-size: 14px;
+                           line-height: 22px;
                            margin: 10px 15px 15px;
                         }
 
@@ -133,7 +133,7 @@
                            border: 1px solid #CCC;
                            @include border-radius(3px);
                            padding: 10px;
-                           font-size: 16px;
+                           font-size: 14px;
                            color: #ccc;
                            @include box-shadow(inset 0px 1px 3px 0 #ccc);
                            outline: none;
