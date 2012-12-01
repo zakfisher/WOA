@@ -15,25 +15,18 @@
  *********************************************/
 WOA.pages.Biz_plan =
 {
-   model : {
-      /*************************************************************
-       * Method - getProjectNames(callback)
-       *
-       *    Fetch Project Names
-       *************************************************************/
-      getProjectNames : function(callback) { $.get('projects/get_project_names', callback); }
-   },
+   model : {},
    view : {
       /*************************************************************
        * Method - loadPage()
        *
        *    Init Page Logic
-       *    - Fetch Projects Data
+       *    - Display Business Plan
        *************************************************************/
       loadPage : function()
       {
-         // Dashboard (list)
-         WOA.pages.Projects.model.getProjects();
+         // Render Template
+         Handlebars.renderTemplate('template-projects-biz-plan', WOA.static.current_project.biz_plan, 'div.dynamic-content');
       },
 
       /*************************************************************

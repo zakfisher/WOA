@@ -34,11 +34,27 @@
 
          <!-- Overview -->
          <script id="template-projects-overview" type="text/x-handlebars-template">
-             <br/>
-             <p>Description: {{description}}</p>
-             <p>Content: {{content}}</p>
+            <br/>
+            <p>Description: {{description}}</p>
+            <p>Content: {{content}}</p>
          </script>
 
+         <!-- Business Plan -->
+         <script id="template-projects-biz-plan" type="text/x-handlebars-template">
+            <div class="biz-plan content">
+                {{#each this}}
+                <div class="section">
+                    <h1>{{section}}</h1>
+                    {{#each articles}}
+                    <div class="article">
+                        <h3>{{article}}</h3>
+                        <p>{{body}}</p>
+                    </div>
+                    {{/each}}
+                </div>
+                {{/each}}
+            </div>
+         </script>
 
          <!-- Contracts Items-->
          <script id="template-projects-contracts" type="text/x-handlebars-template">

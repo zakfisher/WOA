@@ -15,6 +15,9 @@
                      {{#if projects}}
                      <div class="btn btn-inverse left add-project mr10">New Project <i class="icon-white icon-plus"></i></div>
                      {{/if}}
+                     {{#if contracts}}
+                      <div class="btn btn-inverse left add-contract mr10">New Contract <i class="icon-white icon-plus"></i></div>
+                     {{/if}}
                      <?php endif; ?>
                      {{#if contacts}}
                      <div class="btn btn-inverse left add-contact mr10">New Contact <i class="icon-white icon-plus"></i></div>

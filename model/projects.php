@@ -28,29 +28,71 @@ class Projects_Model extends WOA {
                'content' => 'content'
             );
 
-            $project['biz_plan'] = array(
-               'administrative' => array(
-                  array('Section 1', 'body'),
-                  array('Section 2', 'body'),
-                  array('Section 3', 'body')
-               ),
-               'marketing' => array(
-                  array('Section 1', 'body'),
-                  array('Section 2', 'body'),
-                  array('Section 3', 'body')
-               ),
-               'production' => array(
-                  array('Section 1', 'body'),
-                  array('Section 2', 'body'),
-                  array('Section 3', 'body')
-               )
-            );
-
             switch ($access) {
                case 'admin':
                   $project['sub_nav'][] = array('sub_page' => 'overview',  'title' => 'Overview');
                   $project['sub_nav'][] = array('sub_page' => 'contracts', 'title' => 'Contracts');
                   $project['sub_nav'][] = array('sub_page' => 'biz_plan',  'title' => 'Business Plan');
+
+                  $project['biz_plan'] = array(
+                     array(
+                        'section' => 'administrative',
+                        'articles' => array(
+                           array(
+                              'article' => 'Article 1',
+                              'body' => 'text goes here'
+                           ),
+                           array(
+                              'section' => 'administrative',
+                              'article' => 'Article 2',
+                              'body' => 'text goes here'
+                           ),
+                           array(
+                              'section' => 'administrative',
+                              'article' => 'Article 3',
+                              'body' => 'text goes here'
+                           )
+                        )
+                     ),
+                      array(
+                          'section' => 'marketing',
+                          'articles' => array(
+                              array(
+                                  'article' => 'Article 1',
+                                  'body' => 'text goes here'
+                              ),
+                              array(
+                                  'section' => 'administrative',
+                                  'article' => 'Article 2',
+                                  'body' => 'text goes here'
+                              ),
+                              array(
+                                  'section' => 'administrative',
+                                  'article' => 'Article 3',
+                                  'body' => 'text goes here'
+                              )
+                          )
+                      ),
+                      array(
+                          'section' => 'production',
+                          'articles' => array(
+                              array(
+                                  'article' => 'Article 1',
+                                  'body' => 'text goes here'
+                              ),
+                              array(
+                                  'section' => 'administrative',
+                                  'article' => 'Article 2',
+                                  'body' => 'text goes here'
+                              ),
+                              array(
+                                  'section' => 'administrative',
+                                  'article' => 'Article 3',
+                                  'body' => 'text goes here'
+                              )
+                          )
+                      ),
+                  );
 
                   // Fetch from DB
                   $project['contracts'] = array(
