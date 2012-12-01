@@ -1,9 +1,7 @@
 <?php
 class Projects_Model extends WOA {
 
-   function __construct() {
-      parent::__construct();
-   }
+   function __construct() { parent::__construct(); }
 
    public function get_user_projects()
    {

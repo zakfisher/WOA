@@ -9,6 +9,8 @@
  *
  * Search Keys:
  * - Import Pages
+ * - Import User Pages
+ * - Import Sub Pages
  *********************************************/
 
 /** Import Pages **/
@@ -17,13 +19,17 @@ $.getScript('view/themes/default/js/pages/music.js');
 $.getScript('view/themes/default/js/pages/about.js');
 $.getScript('view/themes/default/js/pages/contact.js');
 $.getScript('view/themes/default/js/pages/dashboard.js');
-$.getScript('view/themes/default/js/pages/updates.js');
-$.getScript('view/themes/default/js/pages/projects.js');
-$.getScript('view/themes/default/js/pages/overview.js');
-$.getScript('view/themes/default/js/pages/partners.js');
-$.getScript('view/themes/default/js/pages/biz-plan.js');
-$.getScript('view/themes/default/js/pages/contracts.js');
-$.getScript('view/themes/default/js/pages/settings.js');
-$.getScript('view/themes/default/js/pages/contacts.js');
-$.getScript('view/themes/default/js/pages/site-emails.js');
-$.getScript('view/themes/default/js/pages/admin.js');
+
+/** Import User Pages **/
+$.getScript('view/themes/default/js/pages/user/admin.js');
+$.getScript('view/themes/default/js/pages/user/biz-plan.js');
+$.getScript('view/themes/default/js/pages/user/contacts.js');
+$.getScript('view/themes/default/js/pages/user/contracts.js');
+$.getScript('view/themes/default/js/pages/user/overview.js');
+$.getScript('view/themes/default/js/pages/user/partners.js');
+$.getScript('view/themes/default/js/pages/user/projects.js');
+$.getScript('view/themes/default/js/pages/user/settings.js');
+$.getScript('view/themes/default/js/pages/user/site-emails.js');
+$.getScript('view/themes/default/js/pages/user/updates.js');
+
+/** Import User Pages **/
