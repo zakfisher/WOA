@@ -28,139 +28,141 @@ class Projects_Model extends WOA {
                'content' => 'content'
             );
 
+            // Business Plan
+            if ($access == 'admin' OR $access == 'high')
+            {
+                $project['biz_plan'] = array(
+                    array(
+                        'section' => 'administrative',
+                        'articles' => array(
+                            array(
+                                'article' => 'Article 1',
+                                'body' => 'text goes here'
+                            ),
+                            array(
+                                'section' => 'administrative',
+                                'article' => 'Article 2',
+                                'body' => 'text goes here'
+                            ),
+                            array(
+                                'section' => 'administrative',
+                                'article' => 'Article 3',
+                                'body' => 'text goes here'
+                            )
+                        )
+                    ),
+                    array(
+                        'section' => 'marketing',
+                        'articles' => array(
+                            array(
+                                'article' => 'Article 1',
+                                'body' => 'text goes here'
+                            ),
+                            array(
+                                'section' => 'administrative',
+                                'article' => 'Article 2',
+                                'body' => 'text goes here'
+                            ),
+                            array(
+                                'section' => 'administrative',
+                                'article' => 'Article 3',
+                                'body' => 'text goes here'
+                            )
+                        )
+                    ),
+                    array(
+                        'section' => 'production',
+                        'articles' => array(
+                            array(
+                                'article' => 'Article 1',
+                                'body' => 'text goes here'
+                            ),
+                            array(
+                                'section' => 'administrative',
+                                'article' => 'Article 2',
+                                'body' => 'text goes here'
+                            ),
+                            array(
+                                'section' => 'administrative',
+                                'article' => 'Article 3',
+                                'body' => 'text goes here'
+                            )
+                        )
+                    ),
+                );
+            }
+
+             $project['contracts'] = array(
+                 array(
+                     'template' => 'projects-contracts',
+                     'contract_name' => 'Non-disclosure Agreement',
+                     'user_id' => 6,
+                     'username' => 'investor',
+                     'email' => 'email@fake.com',
+                     'content' => array(),
+                     'signature' => true
+                 ),
+                 array(
+                     'template' => 'projects-contracts',
+                     'contract_name' => 'Another Contract',
+                     'user_id' => 6,
+                     'username' => 'vendor',
+                     'email' => 'email@fake.com',
+                     'content' => array(),
+                     'signature' => array()
+                 ),
+                 array(
+                     'template' => 'projects-contracts',
+                     'contract_name' => 'Non-disclosure Agreement',
+                     'user_id' => 6,
+                     'username' => 'bob',
+                     'email' => 'email@fake.com',
+                     'content' => array(),
+                     'signature' => array()
+                 ),
+                 array(
+                     'template' => 'projects-contracts',
+                     'contract_name' => 'Another Contract',
+                     'user_id' => 6,
+                     'username' => 'jimmy jim',
+                     'email' => 'email@fake.com',
+                     'content' => array(),
+                     'signature' => array()
+                 ),
+                 array(
+                     'template' => 'projects-contracts',
+                     'contract_name' => 'Another Contract',
+                     'user_id' => 6,
+                     'username' => 'vendor',
+                     'email' => 'email@fake.com',
+                     'content' => array(),
+                     'signature' => array()
+                 ),
+                 array(
+                     'template' => 'projects-contracts',
+                     'contract_name' => 'Non-disclosure Agreement',
+                     'user_id' => 6,
+                     'username' => 'bob',
+                     'email' => 'email@fake.com',
+                     'content' => array(),
+                     'signature' => array()
+                 ),
+                 array(
+                     'template' => 'projects-contracts',
+                     'contract_name' => 'Another Contract',
+                     'user_id' => 6,
+                     'username' => 'jimmy jim',
+                     'email' => 'email@fake.com',
+                     'content' => array(),
+                     'signature' => array()
+                 )
+             );
+
             switch ($access) {
                case 'admin':
                   $project['sub_nav'][] = array('sub_page' => 'overview',  'title' => 'Overview');
                   $project['sub_nav'][] = array('sub_page' => 'contracts', 'title' => 'Contracts');
                   $project['sub_nav'][] = array('sub_page' => 'biz_plan',  'title' => 'Business Plan');
-
-                  $project['biz_plan'] = array(
-                     array(
-                        'section' => 'administrative',
-                        'articles' => array(
-                           array(
-                              'article' => 'Article 1',
-                              'body' => 'text goes here'
-                           ),
-                           array(
-                              'section' => 'administrative',
-                              'article' => 'Article 2',
-                              'body' => 'text goes here'
-                           ),
-                           array(
-                              'section' => 'administrative',
-                              'article' => 'Article 3',
-                              'body' => 'text goes here'
-                           )
-                        )
-                     ),
-                      array(
-                          'section' => 'marketing',
-                          'articles' => array(
-                              array(
-                                  'article' => 'Article 1',
-                                  'body' => 'text goes here'
-                              ),
-                              array(
-                                  'section' => 'administrative',
-                                  'article' => 'Article 2',
-                                  'body' => 'text goes here'
-                              ),
-                              array(
-                                  'section' => 'administrative',
-                                  'article' => 'Article 3',
-                                  'body' => 'text goes here'
-                              )
-                          )
-                      ),
-                      array(
-                          'section' => 'production',
-                          'articles' => array(
-                              array(
-                                  'article' => 'Article 1',
-                                  'body' => 'text goes here'
-                              ),
-                              array(
-                                  'section' => 'administrative',
-                                  'article' => 'Article 2',
-                                  'body' => 'text goes here'
-                              ),
-                              array(
-                                  'section' => 'administrative',
-                                  'article' => 'Article 3',
-                                  'body' => 'text goes here'
-                              )
-                          )
-                      ),
-                  );
-
-                  // Fetch from DB
-                  $project['contracts'] = array(
-                      array(
-                          'template' => 'projects-contracts',
-                          'contract_name' => 'Non-disclosure Agreement',
-                          'user_id' => 6,
-                          'username' => 'investor',
-                          'email' => 'email@fake.com',
-                          'content' => array(),
-                          'signature' => true
-                      ),
-                      array(
-                          'template' => 'projects-contracts',
-                          'contract_name' => 'Another Contract',
-                          'user_id' => 6,
-                          'username' => 'vendor',
-                          'email' => 'email@fake.com',
-                          'content' => array(),
-                          'signature' => array()
-                      ),
-                      array(
-                          'template' => 'projects-contracts',
-                          'contract_name' => 'Non-disclosure Agreement',
-                          'user_id' => 6,
-                          'username' => 'bob',
-                          'email' => 'email@fake.com',
-                          'content' => array(),
-                          'signature' => array()
-                      ),
-                      array(
-                          'template' => 'projects-contracts',
-                          'contract_name' => 'Another Contract',
-                          'user_id' => 6,
-                          'username' => 'jimmy jim',
-                          'email' => 'email@fake.com',
-                          'content' => array(),
-                          'signature' => array()
-                      ),
-                      array(
-                          'template' => 'projects-contracts',
-                          'contract_name' => 'Another Contract',
-                          'user_id' => 6,
-                          'username' => 'vendor',
-                          'email' => 'email@fake.com',
-                          'content' => array(),
-                          'signature' => array()
-                      ),
-                      array(
-                          'template' => 'projects-contracts',
-                          'contract_name' => 'Non-disclosure Agreement',
-                          'user_id' => 6,
-                          'username' => 'bob',
-                          'email' => 'email@fake.com',
-                          'content' => array(),
-                          'signature' => array()
-                      ),
-                      array(
-                          'template' => 'projects-contracts',
-                          'contract_name' => 'Another Contract',
-                          'user_id' => 6,
-                          'username' => 'jimmy jim',
-                          'email' => 'email@fake.com',
-                          'content' => array(),
-                          'signature' => array()
-                      )
-                  );
-
                   break;
                case 'high':
                   $project['sub_nav'][] = array('sub_page' => 'overview',  'title' => 'Overview');
