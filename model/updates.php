@@ -161,7 +161,6 @@ class Updates_Model extends WOA {
          foreach ($recipients as $recipient)
          {
             $recipient_email = $db->select_from_where(array('email'), 'users', 'user_id', $recipient['user_id']);
-
             $email->send($recipient_email[0]['email'], $sender, $title, $msg);
          }
       }

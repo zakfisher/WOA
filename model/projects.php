@@ -24,18 +24,56 @@ class Projects_Model extends WOA {
             $project['user_count'] = $user_count[0]['count(*)'];
             $project['sub_nav'] = array();
 
+            // Fetch from DB
+            $project['overview'] = array(
+                'description' => 'This project is really nice.  I like it for many reasons, but I\'ll tell you those later ... :P',
+                'content' => 'content'
+            );
+
             switch ($access) {
                case 'admin':
                   $project['sub_nav'][] = array('sub_page' => 'overview', 'title' => 'Overview');
                   $project['sub_nav'][] = array('sub_page' => 'partners', 'title' => 'Partners');
                   $project['sub_nav'][] = array('sub_page' => 'biz_plan', 'title' => 'Business Plan');
-                  $project['partners'] = array();
+
+                  // Fetch from DB
+                  $project['partners'] = array(
+                      'Investor' => array(
+                          array('Non-disclosure Agreement', 'content', 'signature'),
+                          array('Another Contract', 'content', 'signature')
+                      ),
+                      'Vendor' =>  array(
+                          array('Non-disclosure Agreement', 'content', 'signature'),
+                          array('Another Contract', 'content', 'signature')
+                      )
+                  );
+                  $project['biz_plan'] = array(
+                      'administrative' => array(
+                          array('Section 1', 'body'),
+                          array('Section 2', 'body'),
+                          array('Section 3', 'body')
+                      ),
+                      'marketing' => array(
+                          array('Section 1', 'body'),
+                          array('Section 2', 'body'),
+                          array('Section 3', 'body')
+                      ),
+                      'production' => array(
+                          array('Section 1', 'body'),
+                          array('Section 2', 'body'),
+                          array('Section 3', 'body')
+                      )
+                  );
+
                   break;
                case 'high':
                   $project['sub_nav'][] = array('sub_page' => 'overview',  'title' => 'Overview');
                   $project['sub_nav'][] = array('sub_page' => 'contracts', 'title' => 'Contracts');
                   $project['sub_nav'][] = array('sub_page' => 'biz_plan',  'title' => 'Business Plan');
-                  $project['contracts'] = array();
+                  $project['contracts'] = array(
+                      array('Non-disclosure Agreement', 'signature'),
+                      array('Another Contract', 'signature')
+                  );
                   break;
                case 'low':
                   $project['sub_nav'][] = array('sub_page' => 'overview',  'title' => 'Overview');
