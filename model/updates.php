@@ -150,24 +150,20 @@ class Updates_Model extends WOA {
 
          JSON::print_json($post);
 
-          // Send Email
-          $title = 'New update from ' . $data['author'];
-          $msg = "
-             Author : "     . $data['author']  . "<br/>
-             Project: "     . $data['project'] . "<br/>
-             Time : "       . $data['time']    . "<br/>
-             Post Title : " . $data['title']   . "<br/>
-             Message : "    . $data['content']['message'] . "<br/>"
-          ;
-          foreach ($post['content']['links'] as $link) $msg .= "<a href='" . $link['url'] . "'>" . $link['title'] . "</a><br/>";
+         // Compose Email
+         $sender = $data['title'];
+         $title = $data['project'] . ' : New update from ' . $data['author'];
+         $msg = $data['content']['message'] . "<br/>";
+         foreach ($post['content']['links'] as $link) $msg .= "<a href='" . $link['url'] . "'>" . $link['title'] . "</a><br/>";
 
-          $recipients = $db->select_from_where(array('user_id'), 'project_users', 'proj_id', $data['project_id']);
-          foreach ($recipients as $recipient)
-          {
-             $recipient_email = $db->select_from_where(array('email'), 'users', 'user_id', $recipient['user_id']);
-             $recipient_email = $recipient_email[0]['email'];
-             $email->send($recipient_email, $data['project'], $title, $msg);
-          }
+         // Send Email
+         $recipients = $db->select_from_where(array('user_id'), 'project_users', 'proj_id', $data['project_id']);
+         foreach ($recipients as $recipient)
+         {
+            $recipient_email = $db->select_from_where(array('email'), 'users', 'user_id', $recipient['user_id']);
+
+            $email->send($recipient_email[0]['email'], $sender, $title, $msg);
+         }
       }
    }
 
