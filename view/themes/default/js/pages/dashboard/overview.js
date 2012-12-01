@@ -1,7 +1,7 @@
 /*********************************************
- * WOA Contracts Page Class
+ * WOA Overview Page Class
  *
- * Desc:  Javascript Contracts Page Object
+ * Desc:  Javascript Overview Page Object
  *
  * Creator: Zachary Fisher - zfisher@worldofanarchy.com
  *
@@ -13,27 +13,21 @@
      >> loadPage
  * - Controller
  *********************************************/
-WOA.pages.Contracts =
+WOA.pages.Overview =
 {
-   model : {
-      /*************************************************************
-       * Method - getProjectNames(callback)
-       *
-       *    Fetch Project Names
-       *************************************************************/
-      getProjectNames : function(callback) { $.get('projects/get_project_names', callback); }
-   },
+   model : {},
    view : {
       /*************************************************************
        * Method - loadPage()
        *
        *    Init Page Logic
-       *    - Fetch Projects Data
+       *    - Display Project Overview
        *************************************************************/
       loadPage : function()
       {
-         // Dashboard (list)
-         WOA.pages.Projects.model.getProjects();
+         // Render Template
+         Handlebars.renderTemplate('template-projects-overview', WOA.static.current_project.overview, 'div.dynamic-content');
+         //$('.sigPad').signaturePad();
       },
 
       /*************************************************************
@@ -84,4 +78,4 @@ WOA.pages.Contracts =
    }
 };
 
-WOA.pages.Contracts.controller.init();
+WOA.pages.Overview.controller.init();

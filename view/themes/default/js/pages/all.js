@@ -21,15 +21,12 @@ $.getScript('view/themes/default/js/pages/contact.js');
 $.getScript('view/themes/default/js/pages/dashboard.js');
 
 /** Import User Pages **/
-$.getScript('view/themes/default/js/pages/user/admin.js');
-$.getScript('view/themes/default/js/pages/user/biz-plan.js');
-$.getScript('view/themes/default/js/pages/user/contacts.js');
-$.getScript('view/themes/default/js/pages/user/contracts.js');
-$.getScript('view/themes/default/js/pages/user/overview.js');
-$.getScript('view/themes/default/js/pages/user/partners.js');
-$.getScript('view/themes/default/js/pages/user/projects.js');
-$.getScript('view/themes/default/js/pages/user/settings.js');
-$.getScript('view/themes/default/js/pages/user/site-emails.js');
-$.getScript('view/themes/default/js/pages/user/updates.js');
-
-/** Import User Pages **/
+$.getScript('view/themes/default/js/pages/dashboard/admin.js');
+$.getScript('view/themes/default/js/pages/dashboard/biz-plan.js');
+$.getScript('view/themes/default/js/pages/dashboard/contacts.js');
+$.getScript('view/themes/default/js/pages/dashboard/contracts.js');
+$.getScript('view/themes/default/js/pages/dashboard/overview.js');
+$.getScript('view/themes/default/js/pages/dashboard/projects.js');
+$.getScript('view/themes/default/js/pages/dashboard/settings.js');
+$.getScript('view/themes/default/js/pages/dashboard/site-emails.js');
+$.getScript('view/themes/default/js/pages/dashboard/updates.js');

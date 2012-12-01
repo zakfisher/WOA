@@ -111,6 +111,9 @@ WOA.utilities.Pagination =
                   case 'site-emails':
                      if ((v.subject.toLowerCase().indexOf(val) != -1) || (v.sender.toLowerCase().indexOf(val) != -1) ) { resultSet.items.push(v); }
                      break;
+                  case 'contracts':
+                     if ((v.username.toLowerCase().indexOf(val) != -1) || (v.contract_name.toLowerCase().indexOf(val) != -1) ) { resultSet.items.push(v); }
+                     break;
                   default:
                }
             });

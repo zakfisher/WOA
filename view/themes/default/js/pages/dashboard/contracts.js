@@ -1,7 +1,7 @@
 /*********************************************
- * WOA Partners Page Class
+ * WOA Contracts Page Class
  *
- * Desc:  Javascript Partners Page Object
+ * Desc:  Javascript Contracts Page Object
  *
  * Creator: Zachary Fisher - zfisher@worldofanarchy.com
  *
@@ -13,41 +13,34 @@
      >> loadPage
  * - Controller
  *********************************************/
-WOA.pages.Partners =
+WOA.pages.Contracts =
 {
-   model : {
-      /*************************************************************
-       * Method - getProjectNames(callback)
-       *
-       *    Fetch Project Names
-       *************************************************************/
-      getProjectNames : function(callback) { $.get('projects/get_project_names', callback); }
-   },
+   model : {},
    view : {
       /*************************************************************
        * Method - loadPage()
        *
        *    Init Page Logic
-       *    - Fetch Projects Data
+       *    - Show Contracts List
        *************************************************************/
       loadPage : function()
       {
-         // Dashboard (list)
-         WOA.pages.Projects.model.getProjects();
+          WOA.pages.Contracts.view.showPage(WOA.static.current_project.contracts);
       },
 
       /*************************************************************
-       * Method - showPage(data)
+       * Method - showPage(contracts)
        *
        *    Display Page
        *************************************************************/
-      showPage : function(data)
+      showPage : function(contracts)
       {
          // Load projects
          var data = {
-            projects : true,
-            type : 'projects',
-            items : projects
+            contracts : true,
+            filter : true,
+            type : 'contracts',
+            items : contracts
          };
          data.pagination = {
             float : 'right',
@@ -84,4 +77,4 @@ WOA.pages.Partners =
    }
 };
 
-WOA.pages.Partners.controller.init();
+WOA.pages.Contracts.controller.init();

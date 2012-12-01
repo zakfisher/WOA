@@ -34,10 +34,13 @@
                                  <p>All</p>
                               </div>
                               {{#if contacts}}
-                              {{renderContactTypes items}}
+                              {{renderContactsFilter items}}
                               {{/if}}
                               {{#if posts}}
-                              {{renderProjectFilter items}}
+                              {{renderProjectsFilter items}}
+                              {{/if}}
+                              {{#if contracts}}
+                              {{renderContractsFilter items}}
                               {{/if}}
                               <div class="clr"></div>
                            </div>

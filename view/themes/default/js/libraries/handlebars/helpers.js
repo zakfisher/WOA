@@ -33,7 +33,7 @@ Handlebars.registerHelper('renderSearchField', function(data) {
    return new Handlebars.SafeString(template(data));
 });
 
-Handlebars.registerHelper('renderContactTypes', function(data) {
+Handlebars.registerHelper('renderContactsFilter', function(data) {
    var items = '';
    var types = [];
    $(data).each(function(i, v) {
@@ -45,7 +45,7 @@ Handlebars.registerHelper('renderContactTypes', function(data) {
    return new Handlebars.SafeString(items);
 });
 
-Handlebars.registerHelper('renderProjectFilter', function(data) {
+Handlebars.registerHelper('renderProjectsFilter', function(data) {
     var items = '';
     var projects = [];
     $(data).each(function(i, v) {
@@ -53,6 +53,18 @@ Handlebars.registerHelper('renderProjectFilter', function(data) {
             projects.push(v.project);
             items += '<div class="li" data-filter="' + v.project + '"><p>' + v.project + '</p></div>';
         }
+    });
+    return new Handlebars.SafeString(items);
+});
+
+Handlebars.registerHelper('renderContractsFilter', function(data) {
+    var items = '';
+    var usernames = [];
+    $(data).each(function(i, v) {
+       if ($.inArray(v.username, usernames) == -1) {
+           usernames.push(v.username);
+          items += '<div class="li" data-filter="' + v.username + '"><p>' + v.username + '</p></div>';
+       }
     });
     return new Handlebars.SafeString(items);
 });

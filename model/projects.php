@@ -24,42 +24,98 @@ class Projects_Model extends WOA {
 
             // Fetch from DB
             $project['overview'] = array(
-                'description' => 'This project is really nice.  I like it for many reasons, but I\'ll tell you those later ... :P',
-                'content' => 'content'
+               'description' => 'This project is really nice.  I like it for many reasons, but I\'ll tell you those later ... :P',
+               'content' => 'content'
+            );
+
+            $project['biz_plan'] = array(
+               'administrative' => array(
+                  array('Section 1', 'body'),
+                  array('Section 2', 'body'),
+                  array('Section 3', 'body')
+               ),
+               'marketing' => array(
+                  array('Section 1', 'body'),
+                  array('Section 2', 'body'),
+                  array('Section 3', 'body')
+               ),
+               'production' => array(
+                  array('Section 1', 'body'),
+                  array('Section 2', 'body'),
+                  array('Section 3', 'body')
+               )
             );
 
             switch ($access) {
                case 'admin':
-                  $project['sub_nav'][] = array('sub_page' => 'overview', 'title' => 'Overview');
-                  $project['sub_nav'][] = array('sub_page' => 'partners', 'title' => 'Partners');
-                  $project['sub_nav'][] = array('sub_page' => 'biz_plan', 'title' => 'Business Plan');
+                  $project['sub_nav'][] = array('sub_page' => 'overview',  'title' => 'Overview');
+                  $project['sub_nav'][] = array('sub_page' => 'contracts', 'title' => 'Contracts');
+                  $project['sub_nav'][] = array('sub_page' => 'biz_plan',  'title' => 'Business Plan');
 
                   // Fetch from DB
-                  $project['partners'] = array(
-                      'Investor' => array(
-                          array('Non-disclosure Agreement', 'content', 'signature'),
-                          array('Another Contract', 'content', 'signature')
+                  $project['contracts'] = array(
+                      array(
+                          'template' => 'projects-contracts',
+                          'contract_name' => 'Non-disclosure Agreement',
+                          'user_id' => 6,
+                          'username' => 'investor',
+                          'email' => 'email@fake.com',
+                          'content' => array(),
+                          'signature' => true
                       ),
-                      'Vendor' =>  array(
-                          array('Non-disclosure Agreement', 'content', 'signature'),
-                          array('Another Contract', 'content', 'signature')
-                      )
-                  );
-                  $project['biz_plan'] = array(
-                      'administrative' => array(
-                          array('Section 1', 'body'),
-                          array('Section 2', 'body'),
-                          array('Section 3', 'body')
+                      array(
+                          'template' => 'projects-contracts',
+                          'contract_name' => 'Another Contract',
+                          'user_id' => 6,
+                          'username' => 'vendor',
+                          'email' => 'email@fake.com',
+                          'content' => array(),
+                          'signature' => array()
                       ),
-                      'marketing' => array(
-                          array('Section 1', 'body'),
-                          array('Section 2', 'body'),
-                          array('Section 3', 'body')
+                      array(
+                          'template' => 'projects-contracts',
+                          'contract_name' => 'Non-disclosure Agreement',
+                          'user_id' => 6,
+                          'username' => 'bob',
+                          'email' => 'email@fake.com',
+                          'content' => array(),
+                          'signature' => array()
                       ),
-                      'production' => array(
-                          array('Section 1', 'body'),
-                          array('Section 2', 'body'),
-                          array('Section 3', 'body')
+                      array(
+                          'template' => 'projects-contracts',
+                          'contract_name' => 'Another Contract',
+                          'user_id' => 6,
+                          'username' => 'jimmy jim',
+                          'email' => 'email@fake.com',
+                          'content' => array(),
+                          'signature' => array()
+                      ),
+                      array(
+                          'template' => 'projects-contracts',
+                          'contract_name' => 'Another Contract',
+                          'user_id' => 6,
+                          'username' => 'vendor',
+                          'email' => 'email@fake.com',
+                          'content' => array(),
+                          'signature' => array()
+                      ),
+                      array(
+                          'template' => 'projects-contracts',
+                          'contract_name' => 'Non-disclosure Agreement',
+                          'user_id' => 6,
+                          'username' => 'bob',
+                          'email' => 'email@fake.com',
+                          'content' => array(),
+                          'signature' => array()
+                      ),
+                      array(
+                          'template' => 'projects-contracts',
+                          'contract_name' => 'Another Contract',
+                          'user_id' => 6,
+                          'username' => 'jimmy jim',
+                          'email' => 'email@fake.com',
+                          'content' => array(),
+                          'signature' => array()
                       )
                   );
 
@@ -68,10 +124,6 @@ class Projects_Model extends WOA {
                   $project['sub_nav'][] = array('sub_page' => 'overview',  'title' => 'Overview');
                   $project['sub_nav'][] = array('sub_page' => 'contracts', 'title' => 'Contracts');
                   $project['sub_nav'][] = array('sub_page' => 'biz_plan',  'title' => 'Business Plan');
-                  $project['contracts'] = array(
-                      array('Non-disclosure Agreement', 'signature'),
-                      array('Another Contract', 'signature')
-                  );
                   break;
                case 'low':
                   $project['sub_nav'][] = array('sub_page' => 'overview',  'title' => 'Overview');

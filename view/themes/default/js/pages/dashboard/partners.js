@@ -1,7 +1,7 @@
 /*********************************************
- * WOA Overview Page Class
+ * WOA Partners Page Class
  *
- * Desc:  Javascript Overview Page Object
+ * Desc:  Javascript Partners Page Object
  *
  * Creator: Zachary Fisher - zfisher@worldofanarchy.com
  *
@@ -13,43 +13,33 @@
      >> loadPage
  * - Controller
  *********************************************/
-WOA.pages.Overview =
+WOA.pages.Partners =
 {
-   model : {
-      /*************************************************************
-       * Method - getProjectNames(callback)
-       *
-       *    Fetch Project Names
-       *************************************************************/
-      getProjectNames : function(callback) { $.get('projects/get_project_names', callback); }
-   },
+   model : {},
    view : {
       /*************************************************************
        * Method - loadPage()
        *
        *    Init Page Logic
-       *    - Fetch Projects Data
+       *    - Show Partners List
        *************************************************************/
       loadPage : function()
       {
-         // Dashboard (list)
-         //WOA.pages.Projects.model.getProjects();
-          Handlebars.renderTemplate('template-add-signature', {}, 'div.dynamic-content');
-          $('.sigPad').signaturePad();
+          WOA.pages.Partners.view.showPage(WOA.static.current_project.partners);
       },
 
       /*************************************************************
-       * Method - showPage(data)
+       * Method - showPage(partners)
        *
        *    Display Page
        *************************************************************/
-      showPage : function(data)
+      showPage : function(partners)
       {
          // Load projects
          var data = {
-            projects : true,
-            type : 'projects',
-            items : projects
+            partners : true,
+            type : 'partners',
+            items : partners
          };
          data.pagination = {
             float : 'right',
@@ -86,4 +76,4 @@ WOA.pages.Overview =
    }
 };
 
-WOA.pages.Overview.controller.init();
+WOA.pages.Partners.controller.init();

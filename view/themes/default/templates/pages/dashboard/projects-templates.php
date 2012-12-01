@@ -31,3 +31,23 @@
                <div class="info left last">Users: {{user_count}}</div>
             </div>
          </script>
+
+         <!-- Overview -->
+         <script id="template-projects-overview" type="text/x-handlebars-template">
+             <br/>
+             <p>Description: {{description}}</p>
+             <p>Content: {{content}}</p>
+         </script>
+
+
+         <!-- Contracts Items-->
+         <script id="template-projects-contracts" type="text/x-handlebars-template">
+            <div class="title">
+               <h1>{{contract_name}}</h1>
+            </div>
+            <div class="sub-info">
+               <div class="info left first">{{username}}</div>
+               <div class="info left">{{email}}</div>
+               <div class="info left last">{{#if signature}}signed{{else}}unsigned{{/if}}</div>
+            </div>
+         </script>
