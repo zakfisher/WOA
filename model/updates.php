@@ -102,6 +102,7 @@ class Updates_Model extends WOA {
    {
       $db = new DB();
       $text = new Text();
+      $email = new Email();
 
       // Security Check
       if ($data['author'] == $_SESSION['user']['username'])
@@ -125,8 +126,8 @@ class Updates_Model extends WOA {
          {
             $link_data = array (
                'post_id' => $post['id'],
-               'title' => $link['title'],
-               'url' => $link['url']
+               'title'   => $link['title'],
+               'url'     => $link['url']
             );
             $db->insert_into('post_links', $link_data);
          }
@@ -148,6 +149,25 @@ class Updates_Model extends WOA {
          foreach ($links as $link) $post['content']['links'][] = $link;
 
          JSON::print_json($post);
+
+          // Send Email
+          $title = 'New update from ' . $data['author'];
+          $msg = "
+             Author : "     . $data['author']  . "<br/>
+             Project: "     . $data['project'] . "<br/>
+             Time : "       . $data['time']    . "<br/>
+             Post Title : " . $data['title']   . "<br/>
+             Message : "    . $data['content']['message'] . "<br/>"
+          ;
+          foreach ($post['content']['links'] as $link) $msg .= "<a href='" . $link['url'] . "'>" . $link['title'] . "</a><br/>";
+
+          $recipients = $db->select_from_where(array('user_id'), 'project_users', 'proj_id', $data['project_id']);
+          foreach ($recipients as $recipient)
+          {
+             $recipient_email = $db->select_from_where(array('email'), 'users', 'user_id', $recipient['user_id']);
+             $recipient_email = $recipient_email[0]['email'];
+             $email->send($recipient_email, $data['project'], $title, $msg);
+          }
       }
    }
 
