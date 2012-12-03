@@ -22,16 +22,20 @@ WOA.pages.About =
        *
        *    Build Post List
        *************************************************************/
-      loadPage : function()
-      {
-         // Load latest posts
-         var data = {
-            test : 'halalala',
-            template : 'template-single-post'
-         };
-//         Handlebars.renderTemplate('template-updates-list', data, 'div.dynamic-content');
+      loadPage : function() {},
+
+      /*************************************************************
+       * Method - showSection(e)
+       *
+       *    Display About Sub Section
+       *************************************************************/
+      showSection : function(e) {
+         $('div.dynamic-content div.content').addClass('hidden');
+         $('div.dynamic-content div.content[data-sub-page=' + $(e.target).attr('data-sub-page') + ']').removeClass('hidden');
+         $('#container[data-page=about] ul.sub-nav li').removeClass('active');
+         $(e.target).addClass('active');
       }
-   },
+},
    controller :
    {
       /*************************************************************
@@ -40,6 +44,7 @@ WOA.pages.About =
       init : function()
       {
          /** Handlers **/
+         $(document).on('click', '#container[data-page=about] ul.sub-nav li', WOA.pages.About.view.showSection);
       }
    }
 };
