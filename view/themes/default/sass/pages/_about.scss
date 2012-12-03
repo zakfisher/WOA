@@ -14,5 +14,27 @@
 #container[data-page=about] {
    #main-content {
 
+      div.content {
+
+         div.section {
+            &.pt5 { padding-top: 5px; }
+
+            h3 {
+               padding: 8px 0 3px;
+               color: black;
+            }
+
+            p {
+               color: #5B5B5B;
+               font-size: 14px;
+               line-height: 22px;
+               padding: 5px;
+               margin: 0;
+            }
+
+         }
+
+      }
+
    }
 }

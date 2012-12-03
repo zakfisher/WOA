@@ -328,6 +328,13 @@ html { background: black; }
                            font-size: 54px;
                            border-bottom: 1px solid #CCC;
                            padding-bottom: 20px;
+
+                           &.title {
+                              font-weight: 400;
+                              font-size: 22px;
+                              color: $pink;
+                              padding: 0;
+                           }
                         }
 
                         h2 {
