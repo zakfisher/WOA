@@ -14,7 +14,7 @@
                <div class="header">
                   <h1>Contact Us</h1>
                   <h2>Send us an email below.</h2>
-                  <div class="shadow"></div>
+                  <div class="shadow down"></div>
                   <div class="dynamic-shell">
                      <div class="dynamic-content">
                         <div class="main-view">
@@ -39,7 +39,7 @@
                               <div class="clr"></div>
                            </div>
                            <!-- end.form -->
-                           <div class="shadow down"></div>
+                           <div class="shadow"></div>
                            <div class="submit-form">
                               <p class="error left"></p>
                               <div class="btn btn-inverse send-email right"><i class="icon-white icon-envelope"></i> Send Email</div>
@@ -47,7 +47,6 @@
                            <!-- end.submit-form -->
                         </div>
                         <!-- end .main-view -->
-                        <div class="secondary-view"></div>
                      </div>
                      <!-- end .dynamic-content -->
                   </div>
