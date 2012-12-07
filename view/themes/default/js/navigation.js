@@ -101,9 +101,9 @@ WOA.navigation =
 
             // Trigger Animation
             $('#main-content, div.container').fadeTo(300, 0);
-         }
 
-         WOA.navigation.view.initPage();
+            WOA.navigation.view.initPage();
+         }
       },
 
       /*************************************************************
@@ -173,7 +173,6 @@ WOA.navigation =
             {
                eval("WOA.pages." + page + ".view.loadPage();");
                clearInterval(int);
-
             };
             if (WOA.pages.hasOwnProperty(page)) {
                if ($('div.content-loading').length > 0) showPage();

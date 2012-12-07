@@ -19,7 +19,7 @@
                   <div class="dynamic-shell">
                      <div class="dynamic-content">
                         <div class="main-view">
-                           <div class="form settings">
+                           <div class="form contact">
                               <div class="input left">
                                  <p>Name</p>
                                  <input type="text" name="name">

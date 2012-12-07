@@ -5,7 +5,7 @@ class Contacts_Model extends WOA {
       parent::__construct();
    }
 
-   function get_contacts_data()
+   public function get_contacts_data()
    {
       $db = new DB();
       $contacts = array();
