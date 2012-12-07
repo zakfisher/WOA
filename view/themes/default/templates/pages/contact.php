@@ -1,10 +1,19 @@
 <?php session_start(); ?>
+         <div id="fb-root"></div>
+         <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=241415132595566";
+            fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));</script>
          <div class="content left">
             <div class="inner-container">
                <div class="logo">
                   <div class="sprite"></div>
                </div>
                <!-- end .logo -->
+               <div class="fb-like-box" data-href="http://www.facebook.com/worldofanarchy" data-width="242" data-height="400" data-show-faces="true" data-stream="false" data-header="true"></div>
             </div>
             <!-- end .inner-container -->
          </div>
@@ -34,7 +43,7 @@
                               </div>
                               <div class="input message">
                                  <p>Message</p>
-                                 <textarea name="message" rows="8"></textarea>
+                                 <textarea name="message" rows="15"></textarea>
                               </div>
                               <div class="clr"></div>
                            </div>

@@ -27,11 +27,10 @@
                       <div class="dynamic-content">
                          <div class="main-view">
                             <div class="content" data-sub-page="overview">
-                               <div class="section">
+                               <div class="section first">
                                   <h1 class="section-title">Vision</h1>
                                   <p>To become the premiere outlet for electronic music and events while producing state-of-the-art festivals featuring world-class headliners.</p>
                                </div>
-                               <div class="shadow"></div>
                                <div class="section pt5">
                                   <h1 class="section-title">What is the World of Anarchy?</h1>
                                   <p>Founded in 2008, World of Anarchy began as an event production company, dedicated to the growth of electronic music on a global scale.  By teaming up with industry leaders and charities like the AVON Walk for Breast Cancer and the Costanoan Ohlone Indian Research non-profit, WOA was able to take its first steps by producing community-benefitting events.</p>

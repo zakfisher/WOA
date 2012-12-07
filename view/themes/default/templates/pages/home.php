@@ -3,7 +3,7 @@
             <div class="logo"></div>
             <div class="text">
                <h1>World of Anarchy</h1>
-               <p>In a world of anarchy, anything can happen...</p>
+               <p>In a world of anarchy, anything is possible...</p>
             </div>
             <!-- end .text -->
          </div>
