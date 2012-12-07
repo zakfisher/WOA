@@ -24,12 +24,7 @@ WOA.pages.Contact =
        *************************************************************/
       loadPage : function()
       {
-         // Load latest posts
-         var data = {
-            test : 'halalala',
-            template : 'template-single-post'
-         };
-//         Handlebars.renderTemplate('template-updates-list', data, 'div.dynamic-content');
+
       }
    },
    controller :

@@ -4,7 +4,7 @@
  *  Project: WorldofAnarchy.com
  *
  *  Created: September 2012
- *  Last Updated: 11/24/12
+ *  Last Updated: 12/7/12
  */
 
 require_once('system/config.php');

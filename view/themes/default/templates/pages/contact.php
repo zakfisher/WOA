@@ -1,19 +1,11 @@
 <?php session_start(); ?>
-         <div id="fb-root"></div>
-         <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=241415132595566";
-            fjs.parentNode.insertBefore(js, fjs);
-         }(document, 'script', 'facebook-jssdk'));</script>
          <div class="content left">
             <div class="inner-container">
                <div class="logo">
                   <div class="sprite"></div>
                </div>
                <!-- end .logo -->
-               <div class="fb-like-box" data-href="http://www.facebook.com/worldofanarchy" data-width="242" data-height="400" data-show-faces="true" data-stream="false" data-header="true"></div>
+               <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fworldofanarchy&amp;width=242&amp;height=344&amp;show_faces=true&amp;colorscheme=light&amp;stream=false&amp;border_color&amp;header=false" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:242px; height:344px; background-color:white;" allowTransparency="true"></iframe>
             </div>
             <!-- end .inner-container -->
          </div>

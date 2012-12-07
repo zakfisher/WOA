@@ -173,10 +173,11 @@ WOA.navigation =
             {
                eval("WOA.pages." + page + ".view.loadPage();");
                clearInterval(int);
+
             };
             if (WOA.pages.hasOwnProperty(page)) {
-               if ($('div.content-loading').length > 0) { showPage(); }
-               else if ($('div.page-loading').length > 0) { showPage(); }
+               if ($('div.content-loading').length > 0) showPage();
+               else if ($('div.page-loading').length > 0) showPage();
             }
          }, 300);
       },
