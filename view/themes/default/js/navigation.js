@@ -64,7 +64,7 @@ WOA.navigation =
                 soundFile: data.url,
                 transparentpagebg : 'yes',
                 loader : 'ee528f',
-                titles: data.title,
+                titles: data.title + ' - ' + data.date,
                 artists: data.artist
             });
 
