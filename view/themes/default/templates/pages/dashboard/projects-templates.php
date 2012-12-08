@@ -34,9 +34,12 @@
 
          <!-- Overview -->
          <script id="template-projects-overview" type="text/x-handlebars-template">
-            <br/>
-            <p>Description: {{description}}</p>
-            <p>Content: {{content}}</p>
+            <div class="main-view">
+               <div class="overview">
+                  <p>{{description}}</p>
+                  <p>Content: {{content}}</p>
+               </div>
+            </div>
          </script>
 
          <!-- Business Plan -->

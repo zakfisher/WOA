@@ -67,6 +67,33 @@ html { background: black; }
             }
          }
 
+         #nav-music-player {
+            position: absolute;
+            left: 320px;
+            top: 5px;
+            width: 460px;
+
+            p {
+               color: white;
+               font-weight: bold;
+               font-size: 14px;
+               margin: 0;
+               padding: 3px 20px 0 10px;
+            }
+
+            object {
+               float: right;
+            }
+
+            a.download {
+               background: url('../img/navigation/download-button.png') 0 0 no-repeat;
+               padding: 12px;
+               margin: 0;
+
+               &:hover { background-position: -24px 0; }
+            }
+         }
+
          ul.sub-pages {
             list-style-type: none;
             margin: 0;

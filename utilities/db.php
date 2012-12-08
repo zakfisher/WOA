@@ -1,6 +1,8 @@
 <?php
 class DB extends WOA {
-   function __construct() { session_start(); }
+   function __construct() {
+       parent::__construct();
+   }
 
    private function query($query)
    {
@@ -132,4 +134,18 @@ class DB extends WOA {
       // Execute Query
       $this->query($query);
    }
+
+
+    function get_last_row($table, $column)
+    {
+        $query = "SELECT * FROM " . $table . " WHERE " . $column . " = (SELECT MAX(" . $column . ") FROM " . $table . ");";
+
+        // Execute Query
+        $result_set = $this->query($query);
+
+        // Return Results
+        while ($row = mysqli_fetch_array($result_set, MYSQL_ASSOC)) $rows[] = $row;
+        return $rows;
+    }
+
 }

@@ -17,6 +17,11 @@
                      <a href="javascript:void(0);">Contact</a>
                   </li>
                </ul>
+                <div id="nav-music-player">
+                   <p class="left">Latest Mix:</p>
+                   <a class="download left" href="" download=""></a>
+                   <div id="latest-mix"></div>
+                </div>
                <div class="right">
                   <div class="link left sign-in <?= ($_SESSION['logged_in'] != true) ? '' : 'hidden'; ?>">
                      <p class="left">Log In</p>

@@ -24,73 +24,69 @@ class Projects_Model extends WOA {
 
             // Fetch from DB
             $project['overview'] = array(
-               'description' => 'This project is really nice.  I like it for many reasons, but I\'ll tell you those later ... :P',
+               'description' => 'Now, without further ado, Get Ready India! April 2014 our vision of promoting “Above the influence” centered principles of living a truly P.L.U.R (Peace, Love, Unity, Respect) lifestyle along with the love for Electronic Dance Music will manifest! NAME OF EVENT will set a Benchmark for events to follow. The Festival will further propel our stance that electronic shows are much more than they appear to third persons. The venue hosting this years Gala event will be a safe haven to those who remain open minded, where those who attend can learn and experience two incredible cultures, different in so many ways, yet able to coexist so beautifully. Thus, it is our goal to ultimately found a completely new culture encompassing the new with the old.',
                'content' => 'content'
             );
 
-            // Business Plan
-            if ($access == 'admin' OR $access == 'high')
-            {
-                $project['biz_plan'] = array(
-                    array(
-                        'section' => 'administrative',
-                        'articles' => array(
-                            array(
-                                'article' => 'Article 1',
-                                'body' => 'text goes here'
-                            ),
-                            array(
-                                'section' => 'administrative',
-                                'article' => 'Article 2',
-                                'body' => 'text goes here'
-                            ),
-                            array(
-                                'section' => 'administrative',
-                                'article' => 'Article 3',
-                                'body' => 'text goes here'
-                            )
-                        )
-                    ),
-                    array(
-                        'section' => 'marketing',
-                        'articles' => array(
-                            array(
-                                'article' => 'Article 1',
-                                'body' => 'text goes here'
-                            ),
-                            array(
-                                'section' => 'administrative',
-                                'article' => 'Article 2',
-                                'body' => 'text goes here'
-                            ),
-                            array(
-                                'section' => 'administrative',
-                                'article' => 'Article 3',
-                                'body' => 'text goes here'
-                            )
-                        )
-                    ),
-                    array(
-                        'section' => 'production',
-                        'articles' => array(
-                            array(
-                                'article' => 'Article 1',
-                                'body' => 'text goes here'
-                            ),
-                            array(
-                                'section' => 'administrative',
-                                'article' => 'Article 2',
-                                'body' => 'text goes here'
-                            ),
-                            array(
-                                'section' => 'administrative',
-                                'article' => 'Article 3',
-                                'body' => 'text goes here'
-                            )
-                        )
-                    ),
-                );
-            }
+             $project['biz_plan'] = array(
+                 array(
+                     'section' => 'administrative',
+                     'articles' => array(
+                         array(
+                             'article' => 'Article 1',
+                             'body' => 'text goes here'
+                         ),
+                         array(
+                             'section' => 'administrative',
+                             'article' => 'Article 2',
+                             'body' => 'text goes here'
+                         ),
+                         array(
+                             'section' => 'administrative',
+                             'article' => 'Article 3',
+                             'body' => 'text goes here'
+                         )
+                     )
+                 ),
+                 array(
+                     'section' => 'marketing',
+                     'articles' => array(
+                         array(
+                             'article' => 'Article 1',
+                             'body' => 'text goes here'
+                         ),
+                         array(
+                             'section' => 'administrative',
+                             'article' => 'Article 2',
+                             'body' => 'text goes here'
+                         ),
+                         array(
+                             'section' => 'administrative',
+                             'article' => 'Article 3',
+                             'body' => 'text goes here'
+                         )
+                     )
+                 ),
+                 array(
+                     'section' => 'production',
+                     'articles' => array(
+                         array(
+                             'article' => 'Article 1',
+                             'body' => 'text goes here'
+                         ),
+                         array(
+                             'section' => 'administrative',
+                             'article' => 'Article 2',
+                             'body' => 'text goes here'
+                         ),
+                         array(
+                             'section' => 'administrative',
+                             'article' => 'Article 3',
+                             'body' => 'text goes here'
+                         )
+                     )
+                 ),
+             );
 
              $project['contracts'] = array(
                  array(
@@ -157,6 +153,9 @@ class Projects_Model extends WOA {
                      'signature' => array()
                  )
              );
+
+            // Business Plan
+            if ($access != 'admin' and $access != 'high') unset($project['biz_plan']);
 
             switch ($access) {
                case 'admin':

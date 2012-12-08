@@ -1,5 +1,5 @@
 <?php
-require_once('library/db.php');
-require_once('library/text.php');
-require_once('library/json.php');
-require_once('library/email.php');
+require_once('utilities/db.php');
+require_once('utilities/text.php');
+require_once('utilities/json.php');
+require_once('utilities/email.php');
