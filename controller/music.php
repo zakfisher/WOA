@@ -12,9 +12,9 @@ class Music extends WOA {
       $music_model->get_all_tracks($filter);
    }
 
-   public function latest_mix()
+   public function mix_of_the_day()
    {
       $music_model = new Music_Model();
-      $music_model->get_latest_mix();
+      $music_model->get_mix_of_the_day();
    }
 }

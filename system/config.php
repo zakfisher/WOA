@@ -6,7 +6,7 @@ session_start();
 $uri = explode("/", $_SERVER['DOCUMENT_ROOT']);
 define(ENV, (isset($uri[4])) ? $uri[4] : 'www');
 define(BASE_URL, 'http://' . ENV . '.worldofanarchy.com/');
-if (ENV == 'dev' && !isset($_COOKIE['dev'])) { print 'Access Denied'; exit; }
+//if (ENV == 'dev' && !isset($_COOKIE['dev'])) { print 'Access Denied'; exit; }
 
 /** Require WOA Master Class */
 require_once('system/WOA.php');

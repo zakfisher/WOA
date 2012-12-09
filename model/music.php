@@ -12,10 +12,10 @@ class Music_Model extends WOA {
       JSON::print_json($results);
    }
 
-   public function get_latest_mix()
+   public function get_mix_of_the_day()
    {
       $db = new DB();
-      $results = $db->get_last_row('music', 'id');
+      $results = $db->select_from_where(array('*'), 'music', 'mix_of_the_day', date('n.j.Y'));
       JSON::print_json($results[0]);
    }
 }

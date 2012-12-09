@@ -18,9 +18,9 @@
                   </li>
                </ul>
                 <div id="nav-music-player">
-                   <p class="left">Latest Mix:</p>
+                   <p class="left">Mix of the Day:</p>
                    <a class="download left" href="" download=""></a>
-                   <div id="latest-mix"></div>
+                   <div id="mix-of-the-day"></div>
                 </div>
                <div class="right">
                   <div class="link left sign-in <?= ($_SESSION['logged_in'] != true) ? '' : 'hidden'; ?>">
