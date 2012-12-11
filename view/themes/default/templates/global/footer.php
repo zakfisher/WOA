@@ -3,9 +3,9 @@
          <div class="top-shadow"></div>
          <div class="inner-container">
             <div class="social-media left">
-               <a href="#" target="_blank" class="fb"></a>
+               <a href="https://www.facebook.com/worldofanarchy" target="_blank" class="fb"></a>
                <!-- end .fb -->
-               <a href="#" target="_blank" class="twitter"></a>
+               <a href="http://twitter.com/worldofanarchy" target="_blank" class="twitter"></a>
                <!-- end .twitter -->
                <a href="#" target="_blank" class="rss"></a>
                <!-- end .blog -->

@@ -17,11 +17,11 @@
                      <a href="javascript:void(0);">Contact</a>
                   </li>
                </ul>
-                <div id="nav-music-player">
-                   <p class="left">Mix of the Day:</p>
-                   <a class="download left" href="" download=""></a>
-                   <div id="mix-of-the-day"></div>
-                </div>
+               <div id="nav-music-player">
+                  <p class="left">Mix of the Day:</p>
+                  <a class="download left" href="" download=""></a>
+                  <div id="mix-of-the-day"></div>
+               </div>
                <div class="right">
                   <div class="link left sign-in <?= ($_SESSION['logged_in'] != true) ? '' : 'hidden'; ?>">
                      <p class="left">Log In</p>

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="description" content="In a World of Anarchy, anything is possible." />
 <meta name="keywords" content="EDM, electronic music, dubstep, trance, electro, house, house music, anarchy, world of anarchy" />
-<title>World of Anarchy :: In a world of anarchy, anything can happen.</title>
+<title>World of Anarchy :: In a world of anarchy, anything is possible.</title>
 <meta name="description" content="World of Anarchy <?= date("Y"); ?>">
 <link id="page_favicon" href="favicon.ico" rel="icon" type="image/x-icon">
 <?php

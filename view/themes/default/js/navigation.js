@@ -69,7 +69,7 @@ WOA.navigation =
             });
 
             // Update Download Link
-            $('#nav-music-player a.download').attr('href', data.url).attr('download', data.artist + ' - ' + data.title + ' - [www.worldofanarchy.com].mp3');
+            $('#nav-music-player a.download').attr('href', data.url).attr('download', data.artist + ' - ' + data.title + ' - ' + data.date + ' - [www.worldofanarchy.com].mp3');
          });
       }
    },

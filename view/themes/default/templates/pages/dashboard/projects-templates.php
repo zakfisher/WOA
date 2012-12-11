@@ -36,8 +36,13 @@
          <script id="template-projects-overview" type="text/x-handlebars-template">
             <div class="main-view">
                <div class="overview">
-                  <p>{{description}}</p>
-                  <p>Content: {{content}}</p>
+                  <div class="section first">
+                     <h1 class="section-title">Description</h1>
+                     <p>{{description}}</p>
+                  </div>
+                  <div class="section pt5">
+                     {{content}}
+                  </div>
                </div>
             </div>
          </script>
