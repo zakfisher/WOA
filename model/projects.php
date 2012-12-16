@@ -25,7 +25,7 @@ class Projects_Model extends WOA {
             // Fetch from DB
             $project['overview'] = array(
                'description' => 'Now, without further ado, Get Ready India! April 2014 our vision of promoting “Above the influence” centered principles of living a truly P.L.U.R (Peace, Love, Unity, Respect) lifestyle along with the love for Electronic Dance Music will manifest! NAME OF EVENT will set a Benchmark for events to follow. The Festival will further propel our stance that electronic shows are much more than they appear to third persons. The venue hosting this years Gala event will be a safe haven to those who remain open minded, where those who attend can learn and experience two incredible cultures, different in so many ways, yet able to coexist so beautifully. Thus, it is our goal to ultimately found a completely new culture encompassing the new with the old.',
-               'content' => 'content'
+               'details' => $project['user_count'] . ' users can see this project.'
             );
 
              $project['biz_plan'] = array(

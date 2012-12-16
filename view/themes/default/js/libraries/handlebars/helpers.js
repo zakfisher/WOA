@@ -86,22 +86,26 @@ Handlebars.registerHelper('renderCurrentDate', function() {
 });
 
 Handlebars.registerHelper('renderListItems', function(items, itemsPerPage) {
-   var pages = [];
-   var idx = 0;
-   $(items).each(function(i, v) {
-      if (i % itemsPerPage == 0 && i != 0) { idx++; }
-      if (typeof pages[idx] == 'undefined') {
-         pages[idx] = {};
-         pages[idx].page_number = (idx + 1);
-         pages[idx].items = [];
-         if (idx > 0) { pages[idx].hidden = true; }
-      }
-      pages[idx].items.push(v);
-   });
-
-   var data = { pages : pages };
-   var template = Handlebars.compile($('#template-list-items').html());
-   return new Handlebars.SafeString(template(data));
+   if (items.length == 0) {
+      setTimeout(function() { $('div.list-container').html('<p class="no-results">No Items Found.</p>'); }, 10);
+   }
+   else {
+      var pages = [];
+      var idx = 0;
+      $(items).each(function(i, v) {
+         if (i % itemsPerPage == 0 && i != 0) { idx++; }
+         if (typeof pages[idx] == 'undefined') {
+             pages[idx] = {};
+             pages[idx].page_number = (idx + 1);
+             pages[idx].items = [];
+             if (idx > 0) { pages[idx].hidden = true; }
+         }
+          pages[idx].items.push(v);
+      });
+      var data =  { pages : pages };
+      var template = Handlebars.compile($('#template-list-items').html());
+      return new Handlebars.SafeString(template(data));
+   }
 });
 
 Handlebars.registerHelper('renderLinkItem', function(data) {

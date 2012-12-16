@@ -5,7 +5,7 @@
                   <div class="sprite"></div>
                </div>
                <!-- end .logo -->
-               <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fworldofanarchy&amp;width=242&amp;height=344&amp;show_faces=true&amp;colorscheme=light&amp;stream=false&amp;border_color&amp;header=false" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:242px; height:344px; background-color:white;" allowTransparency="true"></iframe>
+               <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fworldofanarchy&amp;width=242&amp;height=300&amp;show_faces=true&amp;colorscheme=light&amp;stream=false&amp;border_color&amp;header=false" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:242px; height:370px; background-color:white;" allowTransparency="true"></iframe>
             </div>
             <!-- end .inner-container -->
          </div>

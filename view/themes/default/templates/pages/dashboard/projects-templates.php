@@ -41,7 +41,8 @@
                      <p>{{description}}</p>
                   </div>
                   <div class="section pt5">
-                     {{content}}
+                      <h1 class="section-title">Details</h1>
+                      <p>{{details}}</p>
                   </div>
                </div>
             </div>
