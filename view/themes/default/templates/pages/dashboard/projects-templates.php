@@ -50,18 +50,20 @@
 
          <!-- Business Plan -->
          <script id="template-projects-biz-plan" type="text/x-handlebars-template">
-            <div class="biz-plan content">
-                {{#each this}}
-                <div class="section">
-                    <h1>{{section}}</h1>
-                    {{#each articles}}
-                    <div class="article">
-                        <h3>{{article}}</h3>
-                        <p>{{body}}</p>
+            <div class="main-view">
+                <div class="biz-plan content">
+                    {{#each this}}
+                    <div class="section{{#if first}} first{{/if}}">
+                        <h1 class="section-title">{{section}}</h1>
+                        {{#each articles}}
+                        <div class="article">
+                            <h3>{{article}}</h3>
+                            {{renderHTML body}}
+                        </div>
+                        {{/each}}
                     </div>
                     {{/each}}
                 </div>
-                {{/each}}
             </div>
          </script>
 

@@ -1,3 +1,7 @@
+Handlebars.registerHelper('renderHTML', function(data) {
+   return new Handlebars.SafeString(data);
+});
+
 Handlebars.renderTemplate = function(templateId, context, container, append)
 {
    var template = Handlebars.compile($('#' + templateId).html());

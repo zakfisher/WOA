@@ -30,62 +30,111 @@ class Projects_Model extends WOA {
 
              $project['biz_plan'] = array(
                  array(
-                     'section' => 'administrative',
+                     'first' => true,
+                     'section' => 'History',
                      'articles' => array(
                          array(
-                             'article' => 'Article 1',
-                             'body' => 'text goes here'
+                             'article' => 'Anarchy Productions International LLC',
+                             'body' => '<p>In August of 2008 World of Anarchy made their debut with one of the most memorable events of the year: “Down The Rabbit Hole 2” (DTRH 2). What started off as a small idea for a fun electronic music concert consisting of 1 stage and 200 attendees, grew rapidly to an Alice in Wonderland themed 3 stage, 16 hour, 3000 person festival.  It left those that attended in sheer awe! Those who were in attendance along with the multitude of very talented artists, still enthusiastically rave about the event till this day! In early 2010 plans for the “Return of the Mad Hatter: Down the Rabbit Hole 3” were being hatched. In August of 2011 we brought that vision to life at the Monterey County Fair Grounds. DTRH 3 had the same Alice in wonderland theme, only on a much larger scale; with 4 Massive stages, On-site Camping, over 70 renowned DJ’s flown in from all over the world, and 36 Hours of non-stop music. To make this a truly original and out of this world experience, we decided to have On-site Tattoo Artists, Body painting, Glass Blowing, Kandi and Craft workshops, as well as our own hookah lounge, providing maximum entertainment for our guests. With over 15,000 attendees, we are very proud to say DTRH 3 was a huge success!</p>'
                          ),
                          array(
-                             'section' => 'administrative',
-                             'article' => 'Article 2',
-                             'body' => 'text goes here'
-                         ),
-                         array(
-                             'section' => 'administrative',
-                             'article' => 'Article 3',
-                             'body' => 'text goes here'
+                             'article' => 'Event Overview',
+                             'body' => '<p>Now, without further ado, Get Ready India! April 2014 our vision of promoting “Above the influence” centered principles of living a truly P.L.U.R (Peace, Love, Unity, Respect) lifestyle along with the love for Electronic Dance Music will manifest! NAME OF EVENT will set a Benchmark for events to follow. The Festival will further propel our stance that electronic shows are much more than they appear to third persons. The venue hosting this years Gala event will be a safe haven to those who remain open minded, where those who attend can learn and experience two incredible cultures, different in so many ways, yet able to coexist so beautifully. Thus, it is our goal to ultimately found a completely new culture encompassing the new with the old.</p>'
                          )
                      )
                  ),
                  array(
-                     'section' => 'marketing',
+                     'section' => 'Event Logistics',
                      'articles' => array(
                          array(
-                             'article' => 'Article 1',
-                             'body' => 'text goes here'
+                             'article' => 'Date & Time',
+                             'body' => '<p>2014</p>'
                          ),
                          array(
-                             'section' => 'administrative',
-                             'article' => 'Article 2',
-                             'body' => 'text goes here'
+                             'article' => 'Venue',
+                             'body' => '<p>Chinnaswamy Stadium<br/>Bangalore, Karnataka, India</p>'
                          ),
                          array(
-                             'section' => 'administrative',
-                             'article' => 'Article 3',
-                             'body' => 'text goes here'
+                             'article' => 'Capacity',
+                             'body' => '<p>Seating Capacity: 55k<br/>Standing Capacity: 80k+</p>'
+                         ),
+                         array(
+                             'article' => 'Talent',
+                             'body' => '<p>* All artists are subject to change based on availability and booking fees.</p><ul><li>Armin Van Buuren</li><li>Sander Van Doorn</li><li>Chuckie</li><li>Steve Angello</li><li>Alesso</li><li>Axwell</li><li>Avicii</li><li>Dada Life</li><li>Afrojack</li><li>Sebastian Ingrosso</li><li>Lil Jon</li><li>Steve Aoki</li><li>Arty</li><li>Quintino</li><li>Porter Robinson</li><li>Skrillex</li><li>Markus Schulz</li><li>Cosmic Gate</li><li>ATB</li><li>Gareth Emery</li><li>Moby</li><li>John Digweed</li><li>Laidback Luke</li><li>Deadmau5</li><li>Tommy Trash</li><li>R3hab</li><li>Tiesto</li><li>David Guetta</li><li>Swanky Tunes</li><li>Thomas Gold</li><li>Nicky Romero</li><li>Pete Tong</li><li>EDX</li><li>Sunnery James & Ryan Marciano</li><li>BT</li><li>Bobby Burns</li><li>John O’Callaghan</li><li>Chris Lake</li><li>Knife Party</li><li>Infected Mushroom</li></ul>'
+                         ),
+                         array(
+                             'article' => 'Attractions',
+                             'body' => '<p>* All attractions are based on availability.</p><ul><li>3 Carnival Rides</li><li>Fireworks</li><li>Art Installments</li><li>Live Performers</li></ul>'
+                         ),
+                         array(
+                             'article' => 'Vendors',
+                             'body' => '<p>Local businesses can sell food and merchandise.</p>'
+                         ),
+                         array(
+                             'article' => 'Sound / Stage / Lighting',
+                             'body' => '<p>Equipment rental will be outsourced via DNA Networks.</p>'
+                         ),
+                         array(
+                             'article' => 'Event Staff',
+                             'body' => '<p>Security: Company Name<br/>Medical: <br/>Ticketing: <br/>Production: </br>Volunteers:</p>'
                          )
                      )
                  ),
                  array(
-                     'section' => 'production',
+                     'section' => 'Promotion',
                      'articles' => array(
                          array(
-                             'article' => 'Article 1',
-                             'body' => 'text goes here'
+                             'article' => 'Sales / Ticketing Outlets',
+                             'body' => '<p>Online: <br/>Physical Locations:</p>'
                          ),
                          array(
-                             'section' => 'administrative',
-                             'article' => 'Article 2',
-                             'body' => 'text goes here'
+                             'article' => 'Marketing',
+                             'body' => '<p>DNA Networks will provide marketing services.</p>'
                          ),
                          array(
-                             'section' => 'administrative',
-                             'article' => 'Article 3',
-                             'body' => 'text goes here'
+                             'article' => 'Media',
+                             'body' => '<ul><li>TV</li><li>Radio</li><li>Online</li><li>Print</li></ul>'
                          )
                      )
                  ),
+                 array(
+                     'section' => 'Administration',
+                     'articles' => array(
+                         array(
+                             'article' => 'Investors',
+                             'body' => '<p>Investment Plans: <ul><li>Silver</li><li>Gold</li><li>Platinum</li></ul></p><p>Capital Investment: </p><p>ROI: </p><p>Fund Disbursement: </p>'
+                         ),
+                         array(
+                             'article' => 'Accounting',
+                             'body' => '<p>Accounting services will be provided by <b>Company Name</b></p>'
+                         ),
+                         array(
+                             'article' => 'Legal',
+                             'body' => '<p>Government Regulations: <ul><li>Permits</li><li>Laws</li></ul></p><p>Insurance: <ul><li>Venue</li><li>Attractions</li><li>Vendors</li></ul></p>'
+                         )
+                     )
+                 ),
+                 array(
+                     'section' => 'Partners',
+                     'articles' => array(
+                         array(
+                             'article' => 'Venue',
+                             'body' => '<p>Chinnaswamy Stadium</p>'
+                         ),
+                         array(
+                             'article' => 'Marketing',
+                             'body' => '<p>Companies</p>'
+                         ),
+                         array(
+                             'article' => 'Production',
+                             'body' => '<p>Companies</p>'
+                         ),
+                         array(
+                             'article' => 'Sponsors',
+                             'body' => '<p>Companies</p>'
+                         )
+                     )
+                 )
              );
 
              $project['contracts'] = array(
