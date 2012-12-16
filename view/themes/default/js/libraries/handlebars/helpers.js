@@ -125,3 +125,16 @@ Handlebars.registerHelper('renderPostMessageText', function(html) {
     html = html.replace(/<br\/>/g,'\n');
     return new Handlebars.SafeString(html);
 });
+
+Handlebars.registerHelper('renderDocumentSubNav', function(doc) {
+    var list = '';
+    $(doc).each(function(i, v) {
+       list += '<li class="document-nav' + (i == 0 ? ' active' : '') + '" data-section="' + v.section + '">' + v.section + '</li><div class="article-nav' + (i == 0 ? ' active' : '') + '"><ul>';
+       var subList = '';
+       $(v.articles).each(function(j, w) {
+           subList += '<li class="document-sub-nav' + (j == 0 ? ' first' : '') + (j == v.articles.length-1 ? ' last' : '') + '" data-article="' + w.article + '">' + w.article + '</li>';
+       });
+       list += (subList + '</ul></div>');
+    });
+    return new Handlebars.SafeString(list);
+});

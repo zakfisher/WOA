@@ -304,7 +304,7 @@ html { background: black; }
                      margin: 0 auto;
                      position: relative;
                      top: -20px;
-                     
+
                      li {
                         color: $gray;
                         cursor: pointer;
@@ -328,6 +328,42 @@ html { background: black; }
                            background-position: 0 0;
                            color: white;
                         }
+                     }
+
+                     div.article-nav {
+                        margin-top: -13px;
+                        display: none;
+
+                        &.active { display: block; }
+
+                        ul {
+                           border: 1px solid #ccc;
+                           list-style-type: none;
+                           background: white;
+                           @include border-radius(0 0 8px 8px);
+                           margin: 0 10px;
+                           @include box-shadow(0px 1px 5px 0 #333);
+                           padding-left: 2px;
+
+                           li {
+                              font-size: 14px;
+                              padding: 10px;
+                              height: auto;
+                              border-bottom: 1px solid #CCC;
+                              width: 202px;
+                              position: relative;
+                              font-weight: bold;
+                              margin: 0;
+
+                              &.last {
+                                 border: none;
+                                 @include border-radius(0 0 8px 8px);
+                              }
+
+                              &:hover, &.active { background: #eee; }
+                           }
+                        }
+
                      }
                   }
                }
