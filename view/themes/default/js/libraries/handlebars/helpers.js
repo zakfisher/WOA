@@ -132,7 +132,7 @@ Handlebars.registerHelper('renderDocumentSubNav', function(doc) {
        list += '<li class="document-nav' + (i == 0 ? ' active' : '') + '" data-section="' + v.section + '">' + v.section + '</li><div class="article-nav' + (i == 0 ? ' active' : '') + '"><ul>';
        var subList = '';
        $(v.articles).each(function(j, w) {
-           subList += '<li class="document-sub-nav' + (j == 0 ? ' first' : '') + (j == v.articles.length-1 ? ' last' : '') + '" data-article="' + w.article + '">' + w.article + '</li>';
+           subList += '<li class="document-sub-nav' + (j == 0 ? ' first active' : '') + (j == v.articles.length-1 ? ' last' : '') + '" data-article="' + w.article + '">' + w.article + '</li>';
        });
        list += (subList + '</ul></div>');
     });

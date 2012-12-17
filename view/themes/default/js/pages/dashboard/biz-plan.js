@@ -25,6 +25,16 @@ WOA.pages.Biz_plan =
        *************************************************************/
       loadPage : function()
       {
+         WOA.pages.Biz_plan.view.showPage();
+      },
+
+      /*************************************************************
+       * Method - showPage()
+       *
+       *    Display Page
+       *************************************************************/
+      showPage : function()
+      {
          // Render Biz Plan Template
          Handlebars.renderTemplate('template-projects-biz-plan', WOA.static.current_project.biz_plan, 'div.dynamic-content');
 
@@ -35,39 +45,15 @@ WOA.pages.Biz_plan =
          Handlebars.renderTemplate('template-biz-plan-sub-nav', WOA.static.current_project.biz_plan, 'div.content.left ul.sub-nav.sub-page');
       },
 
-      /*************************************************************
-       * Method - showPage(data)
-       *
-       *    Display Page
-       *************************************************************/
-      showPage : function(data)
-      {
-         // Load projects
-         var data = {
-            projects : true,
-            type : 'projects',
-            items : projects
-         };
-         data.pagination = {
-            float : 'right',
-            extra_class : 'list-end',
-            template : 'pagination',
-            item_count : data.items.length,
-            items_per_page : 5
-         }
+       /*************************************************************
+        * Method - selectSection(e)
+        *
+        *    Display Selected Section
+        *************************************************************/
+       selectSection : function(e)
+       {
 
-         // Cache Indexes for Single Post Reference
-         data.item_index = {};
-         $(data.items).each(function(i, v) {
-            data.item_index[v.id] = i;
-         });
-
-         // Cache Result Set
-         WOA.static.list_cache = data;
-
-         // Render List Template
-         Handlebars.renderTemplate('template-list', data, 'div.dynamic-content');
-      }
+       }
    },
    controller :
    {
@@ -78,7 +64,8 @@ WOA.pages.Biz_plan =
       {
          /** Handlers **/
 
-         //
+         // Select & Display Nav Items
+         $(document).on('click', 'ul.sub-nav.sub-page li.document-nav', WOA.pages.Biz_plan.view.selectSection);
       }
    }
 };

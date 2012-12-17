@@ -343,14 +343,14 @@ html { background: black; }
                            @include border-radius(0 0 8px 8px);
                            margin: 0 10px;
                            @include box-shadow(0px 1px 5px 0 #333);
-                           padding-left: 2px;
+                           padding-left: 3px;
 
                            li {
                               font-size: 14px;
-                              padding: 10px;
+                              padding: 10px 15px;
                               height: auto;
-                              border-bottom: 1px solid #CCC;
-                              width: 202px;
+                              border-bottom: 1px solid #ddd;
+                              width: 191px;
                               position: relative;
                               font-weight: bold;
                               margin: 0;
@@ -360,7 +360,10 @@ html { background: black; }
                                  @include border-radius(0 0 8px 8px);
                               }
 
-                              &:hover, &.active { background: #eee; }
+                              &:hover, &.active {
+                                 background: #eee;
+                                 color: black;
+                              }
                            }
                         }
 
