@@ -41,8 +41,8 @@ WOA.pages.Biz_plan =
          // Render Biz Plan Side Nav
          $('div.content.left ul.sub-nav.default').addClass('hidden');
          $('span.sub-page-nav').removeClass('hidden');
-         //$('div.btn.back-to-dashboard').attr('data-sub-page', 'projects');
          Handlebars.renderTemplate('template-biz-plan-sub-nav', WOA.static.current_project.biz_plan, 'div.content.left ul.sub-nav.sub-page');
+         $('div.btn.back-to-dashboard').removeClass('back-to-dashboard').addClass('back-to-project').html('<i class="icon-white icon-arrow-left"></i> Back to Project');
       },
 
        /*************************************************************

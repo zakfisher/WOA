@@ -87,14 +87,18 @@ WOA.pages.Projects =
          *************************************************************/
         displaySingleProject : function(e)
         {
-            var item = ($(e.target).is('.item')) ? $(e.target) : $(e.target).parents('.item');
-            var id = item.attr('data-id');
-            var project = WOA.static.list_cache.items[WOA.static.list_cache.item_index[id]];
-
-            console.log(project);
-
-            // Cache Project
-            WOA.static.current_project = project;
+            var project;
+            if (e !== null) {
+                var item = ($(e.target).is('.item')) ? $(e.target) : $(e.target).parents('.item');
+                var id = item.attr('data-id');
+                project = WOA.static.list_cache.items[WOA.static.list_cache.item_index[id]];
+                // Cache Project
+                WOA.static.current_project = project;
+            }
+            else {
+                project = WOA.static.current_project;
+                $('div.btn.back-to-project').removeClass('back-to-project').addClass('back-to-dashboard').html('<i class="icon-white icon-arrow-left"></i> Back to Dashboard');
+            }
 
             // Display Project Sub Nav
             $('div.content.left ul.sub-nav.default').addClass('hidden');
@@ -128,6 +132,16 @@ WOA.pages.Projects =
 
             // Init Sub Page
             WOA.navigation.view.initSubPage();
+        },
+
+        /*************************************************************
+         * Method - backToProject(e)
+         *
+         *    Go back to project
+         *************************************************************/
+        backToProject : function(e)
+        {
+            WOA.pages.Projects.view.displaySingleProject(null);
         }
     },
     controller :
@@ -161,11 +175,14 @@ WOA.pages.Projects =
             };
             /** Handlers **/
 
-                // View Single Project
+            // View Single Project
             $(document).on('click', 'div.dynamic-content div.list-container.projects div.item', WOA.pages.Projects.view.displaySingleProject);
 
             // View Sub Page
             $(document).on('click', 'ul.sub-nav.sub-page li', WOA.pages.Projects.view.displaySingleProjectSubPage);
+
+            // Back to Project
+            $(document).on('click', 'div.btn.back-to-project', WOA.pages.Projects.view.backToProject);
         }
     }
 };
