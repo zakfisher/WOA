@@ -5,7 +5,7 @@
                   <div class="sprite"></div>
                </div>
                <!-- end .logo -->
-               <div class="inner-container">
+               <div class="inner-container menu">
                   <ul class="sub-nav default">
 <?php if ($_SESSION['user']['access'] == 'admin'): ?>
                      <li data-sub-page="updates"<?= ($_SESSION['sub_page'] == 'updates') ? ' class="active"' : ''; ?>>Updates</li>

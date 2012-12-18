@@ -98,6 +98,7 @@ WOA.pages.Projects =
             else {
                 project = WOA.static.current_project;
                 $('div.btn.back-to-project').removeClass('back-to-project').addClass('back-to-dashboard').html('<i class="icon-white icon-arrow-left"></i> Back to Dashboard');
+                $('div.content.left div.inner-container.menu').removeClass('document scrolling');
             }
 
             // Display Project Sub Nav
@@ -156,10 +157,6 @@ WOA.pages.Projects =
                     shadow_down : true,
                     title : 'Project Overview'
                 },
-                updates : {
-                    shadow_down : true,
-                    title : 'Project Updates'
-                },
                 biz_plan : {
                     shadow_down : true,
                     title : 'Business Plan'
@@ -167,19 +164,16 @@ WOA.pages.Projects =
                 contracts : {
                     shadow_down : true,
                     title : 'Contracts'
-                },
-                partners : {
-                    shadow_down : true,
-                    title : 'Partners'
                 }
             };
+
             /** Handlers **/
 
             // View Single Project
             $(document).on('click', 'div.dynamic-content div.list-container.projects div.item', WOA.pages.Projects.view.displaySingleProject);
 
             // View Sub Page
-            $(document).on('click', 'ul.sub-nav.sub-page li', WOA.pages.Projects.view.displaySingleProjectSubPage);
+            $(document).on('click', 'ul.sub-nav.sub-page li:not(.document-nav, .document-sub-nav)', WOA.pages.Projects.view.displaySingleProjectSubPage);
 
             // Back to Project
             $(document).on('click', 'div.btn.back-to-project', WOA.pages.Projects.view.backToProject);
