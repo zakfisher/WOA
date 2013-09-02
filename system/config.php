@@ -1,36 +1,41 @@
 <?php
-
 session_start();
 
 /** Set Environment */
-$uri = explode("/", $_SERVER['DOCUMENT_ROOT']);
-define(ENV, (isset($uri[4])) ? $uri[4] : 'www');
-define(BASE_URL, 'http://' . ENV . '.worldofanarchy.com/');
-//if (ENV == 'dev' && !isset($_COOKIE['dev'])) { print 'Access Denied'; exit; }
+$uri = explode(".", $_SERVER['HTTP_HOST']);
+define(ENV, ($uri[0] == 'dev') ? 'development' : 'production');
+define(ROOT, $_SERVER['DOCUMENT_ROOT'] . '/new/');
 
-/** Require WOA Master Class */
-require_once('system/WOA.php');
+/** Connect to Database */
+//require_once(ROOT . 'system/connect.php');
 
-/** Require Controller **/
-require_once('system/router.php');
+/** Libraries **/
+require_once(ROOT . 'system/libraries/Savant3-3.0.1/Savant3.php');
 
-/** Variables **/
-$theme = 'default';
-$page = (!isset($_SESSION['page'])) ? 'home' : $_SESSION['page'];
+/** Utilities **/
+require_once(ROOT . 'system/utilities/browser.php');
+require_once(ROOT . 'system/utilities/date.php');
+require_once(ROOT . 'system/utilities/db.php');
+require_once(ROOT . 'system/utilities/email.php');
+require_once(ROOT . 'system/utilities/import.php');
+require_once(ROOT . 'system/utilities/json.php');
+require_once(ROOT . 'system/utilities/text.php');
 
-$css_path = 'view/themes/' . $theme . '/css/';
-$css[] = 'bootstrap.min';
-$css[] = 'WOA';
+/** Controllers **/
+require_once(ROOT . 'system/controller/music.php');
 
-$js_path = 'view/themes/' . $theme . '/js/';
-$js[] = 'WOA';
-$js[] = 'libraries/jquery/cookie';
-$js[] = 'libraries/handlebars/handlebars';
-$js[] = 'libraries/handlebars/helpers';
-$js[] = 'libraries/signature/build/jquery.signaturepad.min';
-$js[] = 'libraries/signature/build/json2.min';
-$js[] = 'user';
-$js[] = 'navigation';
-$js[] = 'utilities/all';
-$js[] = 'pages/all';
-$js[] = 'modals/all';
+/** Models **/
+
+
+/** Launch **/
+$tpl = new Savant3();
+
+// Browser Settings
+$browser = new Browser();
+$tpl->browser = $browser->get_browser_info();
+
+// Check for IE 8 and below
+if ($tpl->browser['short_name'] == 'msie' AND $tpl->browser['version'] <= 8) {
+    echo "Please upgrade your browser.";
+    exit;
+}
