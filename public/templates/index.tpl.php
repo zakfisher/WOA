@@ -1,26 +1,31 @@
 <input type="text" placeholder="search" id="search" style="font-size: 24px;width: 300px;">
 
-<div id="latest">
+<div id="now-playing" class="hidden">
+    <h3>Now Playing</h3>
+    <p></p>
+</div>
+
+<div id="latest" class="clr">
     <h3>Latest Mixes</h3>
     <p>Uploaded: <?=$this->music['latestDate']?></p>
     <p>Total New: <?=count($this->music['mp3s'][$this->music['latest']])?></p>
     <p id="latest-count">Showing: <?=count($this->music['mp3s'][$this->music['latest']])?></p>
 </div>
-<div style="clear:both"></div>
-<div id="latest-results" class="sm2-inline-list"> <!-- remove this class to have one item per line -->
+
+<div id="latest-results" class="clr">
     <?php foreach ($this->music['mp3s'][$this->music['latest']] as $mp3): ?>
-        <div class="ui360 ui360-vis"><a href="<?=$mp3['url']?>"></a><p><?=$mp3['name']?></p></div>
+        <a class="clr left" href="javascript:void(0);" data-url="<?=$mp3['url']?>"><?=$mp3['name']?></a>
     <?php endforeach; ?>
 </div>
-<div style="clear:both"></div>
-<div id="all">
+
+<div id="all" class="clr">
     <h3>All Mixes</h3>
     <p id="all-count">Results Found: <?=count($this->music['mp3s']['all'])?></p>
 </div>
-<div style="clear:both"></div>
-<div id="all-results" class="sm2-inline-list"> <!-- remove this class to have one item per line -->
+
+<div id="all-results" class="clr">
     <?php foreach ($this->music['mp3s']['all'] as $mp3): ?>
-        <div class="ui360 ui360-vis"><a href="<?=$mp3['url']?>"></a><p><?=$mp3['name']?></p></div>
+        <a class="clr left" href="javascript:void(0);" data-url="<?=$mp3['url']?>"><?=$mp3['name']?></a>
     <?php endforeach; ?>
 </div>
 

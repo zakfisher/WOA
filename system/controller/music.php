@@ -25,7 +25,7 @@ class MusicController {
                                     $name = str_replace('%D5', '%20', $name);
                                     $name = str_replace('%91', '%20', $name);
                                     $name = rawurldecode($name);
-                                    $mp3 = array('name' => $name, 'url' => $full_dir . $folder . rawurlencode($subfile), 'folder' => $folder);
+                                    $mp3 = array('name' => $name, 'url' => 'http://www.worldofanarchy.com/_WOA/music/' . $folder . rawurlencode($subfile), 'folder' => $folder);
                                     $mp3s[$folder][] = $mp3;
                                     $mp3s['all'][] = $mp3;
 
