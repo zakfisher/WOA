@@ -1,1 +1,0 @@
-Public Site for Anarchy Productions International LLC (c) Copyright 2012, All Rights Reserved.
