@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name=viewport content="user-scalable=no,width=device-width" />
     <title>World of Anarchy - <?=$this->page?></title>
+    <link href="ui/images/favicon.ico" rel="icon" type="image/x-icon">
     <link type="text/css" href="ui/css/woa.css" rel="stylesheet" />
 </head>
 <body>

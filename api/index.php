@@ -8,17 +8,14 @@ $controllerMap = array(
 $class = $controllerMap[$_GET['c']];
 $method = $_GET['m'];
 
-$params = isset($_POST) ? array($_POST) : array();
+if (isset($_POST)) $params = array($_POST);
 
-if (!empty($_GET['p'])) {
-    $params = $_GET['p'];
-    $params = explode(',', $params);
-    $params = array($params);
-}
+if (!empty($_GET['p'])) $params = $_GET['p'];
 
 if (method_exists($class, $method)) {
     $c = new $class();
-    $json = call_user_func_array(array($class, $method), $params);
+    if (empty($params[0])) $json = call_user_func(array($class, $method));
+    else $json = call_user_func_array(array($class, $method), $params);
     header('Content-type: application/json');
     print json_encode($json);
     exit;
