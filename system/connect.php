@@ -3,21 +3,21 @@
 global $db;
 
 // Production
-if (ENV == 'production')
+if (ENV == 'www')
 {
     $host = 'localhost';
-    $db_name = 'worldoh4_zfi';
-    $u = 'worldoh4_zak';
-    $p = 'TWLzak';
+    $db_name = 'worldoh4_woa_prod';
+    $u = 'worldoh4_WOAprod';
+    $p = 'WOAprod';
 }
 
 // Development
 else
 {
     $host = 'localhost';
-    $db_name = 'worldoh4_zfi_dev';
-    $u = 'worldoh4_zak';
-    $p = 'TWLzak';
+    $db_name = 'worldoh4_woa_dev';
+    $u = 'worldoh4_WOAdev';
+    $p = 'WOAdev';
 }
 
 $db = mysqli_connect($host, $u, $p, $db_name);

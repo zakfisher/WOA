@@ -3,6 +3,16 @@ class MusicController {
 
     function __construct() {}
 
+    public function all_tracks($filter='*') {
+        $music_model = new MusicModel();
+        return $music_model->get_all_tracks($filter);
+    }
+
+    public function mix_of_the_day() {
+        $music_model = new MusicModel();
+        $music_model->get_mix_of_the_day();
+    }
+
     public function getContent() {
         $dir = "/home1/worldoh4/public_html/_WOA/music/";
         $full_dir = "../../_WOA/music/";
