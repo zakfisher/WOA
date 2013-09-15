@@ -1,6 +1,8 @@
 <?php
 class MusicController {
 
+    public $latest = 'halal';
+
     function __construct() {}
 
     public function all_tracks($filter='*') {
@@ -8,18 +10,31 @@ class MusicController {
         return $music_model->get_all_tracks($filter);
     }
 
-    public function mix_of_the_day() {
-        $music_model = new MusicModel();
-        $music_model->get_mix_of_the_day();
+    private function getMetaData($mp3) {
+        $getID3 = new getID3;
+        $fileInfo = $getID3->analyze($mp3['filename']);
+        $title = $fileInfo['tags']['id3v2']['title'][0];
+        $title = str_replace(' - www.mixing.dj', '', $title);
+        $title = str_replace(' - www.edmtunes.com', '', $title);
+        $artist = $fileInfo['id3v1']['artist'];
+        if (empty($artist)) $artist = $fileInfo['tags']['id3v2']['artist'][0];
+        if (empty($artist)) {
+            $artist = explode(' ', $title);
+            $artist = $artist[0];
+        }
+        if (empty($artist)) {
+//            JSON::print_array($fileInfo); exit;
+        }
+        $mp3['artist'] = $artist;
+        $mp3['duration'] = $fileInfo['playtime_string'];
+        $mp3['title'] = $title;
+        return $mp3;
     }
 
-    public function getContent() {
+    public function getMixes($offset = 1, $results = 50) {
         $dir = "/home1/worldoh4/public_html/_WOA/music/";
-        $full_dir = "../../_WOA/music/";
-        $latest = '';
         if (is_dir($dir)) {
             if ($dh = opendir($dir)) {
-                $count = $totalcount = 0;
                 while (($file = readdir($dh)) !== false) {
                     $subdir = $dir . $file;
                     if (is_dir($subdir)) {
@@ -28,47 +43,27 @@ class MusicController {
                             $folder = $folder[6] . "/";
                             while (($subfile = readdir($sdh)) !== false) {
                                 if ($subfile != '.' && $subfile != '..' && $subfile != '_notes' && $file != '.' && $file != '..') {
-                                    $totalcount++;
-                                    $count++;
-                                    $name = rawurlencode($subfile);
-                                    $name = str_replace('%D0', '%20', $name);
-                                    $name = str_replace('%D5', '%20', $name);
-                                    $name = str_replace('%91', '%20', $name);
-                                    $name = rawurldecode($name);
-                                    $mp3 = array('name' => $name, 'url' => 'http://www.worldofanarchy.com/_WOA/music/' . $folder . rawurlencode($subfile), 'folder' => $folder);
-                                    $mp3s[$folder][] = $mp3;
-                                    $mp3s['all'][] = $mp3;
 
-                                    // Get Latest
+                                    // Upload Date (folder)
                                     $date = explode('.', $folder);
                                     $year = $date[2];
                                     $year = str_replace('/', '', $year);
                                     $month = $date[0];
                                     $day = $date[1];
+                                    $YYYYMMDD = '20'.$year.'-'.($month<10?'0'.$month:$month).'-'.($day<10?'0'.$day:$day);
+
+                                    // Filter out folders that aren't dates
                                     if (!is_numeric($year) && !is_numeric($month) && !is_numeric($day)) continue;
-                                    if ($latest == '') {
-                                        $latest = array('year' => $year, 'month' => $month, 'day' => $day);
-                                        continue;
-                                    }
-                                    if ($year < $latest['year']) continue;
-                                    if ($year > $latest['year']) {
-                                        $latest = array('year' => $year, 'month' => $month, 'day' => $day);
-                                        continue;
-                                    }
-                                    if ($year == $latest['year']) {
-                                        if ($month < $latest['month']) continue;
-                                        if ($month > $latest['month']) {
-                                            $latest = array('year' => $year, 'month' => $month, 'day' => $day);
-                                            continue;
-                                        }
-                                        if ($month == $latest['month']) {
-                                            if ($day < $latest['day']) continue;
-                                            if ($day > $latest['day']) {
-                                                $latest = array('year' => $year, 'month' => $month, 'day' => $day);
-                                                continue;
-                                            }
-                                        }
-                                    }
+
+                                    // Extract data from file name
+                                    $mp3 = array(
+                                        'uploaded' => $YYYYMMDD,
+                                        'added' => date('m/d/Y', strtotime($YYYYMMDD)),
+                                        'filename' => $filename = $dir . $folder . $subfile,
+                                        'folder' => $folder,
+                                        'url' => 'http://www.worldofanarchy.com/_WOA/music/' . $folder . rawurlencode($subfile)
+                                    );
+                                    $mp3s[$YYYYMMDD][] = $mp3;
                                 }
                             }
                             closedir($sdh);
@@ -78,10 +73,23 @@ class MusicController {
                 closedir($dh);
             }
         }
-        ksort($mp3s);
-        $latestDate = $latest['month'] . '.' . $latest['day'] . '.' . $latest['year'];
-        $latest = $latestDate . '/';
-        return array('mp3s' => $mp3s, 'latestDate' => $latestDate, 'latest' => $latest);
+
+        krsort($mp3s);
+
+        // Sort tracks (most recent first)
+        foreach($mp3s as $list) {
+            foreach ($list as $item) {
+                $mp3s['all'][] = $item;
+            }
+        }
+
+        // Get meta data for result set
+        for ($i = $offset - 1; $i < $results; $i++) {
+            $mp3s['all'][$i] = MusicController::getMetaData($mp3s['all'][$i]);
+            if ($mp3s['all'][$i]['uploaded'] == $mp3s['all'][0]['uploaded']) $mp3s[$mp3s['all'][0]['uploaded']][$i] = MusicController::getMetaData($mp3s['all'][$i]);
+        }
+
+        return $mp3s;
     }
 
 }
