@@ -23,8 +23,7 @@ if (isset($action)) {
         case 'import-new-tracks':
             $results = $admin->importNewTracks();
             $tpl->actions[$action]['info'] = $results['customData'];
-            $tpl->actionResults = $results['results'];
-            if (empty($tpl->actionResults)) $tpl->actionResults = $music->getAll();
+            if (!empty($results['results'])) $tpl->actionResults = $results['results'];
             break;
     }
 }
