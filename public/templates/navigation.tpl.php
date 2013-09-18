@@ -7,6 +7,7 @@
 <!--                <span class="icon-bar"></span>-->
 <!--            </button>-->
             <a class="navbar-brand" href="#">World of Anarchy</a>
+            <input id="search" type="search" placeholder="Search artists, events, & mixes." class="form-control">
         </div>
 <!--        <div class="collapse navbar-collapse">-->
 <!--            <ul class="nav navbar-nav">-->
@@ -27,10 +28,6 @@
 <!--                </li>-->
 <!--            </ul>-->
 <!--        </div>-->
-    </div>
-    <div class="container">
-        <input id="search" type="search" placeholder="Search mixes." class="form-control">
-        <div class="form-group"></div>
     </div>
 <!--    <div id="now-playing" class="container">-->
 <!--        <h3>Now Playing</h3>-->

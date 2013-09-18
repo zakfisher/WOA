@@ -30,7 +30,7 @@ body {
 /* Not required for template or sticky footer method. */
 
 #wrap > .container {
-   padding: 70px 15px 0;
+   padding: 20px 15px 0;
 }
 .container .credit {
    margin: 20px 0;
@@ -43,4 +43,13 @@ body {
 
 code {
    font-size: 80%;
+}
+
+.navbar-header {
+   width: 100%;
+   #search {
+      float: right;
+      margin-top: 8px;
+      width: 50%;
+   }
 }

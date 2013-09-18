@@ -2,7 +2,8 @@
 require_once('../system/config.php');
 
 $controllerMap = array(
-    'music' => 'MusicController'
+    'music' => 'MusicController',
+    'user' => 'UserController'
 );
 
 $class = $controllerMap[$_GET['c']];

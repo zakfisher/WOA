@@ -23,12 +23,15 @@ require_once('../system/utilities/text.php');
 
 /** Models **/
 require_once('../system/model/music.php');
+require_once('../system/model/user.php');
 
 /** Controllers **/
 require_once('../system/controller/music.php');
+require_once('../system/controller/user.php');
 
 /** Launch **/
 $tpl = new Savant3();
+$user = new UserController();
 
 // Browser Settings
 $browser = new Browser();

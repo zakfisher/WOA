@@ -58,7 +58,7 @@ class MusicController {
                                     // Extract data from file name
                                     $mp3 = array(
                                         'uploaded' => $YYYYMMDD,
-                                        'added' => date('m/d/Y', strtotime($YYYYMMDD)),
+                                        'added' => date('n/j/y', strtotime($YYYYMMDD)),
                                         'filename' => $filename = $dir . $folder . $subfile,
                                         'folder' => $folder,
                                         'url' => 'http://www.worldofanarchy.com/_WOA/music/' . $folder . rawurlencode($subfile)
