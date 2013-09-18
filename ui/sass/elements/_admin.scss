@@ -1,5 +1,5 @@
 body {
-   @include bg-image('textures/dark_brick_wall.png');
+   @include bg-image('textures/pw_pattern.png');
 }
 
 .form-signin {
@@ -11,7 +11,7 @@ body {
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
    margin-bottom: 10px;
-   color: #2aabd2;
+   //color: white;
 }
 .form-signin .checkbox {
    font-weight: normal;

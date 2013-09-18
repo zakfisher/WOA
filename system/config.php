@@ -28,10 +28,11 @@ require_once('../system/model/user.php');
 /** Controllers **/
 require_once('../system/controller/music.php');
 require_once('../system/controller/user.php');
+$user = new UserController();
+$music = new MusicController();
 
 /** Launch **/
 $tpl = new Savant3();
-$user = new UserController();
 
 // Browser Settings
 $browser = new Browser();

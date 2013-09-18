@@ -6,7 +6,7 @@ class DB {
     {
         global $db;
         $result_set = mysqli_query($db, $query) or die("Error at resultset" . mysqli_error($db));
-        if (!$result_set) die('#1 Invalid query: ' . mysqli_error($db));
+        if (!$result_set) return array('error' => '#1 Invalid query: ' . mysqli_error($db));
         return $result_set;
     }
 
@@ -23,7 +23,7 @@ class DB {
         $query = "INSERT INTO " . $table . " (" . $properties . ") VALUES(" . $values . ");";
 
         // Execute Query
-        $this->query($query);
+        return $this->query($query);
     }
 
     function select_from($array, $table)

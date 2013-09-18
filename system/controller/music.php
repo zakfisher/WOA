@@ -1,37 +1,14 @@
 <?php
 class MusicController {
 
-    public $latest = 'halal';
-
     function __construct() {}
 
-    public function all_tracks($filter='*') {
-        $music_model = new MusicModel();
-        return $music_model->get_all_tracks($filter);
+    public function getAll($filter = '*') {
+        $model = new MusicModel();
+        return $model->get_all_tracks($filter);
     }
 
-    private function getMetaData($mp3) {
-        $getID3 = new getID3;
-        $fileInfo = $getID3->analyze($mp3['filename']);
-        $title = $fileInfo['tags']['id3v2']['title'][0];
-        $title = str_replace(' - www.mixing.dj', '', $title);
-        $title = str_replace(' - www.edmtunes.com', '', $title);
-        $artist = $fileInfo['id3v1']['artist'];
-        if (empty($artist)) $artist = $fileInfo['tags']['id3v2']['artist'][0];
-        if (empty($artist)) {
-            $artist = explode(' ', $title);
-            $artist = $artist[0];
-        }
-        if (empty($artist)) {
-//            JSON::print_array($fileInfo); exit;
-        }
-        $mp3['artist'] = $artist;
-        $mp3['duration'] = $fileInfo['playtime_string'];
-        $mp3['title'] = $title;
-        return $mp3;
-    }
-
-    public function getMixes($offset = 1, $results = 50) {
+    public function getFiles() {
         $dir = "/home1/worldoh4/public_html/_WOA/music/";
         if (is_dir($dir)) {
             if ($dh = opendir($dir)) {
@@ -73,7 +50,6 @@ class MusicController {
                 closedir($dh);
             }
         }
-
         krsort($mp3s);
 
         // Sort tracks (most recent first)
@@ -82,6 +58,38 @@ class MusicController {
                 $mp3s['all'][] = $item;
             }
         }
+
+        return $mp3s;
+    }
+
+    public function getMetaData($mp3) {
+        global $db;
+        $getID3 = new getID3;
+        $fileInfo = $getID3->analyze($mp3['filename']);
+        $title = $fileInfo['tags']['id3v2']['title'][0];
+        $title = str_replace(' - www.mixing.dj', '', $title);
+        $title = str_replace(' - www.edmtunes.com', '', $title);
+        $artist = $fileInfo['id3v1']['artist'];
+        if (empty($artist)) $artist = $fileInfo['tags']['id3v2']['artist'][0];
+        if (empty($artist)) {
+            $artist = explode(' ', $title);
+            $artist = $artist[0];
+        }
+        if (empty($artist)) {
+            $artist = 'Unknown';
+        }
+        if (empty($title)) {
+            $title = 'Unknown';
+        }
+        $mp3['artist'] = mysqli_real_escape_string($db, $artist);
+        $mp3['title'] = mysqli_real_escape_string($db, $title);
+        $mp3['duration'] = $fileInfo['playtime_string'];
+//        $mp3['id3'] = $fileInfo;
+        return $mp3;
+    }
+
+    public function getMixes($offset = 1, $results = 50) {
+        $mp3s = MusicController::getFiles();
 
         // Get meta data for result set
         for ($i = $offset - 1; $i < $results; $i++) {

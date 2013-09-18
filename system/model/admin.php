@@ -7,9 +7,4 @@ class Admin_Model {
         return 'yeeee';
     }
 
-    public function test($filter) {
-        $db = new DB();
-        $results = $db->select_from($filter, 'contact_form');
-        return $results;
-    }
 }
