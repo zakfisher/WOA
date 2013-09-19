@@ -16,9 +16,9 @@ class AdminController {
         $customData['Attempted Rows'] = 0;
         $customData['New Rows'] = 0;
         foreach ($files['all'] as $i => $mp3) {
-            $customData['Attempted Rows']++;
             $mp3['url'] = str_replace('http://www.worldofanarchy.com/_WOA/music/', '', $mp3['url']);
             if (in_array($mp3['url'], $existingURLs)) continue;
+            $customData['Attempted Rows']++;
             $mp3 = $music->getMetaData($mp3);
             unset($mp3['uploaded']);
             unset($mp3['filename']);

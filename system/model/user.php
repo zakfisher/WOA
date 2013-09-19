@@ -10,9 +10,27 @@ class UserModel {
             $response = array('error' => 'Username / password not found.');
         }
         else {
+            $token = Text::random_string();
+            $setToken = $database->update_where('users', array('token' => sha1(md5($token))), 'user_id', $user[0]['user_id']);
             $response['success'] = 'Successfully logged in!';
-            $_SESSION['logged_in'] = true;
             $_SESSION['user'] = $user[0];
+            $_SESSION['user']['token'] = $token;
+        }
+        return $response;
+    }
+
+    public function authenticateWithToken($token) {
+        $database = new DB();
+        $user = $database->select_from_where(array('user_id, username, first_name, last_name, access'), 'users', 'token', sha1(md5($token)));
+        if (empty($user)) {
+            $response = array('error' => 'Username / password not found.');
+        }
+        else {
+            $newToken = Text::random_string();
+            $setToken = $database->update_where('users', array('token' => sha1(md5($newToken))), 'user_id', $user[0]['user_id']);
+            $response['success'] = 'Successfully logged in!';
+            $_SESSION['user'] = $user[0];
+            $_SESSION['user']['token'] = $newToken;
         }
         return $response;
     }

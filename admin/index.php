@@ -33,7 +33,7 @@ if (isset($action)) {
 $tpl->page = 'Admin Panel';
 $tpl->display('templates/header.tpl.php');
 
-if ($user->loggedIn()) {
+if ($user->isLoggedIn()) {
     $tpl->display('templates/navigation.tpl.php');
     $tpl->display('templates/dashboard.tpl.php');
 }

@@ -1,11 +1,8 @@
 <?php
 require_once('../system/config.php');
 
-$tpl->offset = 1;
-$tpl->displayable = 50;
-$tpl->music = $music->getMixes($tpl->offset, $tpl->displayable);
-$latest = $tpl->music['all'][0]['uploaded'];
-$tpl->latest = $tpl->music[$latest];
+$tpl->music = $music->getAll();
+//JSON::print_array($tpl->music); exit;
 
 $tpl->page = 'Home';
 

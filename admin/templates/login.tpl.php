@@ -8,6 +8,8 @@
 <!--            <input type="checkbox" value="remember-me"> Remember me-->
 <!--        </label>-->
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <br/>
+        <a href="/">&laquo; Back to WOA</a>
     </form>
 
 </div>

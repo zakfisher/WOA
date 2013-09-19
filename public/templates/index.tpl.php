@@ -1,63 +1,25 @@
 <div class="container">
     <div class="page-header">
-        <ul id="tabs" class="nav nav-pills">
-            <li class="active"><a href="#latest-mixes" data-toggle="tab"><span class="badge pull-right"><?=count($this->latest)?></span>Latest Mixes</a></li>
-            <li><a href="#all-mixes" data-toggle="tab"><span class="badge pull-right"><?=count($this->music['all'])?></span>All Mixes</a></li>
-        </ul>
+        <h4>Mixes Found <span id="result-count" class="label label-default"><?=count($this->music)?></span></h4>
     </div>
-    <div class="tab-content">
-        <div class="tab-pane fade in active" id="latest-mixes">
-            <div class="bs-example">
-                <table id="latest-results" class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Artist</th>
-                        <th>Title</th>
-                        <th>Duration</th>
-                        <th>Added</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($this->latest as $i => $mp3): ?>
-                    <tr>
-                        <td><?=$i+1?></td>
-                        <td><?=$mp3['artist']?></td>
-                        <td><?=$mp3['title']?></td>
-                        <td><?=$mp3['duration']?></td>
-                        <td><?=$mp3['added']?></td>
-                    </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="all-mixes">
-            <div class="bs-example">
-                <table id="latest-results" class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Artist</th>
-                        <th>Title</th>
-                        <th>Duration</th>
-                        <th>Added</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($this->music['all'] as $i => $mp3): ?>
-                    <?php if ($i == $this->displayable) break; ?>
-                        <tr>
-                            <td><?=$i+1?></td>
-                            <td><?=$mp3['artist']?></td>
-                            <td><?=$mp3['title']?></td>
-                            <td><?=$mp3['duration']?></td>
-                            <td><?=$mp3['added']?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    <table id="track-list" class="table table-hover">
+        <thead>
+        <tr>
+            <th>Artist</th>
+            <th>Title</th>
+            <th>Duration</th>
+            <th>Added</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->music as $i => $mp3): ?>
+            <tr data-id="<?=$mp3['music_id']?>">
+                <td class="artist"><?=$mp3['artist']?></td>
+                <td class="title"><?=$mp3['title']?></td>
+                <td><?=$mp3['duration']?></td>
+                <td><?=$mp3['added']?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
