@@ -20,8 +20,8 @@ class UserController {
     }
 
     public function logout() {
-        $database = new DB();
-        $database->update_where('users', array('token' => null), 'user_id', $_SESSION['user']['user_id']);
+        $model = new UserModel();
+        $model->destroyToken();
         $location = '/';
         if ($_SESSION['user']['access'] == 'admin') $location = '/admin/';
         unset($_SESSION);
@@ -30,13 +30,13 @@ class UserController {
     }
 
     private function loginWithToken($token) {
-        $model = new UserModel();
-        return $model->authenticateWithToken($token);
+
     }
 
     public function isLoggedIn() {
         if (isset($_SESSION['user'])) {
-            $response = $this->loginWithToken($_SESSION['user']['token']);
+            $model = new UserModel();
+            $response = $model->authenticateWithToken($_SESSION['user']['token']);
             if (isset($response['success'])) return true;
             JSON::print_array($response);
             JSON::print_array($_SESSION);

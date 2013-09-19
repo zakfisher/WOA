@@ -35,4 +35,9 @@ class UserModel {
         return $response;
     }
 
+    public function destroyToken() {
+        $database = new DB();
+        return $database->update_where('users', array('token' => null), 'user_id', $_SESSION['user']['user_id']);
+    }
+
 }
