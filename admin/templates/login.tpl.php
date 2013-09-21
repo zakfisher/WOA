@@ -1,7 +1,7 @@
 <div id="login" class="container">
 
     <form class="form-signin" method="post">
-        <h2 class="form-signin-heading">WOA Admin</h2>
+        <h2 class="form-signin-heading tk-futura-pt">WOA Admin</h2>
         <input type="text" class="form-control" placeholder="Username" autofocus="" name="username">
         <input type="password" class="form-control" placeholder="Password" name="password">
 <!--        <label class="checkbox">-->

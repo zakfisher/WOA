@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
     <link type="text/css" href="../ui/css/fontawesome.css" rel="stylesheet" />
     <link type="text/css" href="../ui/css/admin.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="//use.typekit.net/mje4onw.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
 <body>
     <div id="wrap">
