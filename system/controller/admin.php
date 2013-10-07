@@ -104,10 +104,14 @@ class AdminController {
     }
 
     public function deleteTrack($params) {
+        $music = new MusicModel();
         $model = new AdminModel();
+        $track = $music->getTrackById($params['music_id']);
+        $track = $track[0];
         $response = $model->deleteTrack($params['music_id']);
         if ($response) {
             $this->setMessage('success', 'Deleted (music_id = ' . $params['music_id'] . ')');
+            unlink("/home1/worldoh4/public_html/_WOA/music/" . $track['url']);
         }
         else {
             $this->setMessage('danger', 'Unable to delete (music_id = ' . $params['music_id'] . ')');
