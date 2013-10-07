@@ -27,8 +27,6 @@ if (isset($_POST['delete'])) {
     }
 }
 
-$tpl->message = $admin->getMessage();
-
 // Handle Current Action
 if (isset($tpl->action) && !empty($tpl->action)) {
     $results = $admin->executeAction($tpl->action);
@@ -38,7 +36,7 @@ if (isset($tpl->action) && !empty($tpl->action)) {
     }
 }
 
-//JSON::print_array($tpl->actions);
+$tpl->message = $admin->getMessage();
 
 $tpl->display('templates/header.tpl.php');
 

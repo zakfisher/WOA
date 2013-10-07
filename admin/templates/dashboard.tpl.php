@@ -28,15 +28,6 @@
         </div>
     </div>
 
-    <!-- Action Results -->
-    <div class="row row-offcanvas row-offcanvas-right">
-    <?php if (!empty($this->actionResults)): ?>
-        <div class="col-xs-12">
-<?JSON::print_array($this->actionResults)?>
-        </div>
-    <?php endif; ?>
-    </div>
-
     <?php if ($this->action == 'update-missing-data' && !empty($this->actionResults)): ?>
         <?php
         $track = $this->actionResults[0];

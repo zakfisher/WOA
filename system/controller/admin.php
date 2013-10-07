@@ -74,9 +74,12 @@ class AdminController {
             $customData['New Rows']++;
         }
         $allMusic = $music->getAll();
-        $customData['File Count'] = count($files['all']);
-        $customData['Total Rows'] = count($allMusic);
-        $results['customData'] = $customData;
+        if ($customData['Attempted Rows'] == 0) {
+            $this->setMessage('success', 'All files exist in database. Total rows = ' . count($allMusic) . '. Total files = ' . count($files['all']) . '.');
+        }
+        else {
+            $this->setMessage('success', 'Attempted ' . $customData['Attempted Rows'] . ' rows. Added ' . $customData['New Rows'] . ' rows. Total rows = ' . count($allMusic) . '. Total files = ' . count($files['all']) . '.');
+        }
         return $results;
     }
 
@@ -84,7 +87,7 @@ class AdminController {
         $model = new AdminModel();
         $track['results'] = $model->getNextTrackMissingData();
         if (empty($track['results'])) {
-            $track = array('customData' => array('Tracks Found' => 0));
+            $this->setMessage('success', 'All tracks are up to date.');
         }
         return $track;
     }
