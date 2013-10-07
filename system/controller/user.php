@@ -34,8 +34,6 @@ class UserController {
             $model = new UserModel();
             $response = $model->authenticateWithToken($_SESSION['user']['token']);
             if (isset($response['success'])) return true;
-            JSON::print_array($response);
-            JSON::print_array($_SESSION);
         }
         else return false;
     }
