@@ -29,10 +29,6 @@ class UserController {
         header('Location: ' . $location);
     }
 
-    private function loginWithToken($token) {
-
-    }
-
     public function isLoggedIn() {
         if (isset($_SESSION['user'])) {
             $model = new UserModel();
@@ -46,6 +42,10 @@ class UserController {
 
     public function getUser() {
         return $_SESSION['user'];
+    }
+
+    public function getUserAccessLevel() {
+        print $_SESSION['user']['access'];
     }
 
 }

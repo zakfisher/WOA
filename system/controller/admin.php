@@ -3,6 +3,45 @@ class AdminController {
 
     function __construct() {}
 
+    public function getMessage() {
+        if (isset($_SESSION['message'])) {
+            $message = $_SESSION['message'];
+            unset($_SESSION['message']);
+            return $message;
+        }
+        return false;
+    }
+
+    public function setMessage($type, $message) {
+        $_SESSION['message'] = array('type' => $type, 'message' => $message);
+    }
+
+    public function getActions() {
+        return array(
+            'import-new-tracks' => array(
+                'title' => 'Import New Tracks',
+                'description' => 'Extract meta data and insert rows in database.'
+            ),
+            'update-missing-data' => array(
+                'title' => 'Update Missing Data',
+                'description' => 'Update "Unknown" artists and titles.'
+            )
+        );
+    }
+
+    public function executeAction($action) {
+        $results = array();
+        switch ($action) {
+            case 'import-new-tracks':
+                $results = $this->importNewTracks();
+                break;
+            case 'update-missing-data':
+                $results = $this->getNextTrackMissingData();
+                break;
+        }
+        return $results;
+    }
+
     public function importNewTracks() {
         $music = new MusicController();
         $allMusic = $music->getAll();
@@ -39,6 +78,40 @@ class AdminController {
         $customData['Total Rows'] = count($allMusic);
         $results['customData'] = $customData;
         return $results;
+    }
+
+    public function getNextTrackMissingData() {
+        $model = new AdminModel();
+        $track['results'] = $model->getNextTrackMissingData();
+        if (empty($track['results'])) {
+            $track = array('customData' => array('Tracks Found' => 0));
+        }
+        return $track;
+    }
+
+    public function updateMissingData($params) {
+        $music = new MusicModel();
+        $model = new AdminModel();
+        $response = $model->updateMissingData($params);
+        if ($response) {
+            $track = $music->getTrackById($params['music_id']);
+            $track = $track[0];
+            $this->setMessage('success', 'Updated (music_id = ' . $track['music_id'] . '): ' . $track['artist'] . ' - ' . $track['title']);
+        }
+        else {
+            $this->setMessage('danger', 'Not Updated (music_id = ' . $params['music_id'] . ')');
+        }
+    }
+
+    public function deleteTrack($params) {
+        $model = new AdminModel();
+        $response = $model->deleteTrack($params['music_id']);
+        if ($response) {
+            $this->setMessage('success', 'Deleted (music_id = ' . $params['music_id'] . ')');
+        }
+        else {
+            $this->setMessage('danger', 'Unable to delete (music_id = ' . $params['music_id'] . ')');
+        }
     }
 
 }

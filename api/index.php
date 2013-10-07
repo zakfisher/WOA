@@ -2,12 +2,21 @@
 require_once('../system/config.php');
 
 $controllerMap = array(
+    'admin' => 'AdminController',
     'music' => 'MusicController',
     'user' => 'UserController'
 );
 
 $class = $controllerMap[$_GET['c']];
 $method = $_GET['m'];
+
+if ($user->isLoggedIn()) {
+    if ($class == 'AdminController' && $user->getUserAccessLevel() == 'admin') {
+        require_once('../system/model/admin.php');
+        require_once('../system/controller/admin.php');
+    }
+    else header('Location: /');
+}
 
 if (!empty($_POST)) $params = array($_POST);
 if (!empty($_GET['p'])) $params = $params = $_GET['p'];
@@ -23,3 +32,4 @@ if (method_exists($class, $method)) {
     print json_encode($json);
     exit;
 }
+else header('Location: /');

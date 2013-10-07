@@ -6,31 +6,40 @@ $admin = new AdminController();
 
 if (isset($_GET['logout'])) $user->logout();
 
-$tpl->user = $user->getUser();
+$tpl->page    = 'Admin Panel';
+$tpl->action  = $_GET['action'];
+$tpl->actions = $admin->getActions();
+$tpl->user    = $user->getUser();
 
-$tpl->actions = array(
-    'import-new-tracks' => array(
-        'title' => 'Import New Tracks',
-        'description' => 'Extract meta data and insert rows in database.'
-    )
-);
-
-$action = $_GET['action'];
-$tpl->actionResults = array();
-
-if (isset($action)) {
-    switch ($action) {
-        case 'import-new-tracks':
-            $results = $admin->importNewTracks();
-            $tpl->actions[$action]['info'] = $results['customData'];
-            if (!empty($results['results'])) $tpl->actionResults = $results['results'];
+// Handle Form Submission
+if (isset($_POST['submit'])) {
+    switch ($tpl->action) {
+        case 'update-missing-data':
+            $admin->updateMissingData($_POST);
             break;
+    }
+}
+if (isset($_POST['delete'])) {
+    switch ($tpl->action) {
+        case 'update-missing-data':
+            $admin->deleteTrack($_POST);
+            break;
+    }
+}
+
+$tpl->message = $admin->getMessage();
+
+// Handle Current Action
+if (isset($tpl->action) && !empty($tpl->action)) {
+    $results = $admin->executeAction($tpl->action);
+    if (!empty($results)) {
+        if (!empty($results['customData'])) $tpl->actions[$tpl->action]['info'] = $results['customData'];
+        if (!empty($results['results'])) $tpl->actionResults = $results['results'];
     }
 }
 
 //JSON::print_array($tpl->actions);
 
-$tpl->page = 'Admin Panel';
 $tpl->display('templates/header.tpl.php');
 
 if ($user->isLoggedIn()) {

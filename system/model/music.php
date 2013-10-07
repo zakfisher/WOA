@@ -9,4 +9,10 @@ class MusicModel {
       return $results;
    }
 
+    public function getTrackById($musicId) {
+        $db = new DB();
+        $results = $db->select_from_where(array('*'), 'music', 'music_id', $musicId);
+        return $results;
+    }
+
 }

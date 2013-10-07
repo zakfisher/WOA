@@ -1,7 +1,7 @@
 <?php
 require_once('../system/config.php');
 
-//$tpl->music = $music->getAll();
+$tpl->music = $music->getAll();
 //JSON::print_array($tpl->music); exit;
 
 $tpl->page = 'Home';

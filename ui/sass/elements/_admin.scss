@@ -1,5 +1,9 @@
+* {
+   //font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
 body {
-   @include bg-image('textures/fabric_of_squares_gray.png');
+   @include bg-image('textures/fancy_deboss.png');
 }
 
 .navbar {

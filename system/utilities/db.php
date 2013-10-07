@@ -26,11 +26,12 @@ class DB {
         return $this->query($query);
     }
 
-    function select_from($array, $table)
-    {
+    function select_from($array, $table, $limit = 0) {
         // Compose SELECT x FROM Query
         $values = implode(",", $array);
-        $query = "SELECT " . $values . " FROM " . $table . ";";
+        $query = "SELECT " . $values . " FROM " . $table;
+        $query .= ($limit > 0) ? (" LIMIT " . $limit) : "";
+        $query .= ";";
 
         // Execute Query
         $result_set = $this->query($query);
@@ -96,11 +97,12 @@ class DB {
         return $rows;
     }
 
-    function select_from_where_or($array, $table, $column1, $value1, $column2, $value2)
-    {
+    function select_from_where_or($array, $table, $column1, $value1, $column2, $value2, $limit) {
         // Compose SELECT x FROM y WHERE Query
         $values = implode(",", $array);
-        $query = "SELECT " . $values . " FROM " . $table . " WHERE " . $column1 . " = '" . $value1 . "' OR " . $column2 . " = '" . $value2 . "';";
+        $query = "SELECT " . $values . " FROM " . $table . " WHERE " . $column1 . " = '" . $value1 . "' OR " . $column2 . " = '" . $value2 . "'";
+        $query .= ($limit > 0) ? (" LIMIT " . $limit) : "";
+        $query .= ";";
 
         // Execute Query
         $result_set = $this->query($query);
@@ -122,6 +124,8 @@ class DB {
 
         // Execute Query
         $this->query($query);
+
+        return true;
     }
 
     function delete_from_where($table, $column, $value)
@@ -131,8 +135,9 @@ class DB {
 
         // Execute Query
         $this->query($query);
-    }
 
+        return true;
+    }
 
     function get_last_row($table, $column)
     {
