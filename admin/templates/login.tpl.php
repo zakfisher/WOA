@@ -1,7 +1,10 @@
 <div id="login" class="container">
 
     <form class="form-signin" method="post">
-        <h2 class="form-signin-heading tk-futura-pt">EDM Cake Admin</h2>
+        <div class="logo">
+            <?php require('../ui/images/edmcake_logo.svg'); ?>
+            <p>Admin Panel</p>
+        </div>
         <input type="text" class="form-control" placeholder="Username" autofocus="" name="username">
         <input type="password" class="form-control" placeholder="Password" name="password">
 <!--        <label class="checkbox">-->

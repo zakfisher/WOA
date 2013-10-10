@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EDM Cake - <?=$this->page?></title>
     <link href="../ui/images/favicon.ico" rel="icon" type="image/x-icon">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+<!--    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">-->
+<!--    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">-->
     <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
 <!--    <link type="text/css" href="../ui/css/fontawesome.css" rel="stylesheet" />-->
+    <link type="text/css" href="../ui/css/admin-bootstrap.min.css" rel="stylesheet" />
     <link type="text/css" href="../ui/css/admin.css" rel="stylesheet" />
 </head>
 <body>

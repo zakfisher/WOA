@@ -16,7 +16,7 @@
                 <div class="col-12 col-sm-6 col-lg-4 pull-left">
                     <h2><?=$data['title']?></h2>
                     <p><?=$data['description']?></p>
-                    <p><a class="btn btn-default" href="?action=<?=$action?>">Run &raquo;</a></p>
+                    <p><a class="btn btn-primary" href="?action=<?=$action?>">Run &raquo;</a></p>
                     <?php if (!empty($data['info'])): ?>
                         <?php foreach ($data['info'] as $key => $val): ?>
                         <p><?=$key?>: <?=$val?></p>
@@ -26,6 +26,15 @@
                 <?php endforeach; ?>
             </div>
         </div>
+    </div>
+
+    <!-- Action Results -->
+    <div class="row row-offcanvas row-offcanvas-right">
+        <?php if (!empty($this->actionResults)): ?>
+            <div class="col-xs-12">
+                <?JSON::print_array($this->actionResults)?>
+            </div>
+        <?php endif; ?>
     </div>
 
     <?php if ($this->action == 'update-missing-data' && !empty($this->actionResults)): ?>
