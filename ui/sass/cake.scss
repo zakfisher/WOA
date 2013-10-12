@@ -1,0 +1,121 @@
+@import 'config/mixins';
+
+/* Extra small devices (phones, up to 480px) */
+/* No media query since this is the default in Bootstrap */
+
+* {
+   font-family: 'Yanone Kaffeesatz', sans-serif;
+   outline: none !important;
+}
+
+body {
+   //@include bg-image('textures/fancy_deboss.png');
+}
+
+a.teal {
+   color: #009490;
+   &:hover { color: black; }
+}
+
+// Navigation
+a.navbar-brand {
+   padding: 0;
+   svg { width: 170px; }
+}
+
+.navbar-toggle {
+   position: relative;
+   top: 10px;
+}
+
+// Search Bar
+.navbar-collapse {
+   .navbar-form {
+      margin: 0;
+      border: none;
+      padding: 0;
+      .form-group {
+         margin: 10px 0;
+         input[type=text] {
+            width: 90%;
+            letter-spacing: .8px;
+            font-size: 16px;
+         }
+         i {
+            cursor: pointer;
+            font-size: 22px;
+            position: relative;
+            top: 5px;
+            right: 2px;
+         }
+      }
+   }
+}
+
+.toggle-search-bar {
+   display: none;
+   bottom: -22px;
+   background: #333;
+   cursor: pointer;
+   height: 22px;
+   left: 50%;
+   margin-left: -50px;
+   position: absolute;
+   text-align: center;
+   width: 100px;
+   @include border-radius(0 0 6px 6px);
+   i {
+      color: white;
+      cursor: pointer;
+      position: relative;
+      top: 3px;
+   }
+}
+
+// Only Small
+@media (max-width: 768px) {
+   .navbar-collapse {
+      background: black;
+      .navbar-form {
+         .form-group {
+            i {
+               color: white;
+            }
+         }
+      }
+   }
+   .toggle-search-bar {
+      display: block;
+   }
+   .navbar-header {
+      button {
+         position: absolute;
+         top: -99999px;
+      }
+   }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+   .navbar-collapse {
+      .navbar-form {
+         position: relative;
+         top: 10px;
+         .form-group {
+            width: 340px;
+            input[type=text] {}
+            i {}
+         }
+      }
+   }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}
