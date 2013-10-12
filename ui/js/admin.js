@@ -3,9 +3,10 @@
  *
  * Author: Zachary Fisher - zfisher@zfidesign.com
  * * * * * * * * * * * * * * * * * * * * * * * * */
-W0Aadmin = new function() {
+cake = new function() {
+    var c = this;
 
-    var Login = function(id) {
+    c.Login = function(id) {
         var module = this;
         var config = {
             ajaxURL : '../api/user/login/'
@@ -59,7 +60,9 @@ W0Aadmin = new function() {
         };
     };
 
-    var login = new Login('#login');
+    $(".collapse").collapse({toggle:true});
+
+    var login = new c.Login('#login');
     login.init();
 
 };

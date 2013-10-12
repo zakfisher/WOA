@@ -1,13 +1,26 @@
 * {
    //font-family: 'Yanone Kaffeesatz', sans-serif;
+   outline: none !important;
 }
 
 body {
    //@include bg-image('textures/fancy_deboss.png');
 }
 
-.navbar {
-   @include border-radius(0);
+a.teal {
+   color: #009490;
+   &:hover { color: black; }
+}
+
+a.navbar-brand {
+   padding: 0;
+   svg { width: 170px; }
+}
+
+form.navbar-form {
+   padding: 0 15px;
+   position: relative;
+   top: 10px;
 }
 
 .form-signin {
@@ -62,4 +75,36 @@ body {
    margin-bottom: 10px;
    border-top-left-radius: 0;
    border-top-right-radius: 0;
+}
+
+.navbar {
+   @include border-radius(0);
+}
+
+/* Extra small devices (phones, up to 480px) */
+/* No media query since this is the default in Bootstrap */
+div.model {
+   margin: 20px 0;
+}
+
+div.row-offcanvas-right {
+   margin-left: 0;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+   div.model {
+      float: right;
+      margin: 0 0 0 -15px;
+   }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+}
+
+   /* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
 }

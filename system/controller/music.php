@@ -3,6 +3,15 @@ class MusicController {
 
     function __construct() {}
 
+    public function getMethods() {
+        return array(
+            'getAll' => array(),
+            'getFiles' => array(),
+            'getMetaData' => array(),
+            'getMixes' => array()
+        );
+    }
+
     public function getAll($filter = '*') {
         $model = new MusicModel();
         return $model->get_all_tracks($filter);

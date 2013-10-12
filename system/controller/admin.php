@@ -3,6 +3,19 @@ class AdminController {
 
     function __construct() {}
 
+    public function getMethods() {
+        return array(
+            'getMessage' => array(),
+            'setMessage' => array(),
+            'getActions' => array(),
+            'executeAction' => array(),
+            'importNewTracks' => array(),
+            'getNextTrackMissingData' => array(),
+            'updateMissingData' => array(),
+            'deleteTrack' => array(),
+        );
+    }
+
     public function getMessage() {
         if (isset($_SESSION['message'])) {
             $message = $_SESSION['message'];

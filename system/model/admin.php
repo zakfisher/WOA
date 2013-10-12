@@ -3,6 +3,14 @@ class AdminModel {
 
     function __construct() {}
 
+    public function getMethods() {
+        return array(
+            'getNextTrackMissingData' => array(),
+            'updateMissingData' => array(),
+            'deleteTrack' => array()
+        );
+    }
+
     public function getNextTrackMissingData() {
         $db = new DB();
         return $db->select_from_where_or(array('*'), 'music', 'artist', 'Unknown', 'title', 'Unknown', 1);

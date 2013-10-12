@@ -1,31 +1,19 @@
 <div class="container">
 
-    <!-- Message -->
-    <?php if (isset($this->message) && !empty($this->message)): ?>
-    <div class="alert alert-<?=$this->message['type']?> alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <p><?=$this->message['message']?></p>
-    </div>
-    <?php endif; ?>
-
     <!-- Actions -->
     <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-xs-12">
-            <div class="row">
-                <?php foreach ($this->actions as $action => $data): ?>
-                <div class="col-12 col-sm-6 col-lg-4 pull-left">
-                    <h2><?=$data['title']?></h2>
-                    <p><?=$data['description']?></p>
-                    <p><a class="btn btn-primary" href="?action=<?=$action?>">Run &raquo;</a></p>
-                    <?php if (!empty($data['info'])): ?>
-                        <?php foreach ($data['info'] as $key => $val): ?>
+        <?php foreach ($this->actions as $action => $data): ?>
+            <div class="col-12 col-sm-6 col-lg-4 pull-left">
+                <h2><?=$data['title']?></h2>
+                <p><?=$data['description']?></p>
+                <p><a class="btn btn-primary" href="?action=<?=$action?>">Run &raquo;</a></p>
+                <?php if (!empty($data['info'])): ?>
+                    <?php foreach ($data['info'] as $key => $val): ?>
                         <p><?=$key?>: <?=$val?></p>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
-        </div>
+        <?php endforeach; ?>
     </div>
 
     <!-- Action Results -->
@@ -58,9 +46,21 @@
                 </div>
             <?php endif; ?>
             <input type="hidden" name="music_id" value="<?=$id?>" />
-            <button type="submit" class="btn btn-default" name="submit">Submit</button>
+            <button type="submit" class="btn btn-primary" name="submit">Submit</button>
             <button type="submit" class="btn btn-danger" name="delete">Delete</button>
         </form>
     <?php endif; ?>
+
+
+    <?php switch ($this->section) {
+        case 'data-tools':
+
+            break;
+            break;
+        case 'suites':
+            $this->display('templates/suites-'.$this->subsection.'.tpl.php');
+            break;
+    } ?>
+    <?php  ?>
 
 </div>

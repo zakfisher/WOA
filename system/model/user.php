@@ -3,6 +3,14 @@ class UserModel {
 
     function __construct() {}
 
+    public function getMethods() {
+        return array(
+            'authenticate' => array(),
+            'authenticateWithToken' => array(),
+            'destroyToken' => array()
+        );
+    }
+
     public function authenticate($params) {
         $database = new DB();
         $user = $database->select_from_where_and(array('user_id, username, first_name, last_name, access'), 'users', 'username', $params['username'], 'password', sha1($params['password']));

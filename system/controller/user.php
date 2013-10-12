@@ -3,6 +3,16 @@ class UserController {
 
     function __construct() {}
 
+    public function getMethods() {
+        return array(
+            'login' => array(),
+            'logout' => array(),
+            'isLoggedIn' => array(),
+            'getUser' => array(),
+            'getUserAccessLevel' => array()
+        );
+    }
+
     public function login($params) {
         $model = new UserModel();
         if (isset($params['username']) && isset($params['password'])) {
