@@ -42,7 +42,7 @@ cake = new function() {
             }
         };
         n.init = function() {
-            n.toggleDisplay();
+//            n.toggleDisplay();
             $(document).on('click', togglePlayerBtn, n.toggleDisplay);
             var player = new MediaElementPlayer('audio',{
 //            audioWidth: 280,
@@ -59,9 +59,40 @@ cake = new function() {
             //player.play();
         };
     };
+    c.Slideshow = new function() {
+        var s = this;
+        var id = '#bg-image';
+        var currentImage = 4;
+        var totalImages = 4;
+        s.adjustBGposition = function() {
+            var imageWidth = $(id).width();
+            var docWidth = $(document).width();
+            var offset = imageWidth - docWidth;
+            if (offset > 0) {
+                $(id).css({marginLeft:'-'+offset/2+'px'});
+            }
+            else {
+                $(id).css({marginLeft:'0px'});
+            }
+        };
+        s.updateImage = function() {
+            currentImage++;
+            if (currentImage > totalImages) currentImage = 1;
+            $(id).fadeOut(300, function() {
+                $(id).attr('src', '/images/bg/' + currentImage + '.jpg');
+                setTimeout(function() { $(id).fadeIn(); }, 300);
+            });
+        };
+        s.init = function() {
+            s.adjustBGposition();
+            $(window).resize(s.adjustBGposition);
+            setInterval(s.updateImage, 10000);
+        };
+    };
     c.init = function() {
         c.Search.init();
         c.Player.init();
+        c.Slideshow.init();
     }
 };
 

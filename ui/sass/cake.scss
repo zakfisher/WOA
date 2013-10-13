@@ -10,17 +10,24 @@ $pink : #ee528f;
    font-family: 'Yanone Kaffeesatz', sans-serif;
    outline: none !important;
 }
-
 html,
 body {
    height: 100%;
    /* The html and body elements cannot have any padding or margin. */
 }
-
 body {
    //@include bg-image('textures/fancy_deboss.png');
+   background: black;
 }
-
+#bg-image {
+   //@include bg-image('bg/4.jpg');
+   //background-position: center top;
+   //background-repeat: no-repeat;
+   min-height: 100%;
+   position: fixed;
+   top: 0;
+   min-width: 100%;
+}
 a.teal {
    color: $teal;
    &:hover { color: black; }
@@ -31,7 +38,6 @@ a.navbar-brand {
    padding: 0;
    svg { width: 170px; }
 }
-
 i.real-menu {
    display: none;
    font-size: 26px;
@@ -40,13 +46,34 @@ i.real-menu {
    right: 25px;
    cursor: pointer;
 }
-
 .navbar-toggle {
    position: relative;
    top: 10px;
 }
 
 // Search Bar
+.navbar-default {
+   border: none;
+   border-bottom: 1px solid black;
+}
+.toggle-search-bar,
+.toggle-player-bar {
+   display: none;
+   background: #333;
+   cursor: pointer;
+   height: 22px;
+   left: 50%;
+   margin-left: -50px;
+   position: absolute;
+   text-align: center;
+   width: 100px;
+   i {
+      color: white;
+      cursor: pointer;
+      position: relative;
+      top: 3px;
+   }
+}
 .navbar-collapse {
    .navbar-form {
       margin: 0;
@@ -71,31 +98,13 @@ i.real-menu {
       }
    }
 }
-
-.toggle-search-bar,
-.toggle-player-bar {
-   display: none;
-   background: #333;
-   cursor: pointer;
-   height: 22px;
-   left: 50%;
-   margin-left: -50px;
-   position: absolute;
-   text-align: center;
-   width: 100px;
-   i {
-      color: white;
-      cursor: pointer;
-      position: relative;
-      top: 3px;
-   }
-}
-
 .toggle-search-bar {
    bottom: -22px;
    @include border-radius(0 0 6px 6px);
 }
 
+
+// Player
 .toggle-player-bar {
    bottom: 60px;
    @include border-radius(6px 6px 0 0);
@@ -187,7 +196,7 @@ i.real-menu {
       }
    }
    #footer {
-      bottom: 0px;
+      bottom: 0px !important;
    }
 }
 

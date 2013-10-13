@@ -1,3 +1,3 @@
-<div class="container">
-    <i class="icon-user"></i>
+<div id="desktop" class="container">
+
 </div>

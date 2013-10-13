@@ -12,4 +12,5 @@
     <link type="text/css" href="/ui/css/cake.css" rel="stylesheet" />
 </head>
 <body>
+    <img id="bg-image" src="/images/bg/4.jpg" />
     <div id="wrap">
