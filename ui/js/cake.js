@@ -7,6 +7,7 @@ cake = new function() {
     var c = this;
     c.Search = new function() {
         var n = this;
+        var page = '.page';
         var navbarBtn       = '.navbar-header button';
         var toggleSearchBtn = '.toggle-search-bar';
         n.toggleDisplay = function() {
@@ -14,9 +15,11 @@ cake = new function() {
             var icon = $(toggleSearchBtn).find('i');
             if (icon.is('.icon-chevron-up')) {
                 icon.removeClass('icon-chevron-up').addClass('icon-chevron-down');
+                $(page).animate({paddingTop:'-=50px'}, 200);
             }
             else {
                 icon.addClass('icon-chevron-up').removeClass('icon-chevron-down');
+                $(page).animate({paddingTop:'+=50px'}, 200);
             }
         };
         n.init = function() {
@@ -86,7 +89,7 @@ cake = new function() {
         s.init = function() {
             s.adjustBGposition();
             $(window).resize(s.adjustBGposition);
-            setInterval(s.updateImage, 10000);
+            setInterval(s.updateImage, 30000);
         };
     };
     c.init = function() {

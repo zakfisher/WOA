@@ -6,6 +6,7 @@ $pink : #ee528f;
 /* Extra small devices (phones, up to 480px) */
 /* No media query since this is the default in Bootstrap */
 
+// Global
 * {
    font-family: 'Yanone Kaffeesatz', sans-serif;
    outline: none !important;
@@ -32,6 +33,15 @@ a.teal {
    color: $teal;
    &:hover { color: black; }
 }
+.text-teal { color: $teal; }
+.text-pink { color: $pink; }
+.text-gold { color: gold; }
+.text-yellow { color: yellow; }
+
+div.page {
+   padding-bottom: 30px;
+   padding-top: 90px;
+}
 
 // Navigation
 a.navbar-brand {
@@ -50,12 +60,15 @@ i.real-menu {
    position: relative;
    top: 10px;
 }
-
-// Search Bar
 .navbar-default {
    border: none;
    border-bottom: 1px solid black;
+   position: fixed;
+   width: 100%;
+   top: 0;
 }
+
+// Search Bar
 .toggle-search-bar,
 .toggle-player-bar {
    display: none;
@@ -103,13 +116,7 @@ i.real-menu {
    @include border-radius(0 0 6px 6px);
 }
 
-
 // Player
-.toggle-player-bar {
-   bottom: 60px;
-   @include border-radius(6px 6px 0 0);
-}
-
 /* Wrapper for page content to push down footer */
 #wrap {
    min-height: 100%;
@@ -120,7 +127,6 @@ i.real-menu {
    /* Pad bottom by footer height */
    padding: 0 0 60px;
 }
-
 /* Set the fixed height of the footer here */
 #footer {
    background-color: #f8f8f8;
@@ -153,6 +159,44 @@ i.real-menu {
    div.player {
       height: 34px;
    }
+   .toggle-player-bar {
+      bottom: 60px;
+      @include border-radius(6px 6px 0 0);
+   }
+}
+
+// Desktop
+#desktop {
+   div.row {
+      margin-top: 20px;
+      div.col-xs-4 {
+         padding-left: 10px;
+         padding-right: 10px;
+      }
+      div.desktop-icon {
+         cursor: pointer;
+         width: 100%;
+         height: 90px;
+         background: rgba(0,0,0,.8);
+         @include border-radius(6px);
+         text-align: center;
+         color: white;
+         svg {
+            cursor: pointer;
+            fill: white;
+            height: 56px;
+            margin: 5px 0;
+            path { fill: white; }
+         }
+         p {
+            cursor: pointer;
+            margin: 0;
+         }
+         &[data-page='now-playing'] {
+            //svg { height: 50px; }
+         }
+      }
+   }
 }
 
 // Only Small
@@ -184,6 +228,9 @@ i.real-menu {
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+   div.page {
+      padding-top: 90px !important;
+   }
    .navbar-collapse {
       .navbar-form {
          position: relative;
@@ -192,6 +239,20 @@ i.real-menu {
             width: 340px;
             input[type=text] {}
             i {}
+         }
+      }
+   }
+   #desktop {
+      div.row {
+         div.desktop-icon {
+            text-align: left;
+            svg {
+               height: 80px;
+               float: left;
+            }
+            p {
+               font-size: 22px;
+            }
          }
       }
    }
