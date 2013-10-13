@@ -9,7 +9,9 @@
             <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/"><?php require('../ui/images/edmcake_logo.svg'); ?></a>
+        <i class="icon-reorder real-menu pull-right"></i>
     </div>
+
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -29,8 +31,8 @@
 <!--        </ul>-->
         <form class="navbar-form navbar-right" role="search">
             <div class="form-group">
-                <i class="icon-search pull-right"></i>
-                <input type="text" class="form-control" placeholder="Search artists, events, & mixes.">
+                <input type="text" class="form-control pull-left" placeholder="Search artists, events, & mixes.">
+                <i class="icon-search pull-left"></i>
             </div>
         </form>
     </div>

@@ -1,4 +1,7 @@
+$teal : #009490;
+$pink : #ee528f;
 @import 'config/mixins';
+@import 'elements/media-element';
 
 /* Extra small devices (phones, up to 480px) */
 /* No media query since this is the default in Bootstrap */
@@ -8,12 +11,18 @@
    outline: none !important;
 }
 
+html,
+body {
+   height: 100%;
+   /* The html and body elements cannot have any padding or margin. */
+}
+
 body {
    //@include bg-image('textures/fancy_deboss.png');
 }
 
 a.teal {
-   color: #009490;
+   color: $teal;
    &:hover { color: black; }
 }
 
@@ -21,6 +30,15 @@ a.teal {
 a.navbar-brand {
    padding: 0;
    svg { width: 170px; }
+}
+
+i.real-menu {
+   display: none;
+   font-size: 26px;
+   position: relative;
+   top: 23px;
+   right: 25px;
+   cursor: pointer;
 }
 
 .navbar-toggle {
@@ -37,24 +55,26 @@ a.navbar-brand {
       .form-group {
          margin: 10px 0;
          input[type=text] {
+            color: black;
             width: 90%;
             letter-spacing: .8px;
             font-size: 16px;
+            margin-bottom: 10px;
          }
          i {
             cursor: pointer;
             font-size: 22px;
             position: relative;
             top: 5px;
-            right: 2px;
+            left: 10px;
          }
       }
    }
 }
 
-.toggle-search-bar {
+.toggle-search-bar,
+.toggle-player-bar {
    display: none;
-   bottom: -22px;
    background: #333;
    cursor: pointer;
    height: 22px;
@@ -63,7 +83,6 @@ a.navbar-brand {
    position: absolute;
    text-align: center;
    width: 100px;
-   @include border-radius(0 0 6px 6px);
    i {
       color: white;
       cursor: pointer;
@@ -72,8 +91,66 @@ a.navbar-brand {
    }
 }
 
+.toggle-search-bar {
+   bottom: -22px;
+   @include border-radius(0 0 6px 6px);
+}
+
+.toggle-player-bar {
+   bottom: 60px;
+   @include border-radius(6px 6px 0 0);
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+   min-height: 100%;
+   height: auto !important;
+   height: 100%;
+   /* Negative indent footer by its height */
+   margin: 0 auto -60px;
+   /* Pad bottom by footer height */
+   padding: 0 0 60px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+   background-color: #f8f8f8;
+   bottom: -60px;
+   position: fixed;
+   width: 100%;
+   height: 60px;
+   div.now-playing {
+      height: 26px;
+      background: black;
+      p {
+         color: white;
+         margin: 0;
+         padding: 0;
+         text-align: left;
+         position: relative;
+         top: 5px;
+         letter-spacing: 1px;
+         font-size: 14px;
+         left: 10px;
+      }
+      i.icon-heart {
+         position: absolute;
+         right: 10px;
+         top: 9px;
+         color: #999;
+         &.favorite { color: $pink; }
+      }
+   }
+   div.player {
+      height: 34px;
+   }
+}
+
 // Only Small
 @media (max-width: 768px) {
+   i.real-menu {
+      display: block;
+   }
    .navbar-collapse {
       background: black;
       .navbar-form {
@@ -84,7 +161,8 @@ a.navbar-brand {
          }
       }
    }
-   .toggle-search-bar {
+   .toggle-search-bar,
+   .toggle-player-bar {
       display: block;
    }
    .navbar-header {
@@ -107,6 +185,9 @@ a.navbar-brand {
             i {}
          }
       }
+   }
+   #footer {
+      bottom: 0px;
    }
 }
 

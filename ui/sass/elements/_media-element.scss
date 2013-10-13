@@ -6,7 +6,7 @@
    vertical-align: top;
    text-indent: 0;
    width: 100% !important;
-   height: 30px !important;
+   height: 34px !important;
    * {
       @include text-shadow(none);
       //font-weight: normal;
@@ -142,7 +142,7 @@
    padding: 0;
    bottom: 0;
    left: 0;
-   background: black;
+   background: white;
    //background: url(../js/media-element/build/background.png);
    //background: rgba(0, 0, 0, 0.7);
    //background: -webkit-gradient(linear, 0% 0, 0% 100%, from(rgba(50, 50, 50, 0.7)), to(rgba(0, 0, 0, 0.7)));
@@ -153,6 +153,13 @@
    //background: linear-gradient(rgba(50, 50, 50, 0.7), rgba(0, 0, 0, 0.7));
    height: 30px;
    width: 100%;
+}
+
+.mejs-volume-button {
+   width: 10px !important;
+   button {
+      display: none !important;
+   }
 }
 
 .mejs-container .mejs-controls div {
@@ -194,7 +201,8 @@
 }
 
 .mejs-container .mejs-controls .mejs-time {
-   color: #fff;
+   font-family: 'Helvetica, Arial, sans-serif';
+   color: black;
    display: block;
    height: 17px;
    width: auto;
@@ -207,7 +215,8 @@
 }
 
 .mejs-container .mejs-controls .mejs-time span {
-   color: #fff;
+   font-family: 'Helvetica, Arial, sans-serif';
+   color: black;
    font-size: 12px;
    line-height: 12px;
    display: block;
@@ -319,7 +328,7 @@
 }
 
 .mejs-controls .mejs-time-rail .mejs-time-loaded {
-   background: #ee528f;
+   background: #333;
    //background: #3caac8;
    //background: rgba(60, 170, 200, 0.8);
    //background: -webkit-gradient(linear, 0% 0, 0% 100%, from(rgba(44, 124, 145, 0.8)), to(rgba(78, 183, 212, 0.8)));
@@ -332,7 +341,8 @@
 }
 
 .mejs-controls .mejs-time-rail .mejs-time-current {
-   background: yellow;
+   background: $pink;
+   border-right: 1px solid gold;
    //background: #fff;
    //background: rgba(255, 255, 255, 0.8);
    //background: -webkit-gradient(linear, 0% 0, 0% 100%, from(rgba(255, 255, 255, 0.9)), to(rgba(200, 200, 200, 0.8)));
@@ -428,7 +438,7 @@
 }
 
 .mejs-controls .mejs-volume-button .mejs-volume-slider {
-   display: none;
+   display: none !important;
    height: 115px;
    width: 25px;
    background: url(../js/media-element/build/background.png);
@@ -487,6 +497,7 @@
 }
 
 .mejs-controls div.mejs-horizontal-volume-slider {
+   display: none !important;
    height: 26px;
    width: 60px;
    position: relative;
@@ -501,7 +512,7 @@
    margin: 0;
    padding: 0;
    font-size: 1px;
-   background: #ee528f;
+   background: $teal;
    //background: #333;
    //background: rgba(50, 50, 50, 0.8);
    //background: -webkit-gradient(linear, 0% 0, 0% 100%, from(rgba(30, 30, 30, 0.8)), to(rgba(60, 60, 60, 0.8)));
@@ -850,4 +861,15 @@
    padding: 4px;
    z-index: 100;
    cursor: pointer;
+}
+
+.mejs-controls {
+   i {
+      cursor: pointer;
+      float: left;
+      margin: 0 5px;
+      position: relative;
+      top: 9px;
+      font-size: 14px;
+   }
 }
