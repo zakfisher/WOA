@@ -29,11 +29,11 @@ class UserController {
         }
     }
 
-    public function logout() {
-        $model = new UserModel();
-        $model->destroyToken();
-        $location = '/';
-        if ($_SESSION['user']['access'] == 'admin') $location = '/admin/';
+    public function logout($location) {
+        if ($this->isLoggedIn()) {
+            $model = new UserModel();
+            $model->destroyToken();
+        }
         unset($_SESSION);
         session_destroy();
         header('Location: ' . $location);
@@ -53,7 +53,7 @@ class UserController {
     }
 
     public function getUserAccessLevel() {
-        print $_SESSION['user']['access'];
+        return $_SESSION['user']['access'];
     }
 
 }

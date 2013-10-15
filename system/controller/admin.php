@@ -13,6 +13,8 @@ class AdminController {
             'getNextTrackMissingData' => array(),
             'updateMissingData' => array(),
             'deleteTrack' => array(),
+            'getArtistList' => array(),
+            'updateArtistName' => array()
         );
     }
 
@@ -29,17 +31,25 @@ class AdminController {
         $_SESSION['message'] = array('type' => $type, 'message' => $message);
     }
 
-    public function getActions() {
-        return array(
-            'import-new-tracks' => array(
-                'title' => 'Import New Tracks',
-                'description' => 'Extract meta data and insert rows in database.'
+    public function getActions($section) {
+        $actions = array(
+            'music' => array(
+                'import-new-tracks' => array(
+                    'title' => 'Import New Tracks',
+                    'description' => 'Extract meta data and insert rows in database.'
+                ),
+                'update-missing-data' => array(
+                    'title' => 'Update Missing Data',
+                    'description' => 'Update "Unknown" artists and titles.'
+                ),
+                'update-artist-list' => array(
+                    'title' => 'Update Artists',
+                    'description' => 'Get list of artists and update data.'
+                )
             ),
-            'update-missing-data' => array(
-                'title' => 'Update Missing Data',
-                'description' => 'Update "Unknown" artists and titles.'
-            )
+            'users' => array()
         );
+        return $actions[$section];
     }
 
     public function executeAction($action) {
@@ -50,6 +60,9 @@ class AdminController {
                 break;
             case 'update-missing-data':
                 $results = $this->getNextTrackMissingData();
+                break;
+            case 'update-artist-list':
+                $results = $this->getArtistList();
                 break;
         }
         return $results;
@@ -131,6 +144,24 @@ class AdminController {
         }
         else {
             $this->setMessage('danger', 'Unable to delete (music_id = ' . $params['music_id'] . ')');
+        }
+    }
+
+    public function getArtistList() {
+        $music = new MusicController();
+        $results = array();
+        $results['results'] = $music->listArtists();
+        return $results;
+    }
+
+    public function updateArtistName($params) {
+        $model = new AdminModel();
+        $response = $model->updateArtistName($params);
+        if (!empty($response)) {
+            $this->setMessage('success', 'Updated ' . $response['old_artist_name']  . ' to ' . $response['new_artist_name'] . '. ' . $response['rows_attempted'] . ' rows attempted. ' . $response['rows_updated'] . ' rows updated.');
+        }
+        else {
+            $this->setMessage('danger', 'No rows updated. (' . $params['old_artist_name']  . ' to ' . $params['new_artist_name'] . ')');
         }
     }
 

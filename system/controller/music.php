@@ -8,13 +8,14 @@ class MusicController {
             'getAll' => array(),
             'getFiles' => array(),
             'getMetaData' => array(),
-            'getMixes' => array()
+            'listArtists' => array(),
+            'getBrowseByArtistList' => array()
         );
     }
 
     public function getAll($filter = '*') {
         $model = new MusicModel();
-        return $model->get_all_tracks($filter);
+        return $model->getAllRows($filter);
     }
 
     public function getFiles() {
@@ -97,16 +98,13 @@ class MusicController {
         return $mp3;
     }
 
-    public function getMixes($offset = 1, $results = 50) {
-        $mp3s = MusicController::getFiles();
-
-        // Get meta data for result set
-        for ($i = $offset - 1; $i < $results; $i++) {
-            $mp3s['all'][$i] = MusicController::getMetaData($mp3s['all'][$i]);
-            if ($mp3s['all'][$i]['uploaded'] == $mp3s['all'][0]['uploaded']) $mp3s[$mp3s['all'][0]['uploaded']][$i] = MusicController::getMetaData($mp3s['all'][$i]);
-        }
-
-        return $mp3s;
+    public function listArtists() {
+        $model = new MusicModel();
+        return $model->makeArtistList();
     }
 
+    public function getBrowseByArtistList() {
+        $model = new MusicModel();
+        return $model->makeBrowseByArtistList();
+    }
 }

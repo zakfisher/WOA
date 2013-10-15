@@ -4,23 +4,22 @@ require_once('../system/model/admin.php');
 require_once('../system/controller/admin.php');
 $admin = new AdminController();
 
-if (isset($_GET['logout'])) $user->logout();
+if (isset($_GET['logout'])) $user->logout('/admin/');
 
+$tpl->user    = $user->getUser();
 $tpl->page    = 'Admin Panel';
 $tpl->action  = $_GET['action'];
-$tpl->section = 'data-tools';
-$tpl->subsection = '';
-$tpl->actions = $admin->getActions();
-$tpl->user = $user->getUser();
-
-if (isset($_GET['section']) && !empty($_GET['section'])) $tpl->section = $_GET['section'];
-if (isset($_GET['subsection']) && !empty($_GET['subsection'])) $tpl->subsection = $_GET['subsection'];
+$tpl->section = 'music';
+$tpl->actions = $admin->getActions('music');
 
 // Handle Form Submission
 if (isset($_POST['submit'])) {
     switch ($tpl->action) {
         case 'update-missing-data':
             $admin->updateMissingData($_POST);
+            break;
+        case 'update-artist-list':
+            $admin->updateArtistName($_POST);
             break;
     }
 }
@@ -48,9 +47,15 @@ $tpl->display('templates/header.tpl.php');
 if ($user->isLoggedIn()) {
     $tpl->display('templates/navigation.tpl.php');
     $tpl->display('templates/message.tpl.php');
-    $tpl->display('templates/dashboard.tpl.php');
+    if (empty($tpl->action)) {
+        $tpl->display('templates/actions.tpl.php');
+    }
+    else {
+        if (file_exists('templates/music/' . $tpl->action . '.tpl.php')) {
+            $tpl->display('templates/music/' . $tpl->action . '.tpl.php');
+        }
+    }
+
 }
-else {
-    $tpl->display('templates/login.tpl.php');
-}
+else $tpl->display('templates/login.tpl.php');
 $tpl->display('templates/footer.tpl.php');

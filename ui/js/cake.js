@@ -3,8 +3,67 @@
  *
  * Author: Zachary Fisher - zfisher@zfidesign.com
  * * * * * * * * * * * * * * * * * * * * * * * * */
+
 cake = new function() {
     var c = this;
+    var body = $('body');
+    c.API = {
+        music : {},
+        user : {
+            getUser: '/api/user/getUser/',
+            login: '/api/user/login/'
+        }
+    };
+    c.Login = function(id) {
+        var module = this;
+        var submitForm = function(e) {
+            e.preventDefault();
+            c.Modal.hideMessage();
+            var POST = {
+                username : $(module.username).val(),
+                password : $(module.password).val()
+            };
+            var usernameExists = POST.username.length > 0;
+            var passwordExists = POST.password.length > 0;
+            if (!usernameExists && !passwordExists) {
+                c.Modal.displayMessage('danger', 'You must provide a username and password to login.');
+                return false;
+            }
+            if (POST.username.length == 0) {
+                c.Modal.displayMessage('danger', 'You must provide a username to login.');
+                return false;
+            }
+            if (POST.password.length == 0) {
+                c.Modal.displayMessage('danger', 'You must provide a password to login.');
+                return false;
+            }
+            $.post(c.API.user.login, POST, function(data) {
+                if (data.success) {
+                    location.href = '/';
+                }
+                if (data.error) {
+                    c.Modal.displayMessage('danger', data.error);
+                }
+            })
+            .error(function() {
+                c.Modal.displayMessage('danger', 'Unable to reach server.');
+            });
+        };
+        module.init = function(opts) {
+            if (typeof opts !== 'undefined') $.extend(config, opts);
+            module.message   = $(id).find('div.message');
+            module.form      = id + ' form';
+            module.username  = module.form + ' input[name=username]';
+            module.password  = module.form + ' input[name=password]';
+            module.submitBtn = module.form + ' input[name=submit]';
+            $(document).on('submit', module.form, submitForm);
+            $(id).data('login', module);
+            if (c.Browser.name == 'msie' && c.Browser.version == '9.0') {
+                $(module.username).val('Apple ID');
+                $(module.password).val('Password');
+            }
+        };
+    };
     c.Search = new function() {
         var n = this;
         var page = '.page';
@@ -45,9 +104,8 @@ cake = new function() {
             }
         };
         n.init = function() {
-//            n.toggleDisplay();
             $(document).on('click', togglePlayerBtn, n.toggleDisplay);
-            var player = new MediaElementPlayer('audio',{
+            var player = new MediaElementPlayer('audio', {
 //            audioWidth: 280,
 //            success: function(mediaElement, domObject) {
 //                mediaElement.addEventListener('ended', function(e) {
@@ -58,7 +116,10 @@ cake = new function() {
 //                }, false);
 //            }
             });
-            $('.mejs-playpause-button').after('<i class="icon-fast-backward"></i><i class="icon-fast-forward"></i>');
+            if (c.isLoggedIn) {
+                $('.mejs-duration-container').after('<i class="icon-heart"></i>');
+            }
+//            $('.mejs-playpause-button').after('<i class="icon-fast-backward"></i><i class="icon-fast-forward"></i>');
             //player.play();
         };
     };
@@ -83,7 +144,10 @@ cake = new function() {
             if (currentImage > totalImages) currentImage = 1;
             $(id).fadeOut(300, function() {
                 $(id).attr('src', '/images/bg/' + currentImage + '.jpg');
-                setTimeout(function() { $(id).fadeIn(); }, 300);
+                setTimeout(function() {
+                    s.adjustBGposition();
+                    $(id).fadeIn();
+                }, 300);
             });
         };
         s.init = function() {
@@ -92,11 +156,91 @@ cake = new function() {
             setInterval(s.updateImage, 30000);
         };
     };
+    c.App = new function() {
+        var p = this;
+        var data = $('#desktop-apps');
+        var apps = $.parseJSON(data.val());
+        data.remove();
+        p.getAppById = function(id) {
+            return apps[id];
+        };
+    };
+    c.Modal = new function() {
+        var m = this;
+        var title = '#modal h4.modal-title';
+        var content = '#modal div.modal-content';
+        var message = '#modal div.alert';
+        m.hideMessage = function() {
+            $(message).hide().removeClass('alert-success alert-danger').find('p').html('');
+        };
+        m.displayMessage = function(type, msg) {
+            m.hideMessage();
+            $(message).show().addClass('alert-' + type).find('p').html(msg);
+        };
+        m.displayTemplate = function(template, callback) {
+            template = '/public/templates/modals/' + template + '.tpl.php';
+            if (typeof callback == 'undefined') $(content).load(template);
+            else $(content).load(template, callback);
+        };
+        m.renderModalContent = function(e) {
+            var target = $(e.target).is('[data-toggle=modal]') ? $(e.target) : $(e.target).parents('[data-toggle=modal]');
+            var modal = target.attr('data-modal');
+            var isNavMenu = target.is('[data-nav-menu]');
+            var isPage = target.is('[data-page]');
+            console.log(modal);
+            if (isNavMenu) {
+                switch (modal) {
+                    case 'logged-in-menu':
+                        m.displayTemplate('user-menu', function() {
+                            $(title).append('<span class="text-teal">' + c.User.first_name + ' ' + c.User.last_name + '</span>');
+                            switch (c.User.access) {
+                                case 'admin':
+                                    $(content).find('div.list-group').prepend('<a href="/admin" class="list-group-item" target="_blank">Admin Panel</a>');
+                                    break;
+                            }
+                        });
+                        break;
+                    case 'logged-out-menu':
+                        m.displayTemplate('login', function() {
+                            var login = new c.Login('#login');
+                            login.init();
+                        });
+                        break;
+                }
+            }
+            if (isPage) {
+                switch (modal) {
+                    case 'now-playing':
+                        break;
+                    case 'browse-by-artist':
+                        break;
+                    case 'my-playlist':
+                        break;
+                }
+            }
+        };
+        m.init = function() {
+            $(document).on('click', '[data-toggle=modal]', m.renderModalContent);
+            $(document).on('click', message + ' .close', m.hideMessage);
+        };
+    };
     c.init = function() {
+        c.isLoggedIn = $('#is-logged-in').length > 0;
+        c.Browser = {
+            name: body.attr('data-browser'),
+            platform: body.attr('data-platform'),
+            version: body.attr('data-version')
+        };
         c.Search.init();
         c.Player.init();
         c.Slideshow.init();
+        c.Modal.init();
+        if (c.isLoggedIn) {
+            $('#is-logged-in').remove();
+            $.get(c.API.user.getUser, function(user) {
+                c.User = user;
+            });
+        }
     }
 };
-
 $(cake.init);

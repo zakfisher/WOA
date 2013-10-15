@@ -1,24 +1,14 @@
 <div id="desktop" class="page container">
-<!--    --><?php //$i = 0; while($i < 7): ?>
-    <div class="row">
-        <div class="col-xs-4">
-            <div class="desktop-icon" data-page="now-playing">
-                <?php require('../ui/images/icons/now-playing.svg'); ?>
-                <p class="text-yellow">Now Playing</p>
+    <?php $i = 0; foreach ($this->desktop['apps'] as $idx => $app): ?>
+        <?php if ($app['requires_login'] && !$this->isLoggedIn) continue; ?>
+        <?php if ($i % 3 == 0): ?><div class="row"><?php endif; ?>
+        <div class="col-xs-4" data-toggle="modal" href="#modal" data-modal="<?=$app['icon']?>" data-page>
+            <div class="desktop-icon">
+                <?php require('../ui/images/icons/' . $app['icon'] . '.svg'); ?>
+                <p class="text-<?=$app['color']?>"><?=$app['title']?></p>
             </div>
         </div>
-        <div class="col-xs-4">
-            <div class="desktop-icon" data-page="browse-by-artist">
-                <?php require('../ui/images/icons/browse-by-artist.svg'); ?>
-                <p class="text-gold">Browse by Artist</p>
-            </div>
-        </div>
-        <div class="col-xs-4">
-            <div class="desktop-icon" data-page="my-playlist">
-                <?php require('../ui/images/icons/my-playlist.svg'); ?>
-                <p class="text-pink">My Playlist</p>
-            </div>
-        </div>
-    </div>
-<!--    --><?php //$i++; endwhile; ?>
+        <?php if ($i % 3 == 0 && $i > 0): ?></div><?php endif; ?>
+    <?php $i++; endforeach; ?>
 </div>
+<textarea id="desktop-apps" style="display:none;"><?= json_encode($this->desktop['apps']); ?></textarea>

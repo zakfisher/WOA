@@ -37,10 +37,15 @@ a.teal {
 .text-pink { color: $pink; }
 .text-gold { color: gold; }
 .text-yellow { color: yellow; }
-
 div.page {
    padding-bottom: 30px;
    padding-top: 90px;
+}
+input[type=text],
+input[type=password] {
+   color: black;
+   letter-spacing: .8px;
+   font-size: 16px;
 }
 
 // Navigation
@@ -48,10 +53,9 @@ a.navbar-brand {
    padding: 0;
    svg { width: 170px; }
 }
-i.real-menu {
-   display: none;
+i.options-menu {
    font-size: 26px;
-   position: relative;
+   position: absolute;
    top: 23px;
    right: 25px;
    cursor: pointer;
@@ -95,10 +99,7 @@ i.real-menu {
       .form-group {
          margin: 10px 0;
          input[type=text] {
-            color: black;
             width: 90%;
-            letter-spacing: .8px;
-            font-size: 16px;
             margin-bottom: 10px;
          }
          i {
@@ -165,6 +166,44 @@ i.real-menu {
    }
 }
 
+// Modal
+.alert {
+   .close {
+      margin: 0;
+      top: 1px;
+   }
+   p {
+      font-size: 16px;
+   }
+}
+.modal-header {
+   .close {
+      margin: 0;
+      position: relative;
+      top: 2px;
+   }
+   h4 {
+      font-family: 'Yanone Kaffeesatz', sans-serif;
+      letter-spacing: 1px;
+   }
+}
+.modal-body {
+   background-color: #f8f8f8;
+   .list-group {
+      margin: 0;
+   }
+}
+.modal-footer {
+   margin: 0;
+}
+
+// Login
+#login {
+   input[type=text] {
+      margin-bottom: 15px;
+   }
+}
+
 // Desktop
 #desktop {
    div.row {
@@ -174,6 +213,7 @@ i.real-menu {
          padding-right: 10px;
       }
       div.desktop-icon {
+         border: 1px solid transparent;
          cursor: pointer;
          width: 100%;
          height: 90px;
@@ -195,15 +235,15 @@ i.real-menu {
          &[data-page='now-playing'] {
             //svg { height: 50px; }
          }
+         &:hover {
+            border: 1px solid white;
+         }
       }
    }
 }
 
 // Only Small
 @media (max-width: 768px) {
-   i.real-menu {
-      display: block;
-   }
    .navbar-collapse {
       background: black;
       .navbar-form {
@@ -228,13 +268,18 @@ i.real-menu {
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+   i.options-menu {
+      border-left: 1px solid #ccc;
+      padding-left: 15px;
+   }
    div.page {
       padding-top: 90px !important;
    }
    .navbar-collapse {
       .navbar-form {
          position: relative;
-         top: 10px;
+         top: 9px;
+         right: 60px;
          .form-group {
             width: 340px;
             input[type=text] {}
@@ -252,6 +297,8 @@ i.real-menu {
             }
             p {
                font-size: 22px;
+               position: relative;
+               top: 28px;
             }
          }
       }

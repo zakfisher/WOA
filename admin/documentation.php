@@ -2,7 +2,7 @@
 require_once('../system/config.php');
 require_once('../system/model/admin.php');
 require_once('../system/controller/admin.php');
-if (!$user->isLoggedIn()) $user->logout();
+if (!$user->isLoggedIn()) $user->logout('/admin/');
 
 $admin = new AdminController();
 
