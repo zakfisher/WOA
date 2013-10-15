@@ -19,6 +19,7 @@ body {
 body {
    //@include bg-image('textures/fancy_deboss.png');
    background: black;
+   &.modal-open { margin: 0; }
 }
 #bg-image {
    //@include bg-image('bg/4.jpg');

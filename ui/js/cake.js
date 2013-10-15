@@ -256,6 +256,12 @@ cake = new function() {
     };
     c.init = function() {
         c.isLoggedIn = $('#is-logged-in').length > 0;
+        if (c.isLoggedIn) {
+            $('#is-logged-in').remove();
+            $.get(c.API.user.getUser, function(user) {
+                c.User = user;
+            });
+        }
         c.Browser = {
             name: body.attr('data-browser'),
             platform: body.attr('data-platform'),
@@ -265,12 +271,6 @@ cake = new function() {
         c.Player.init();
         c.Slideshow.init();
         c.Modal.init();
-        if (c.isLoggedIn) {
-            $('#is-logged-in').remove();
-            $.get(c.API.user.getUser, function(user) {
-                c.User = user;
-            });
-        }
     }
 };
 $(cake.init);

@@ -2,7 +2,7 @@
     <form class="form-signin" method="post">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-            <h4 class="modal-title">My Account</h4>
+            <h4 class="modal-title text-teal">My Account</h4>
         </div>
         <div class="modal-body">
             <input type="text" class="form-control" placeholder="Username" autofocus="" name="username">
