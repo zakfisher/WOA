@@ -189,6 +189,14 @@ i.options-menu {
 }
 .modal-body {
    background-color: #f8f8f8;
+   p.loading {
+      margin: 10px 0;
+      text-align: center;
+      img {
+         height: 32px;
+         width: 32px;
+      }
+   }
    .list-group {
       margin: 0;
    }
@@ -239,6 +247,49 @@ i.options-menu {
             border: 1px solid white;
          }
       }
+   }
+}
+
+// Browse By Artist List
+#browse-by-artist {
+   div.modal-body {
+      background: white;
+      padding: 0;
+   }
+   a.list-group-item {
+      @include border-radius(0);
+      border-left: none;
+      border-right: none;
+      &:hover {
+         color: white;
+         background: $pink;
+      }
+   }
+   a.accordion-toggle {
+      div.panel-heading {
+         background: #f5f5f5;
+         @include border-radius(0);
+         h4 {
+            color: black;
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+         }
+      }
+      &:hover {
+         text-decoration: none !important;
+         div.panel-heading {
+            background: $pink;
+            h4 {
+               color: white;
+               text-decoration: none !important;
+            }
+         }
+      }
+   }
+   .panel-group .panel {
+      @include border-radius(0);
+   }
+   .panel-group .panel+.panel {
+      margin: 0;
    }
 }
 

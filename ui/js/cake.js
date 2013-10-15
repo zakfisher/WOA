@@ -8,7 +8,9 @@ cake = new function() {
     var c = this;
     var body = $('body');
     c.API = {
-        music : {},
+        music : {
+            getBrowseByArtistList : '/api/music/getBrowseByArtistList/'
+        },
         user : {
             getUser: '/api/user/getUser/',
             login: '/api/user/login/'
@@ -157,12 +159,39 @@ cake = new function() {
         };
     };
     c.App = new function() {
-        var p = this;
-        var data = $('#desktop-apps');
-        var apps = $.parseJSON(data.val());
-        data.remove();
-        p.getAppById = function(id) {
-            return apps[id];
+        var a = this;
+        a.BrowseByArtist = new function() {
+            var app = this;
+            app.init = function() {
+                var listContainer = '#browse-by-artist-list';
+                var makeSection = function(idx, artist, list) {
+                    var section = '';
+                    section += '<div class="panel panel-default">';
+                    section += '<a class="accordion-toggle" data-toggle="collapse" href="#section-' + idx + '">';
+                        section += '<div class="panel-heading">';
+                            section += '<h4 class="panel-title">' + artist + ' (' + list.length + ')' + '</h4>';
+                        section += '</div>';
+                    section += '</a>';
+                    section += '<div id="section-' + idx + '" class="panel-collapse collapse">';
+                    section += '<div class="list-group">';
+                    for (var track in list) {
+                        section += '<a href="javascript:void(0);" class="list-group-item">' + list[track].title + '</a>';
+                    }
+                    section += '</div>';
+                    section += '</div>';
+                    section += '</div>';
+                    return section;
+                };
+                $.get(c.API.music.getBrowseByArtistList, function(data) {
+                    $(listContainer).siblings('p.loading').remove();
+                    var i = 0;
+                    for (var artist in data) {
+                        var section = makeSection(i, artist, data[artist]);
+                        $(listContainer).append(section);
+                        i++;
+                    }
+                });
+            };
         };
     };
     c.Modal = new function() {
@@ -186,7 +215,7 @@ cake = new function() {
             var target = $(e.target).is('[data-toggle=modal]') ? $(e.target) : $(e.target).parents('[data-toggle=modal]');
             var modal = target.attr('data-modal');
             var isNavMenu = target.is('[data-nav-menu]');
-            var isPage = target.is('[data-page]');
+            var isApp = target.is('[data-app]');
             console.log(modal);
             if (isNavMenu) {
                 switch (modal) {
@@ -208,11 +237,12 @@ cake = new function() {
                         break;
                 }
             }
-            if (isPage) {
+            if (isApp) {
                 switch (modal) {
                     case 'now-playing':
                         break;
                     case 'browse-by-artist':
+                        m.displayTemplate('browse-by-artist', c.App.BrowseByArtist.init);
                         break;
                     case 'my-playlist':
                         break;

@@ -4,17 +4,12 @@
         <h4 class="modal-title">Browse by Artist</h4>
     </div>
     <div class="modal-body">
-        <div class="list-group">
-            <!--        <a href="/?logout=true" class="list-group-item">Log out</a>-->
-            <!--        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>-->
-            <!--        <a href="#" class="list-group-item">Morbi leo risus</a>-->
-            <!--        <a href="#" class="list-group-item">Porta ac consectetur ac</a>-->
-            <!--        <a href="#" class="list-group-item">Vestibulum at eros</a>-->
-        </div>
+        <p class="loading"><img src="/images/loading.gif" /></p>
+        <div class="panel-group" id="browse-by-artist-list"></div>
     </div>
     <div class="modal-footer">
-        <a href="/?logout=true">
-            <button class="btn btn-primary btn-block">Log out</button>
-        </a>
+<!--        <a href="/?logout=true">-->
+<!--            <button class="btn btn-primary btn-block">Log out</button>-->
+<!--        </a>-->
     </div>
 </span>
