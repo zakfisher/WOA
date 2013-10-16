@@ -1,5 +1,7 @@
 $teal : #009490;
 $pink : #ee528f;
+$gold : #ffae00;
+$yellow : #ffef29;
 @import 'config/mixins';
 @import 'elements/media-element';
 
@@ -29,6 +31,7 @@ body {
    position: fixed;
    top: 0;
    min-width: 100%;
+   @include opacity(.7);
 }
 a.teal {
    color: $teal;
@@ -36,8 +39,8 @@ a.teal {
 }
 .text-teal { color: $teal; }
 .text-pink { color: $pink; }
-.text-gold { color: gold; }
-.text-yellow { color: yellow; }
+.text-gold { color: $gold; }
+.text-yellow { color: $yellow; }
 div.page {
    padding-bottom: 30px;
    padding-top: 90px;
@@ -50,6 +53,9 @@ input[type=password] {
 }
 
 // Navigation
+.navbar {
+   @include border-radius(0);
+}
 a.navbar-brand {
    padding: 0;
    svg { width: 170px; }
@@ -108,7 +114,7 @@ i.options-menu {
             font-size: 22px;
             position: relative;
             top: 5px;
-            left: 10px;
+            left: 12px;
          }
       }
    }
@@ -177,6 +183,12 @@ i.options-menu {
       font-size: 16px;
    }
 }
+.modal {
+   overflow-y: auto;
+}
+.modal-backdrop {
+   background: rgba(0,0,0,.7) !important;
+}
 .modal-header {
    .close {
       margin: 0;
@@ -215,6 +227,7 @@ i.options-menu {
 
 // Desktop
 #desktop {
+   max-width: 100%;
    div.row {
       margin-top: 20px;
       div.col-xs-4 {
@@ -254,18 +267,18 @@ i.options-menu {
 // Browse By Artist List
 #browse-by-artist {
    div.modal-body {
-      background: white;
-      padding: 0;
+      //background: white;
+      //padding: 0;
    }
-   a.list-group-item {
-      @include border-radius(0);
-      border-left: none;
-      border-right: none;
-      &:hover {
-         color: white;
-         background: $pink;
-      }
-   }
+   //a.list-group-item {
+   //   @include border-radius(0);
+   //   border-left: none;
+   //   border-right: none;
+   //   &:hover {
+   //      color: white;
+   //      background: $pink;
+   //   }
+   //}
    a.accordion-toggle {
       div.panel-heading {
          background: #f5f5f5;
@@ -291,6 +304,10 @@ i.options-menu {
    }
    .panel-group .panel+.panel {
       margin: 0;
+   }
+   #browse-by-artist-mixes {
+      display:none;
+      margin-top: 15px;
    }
 }
 
@@ -338,6 +355,9 @@ i.options-menu {
             i {}
          }
       }
+   }
+   .modal-dialog {
+      //width: auto !important;
    }
    #desktop {
       div.row {

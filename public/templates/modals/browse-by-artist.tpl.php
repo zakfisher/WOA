@@ -5,7 +5,10 @@
     </div>
     <div class="modal-body">
         <p class="loading"><img src="/images/loading.gif" /></p>
-        <div class="panel-group" id="browse-by-artist-list"></div>
+        <div id="browse-by-artist-list"></div>
+        <div id="browse-by-artist-mixes">
+            <div class="list-group"></div>
+        </div>
     </div>
     <div class="modal-footer">
 <!--        <a href="/?logout=true">-->

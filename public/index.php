@@ -15,19 +15,19 @@ $tpl->desktop = array(
             'requires_login' => 0,
             'title' => 'Now Playing',
             'icon' => 'now-playing',
-            'color' => 'gold'
+            'color' => 'yellow'
         ),
         array(
             'requires_login' => 0,
             'title' => 'Browse By Artist',
             'icon' => 'browse-by-artist',
-            'color' => 'pink'
+            'color' => 'gold'
         ),
         array(
             'requires_login' => 1,
             'title' => 'My Playlist',
             'icon' => 'my-playlist',
-            'color' => 'teal'
+            'color' => 'pink'
         )
     )
 );
