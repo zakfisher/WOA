@@ -9,6 +9,7 @@ cake = new function() {
     var body = $('body');
     c.API = {
         music : {
+            getAll : '/api/music/getAll/',
             getBrowseByArtistList : '/api/music/getBrowseByArtistList/'
         },
         user : {
@@ -88,41 +89,52 @@ cake = new function() {
         };
     };
     c.Player = new function() {
-        var n = this;
+        var p = this;
+        var player = $('#player');
         var togglePlayerBtn = '.toggle-player-bar';
-        n.toggleDisplay = function() {
+        p.toggleDisplay = function() {
             var icon = $(togglePlayerBtn).find('i');
             if (icon.is('.icon-chevron-up')) {
                 icon.removeClass('icon-chevron-up').addClass('icon-chevron-down');
-                $('#footer').animate({
+                player.animate({
                     bottom: '0'
                 }, 300);
             }
             else {
                 icon.addClass('icon-chevron-up').removeClass('icon-chevron-down');
-                $('#footer').animate({
+                player.animate({
                     bottom: '-60px'
                 }, 300);
             }
         };
-        n.init = function() {
-            $(document).on('click', togglePlayerBtn, n.toggleDisplay);
-            var player = new MediaElementPlayer('audio', {
-//            audioWidth: 280,
-//            success: function(mediaElement, domObject) {
-//                mediaElement.addEventListener('ended', function(e) {
-//                    var max = $('#all-count').text();
-//                    max = max.split('Results Found: ');
-//                    max = Number(max[1]);
-//                    $('#all-results a')[getRandomInt(0, max)].click();
-//                }, false);
-//            }
+        p.play = function(musicId) {
+            var mix = c.MixesById[musicId];
+            $('audio').attr('src', 'http://www.worldofanarchy.com/_WOA/music/' + mix.url);
+            player.find('div.now-playing p').text(mix.artist + ' - ' + mix.title);
+            p.currentMix = new MediaElementPlayer('audio', {
+                success: function(mediaElement, domObject) {
+    //                mediaElement.addEventListener('ended', function(e) {
+    //                    var max = $('#all-count').text();
+    //                    max = max.split('Results Found: ');
+    //                    max = Number(max[1]);
+    //                    $('#all-results a')[getRandomInt(0, max)].click();
+    //                }, false);
+                }
+            });
+            p.currentMix.play();
+        };
+        p.init = function() {
+            $.get(c.API.music.getAll, function(mixesById) {
+                c.MixesById = mixesById;
+                var i = 0;
+                for (var id in mixesById) i++;
+                p.play(mixesById[i].music_id);
+                player.show();
             });
             if (c.isLoggedIn) {
                 $('.mejs-duration-container').after('<i class="icon-heart"></i>');
             }
-//            $('.mejs-playpause-button').after('<i class="icon-fast-backward"></i><i class="icon-fast-forward"></i>');
-            //player.play();
+            $(document).on('click', togglePlayerBtn, p.toggleDisplay);
         };
     };
     c.Slideshow = new function() {
@@ -165,13 +177,20 @@ cake = new function() {
             var artistListContainer = '#browse-by-artist-list';
             var artistSelect = artistListContainer + ' select[name=artist]';
             var mixListContainer = '#browse-by-artist-mixes';
+            var mix = mixListContainer + ' a.mix';
             app.renderMixList = function() {
                 $(mixListContainer).html('').show();
+                $(artistListContainer).find('h4').text($(artistSelect).val());
                 var artist = c.Helpers.htmlentities($(artistSelect).val());
-                console.log(artist);
                 $(c.MixesByArtist[artist]).each(function(i, mix) {
-                    $(mixListContainer).append('<a href="javascript:void(0);" class="list-group-item">' + mix.title + '</a>');
+                    $(mixListContainer).append('<a href="javascript:void(0);" class="list-group-item mix default-font" data-music-id="' + mix.music_id + '"><i class="icon-play"></i>&nbsp;&nbsp;&nbsp;' + mix.title + '</a>');
                 });
+            };
+            app.selectMix = function(e) {
+                var musicId = $(e.target).attr('data-music-id');
+                $(mix).find('i').addClass('icon-play').removeClass('icon-pause');
+                $(e.target).find('i').removeClass('icon-play').addClass('icon-pause');
+                c.Player.play(musicId);
             };
             app.start = function() {
                 $(artistListContainer).append('<select class="form-control" name="artist"><option disabled>Select Artist</option></select>').siblings('p.loading').remove();
@@ -182,7 +201,12 @@ cake = new function() {
                 }
             };
             app.init = function() {
+                $.get(c.API.music.getBrowseByArtistList, function(mixesByArtist) {
+                    c.MixesByArtist = mixesByArtist;
+                    $('[data-modal=browse-by-artist] div.desktop-icon').removeClass('disabled');
+                });
                 $(document).on('change', artistSelect, app.renderMixList);
+                $(document).on('click', mix, app.selectMix);
             };
         };
         a.init = function() {
@@ -202,6 +226,7 @@ cake = new function() {
         var message = '#modal div.alert';
         m.hideModal = function() {
             $('#modal').modal('hide');
+            $('#loading').hide();
         };
         m.showModal = function() {
             $('#modal').modal('show');
@@ -214,13 +239,13 @@ cake = new function() {
             $(message).show().addClass('alert-' + type).find('p').html(msg);
         };
         m.displayTemplate = function(template, callback) {
-            $('#modal').hide();
             $(content).html('');
             template = '/apps/' + template + '.tpl.php';
             if (typeof callback == 'undefined') $(content).load(template);
             else $(content).load(template, function() {
                 callback();
-                $('#modal').slideDown();
+                $('div.modal-content').show();
+                $('#loading').hide();
             });
         };
         m.renderModalContent = function(e) {
@@ -250,6 +275,7 @@ cake = new function() {
                 }
             }
             if (isApp) {
+                //c.Helpers.setURL(modal);
                 switch (modal) {
                     case 'now-playing':
                         break;
@@ -266,8 +292,21 @@ cake = new function() {
             }
         };
         m.init = function() {
+            var modal = $('#modal');
             $(document).on('click', '[data-toggle=modal]', m.renderModalContent);
             $(document).on('click', message + ' .close', m.hideMessage);
+            modal.on('show.bs.modal', function () {
+                $('#loading').show();
+            });
+            modal.on('hide.bs.modal', function () {
+                $('#loading').hide();
+            });
+            modal.on('hidden.bs.modal', function() {
+                $('div.modal-content').hide();
+            });
+            modal.on('shown.bs.modal', function () {
+                $('div.modal-content').removeClass('hidden');
+            });
         };
     };
     c.Helpers = new function() {
@@ -483,6 +522,9 @@ cake = new function() {
 
             return string;
         };
+        h.setURL = function(path) {
+            window.history.pushState({}, '', path);
+        };
     };
     c.init = function() {
         c.isLoggedIn = $('#is-logged-in').length > 0;
@@ -492,9 +534,6 @@ cake = new function() {
                 c.User = user;
             });
         }
-        $.get(c.API.music.getBrowseByArtistList, function(mixesByArtist) {
-            c.MixesByArtist = mixesByArtist;
-        });
         c.Browser = {
             name: body.attr('data-browser'),
             platform: body.attr('data-platform'),
@@ -508,3 +547,10 @@ cake = new function() {
     }
 };
 $(cake.init);
+//$(window).bind('beforeunload',function(){
+//
+//    //save info somewhere
+//
+//    return 'are you sure you want to leave?';
+//
+//});

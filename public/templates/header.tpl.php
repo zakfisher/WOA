@@ -11,7 +11,7 @@
     <link href="/ui/images/favicon.ico" rel="icon" type="image/x-icon">
     <link rel="apple-touch-icon" href="/ui/images/app.ico">
     <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link type="text/css" href="/ui/css/bootstrap.min.css" rel="stylesheet" />
     <link type="text/css" href="/ui/css/cake.css" rel="stylesheet" />
 </head>

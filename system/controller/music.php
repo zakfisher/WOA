@@ -15,7 +15,12 @@ class MusicController {
 
     public function getAll($filter = '*') {
         $model = new MusicModel();
-        return $model->getAllRows($filter);
+        $response = $model->getAllRows($filter);
+        $mixes = array();
+        foreach ($response as $mix) {
+            $mixes[$mix['music_id']] = $mix;
+        }
+        return $mixes;
     }
 
     public function getFiles() {

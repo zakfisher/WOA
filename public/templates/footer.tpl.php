@@ -1,15 +1,17 @@
     </div>
-    <div id="footer">
+    <div id="player">
         <div class="toggle-player-bar">
             <i class="icon-chevron-up"></i>
         </div>
         <div class="now-playing">
-            <p id="now-playing">Afrojack - Live @ Your Mom's House</p>
+            <p></p>
         </div>
-        <div class="player">
-            <audio src="http://www.worldofanarchy.com/_WOA/music/9.14.13/Afrojack%20%E2%80%93%20Jacked%20%E2%80%93%2014.09.2013%20%5Bwww.edmtunes.com%5D.mp3" type="audio/mp3" controls="controls"></audio>
+        <div class="element">
+            <audio src="" type="audio/mp3" controls="controls"></audio>
         </div>
     </div>
+    <img id="loading" src="/images/loading.gif" />
+    <div id="overlay"></div>
     <?php if ($this->isLoggedIn): ?><input id="is-logged-in" type="hidden" /><?php endif; ?>
 </body>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>

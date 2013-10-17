@@ -10,7 +10,7 @@ $yellow : #ffef29;
 
 // Global
 * {
-   font-family: 'Yanone Kaffeesatz', sans-serif;
+   :not(i) { font-family: 'Yanone Kaffeesatz', sans-serif; }
    outline: none !important;
 }
 html,
@@ -36,6 +36,9 @@ body {
 a.teal {
    color: $teal;
    &:hover { color: black; }
+}
+.default-font {
+   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
 }
 .text-teal { color: $teal; }
 .text-pink { color: $pink; }
@@ -136,12 +139,14 @@ i.options-menu {
    padding: 0 0 60px;
 }
 /* Set the fixed height of the footer here */
-#footer {
+#player {
+   display: none;
    background-color: #f8f8f8;
    bottom: -60px;
    position: fixed;
    width: 100%;
    height: 60px;
+   z-index: 5;
    div.now-playing {
       height: 26px;
       background: black;
@@ -164,7 +169,7 @@ i.options-menu {
          &.favorite { color: $pink; }
       }
    }
-   div.player {
+   div.element {
       height: 34px;
    }
    .toggle-player-bar {
@@ -214,6 +219,12 @@ i.options-menu {
       margin: 0;
    }
 }
+.modal-content {
+   &.hidden {
+      @include box-shadow(none !important);
+      border: none;
+   }
+}
 .modal-footer {
    margin: 0;
 }
@@ -228,38 +239,45 @@ i.options-menu {
 // Desktop
 #desktop {
    max-width: 100%;
-   div.row {
+   padding-left: 0;
+   padding-right: 0;
+   div.col-xs-4 {
+      padding-left: 10px;
+      padding-right: 10px;
+   }
+   div.desktop-icon {
       margin-top: 20px;
-      div.col-xs-4 {
-         padding-left: 10px;
-         padding-right: 10px;
-      }
-      div.desktop-icon {
-         border: 1px solid transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      width: 100%;
+      height: 90px;
+      background: rgba(0,0,0,.8);
+      @include border-radius(6px);
+      text-align: center;
+      color: white;
+      position: relative;
+      svg {
          cursor: pointer;
-         width: 100%;
-         height: 90px;
-         background: rgba(0,0,0,.8);
-         @include border-radius(6px);
-         text-align: center;
-         color: white;
-         svg {
-            cursor: pointer;
-            fill: white;
-            height: 56px;
-            margin: 5px 0;
-            path { fill: white; }
-         }
-         p {
-            cursor: pointer;
-            margin: 0;
-         }
-         &[data-page='now-playing'] {
-            //svg { height: 50px; }
-         }
-         &:hover {
-            border: 1px solid white;
-         }
+         fill: white;
+         height: 56px;
+         margin: 5px 0;
+         path { fill: white; }
+      }
+      p {
+         cursor: pointer;
+         margin: 0;
+      }
+      &[data-page='now-playing'] {
+         //svg { height: 50px; }
+      }
+      &.disabled {
+         @include opacity(.5);
+      }
+      &:not(.disabled) {
+         z-index: 5;
+      }
+      &:hover {
+         border: 1px solid white;
       }
    }
 }
@@ -267,48 +285,69 @@ i.options-menu {
 // Browse By Artist List
 #browse-by-artist {
    div.modal-body {
-      //background: white;
-      //padding: 0;
-   }
-   //a.list-group-item {
-   //   @include border-radius(0);
-   //   border-left: none;
-   //   border-right: none;
-   //   &:hover {
-   //      color: white;
-   //      background: $pink;
-   //   }
-   //}
-   a.accordion-toggle {
-      div.panel-heading {
-         background: #f5f5f5;
-         @include border-radius(0);
-         h4 {
-            color: black;
-            font-family: 'Yanone Kaffeesatz', sans-serif;
-         }
+      @include border-radius(0 0 6px 6px);
+      padding: 0;
+      h4 {
+         margin: 0 15px;
+         position: absolute;
+         z-index: 1;
+         top: 15px;
       }
-      &:hover {
-         text-decoration: none !important;
-         div.panel-heading {
-            background: $pink;
-            h4 {
+      i.icon-chevron-sign-down {
+         position: absolute;
+         font-size: 20px;
+         right: 15px;
+         top: 15px;
+      }
+      select.form-control {
+         height: 50px;
+         @include opacity(0);
+         position: relative;
+         z-index: 5;
+      }
+   }
+   div.modal-footer {
+      //background: white;
+      border: none;
+      padding: 0;
+      text-align: left;
+      #browse-by-artist-mixes {
+         display:none;
+         a.list-group-item {
+            @include border-radius(0);
+            border-left: none;
+            border-right: none;
+            &:last-child {
+               @include border-radius(0 0 6px 6px);
+            }
+            &:hover {
                color: white;
-               text-decoration: none !important;
+               background: $pink;
             }
          }
       }
    }
-   .panel-group .panel {
-      @include border-radius(0);
-   }
-   .panel-group .panel+.panel {
-      margin: 0;
-   }
-   #browse-by-artist-mixes {
-      display:none;
-      margin-top: 15px;
-   }
+}
+
+// Loading
+#loading {
+   display: none;
+   width: 32px;
+   margin: 0 auto;
+   position: absolute;
+   left: 50%;
+   margin-left: -16px;
+   top: 50%;
+   margin-top: -16px;
+   z-index: 10000;
+}
+
+// Overlay
+#overlay {
+   position: fixed;
+   height: 100%;
+   width: 100%;
+   top: 0;
 }
 
 // Only Small
@@ -360,22 +399,20 @@ i.options-menu {
       //width: auto !important;
    }
    #desktop {
-      div.row {
-         div.desktop-icon {
-            text-align: left;
-            svg {
-               height: 80px;
-               float: left;
-            }
-            p {
-               font-size: 22px;
-               position: relative;
-               top: 28px;
-            }
+      div.desktop-icon {
+         text-align: left;
+         svg {
+            height: 80px;
+            float: left;
+         }
+         p {
+            font-size: 22px;
+            position: relative;
+            top: 28px;
          }
       }
    }
-   #footer {
+   #player {
       bottom: 0px !important;
    }
 }

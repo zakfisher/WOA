@@ -4,15 +4,14 @@
         <h4 class="modal-title text-teal">Browse by Artist</h4>
     </div>
     <div class="modal-body">
-        <p class="loading"><img src="/images/loading.gif" /></p>
-        <div id="browse-by-artist-list"></div>
-        <div id="browse-by-artist-mixes">
-            <div class="list-group"></div>
+        <div id="browse-by-artist-list">
+            <h4 class="default-font">Select Artist</h4>
+            <i class="icon-chevron-sign-down"></i>
         </div>
     </div>
     <div class="modal-footer">
-<!--        <a href="/?logout=true">-->
-<!--            <button class="btn btn-primary btn-block">Log out</button>-->
-<!--        </a>-->
+        <div id="browse-by-artist-mixes">
+            <div class="list-group"></div>
+        </div>
     </div>
 </span>
