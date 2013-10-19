@@ -107,7 +107,7 @@ cake = new function() {
                 }, 300);
             }
         };
-        p.play = function(musicId) {
+        p.setCurrentMix = function(musicId, play) {
             var mix = c.MixesById[musicId];
             $('audio').attr('src', 'http://www.worldofanarchy.com/_WOA/music/' + mix.url);
             player.find('div.now-playing p').text(mix.artist + ' - ' + mix.title);
@@ -121,14 +121,15 @@ cake = new function() {
     //                }, false);
                 }
             });
-            p.currentMix.play();
+            p.currentMix.cache = mix;
+            if (play) p.currentMix.play();
         };
         p.init = function() {
             $.get(c.API.music.getAll, function(mixesById) {
                 c.MixesById = mixesById;
                 var i = 0;
                 for (var id in mixesById) i++;
-                p.play(mixesById[i].music_id);
+                p.setCurrentMix(mixesById[i].music_id);
                 player.show();
             });
             if (c.isLoggedIn) {
@@ -183,14 +184,16 @@ cake = new function() {
                 $(artistListContainer).find('h4').text($(artistSelect).val());
                 var artist = c.Helpers.htmlentities($(artistSelect).val());
                 $(c.MixesByArtist[artist]).each(function(i, mix) {
-                    $(mixListContainer).append('<a href="javascript:void(0);" class="list-group-item mix default-font" data-music-id="' + mix.music_id + '"><i class="icon-play"></i>&nbsp;&nbsp;&nbsp;' + mix.title + '</a>');
+                    var isCurrentMix = (mix.music_id == c.Player.currentMix.cache.music_id);
+                    var currentMixIsPlaying = false;
+                    $(mixListContainer).append('<a href="javascript:void(0);" class="list-group-item mix default-font' + (isCurrentMix ? ' current-mix' : '') + '" data-music-id="' + mix.music_id + '"><i class="icon-' + (isCurrentMix && currentMixIsPlaying ? 'pause' : 'play') + '"></i>&nbsp;&nbsp;&nbsp;' + mix.title + '</a>');
                 });
             };
             app.selectMix = function(e) {
                 var musicId = $(e.target).attr('data-music-id');
-                $(mix).find('i').addClass('icon-play').removeClass('icon-pause');
+                $(mix).removeClass('current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
                 $(e.target).find('i').removeClass('icon-play').addClass('icon-pause');
-                c.Player.play(musicId);
+                c.Player.setCurrentMix(musicId, true);
             };
             app.start = function() {
                 $(artistListContainer).append('<select class="form-control" name="artist"><option disabled>Select Artist</option></select>').siblings('p.loading').remove();
@@ -544,7 +547,7 @@ cake = new function() {
         c.Slideshow.init();
         c.Modal.init();
         c.App.init();
-    }
+    };
 };
 $(cake.init);
 //$(window).bind('beforeunload',function(){

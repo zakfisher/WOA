@@ -44,10 +44,6 @@ a.teal {
 .text-pink { color: $pink; }
 .text-gold { color: $gold; }
 .text-yellow { color: $yellow; }
-div.page {
-   padding-bottom: 30px;
-   padding-top: 90px;
-}
 input[type=text],
 input[type=password] {
    color: black;
@@ -58,15 +54,24 @@ input[type=password] {
 // Navigation
 .navbar {
    @include border-radius(0);
+   height: 60px;
+   .navbar-header {
+      margin-bottom: 7px;
+   }
 }
 a.navbar-brand {
    padding: 0;
-   svg { width: 170px; }
+   svg {
+      height: 52px;
+      left: -20px;
+      position: relative;
+      top: 3px;
+   }
 }
 i.options-menu {
    font-size: 26px;
    position: absolute;
-   top: 23px;
+   top: 17px;
    right: 25px;
    cursor: pointer;
 }
@@ -91,7 +96,6 @@ i.options-menu {
    height: 22px;
    left: 50%;
    margin-left: -50px;
-   position: absolute;
    text-align: center;
    width: 100px;
    i {
@@ -107,7 +111,7 @@ i.options-menu {
       border: none;
       padding: 0;
       .form-group {
-         margin: 10px 0;
+         margin: 0;
          input[type=text] {
             width: 90%;
             margin-bottom: 10px;
@@ -123,7 +127,7 @@ i.options-menu {
    }
 }
 .toggle-search-bar {
-   bottom: -22px;
+   position: relative;
    @include border-radius(0 0 6px 6px);
 }
 
@@ -174,6 +178,7 @@ i.options-menu {
    }
    .toggle-player-bar {
       bottom: 60px;
+      position: absolute;
       @include border-radius(6px 6px 0 0);
    }
 }
@@ -241,6 +246,8 @@ i.options-menu {
    max-width: 100%;
    padding-left: 0;
    padding-right: 0;
+   padding-bottom: 30px;
+   padding-top: 60px;
    div.col-xs-4 {
       padding-left: 10px;
       padding-right: 10px;
@@ -304,6 +311,8 @@ i.options-menu {
          @include opacity(0);
          position: relative;
          z-index: 5;
+         @include box-shadow(none);
+         right: -10px;
       }
    }
    div.modal-footer {
@@ -320,6 +329,7 @@ i.options-menu {
             &:last-child {
                @include border-radius(0 0 6px 6px);
             }
+            &.current-mix,
             &:hover {
                color: white;
                background: $pink;
@@ -350,14 +360,18 @@ i.options-menu {
    top: 0;
 }
 
-// Only Small
+// Only Extra Small
 @media (max-width: 768px) {
    .navbar-collapse {
       background: black;
       .navbar-form {
          .form-group {
+            input[type=text] {
+               margin: 10px 0;
+            }
             i {
                color: white;
+               top: 15px;
             }
          }
       }
@@ -372,6 +386,9 @@ i.options-menu {
          top: -99999px;
       }
    }
+   #desktop {
+      padding-top: 80px;
+   }
 }
 
 /* Small devices (tablets, 768px and up) */
@@ -380,17 +397,16 @@ i.options-menu {
       border-left: 1px solid #ccc;
       padding-left: 15px;
    }
-   div.page {
-      padding-top: 90px !important;
-   }
    .navbar-collapse {
       .navbar-form {
          position: relative;
-         top: 9px;
+         top: 12px;
          right: 60px;
          .form-group {
             width: 340px;
-            input[type=text] {}
+            input[type=text] {
+               margin: 0;
+            }
             i {}
          }
       }
@@ -399,6 +415,7 @@ i.options-menu {
       //width: auto !important;
    }
    #desktop {
+      padding-top: 60px !important;
       div.desktop-icon {
          text-align: left;
          svg {
