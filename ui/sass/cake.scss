@@ -206,22 +206,27 @@ i.options-menu {
       top: 2px;
    }
    h4 {
-      font-family: 'Yanone Kaffeesatz', sans-serif;
-      letter-spacing: 1px;
+      //font-family: 'Yanone Kaffeesatz', sans-serif;
+      //letter-spacing: 1px;
+      color: #333;
    }
 }
 .modal-body {
+   @include border-radius(0 0 6px 6px);
    background-color: #f8f8f8;
-   p.loading {
-      margin: 10px 0;
-      text-align: center;
-      img {
-         height: 32px;
-         width: 32px;
-      }
-   }
+   padding: 0;
    .list-group {
       margin: 0;
+   }
+   input[type=text], input[type=password] {
+      @include border-radius(0);
+      background: none;
+      color: black;
+      letter-spacing: .8px;
+      font-size: 16px;
+      border: none;
+      padding: 15px;
+      height: auto;
    }
 }
 .modal-content {
@@ -232,12 +237,34 @@ i.options-menu {
 }
 .modal-footer {
    margin: 0;
+   padding: 10px;
+   button {
+      //display: block;
+      width: 49%;
+      //padding: 10px;
+      font-size: 16px;
+      letter-spacing: 1px;
+   }
 }
 
 // Login
 #login {
-   input[type=text] {
-      margin-bottom: 15px;
+   .modal-header {
+      border-bottom: none;
+   }
+}
+
+// User Menu
+#user-menu {
+   .modal-body {
+      padding: 15px;
+      button {
+         //display: block;
+         width: 49%;
+         //padding: 10px;
+         font-size: 16px;
+         letter-spacing: 1px;
+      }
    }
 }
 

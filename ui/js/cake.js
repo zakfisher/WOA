@@ -40,8 +40,17 @@ cake = new function() {
                 c.Modal.displayMessage('danger', 'You must provide a password to login.');
                 return false;
             }
+            var rememberMe = $(id).find('input[value=remember-me]').is(':checked');
+            if (!rememberMe) {
+                $.cookie('username', null);
+                $.cookie('password', null);
+            }
             $.post(c.API.user.login, POST, function(data) {
                 if (data.success) {
+                    if (rememberMe) {
+                        $.cookie('username', POST.username);
+                        $.cookie('password', POST.password);
+                    }
                     location.href = '/';
                 }
                 if (data.error) {
@@ -59,6 +68,11 @@ cake = new function() {
             module.username  = module.form + ' input[name=username]';
             module.password  = module.form + ' input[name=password]';
             module.submitBtn = module.form + ' input[name=submit]';
+            if ($.cookie('username') !== null && $.cookie('password') !== null) {
+                $(id).find('input[value=remember-me]').prop('checked', true);
+                $(id).find('input[name=username]').val($.cookie('username'));
+                $(id).find('input[name=password]').val($.cookie('password'));
+            }
             $(document).on('submit', module.form, submitForm);
             $(id).data('login', module);
             if (c.Browser.name == 'msie' && c.Browser.version == '9.0') {
@@ -92,6 +106,12 @@ cake = new function() {
         var p = this;
         var player = $('#player');
         var togglePlayerBtn = '.toggle-player-bar';
+        p.playPause = function() {
+            $('button[title="Play/Pause"]').click();
+        };
+        p.isPlaying = function() {
+            return $('button[title="Play/Pause"]').parents('.mejs-button').is('.mejs-pause');
+        };
         p.toggleDisplay = function() {
             var icon = $(togglePlayerBtn).find('i');
             if (icon.is('.icon-chevron-up')) {
@@ -110,7 +130,7 @@ cake = new function() {
         p.setCurrentMix = function(musicId, play) {
             var mix = c.MixesById[musicId];
             $('audio').attr('src', 'http://www.worldofanarchy.com/_WOA/music/' + mix.url);
-            player.find('div.now-playing p').text(mix.artist + ' - ' + mix.title);
+            player.find('div.now-playing p').html('<span class="text-gold">' + mix.artist + '</span> ' + mix.title);
             p.currentMix = new MediaElementPlayer('audio', {
                 success: function(mediaElement, domObject) {
     //                mediaElement.addEventListener('ended', function(e) {
@@ -123,6 +143,9 @@ cake = new function() {
             });
             p.currentMix.cache = mix;
             if (play) p.currentMix.play();
+        };
+        p.getCurrentMixId = function() {
+            return p.currentMix.cache.music_id;
         };
         p.init = function() {
             $.get(c.API.music.getAll, function(mixesById) {
@@ -173,6 +196,13 @@ cake = new function() {
     };
     c.App = new function() {
         var a = this;
+        a.NowPlaying = new function() {
+            var app = this;
+            app.start = function() {
+                console.log('yeeee');
+            };
+            app.init = function() {};
+        };
         a.BrowseByArtist = new function() {
             var app = this;
             var artistListContainer = '#browse-by-artist-list';
@@ -184,16 +214,28 @@ cake = new function() {
                 $(artistListContainer).find('h4').text($(artistSelect).val());
                 var artist = c.Helpers.htmlentities($(artistSelect).val());
                 $(c.MixesByArtist[artist]).each(function(i, mix) {
-                    var isCurrentMix = (mix.music_id == c.Player.currentMix.cache.music_id);
-                    var currentMixIsPlaying = false;
-                    $(mixListContainer).append('<a href="javascript:void(0);" class="list-group-item mix default-font' + (isCurrentMix ? ' current-mix' : '') + '" data-music-id="' + mix.music_id + '"><i class="icon-' + (isCurrentMix && currentMixIsPlaying ? 'pause' : 'play') + '"></i>&nbsp;&nbsp;&nbsp;' + mix.title + '</a>');
+                    var isCurrentMix = (mix.music_id == c.Player.getCurrentMixId());
+                    $(mixListContainer).append('<a href="javascript:void(0);" class="list-group-item mix default-font' + (isCurrentMix ? ' current-mix' : '') + '" data-music-id="' + mix.music_id + '"><i class="icon-' + (isCurrentMix && c.Player.isPlaying() ? 'pause' : 'play') + '"></i>&nbsp;&nbsp;&nbsp;' + mix.title + '</a>');
                 });
             };
             app.selectMix = function(e) {
                 var musicId = $(e.target).attr('data-music-id');
-                $(mix).removeClass('current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
-                $(e.target).find('i').removeClass('icon-play').addClass('icon-pause');
-                c.Player.setCurrentMix(musicId, true);
+                var isCurrentMix = musicId == c.Player.getCurrentMixId();
+                if (isCurrentMix) {
+                    console.log(c.Player.isPlaying());
+                    if (c.Player.isPlaying()) {
+                        $(mix + '.current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
+                    }
+                    else {
+                        $(mix + '.current-mix').find('i').addClass('icon-pause').removeClass('icon-play');
+                    }
+                    c.Player.playPause();
+                }
+                else { // Play New Mix
+                    $(mix).removeClass('current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
+                    $(e.target).addClass('current-mix').find('i').removeClass('icon-play').addClass('icon-pause');
+                    c.Player.setCurrentMix(musicId, true);
+                }
             };
             app.start = function() {
                 $(artistListContainer).append('<select class="form-control" name="artist"><option disabled>Select Artist</option></select>').siblings('p.loading').remove();
@@ -256,15 +298,14 @@ cake = new function() {
             var modal = target.attr('data-modal');
             var isNavMenu = target.is('[data-nav-menu]');
             var isApp = target.is('[data-app]');
-            console.log(modal);
             if (isNavMenu) {
                 switch (modal) {
                     case 'logged-in-menu':
                         m.displayTemplate('user-menu', function() {
-                            $(title).append('<span class="text-teal">' + c.User.first_name + ' ' + c.User.last_name + '</span>');
+                            $(title).append('<span class="text-teal default-font">' + c.User.first_name + ' ' + c.User.last_name + '</span>');
                             switch (c.User.access) {
                                 case 'admin':
-                                    $(content).find('div.list-group').prepend('<a href="/admin" class="list-group-item" target="_blank">Admin Panel</a>');
+                                    $(content).find('div.modal-body').prepend('<a href="/admin" target="_blank"><button class="btn btn-primary pull-left">Admin Panel</button></a>');
                                     break;
                             }
                         });
@@ -281,6 +322,7 @@ cake = new function() {
                 //c.Helpers.setURL(modal);
                 switch (modal) {
                     case 'now-playing':
+                        m.displayTemplate('now-playing', c.App.NowPlaying.start);
                         break;
                     case 'browse-by-artist':
                         if (typeof c.MixesByArtist == 'undefined') {
