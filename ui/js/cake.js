@@ -67,7 +67,10 @@ cake = new function() {
         p.setCurrentMix = function(musicId, play) {
             var setMixFromRefresh = ($.cookie('current-mix-id') !== null && $.cookie('current-mix-time') !== null && $.cookie('current-mix-playing') !== null);
             if (setMixFromRefresh) musicId = $.cookie('current-mix-id');
+            console.log(musicId);
+            console.log(typeof musicId);
             var mix = c.MixesById[musicId];
+            console.log(mix);
             var url = 'http://www.worldofanarchy.com/_WOA/music/' + mix.url;
             var audio = $('audio');
             audio.attr('src', url);
@@ -97,10 +100,15 @@ cake = new function() {
         p.init = function() {
             $.get(c.API.music.getAllMixes, function(mixesById) {
                 c.MixesById = mixesById;
+                c.MixArray = [];
                 var i = 0;
-                for (var id in mixesById) i++;
+                for (var id in mixesById) {
+                    c.MixArray.push(mixesById[id]);
+                    i++;
+                }
                 p.setCurrentMix(mixesById[i].music_id);
                 player.fadeIn();
+                $('[data-modal=random-mix] div.desktop-icon').removeClass('disabled');
             });
             if (c.isLoggedIn) {
                 $('.mejs-duration-container').after('<i class="icon-heart"></i>');
@@ -329,8 +337,6 @@ cake = new function() {
                 }
             };
             app.start = function() {
-                console.log(c.MixesByDate.results[c.MixesByDate.latest_date]);
-                console.log($(mixListContainer));
                 c.Modal.getTitleNode().find('span').after(' - <span class="default-font">' + c.MixesByDate.latest_date + '</span>');
                 $(c.MixesByDate.results[c.MixesByDate.latest_date]).each(function(i, mix) {
                     var isCurrentMix = (mix.music_id == c.Player.getCurrentMixId());
@@ -340,12 +346,22 @@ cake = new function() {
             };
             app.init = function() {
                 $.get(c.API.music.getBrowseByDateList, function(mixesByDate) {
-                    console.log(mixesByDate);
                     c.MixesByDate = mixesByDate;
                     $('[data-modal=latest-mixes] div.desktop-icon').removeClass('disabled');
                 });
                 $(document).on('click', mix, app.selectMix);
             };
+        };
+        a.RandomMix = new function() {
+            var app = this;
+            var id = '';
+            app.selectRandomMix = function() {
+                var randomIndex = c.Helpers.getRandomInt(0, c.MixArray.length-1);
+                console.log(randomIndex);
+                c.Player.setCurrentMix(c.MixArray[randomIndex].music_id, true);
+            };
+            app.start = function() {};
+            app.init = function() {};
         };
         a.render = function(e) {
             var target = $(e.target).is('[data-toggle=modal]') ? $(e.target) : $(e.target).parents('[data-toggle=modal]');
@@ -372,6 +388,11 @@ cake = new function() {
                     break;
                 case 'latest-mixes':
                     c.Modal.displayTemplate('latest-mixes', a.LatestMixes.start);
+                    break;
+                case 'random-mix':
+                    c.App.RandomMix.selectRandomMix();
+                    c.Modal.hideModal();
+                    return false;
                     break;
             }
         };
@@ -653,6 +674,9 @@ cake = new function() {
         };
         h.setURL = function(path) {
             window.history.pushState({}, '', path);
+        };
+        h.getRandomInt = function(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         };
     };
     c.Page = new function() {

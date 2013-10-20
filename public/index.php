@@ -34,11 +34,17 @@ $tpl->desktop = array(
             'requires_ajax' => 1,
             'title' => 'Latest Mixes',
             'icon' => 'latest-mixes'
+        ),
+        array(
+            'requires_login' => 0,
+            'requires_ajax' => 1,
+            'title' => 'Random Mix',
+            'icon' => 'random-mix'
         )
     )
 );
 
-$tpl->message = array('type' => 'success', 'message' => 'some shit..');
+//$tpl->message = array('type' => 'success', 'message' => 'some shit..');
 
 //$tpl->music = $music->getAll();
 $tpl->isLoggedIn = $user->isLoggedIn();
