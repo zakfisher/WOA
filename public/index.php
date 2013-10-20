@@ -12,30 +12,35 @@ $tpl->page    = 'Desktop';
 $tpl->desktop = array(
     'apps' => array(
         array(
+            'has_modal' => 1,
             'requires_login' => 0,
             'requires_ajax' => 0,
             'title' => 'Now Playing',
             'icon' => 'now-playing'
         ),
         array(
+            'has_modal' => 1,
             'requires_login' => 1,
             'requires_ajax' => 0,
             'title' => 'My Playlist',
             'icon' => 'my-playlist'
         ),
         array(
+            'has_modal' => 1,
             'requires_login' => 0,
             'requires_ajax' => 1,
             'title' => 'Browse By Artist',
             'icon' => 'browse-by-artist'
         ),
         array(
+            'has_modal' => 1,
             'requires_login' => 0,
             'requires_ajax' => 1,
             'title' => 'Latest Mixes',
             'icon' => 'latest-mixes'
         ),
         array(
+            'has_modal' => 0,
             'requires_login' => 0,
             'requires_ajax' => 1,
             'title' => 'Random Mix',

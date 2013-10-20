@@ -364,7 +364,7 @@ cake = new function() {
             app.init = function() {};
         };
         a.render = function(e) {
-            var target = $(e.target).is('[data-toggle=modal]') ? $(e.target) : $(e.target).parents('[data-toggle=modal]');
+            var target = $(e.target).is('[data-modal]') ? $(e.target) : $(e.target).parents('[data-modal]');
             var modal = target.attr('data-modal');
             //c.Helpers.setURL(modal);
             switch (modal) {
@@ -390,14 +390,13 @@ cake = new function() {
                     c.Modal.displayTemplate('latest-mixes', a.LatestMixes.start);
                     break;
                 case 'random-mix':
+                    console.log('random');
                     c.App.RandomMix.selectRandomMix();
-                    c.Modal.hideModal();
-                    return false;
                     break;
             }
         };
         a.init = function() {
-            $(document).on('click', '[data-toggle=modal]', a.render);
+            $(document).on('click', '[data-modal]', a.render);
             for (var module in a) {
                 for (var method in a[module]) {
                     if (method == 'init') {
