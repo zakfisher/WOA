@@ -1,9 +1,9 @@
-<span id="now-playing">
+<span id="search-results">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
         <h4 class="modal-title">
-            <i class="icon-play" style="margin-right:10px;"></i>
-            <span class="text-teal default-font">Now Playing</span>
+            <i class="icon-search" style="margin-right:10px;"></i>
+            <span class="text-teal default-font">Search Results</span>
         </h4>
     </div>
     <div class="modal-body">

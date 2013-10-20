@@ -15,22 +15,25 @@ $tpl->desktop = array(
             'requires_login' => 0,
             'requires_ajax' => 0,
             'title' => 'Now Playing',
-            'icon' => 'now-playing',
-            'color' => 'yellow'
-        ),
-        array(
-            'requires_login' => 0,
-            'requires_ajax' => 1,
-            'title' => 'Browse By Artist',
-            'icon' => 'browse-by-artist',
-            'color' => 'gold'
+            'icon' => 'now-playing'
         ),
         array(
             'requires_login' => 1,
             'requires_ajax' => 0,
             'title' => 'My Playlist',
-            'icon' => 'my-playlist',
-            'color' => 'pink'
+            'icon' => 'my-playlist'
+        ),
+        array(
+            'requires_login' => 0,
+            'requires_ajax' => 1,
+            'title' => 'Browse By Artist',
+            'icon' => 'browse-by-artist'
+        ),
+        array(
+            'requires_login' => 0,
+            'requires_ajax' => 1,
+            'title' => 'Latest Mixes',
+            'icon' => 'latest-mixes'
         )
     )
 );

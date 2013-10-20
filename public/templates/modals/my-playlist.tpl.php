@@ -1,9 +1,9 @@
-<span id="now-playing">
+<span id="my-playlist">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
         <h4 class="modal-title">
-            <i class="icon-play" style="margin-right:10px;"></i>
-            <span class="text-teal default-font">Now Playing</span>
+            <i class="icon-heart" style="margin-right:10px;"></i>
+            <span class="text-teal default-font">My Playlist</span>
         </h4>
     </div>
     <div class="modal-body">

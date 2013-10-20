@@ -10,9 +10,9 @@
         </button>
         <a class="navbar-brand" href="/"><?php require('../ui/images/edmcake_logo.svg'); ?></a>
         <?php if ($this->isLoggedIn): ?>
-        <i class="icon-gear options-menu pull-right" data-toggle="modal" href="#modal" data-modal="logged-in-menu" data-nav-menu></i>
+        <i class="icon-gear options-menu pull-right" data-toggle="modal" href="#modal" data-modal="logged-in-menu"></i>
         <?php else: ?>
-        <i class="icon-user options-menu pull-right" data-toggle="modal" href="#modal" data-modal="logged-out-menu" data-nav-menu></i>
+        <i class="icon-user options-menu pull-right" data-toggle="modal" href="#modal" data-modal="logged-out-menu"></i>
         <?php endif; ?>
     </div>
 
@@ -26,7 +26,7 @@
 <!--                    <option>Avicii</option>-->
 <!--                    <option>Steve Aoki</option>-->
 <!--                </datalist>-->
-                <i class="icon-search pull-left"></i>
+                <i class="icon-search pull-left" data-toggle="modal" href="#modal" data-modal="search-results"></i>
             </div>
         </form>
     </div>

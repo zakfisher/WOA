@@ -9,8 +9,9 @@ cake = new function() {
     var body = $('body');
     c.API = {
         music : {
-            getAll : '/api/music/getAll/',
-            getBrowseByArtistList : '/api/music/getBrowseByArtistList/'
+            getAllMixes : '/api/music/getAllMixes/',
+            getBrowseByArtistList : '/api/music/getBrowseByArtistList/',
+            getBrowseByDateList : '/api/music/getBrowseByDateList/'
         },
         user : {
             getUser: '/api/user/getUser/',
@@ -75,8 +76,7 @@ cake = new function() {
                 success: function(mediaElement, domObject) {
                     mediaElement.addEventListener('canplay', function(e) {
                         if (setMixFromRefresh) {
-                            if ($.inArray(c.Browser.platform, ['android', 'ipad', 'iphone']) == -1) {
-                                console.log(c.Browser.platform);
+                            if (!c.Browser.isMobile) {
                                 p.currentMix.setCurrentTime(Number($.cookie('current-mix-time')));
                                 if ($.cookie('current-mix-playing') == 'true') p.currentMix.play();
                             }
@@ -95,7 +95,7 @@ cake = new function() {
             return p.currentMix.cache.music_id;
         };
         p.init = function() {
-            $.get(c.API.music.getAll, function(mixesById) {
+            $.get(c.API.music.getAllMixes, function(mixesById) {
                 c.MixesById = mixesById;
                 var i = 0;
                 for (var id in mixesById) i++;
@@ -252,7 +252,6 @@ cake = new function() {
                 var musicId = $(e.target).attr('data-music-id');
                 var isCurrentMix = musicId == c.Player.getCurrentMixId();
                 if (isCurrentMix) {
-                    console.log(c.Player.isPlaying());
                     if (c.Player.isPlaying()) {
                         $(mix + '.current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
                     }
@@ -274,6 +273,8 @@ cake = new function() {
                     $(artistSelect).append('<option value="' + artist + '">' + artist + ' (' + c.MixesByArtist[artist].length + ')' + '</option>');
                     i++;
                 }
+                $(artistSelect).find('option[value="' + c.MixesById[c.Player.getCurrentMixId()].artist + '"]').prop('selected', true);
+                app.renderMixList();
             };
             app.init = function() {
                 $.get(c.API.music.getBrowseByArtistList, function(mixesByArtist) {
@@ -284,7 +285,98 @@ cake = new function() {
                 $(document).on('click', mix, app.selectMix);
             };
         };
+        a.SearchResults = new function() {
+            var app = this;
+            var id = '#search-results';
+            app.start = function() {
+                //c.Modal.getTitleNode().append('<span class="text-teal default-font">' + c.User.first_name + ' ' + c.User.last_name + '</span>');
+            };
+            app.init = function() {
+
+            };
+        };
+        a.MyPlaylist = new function() {
+            var app = this;
+            var id = '#my-playlist';
+            app.start = function() {
+                //c.Modal.getTitleNode().append('<span class="text-teal default-font">' + c.User.first_name + ' ' + c.User.last_name + '</span>');
+            };
+            app.init = function() {
+
+            };
+        };
+        a.LatestMixes = new function() {
+            var app = this;
+            var id = '#latest-mixes';
+            var mixListContainer = '#latest-mixes-list';
+            var mix = mixListContainer + ' a.mix';
+            app.selectMix = function(e) {
+                var musicId = $(e.target).attr('data-music-id');
+                var isCurrentMix = musicId == c.Player.getCurrentMixId();
+                if (isCurrentMix) {
+                    if (c.Player.isPlaying()) {
+                        $(mix + '.current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
+                    }
+                    else {
+                        $(mix + '.current-mix').find('i').addClass('icon-pause').removeClass('icon-play');
+                    }
+                    c.Player.playPause();
+                }
+                else { // Play New Mix
+                    $(mix).removeClass('current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
+                    $(e.target).addClass('current-mix').find('i').removeClass('icon-play').addClass('icon-pause');
+                    c.Player.setCurrentMix(musicId, true);
+                }
+            };
+            app.start = function() {
+                console.log(c.MixesByDate.results[c.MixesByDate.latest_date]);
+                console.log($(mixListContainer));
+                c.Modal.getTitleNode().find('span').after(' - <span class="default-font">' + c.MixesByDate.latest_date + '</span>');
+                $(c.MixesByDate.results[c.MixesByDate.latest_date]).each(function(i, mix) {
+                    var isCurrentMix = (mix.music_id == c.Player.getCurrentMixId());
+                    $(mixListContainer).append('<a href="javascript:void(0);" class="list-group-item mix default-font' + (isCurrentMix ? ' current-mix' : '') + '" data-music-id="' + mix.music_id + '"><i class="icon-' + (isCurrentMix && c.Player.isPlaying() ? 'pause' : 'play') + '"></i>&nbsp;&nbsp;&nbsp;<b><span class="text-pink default-font">' + mix.artist + '</span></b> ' + mix.title + '</a>');
+                });
+                $(mixListContainer).show();
+            };
+            app.init = function() {
+                $.get(c.API.music.getBrowseByDateList, function(mixesByDate) {
+                    console.log(mixesByDate);
+                    c.MixesByDate = mixesByDate;
+                    $('[data-modal=latest-mixes] div.desktop-icon').removeClass('disabled');
+                });
+                $(document).on('click', mix, app.selectMix);
+            };
+        };
+        a.render = function(e) {
+            var target = $(e.target).is('[data-toggle=modal]') ? $(e.target) : $(e.target).parents('[data-toggle=modal]');
+            var modal = target.attr('data-modal');
+            //c.Helpers.setURL(modal);
+            switch (modal) {
+                case 'logged-in-menu':
+                    c.Modal.displayTemplate('user-menu', a.UserMenu.start);
+                    break;
+                case 'logged-out-menu':
+                    c.Modal.displayTemplate('login', a.Login.start);
+                    break;
+                case 'now-playing':
+                    c.Modal.displayTemplate('now-playing', a.NowPlaying.start);
+                    break;
+                case 'browse-by-artist':
+                    c.Modal.displayTemplate('browse-by-artist', a.BrowseByArtist.start);
+                    break;
+                case 'search-results':
+                    c.Modal.displayTemplate('search-results', a.SearchResults.start);
+                    break;
+                case 'my-playlist':
+                    c.Modal.displayTemplate('my-playlist', a.MyPlaylist.start);
+                    break;
+                case 'latest-mixes':
+                    c.Modal.displayTemplate('latest-mixes', a.LatestMixes.start);
+                    break;
+            }
+        };
         a.init = function() {
+            $(document).on('click', '[data-toggle=modal]', a.render);
             for (var module in a) {
                 for (var method in a[module]) {
                     if (method == 'init') {
@@ -325,34 +417,12 @@ cake = new function() {
             if (typeof callback == 'undefined') $(content).load(template);
             else $(content).load(template, function() {
                 callback();
-                $('div.modal-content').show();
+                $('div.modal-content').fadeIn();
                 $('#loading').hide();
             });
         };
-        m.renderApp = function(e) {
-            var target = $(e.target).is('[data-toggle=modal]') ? $(e.target) : $(e.target).parents('[data-toggle=modal]');
-            var modal = target.attr('data-modal');
-            //c.Helpers.setURL(modal);
-            switch (modal) {
-                case 'logged-in-menu':
-                    m.displayTemplate('user-menu', c.App.UserMenu.start);
-                    break;
-                case 'logged-out-menu':
-                    m.displayTemplate('login', c.App.Login.start);
-                    break;
-                case 'now-playing':
-                    m.displayTemplate('now-playing', c.App.NowPlaying.start);
-                    break;
-                case 'browse-by-artist':
-                    m.displayTemplate('browse-by-artist', c.App.BrowseByArtist.start);
-                    break;
-                case 'my-playlist':
-                    break;
-            }
-        };
         m.init = function() {
             var modal = $('#modal');
-            $(document).on('click', '[data-toggle=modal]', m.renderApp);
             $(document).on('click', message + ' .close', m.hideMessage);
             modal.on('show.bs.modal', function () {
                 $('#loading').show();
@@ -609,6 +679,7 @@ cake = new function() {
             platform: body.attr('data-platform'),
             version: body.attr('data-version')
         };
+        c.Browser.isMobile = ($.inArray(c.Browser.platform, ['android', 'ipad', 'iphone']) != -1);
         c.Search.init();
         c.Player.init();
         c.Slideshow.init();

@@ -9,11 +9,12 @@ class MusicController {
             'getFiles' => array(),
             'getMetaData' => array(),
             'listArtists' => array(),
-            'getBrowseByArtistList' => array()
+            'getBrowseByArtistList' => array(),
+            'getBrowseByDateList' => array()
         );
     }
 
-    public function getAll($filter = '*') {
+    public function getAllMixes($filter = '*') {
         $model = new MusicModel();
         $response = $model->getAllRows($filter);
         $mixes = array();
@@ -111,5 +112,10 @@ class MusicController {
     public function getBrowseByArtistList() {
         $model = new MusicModel();
         return $model->makeBrowseByArtistList();
+    }
+
+    public function getBrowseByDateList() {
+        $model = new MusicModel();
+        return $model->makeBrowseByDateList();
     }
 }

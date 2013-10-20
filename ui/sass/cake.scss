@@ -19,8 +19,8 @@ body {
    /* The html and body elements cannot have any padding or margin. */
 }
 body {
-   //@include bg-image('textures/fancy_deboss.png');
-   background: black;
+   @include bg-image('textures/dark_mosaic.png');
+   //background: black;
    &.modal-open { margin: 0; }
 }
 #bg-image {
@@ -31,7 +31,7 @@ body {
    position: fixed;
    top: 0;
    min-width: 100%;
-   @include opacity(.7);
+   @include opacity(.5);
 }
 a.teal {
    color: $teal;
@@ -358,6 +358,36 @@ i.options-menu {
             }
             &.current-mix,
             &:hover {
+               color: white;
+               background: $pink;
+            }
+         }
+      }
+   }
+}
+
+// Latest Mixes
+#latest-mixes {
+   div.modal-header {
+      border-bottom: none;
+   }
+   div.modal-footer {
+      //background: white;
+      border: none;
+      padding: 0;
+      text-align: left;
+      #latest-mixes-list {
+         display:none;
+         a.list-group-item {
+            @include border-radius(0);
+            border-left: none;
+            border-right: none;
+            &:last-child {
+               @include border-radius(0 0 6px 6px);
+            }
+            &.current-mix,
+            &:hover {
+               * { color: white; }
                color: white;
                background: $pink;
             }

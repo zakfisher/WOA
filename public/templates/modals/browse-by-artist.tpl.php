@@ -3,7 +3,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
         <h4 class="modal-title">
             <i class="icon-group" style="margin-right:10px;"></i>
-            <span class="text-pink default-font">Browse by Artist</span>
+            <span class="text-teal default-font">Browse by Artist</span>
         </h4>
     </div>
     <div class="modal-body">
@@ -13,8 +13,6 @@
         </div>
     </div>
     <div class="modal-footer">
-        <div id="browse-by-artist-mixes">
-            <div class="list-group"></div>
-        </div>
+        <div id="browse-by-artist-mixes"></div>
     </div>
 </span>
