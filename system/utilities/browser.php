@@ -104,8 +104,12 @@ class Browser {
             $version = "?";
         }
 
-        $platform = preg_match('/(.+)Macintosh(.+)/', $visitor_user_agent) ? 'mac' : '';
+        $platform = preg_match('/(.+)Macintosh(.+)/', $visitor_user_agent) ? 'mac' : 'unknown';
         $platform = preg_match('/(.+)Windows(.+)/', $visitor_user_agent) ? 'windows' : $platform;
+        $platform = preg_match('/(.+)Android(.+)/', $visitor_user_agent) ? 'android' : $platform;
+        $platform = preg_match('/(.+)iPad(.+)/', $visitor_user_agent) ? 'ipad' : $platform;
+        $platform = preg_match('/(.+)iPhone(.+)/', $visitor_user_agent) ? 'iphone' : $platform;
+
 
         return array(
             'userAgent' => $visitor_user_agent,

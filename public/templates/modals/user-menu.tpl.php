@@ -6,7 +6,7 @@
         </h4>
     </div>
     <div class="modal-body clearfix">
-        <a href="/?logout=true">
+        <a class="logout" data-href="/?logout=true">
             <button class="btn btn-primary pull-left" style="margin-left:2%;">Log out</button>
         </a>
     <!--    <div class="list-group">-->

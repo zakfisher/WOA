@@ -17,70 +17,6 @@ cake = new function() {
             login: '/api/user/login/'
         }
     };
-    c.Login = function(id) {
-        var module = this;
-        var submitForm = function(e) {
-            e.preventDefault();
-            c.Modal.hideMessage();
-            var POST = {
-                username : $(module.username).val(),
-                password : $(module.password).val()
-            };
-            var usernameExists = POST.username.length > 0;
-            var passwordExists = POST.password.length > 0;
-            if (!usernameExists && !passwordExists) {
-                c.Modal.displayMessage('danger', 'You must provide a username and password to login.');
-                return false;
-            }
-            if (POST.username.length == 0) {
-                c.Modal.displayMessage('danger', 'You must provide a username to login.');
-                return false;
-            }
-            if (POST.password.length == 0) {
-                c.Modal.displayMessage('danger', 'You must provide a password to login.');
-                return false;
-            }
-            var rememberMe = $(id).find('input[value=remember-me]').is(':checked');
-            if (!rememberMe) {
-                $.cookie('username', null);
-                $.cookie('password', null);
-            }
-            $.post(c.API.user.login, POST, function(data) {
-                if (data.success) {
-                    if (rememberMe) {
-                        $.cookie('username', POST.username);
-                        $.cookie('password', POST.password);
-                    }
-                    location.href = '/';
-                }
-                if (data.error) {
-                    c.Modal.displayMessage('danger', data.error);
-                }
-            })
-            .error(function() {
-                //c.Modal.displayMessage('danger', 'Unable to reach server.');
-            });
-        };
-        module.init = function(opts) {
-            if (typeof opts !== 'undefined') $.extend(config, opts);
-            module.message   = $(id).find('div.message');
-            module.form      = id + ' form';
-            module.username  = module.form + ' input[name=username]';
-            module.password  = module.form + ' input[name=password]';
-            module.submitBtn = module.form + ' input[name=submit]';
-            if ($.cookie('username') !== null && $.cookie('password') !== null) {
-                $(id).find('input[value=remember-me]').prop('checked', true);
-                $(id).find('input[name=username]').val($.cookie('username'));
-                $(id).find('input[name=password]').val($.cookie('password'));
-            }
-            $(document).on('submit', module.form, submitForm);
-            $(id).data('login', module);
-            if (c.Browser.name == 'msie' && c.Browser.version == '9.0') {
-                $(module.username).val('Apple ID');
-                $(module.password).val('Password');
-            }
-        };
-    };
     c.Search = new function() {
         var n = this;
         var page = '.page';
@@ -128,19 +64,30 @@ cake = new function() {
             }
         };
         p.setCurrentMix = function(musicId, play) {
+            var setMixFromRefresh = ($.cookie('current-mix-id') !== null && $.cookie('current-mix-time') !== null && $.cookie('current-mix-playing') !== null);
+            if (setMixFromRefresh) musicId = $.cookie('current-mix-id');
             var mix = c.MixesById[musicId];
-            $('audio').attr('src', 'http://www.worldofanarchy.com/_WOA/music/' + mix.url);
-            player.find('div.now-playing p').html('<span class="text-gold">' + mix.artist + '</span> ' + mix.title);
-            p.currentMix = new MediaElementPlayer('audio', {
+            var url = 'http://www.worldofanarchy.com/_WOA/music/' + mix.url;
+            var audio = $('audio');
+            audio.attr('src', url);
+            player.find('div.now-playing p').html('<span class="text-yellow">' + mix.artist + '</span> ' + mix.title);
+            p.currentMix = new MediaElementPlayer(audio, {
                 success: function(mediaElement, domObject) {
-    //                mediaElement.addEventListener('ended', function(e) {
-    //                    var max = $('#all-count').text();
-    //                    max = max.split('Results Found: ');
-    //                    max = Number(max[1]);
-    //                    $('#all-results a')[getRandomInt(0, max)].click();
-    //                }, false);
+                    mediaElement.addEventListener('canplay', function(e) {
+                        if (setMixFromRefresh) {
+                            if ($.inArray(c.Browser.platform, ['android', 'ipad', 'iphone']) == -1) {
+                                console.log(c.Browser.platform);
+                                p.currentMix.setCurrentTime(Number($.cookie('current-mix-time')));
+                                if ($.cookie('current-mix-playing') == 'true') p.currentMix.play();
+                            }
+                        }
+                        $.cookie('current-mix-id', null);
+                        $.cookie('current-mix-time', null);
+                        $.cookie('current-mix-playing', null);
+                    }, false);
                 }
             });
+            audio.mediaelementplayer({alwaysShowHours: true});
             p.currentMix.cache = mix;
             if (play) p.currentMix.play();
         };
@@ -153,7 +100,7 @@ cake = new function() {
                 var i = 0;
                 for (var id in mixesById) i++;
                 p.setCurrentMix(mixesById[i].music_id);
-                player.show();
+                player.fadeIn();
             });
             if (c.isLoggedIn) {
                 $('.mejs-duration-container').after('<i class="icon-heart"></i>');
@@ -196,6 +143,89 @@ cake = new function() {
     };
     c.App = new function() {
         var a = this;
+        a.Login = new function() {
+            var app = this;
+            var id = '#login';
+            var message   = $(id).find('div.message');
+            var form      = id + ' form';
+            var username  = form + ' input[name=username]';
+            var password  = form + ' input[name=password]';
+            app.submitForm = function(e) {
+                e.preventDefault();
+                c.Modal.hideMessage();
+                var POST = {
+                    username : $(username).val(),
+                    password : $(password).val()
+                };
+                var usernameExists = POST.username.length > 0;
+                var passwordExists = POST.password.length > 0;
+                if (!usernameExists && !passwordExists) {
+                    c.Modal.displayMessage('danger', 'You must provide a username and password to login.');
+                    return false;
+                }
+                if (POST.username.length == 0) {
+                    c.Modal.displayMessage('danger', 'You must provide a username to login.');
+                    return false;
+                }
+                if (POST.password.length == 0) {
+                    c.Modal.displayMessage('danger', 'You must provide a password to login.');
+                    return false;
+                }
+                var rememberMe = $(id).find('input[value=remember-me]').is(':checked');
+                if (!rememberMe) {
+                    $.cookie('username', null);
+                    $.cookie('password', null);
+                }
+                $.post(c.API.user.login, POST, function(data) {
+                    if (data.success) {
+                        if (rememberMe) {
+                            $.cookie('username', POST.username);
+                            $.cookie('password', POST.password);
+                        }
+                        location.href = '/';
+                    }
+                    if (data.error) {
+                        c.Modal.displayMessage('danger', data.error);
+                    }
+                })
+                    .error(function() {
+                        //c.Modal.displayMessage('danger', 'Unable to reach server.');
+                    });
+            };
+            app.start = function() {
+                if ($.cookie('username') !== null && $.cookie('password') !== null) {
+                    $(id).find('input[value=remember-me]').prop('checked', true);
+                    $(id).find('input[name=username]').val($.cookie('username'));
+                    $(id).find('input[name=password]').val($.cookie('password'));
+                }
+                if (c.Browser.name == 'msie' && c.Browser.version == '9.0') {
+                    $(username).val('Username');
+                    $(password).val('Password');
+                }
+            };
+            app.init = function() {
+                $(document).on('submit', form, app.submitForm);
+            };
+        };
+        a.UserMenu = new function() {
+            var app = this;
+            var id = '#user-menu';
+            var logoutBtn = id + ' a.logout';
+            app.logOut = function() {
+                location.href = $(logoutBtn).attr('data-href');
+            };
+            app.start = function() {
+                c.Modal.getTitleNode().append('<span class="text-teal default-font">' + c.User.first_name + ' ' + c.User.last_name + '</span>');
+                switch (c.User.access) {
+                    case 'admin':
+                        c.Modal.getContentNode().find('div.modal-body').prepend('<a href="/admin" target="_blank"><button class="btn btn-primary pull-left">Admin Panel</button></a>');
+                        break;
+                }
+            };
+            app.init = function() {
+                $(document).on('click', logoutBtn, app.logOut);
+            };
+        };
         a.NowPlaying = new function() {
             var app = this;
             app.start = function() {
@@ -269,6 +299,12 @@ cake = new function() {
         var title = '#modal h4.modal-title';
         var content = '#modal div.modal-content';
         var message = '#modal div.alert';
+        m.getTitleNode = function() {
+            return $(title);
+        };
+        m.getContentNode = function() {
+            return $(content);
+        };
         m.hideModal = function() {
             $('#modal').modal('hide');
             $('#loading').hide();
@@ -293,52 +329,30 @@ cake = new function() {
                 $('#loading').hide();
             });
         };
-        m.renderModalContent = function(e) {
+        m.renderApp = function(e) {
             var target = $(e.target).is('[data-toggle=modal]') ? $(e.target) : $(e.target).parents('[data-toggle=modal]');
             var modal = target.attr('data-modal');
-            var isNavMenu = target.is('[data-nav-menu]');
-            var isApp = target.is('[data-app]');
-            if (isNavMenu) {
-                switch (modal) {
-                    case 'logged-in-menu':
-                        m.displayTemplate('user-menu', function() {
-                            $(title).append('<span class="text-teal default-font">' + c.User.first_name + ' ' + c.User.last_name + '</span>');
-                            switch (c.User.access) {
-                                case 'admin':
-                                    $(content).find('div.modal-body').prepend('<a href="/admin" target="_blank"><button class="btn btn-primary pull-left">Admin Panel</button></a>');
-                                    break;
-                            }
-                        });
-                        break;
-                    case 'logged-out-menu':
-                        m.displayTemplate('login', function() {
-                            var login = new c.Login('#login');
-                            login.init();
-                        });
-                        break;
-                }
-            }
-            if (isApp) {
-                //c.Helpers.setURL(modal);
-                switch (modal) {
-                    case 'now-playing':
-                        m.displayTemplate('now-playing', c.App.NowPlaying.start);
-                        break;
-                    case 'browse-by-artist':
-                        if (typeof c.MixesByArtist == 'undefined') {
-                            m.hideModal();
-                            return false;
-                        }
-                        m.displayTemplate('browse-by-artist', c.App.BrowseByArtist.start);
-                        break;
-                    case 'my-playlist':
-                        break;
-                }
+            //c.Helpers.setURL(modal);
+            switch (modal) {
+                case 'logged-in-menu':
+                    m.displayTemplate('user-menu', c.App.UserMenu.start);
+                    break;
+                case 'logged-out-menu':
+                    m.displayTemplate('login', c.App.Login.start);
+                    break;
+                case 'now-playing':
+                    m.displayTemplate('now-playing', c.App.NowPlaying.start);
+                    break;
+                case 'browse-by-artist':
+                    m.displayTemplate('browse-by-artist', c.App.BrowseByArtist.start);
+                    break;
+                case 'my-playlist':
+                    break;
             }
         };
         m.init = function() {
             var modal = $('#modal');
-            $(document).on('click', '[data-toggle=modal]', m.renderModalContent);
+            $(document).on('click', '[data-toggle=modal]', m.renderApp);
             $(document).on('click', message + ' .close', m.hideMessage);
             modal.on('show.bs.modal', function () {
                 $('#loading').show();
@@ -571,6 +585,17 @@ cake = new function() {
             window.history.pushState({}, '', path);
         };
     };
+    c.Page = new function() {
+        var p = this;
+        p.refresh = function() {
+            $.cookie('current-mix-id', c.Player.getCurrentMixId());
+            $.cookie('current-mix-time', c.Player.currentMix.getCurrentTime());
+            $.cookie('current-mix-playing', c.Player.isPlaying());
+        };
+        p.init = function() {
+            $(window).bind('beforeunload', p.refresh);
+        };
+    };
     c.init = function() {
         c.isLoggedIn = $('#is-logged-in').length > 0;
         if (c.isLoggedIn) {
@@ -589,13 +614,7 @@ cake = new function() {
         c.Slideshow.init();
         c.Modal.init();
         c.App.init();
+        c.Page.init();
     };
 };
 $(cake.init);
-//$(window).bind('beforeunload',function(){
-//
-//    //save info somewhere
-//
-//    return 'are you sure you want to leave?';
-//
-//});

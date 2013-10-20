@@ -1,7 +1,7 @@
     </div>
     <div id="player">
         <div class="toggle-player-bar">
-            <i class="icon-chevron-up"></i>
+            <i class="icon-chevron-down"></i>
         </div>
         <div class="now-playing">
             <p></p>
