@@ -43,6 +43,7 @@ cake = new function() {
         var p = this;
         var player = $('#player');
         var togglePlayerBtn = '.toggle-player-bar';
+        var addToPlaylistBtn = 'i.add-to-playlist';
         p.playPause = function() {
             $('button[title="Play/Pause"]').click();
         };
@@ -67,15 +68,13 @@ cake = new function() {
         p.setCurrentMix = function(musicId, play) {
             var setMixFromRefresh = ($.cookie('current-mix-id') !== null && $.cookie('current-mix-time') !== null && $.cookie('current-mix-playing') !== null);
             if (setMixFromRefresh) musicId = $.cookie('current-mix-id');
-            console.log(musicId);
-            console.log(typeof musicId);
             var mix = c.MixesById[musicId];
-            console.log(mix);
             var url = 'http://www.worldofanarchy.com/_WOA/music/' + mix.url;
             var audio = $('audio');
             audio.attr('src', url);
             player.find('div.now-playing p').html('<span class="text-yellow">' + mix.artist + '</span> ' + mix.title);
             p.currentMix = new MediaElementPlayer(audio, {
+                alwaysShowHours: true,
                 success: function(mediaElement, domObject) {
                     mediaElement.addEventListener('canplay', function(e) {
                         if (setMixFromRefresh) {
@@ -90,12 +89,19 @@ cake = new function() {
                     }, false);
                 }
             });
-            audio.mediaelementplayer({alwaysShowHours: true});
             p.currentMix.cache = mix;
             if (play) p.currentMix.play();
+            if (c.isLoggedIn && $(addToPlaylistBtn).length == 0) {
+                $('.mejs-controls').prepend('<i class="icon-heart add-to-playlist"></i>');
+                $('.mejs-currenttime-container').addClass('showing-heart');
+            }
         };
         p.getCurrentMixId = function() {
             return p.currentMix.cache.music_id;
+        };
+        p.toggleFavoriteMix = function() {
+            if ($(addToPlaylistBtn).is('.favorite')) $(addToPlaylistBtn).removeClass('favorite');
+            else $(addToPlaylistBtn).addClass('favorite');
         };
         p.init = function() {
             $.get(c.API.music.getAllMixes, function(mixesById) {
@@ -110,10 +116,8 @@ cake = new function() {
                 player.fadeIn();
                 $('[data-modal=random-mix] div.desktop-icon').removeClass('disabled');
             });
-            if (c.isLoggedIn) {
-                $('.mejs-duration-container').after('<i class="icon-heart"></i>');
-            }
             $(document).on('click', togglePlayerBtn, p.toggleDisplay);
+            $(document).on('click', addToPlaylistBtn, p.toggleFavoriteMix);
         };
     };
     c.Slideshow = new function() {
@@ -689,6 +693,34 @@ cake = new function() {
             $(window).bind('beforeunload', p.refresh);
         };
     };
+    c.Facebook = new function() {
+        var f = this;
+        var APIready = false;
+        f.loginStatusCallback = function(e) {
+            if (e.status == 'connected') {
+                APIready = true;
+            }
+            console.log(e);
+            f.fetchData();
+        };
+        f.fetchData = function() {
+            if (!APIready) return false;
+            FB.api(
+                '/search?q=conference&type=event',
+                'get',
+                function(response) {
+                    console.log(response);
+                }
+            );
+        };
+        f.init = function() {
+            $.ajaxSetup({ cache: true });
+            $.getScript('//connect.facebook.net/en_UK/all.js', function(){
+                FB.init({appId:241415132595566});
+                FB.getLoginStatus(f.loginStatusCallback);
+            });
+        };
+    };
     c.init = function() {
         c.isLoggedIn = $('#is-logged-in').length > 0;
         if (c.isLoggedIn) {
@@ -703,6 +735,7 @@ cake = new function() {
             version: body.attr('data-version')
         };
         c.Browser.isMobile = ($.inArray(c.Browser.platform, ['android', 'ipad', 'iphone']) != -1);
+        c.Facebook.init();
         c.Search.init();
         c.Player.init();
         c.Slideshow.init();

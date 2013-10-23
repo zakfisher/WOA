@@ -145,7 +145,6 @@ i.options-menu {
 /* Set the fixed height of the footer here */
 #player {
    display: none;
-   background-color: #f8f8f8;
    //bottom: -60px;
    position: fixed;
    width: 100%;
@@ -153,7 +152,7 @@ i.options-menu {
    z-index: 5;
    div.now-playing {
       height: 26px;
-      background: black;
+      background: rgba(0,0,0,.3);
       border-top: 1px solid #333;
       p {
          color: white;
@@ -166,21 +165,36 @@ i.options-menu {
          font-size: 14px;
          left: 10px;
       }
-      i.icon-heart {
-         position: absolute;
-         right: 10px;
-         top: 9px;
-         color: #999;
-         &.favorite { color: $pink; }
-      }
    }
    div.element {
       height: 34px;
+      i.icon-heart {
+         cursor: pointer;
+         font-size: 16px;
+         float: right;
+         position: relative;
+         right: 10px;
+         top: 8px;
+         color: #999;
+         z-index: 5;
+         &.favorite { color: $pink; }
+      }
    }
    .toggle-player-bar {
       bottom: 60px;
       position: absolute;
       @include border-radius(6px 6px 0 0);
+   }
+}
+[data-platform="mac"],
+[data-platform="windows"] {
+   #player {
+      div.element {
+         i.icon-heart {
+            right: 9px;
+            top: 7px;
+         }
+      }
    }
 }
 

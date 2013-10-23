@@ -70,7 +70,7 @@ class AdminController {
 
     public function importNewTracks() {
         $music = new MusicController();
-        $allMusic = $music->getAll();
+        $allMusic = $music->getAllMixes();
         $existingURLs = array();
         foreach ($allMusic as $row) {
             if (!in_array($row['url'], $existingURLs)) $existingURLs[] = $row['url'];
@@ -99,7 +99,7 @@ class AdminController {
             $results['results'][] = $mp3;
             $customData['New Rows']++;
         }
-        $allMusic = $music->getAll();
+        $allMusic = $music->getAllMixes();
         if ($customData['Attempted Rows'] == 0) {
             $this->setMessage('success', 'All files exist in database. Total rows = ' . count($allMusic) . '. Total files = ' . count($files['all']) . '.');
         }
