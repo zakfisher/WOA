@@ -69,10 +69,12 @@ a.navbar-brand {
    }
 }
 i.options-menu {
+   border-left: 1px solid #ccc;
+   padding-left: 15px;
    font-size: 26px;
    position: absolute;
    top: 17px;
-   right: 25px;
+   right: 20px;
    cursor: pointer;
 }
 .navbar-toggle {
@@ -88,48 +90,35 @@ i.options-menu {
 }
 
 // Search Bar
-.toggle-search-bar,
-.toggle-player-bar {
-   display: none;
-   background: #333;
-   cursor: pointer;
-   height: 22px;
-   left: 50%;
-   margin-left: -50px;
-   text-align: center;
-   width: 100px;
-   i {
-      color: white;
-      cursor: pointer;
-      position: relative;
-      top: 3px;
-   }
-}
-.navbar-collapse {
-   .navbar-form {
+.navbar-form {
+   margin: 0;
+   border: none;
+   padding: 0;
+   .form-group {
       margin: 0;
-      border: none;
-      padding: 0;
-      .form-group {
+      position: absolute;
+      right: 100px;
+      top: 12px;
+      input[type=text] {
+         width: 220px;
+      }
+      i {
+         cursor: pointer;
+         font-size: 22px;
+         top: 7px;
          margin: 0;
-         input[type=text] {
-            width: 90%;
-            margin-bottom: 10px;
-         }
-         i {
-            cursor: pointer;
-            font-size: 22px;
-            position: relative;
-            top: 5px;
-            left: 12px;
-         }
+         position: absolute;
+         right: -30px;
       }
    }
 }
-.toggle-search-bar {
-   position: relative;
-   @include border-radius(0 0 6px 6px);
+[data-platform="mac"],
+[data-platform="windows"] {
+   .navbar-form .form-group i {
+      top: 5px;
+   }
 }
+
 
 // Player
 /* Wrapper for page content to push down footer */
@@ -149,10 +138,10 @@ i.options-menu {
    position: fixed;
    width: 100%;
    height: 60px;
-   z-index: 5;
+   z-index: 10;
    div.now-playing {
       height: 26px;
-      background: rgba(0,0,0,.3);
+      background: black;
       border-top: 1px solid #333;
       p {
          color: white;
@@ -164,6 +153,9 @@ i.options-menu {
          letter-spacing: 1px;
          font-size: 14px;
          left: 10px;
+         span {
+            letter-spacing: 0;
+         }
       }
    }
    div.element {
@@ -181,9 +173,23 @@ i.options-menu {
       }
    }
    .toggle-player-bar {
+      display: none;
+      background: #333;
+      cursor: pointer;
+      height: 22px;
+      left: 50%;
+      margin-left: -50px;
+      text-align: center;
+      width: 100px;
       bottom: 60px;
       position: absolute;
       @include border-radius(6px 6px 0 0);
+      i {
+         color: white;
+         cursor: pointer;
+         position: relative;
+         top: 3px;
+      }
    }
 }
 [data-platform="mac"],
@@ -229,19 +235,21 @@ i.options-menu {
 .modal-body {
    @include border-radius(0 0 6px 6px);
    background-color: #f8f8f8;
-   padding: 0;
    .list-group {
       margin: 0;
    }
    input[type=text], input[type=password] {
-      @include border-radius(0);
-      background: none;
+//      @include border-radius(0);
+      background: white;
       color: black;
       letter-spacing: .8px;
       font-size: 16px;
-      border: none;
-      padding: 15px;
+      //border: none;
+//      padding: 15px;
       height: auto;
+      &:first-child {
+         margin-bottom: 20px;
+      }
    }
 }
 .modal-content {
@@ -252,20 +260,25 @@ i.options-menu {
 }
 .modal-footer {
    margin: 0;
-   padding: 10px;
    button {
       //display: block;
-      width: 49%;
+      width: 48%;
       //padding: 10px;
       font-size: 16px;
       letter-spacing: 1px;
+      &:hover {
+         text-decoration: none;
+      }
    }
 }
 
 // Login
 #login {
-   .modal-header {
-      border-bottom: none;
+   .modal-footer {
+      label.checkbox {
+         margin-top: 5px;
+         margin-bottom: 15px;
+      }
    }
 }
 
@@ -274,11 +287,14 @@ i.options-menu {
    .modal-body {
       padding: 15px;
       button {
-         //display: block;
-         width: 49%;
-         //padding: 10px;
+//         display: block;
+         width: 48%;
+         margin-bottom: 10px;
          font-size: 16px;
          letter-spacing: 1px;
+         &:last-child {
+            margin-bottom: 0;
+         }
       }
    }
 }
@@ -327,6 +343,7 @@ i.options-menu {
       }
       &:hover {
          border: 1px solid white;
+         //background: rgba(0,0,0,.3);
       }
    }
 }
@@ -383,29 +400,20 @@ i.options-menu {
 
 // Latest Mixes
 #latest-mixes {
-   div.modal-header {
-      border-bottom: none;
-   }
-   div.modal-footer {
-      //background: white;
-      border: none;
-      padding: 0;
-      text-align: left;
-      #latest-mixes-list {
-         display:none;
-         a.list-group-item {
-            @include border-radius(0);
-            border-left: none;
-            border-right: none;
-            &:last-child {
-               @include border-radius(0 0 6px 6px);
-            }
-            &.current-mix,
-            &:hover {
-               * { color: white; }
-               color: white;
-               background: $pink;
-            }
+   #latest-mixes-list {
+      display:none;
+      a.list-group-item {
+         @include border-radius(0);
+         border-left: none;
+         border-right: none;
+         &:last-child {
+            //@include border-radius(0 0 6px 6px);
+         }
+         &.current-mix,
+         &:hover {
+//            * { color: white; }
+//            color: white;
+            background: #f3f3f3;
          }
       }
    }
@@ -432,25 +440,60 @@ i.options-menu {
    top: 0;
 }
 
-// Only Extra Small
-@media (max-width: 768px) {
-   .navbar-collapse {
-      background: black;
-      .navbar-form {
-         .form-group {
-            input[type=text] {
-               margin: 10px 0;
-            }
-            i {
-               color: white;
-               top: 15px;
+// App
+#app {
+   display: none;
+   &>div {
+      //background: rgba(0,0,0,.7);
+      position: fixed;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      z-index: 5;
+      &.bg {
+         @include bg-image('textures/black_mamba.png');
+         @include opacity(.96);
+      }
+      &.header {
+         display: none;
+         top: 60PX;
+         background: black;
+         z-index: 10;
+         height: auto;
+         i {
+            color: white;
+            float: left;
+            font-size: 24px;
+            margin: 11px;
+            &.icon-remove {
+               color: #666;
+               cursor: pointer;
+               &:hover { color: white; }
             }
          }
+         h3 {
+            float: left;
+            margin: 11px 0 0;
+            font-size: 22px;
+         }
+      }
+      &.content {
+         display:none;
+         z-index: 6;
+         padding-top: 105px;
+         padding-bottom: 90px;
+         overflow: scroll;
+         overflow-x: hidden;
       }
    }
-   .toggle-search-bar,
-   .toggle-player-bar {
-      display: block;
+}
+
+// Only Extra Small
+@media (max-width: 668px) {
+   #player {
+      .toggle-player-bar {
+         display: block;
+      }
    }
    .navbar-header {
       button {
@@ -458,31 +501,18 @@ i.options-menu {
          top: -99999px;
       }
    }
-   #desktop {
-      padding-top: 80px;
+   .navbar-form {
+      .form-group {
+         input[type=text] {
+            display: none;
+         }
+         i {}
+      }
    }
 }
 
 /* Small devices (tablets, 768px and up) */
-@media (min-width: 768px) {
-   i.options-menu {
-      border-left: 1px solid #ccc;
-      padding-left: 15px;
-   }
-   .navbar-collapse {
-      .navbar-form {
-         position: relative;
-         top: 12px;
-         right: 60px;
-         .form-group {
-            width: 340px;
-            input[type=text] {
-               margin: 0;
-            }
-            i {}
-         }
-      }
-   }
+@media (min-width: 668px) {
    .modal-dialog {
       //width: auto !important;
    }
@@ -503,6 +533,11 @@ i.options-menu {
    }
    #player {
       bottom: 0px !important;
+   }
+   #app {
+      div.content {
+         padding-bottom: 60px;
+      }
    }
 }
 
