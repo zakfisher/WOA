@@ -61,7 +61,7 @@ cake = new function() {
             var url = 'http://www.worldofanarchy.com/_WOA/music/' + mix.url;
             var audio = $('audio');
             audio.attr('src', url);
-            player.find('div.now-playing p').html('<b><span class="text-teal default-font">' + mix.artist + '</span></b> ' + mix.title);
+            player.find('div.now-playing p').html('<b><span class="text-' + c.Helpers.getRandomColor(['gold','yellow','teal','pink']) + ' default-font">' + mix.artist + '</span></b> <span style="font-size:12px;">' + mix.title + '</span>');
             p.currentMix = new MediaElementPlayer(audio, {
                 alwaysShowHours: true,
                 success: function(mediaElement, domObject) {
@@ -152,12 +152,15 @@ cake = new function() {
         a.hideApp = function() {
             $('#app').fadeOut();
             $(header).hide();
-            $(content).hide();
+            $(content).hide().removeClass('pt140');
             $(innerContent).html('');
         };
         a.showApp = function() {
             $('#app').fadeIn('fast');
             $('#loading').show();
+        };
+        a.setTitle = function(title) {
+            $(header).find('h3').html(title).removeClass('text-teal text-pink text-gold text-yellow').addClass('text-' + c.Helpers.getRandomColor(['gold','yellow','teal','pink']));
         };
         a.displayTemplate = function(template, callback) {
             a.showApp();
@@ -197,7 +200,7 @@ cake = new function() {
         };
         a.init = function() {
             $(document).on('click', '[data-app]', a.render);
-            $(document).on('click', header + ' i.icon-remove', a.hideApp);
+            $(document).on('click', header + ' i.icon-remove,' + bg, a.hideApp);
             for (var module in a) {
                 for (var method in a[module]) {
                     if (method == 'init') {
@@ -205,11 +208,11 @@ cake = new function() {
                     }
                 }
             }
-        }
+        };
         a.NowPlaying = new function() {
             var app = this;
             app.start = function() {
-                console.log('yeeee');
+                a.setTitle('Now Playing');
             };
             app.init = function() {};
         };
@@ -225,7 +228,7 @@ cake = new function() {
                 var artist = c.Helpers.htmlentities($(artistSelect).val());
                 $(c.MixesByArtist[artist]).each(function(i, mix) {
                     var isCurrentMix = (mix.music_id == c.Player.getCurrentMixId());
-                    $(mixListContainer).append('<a href="javascript:void(0);" class="list-group-item mix default-font' + (isCurrentMix ? ' current-mix' : '') + '" data-music-id="' + mix.music_id + '"><i class="icon-' + (isCurrentMix && c.Player.isPlaying() ? 'pause' : 'play') + '"></i>&nbsp;&nbsp;&nbsp;' + mix.title + '</a>');
+                    $(mixListContainer).append('<a href="javascript:void(0);" class="list-group-item mix default-font' + (isCurrentMix ? ' current-mix' : '') + '" data-music-id="' + mix.music_id + '"><i class="icon-' + (isCurrentMix && c.Player.isPlaying() ? 'pause' : 'play') + '"></i>&nbsp;&nbsp;&nbsp;<b><span class="text-' + c.Helpers.getRandomColor(['teal','pink','purple']) + ' default-font">' + mix.artist + '</span></b> ' + mix.title + '</a>');
                 });
             };
             app.selectMix = function(e) {
@@ -247,7 +250,9 @@ cake = new function() {
                 }
             };
             app.start = function() {
-                $(artistListContainer).append('<select class="form-control" name="artist"><option disabled>Select Artist</option></select>').siblings('p.loading').remove();
+                a.setTitle('Browse by Artist');
+                $(content).addClass('pt140');
+                $(artistListContainer).addClass('bg-' + c.Helpers.getRandomColor(['gold','yellow','teal','pink'])).append('<select class="form-control" name="artist"><option disabled>Select Artist</option></select>');
                 var i = 0;
                 for (var artist in c.MixesByArtist) {
                     $(artistSelect).append('<option value="' + artist + '">' + artist + ' (' + c.MixesByArtist[artist].length + ')' + '</option>');
@@ -309,15 +314,22 @@ cake = new function() {
                 }
             };
             app.start = function() {
-                c.Modal.getTitleNode().find('span').after(' - <span class="default-font">' + c.MixesByDate.latest_date + '</span>');
+                a.setTitle('Latest Mixes <span style="font-size:12px;color:white;">Added ' + c.MixesByDate.latest_date + '</span>');
                 $(c.MixesByDate.results[c.MixesByDate.latest_date]).each(function(i, mix) {
                     var isCurrentMix = (mix.music_id == c.Player.getCurrentMixId());
-                    $(mixListContainer).append('<a href="javascript:void(0);" class="list-group-item mix default-font' + (isCurrentMix ? ' current-mix' : '') + '" data-music-id="' + mix.music_id + '"><i class="icon-' + (isCurrentMix && c.Player.isPlaying() ? 'pause' : 'play') + '"></i>&nbsp;&nbsp;&nbsp;<b><span class="text-pink default-font">' + mix.artist + '</span></b> ' + mix.title + '</a>');
+                    $(mixListContainer).append('<a href="javascript:void(0);" class="list-group-item mix default-font' + (isCurrentMix ? ' current-mix' : '') + '" data-music-id="' + mix.music_id + '"><i class="icon-' + (isCurrentMix && c.Player.isPlaying() ? 'pause' : 'play') + '"></i>&nbsp;&nbsp;&nbsp;<b><span class="text-' + c.Helpers.getRandomColor(['teal','pink','purple']) + ' default-font">' + mix.artist + '</span></b> ' + mix.title + '</a>');
                 });
                 $(mixListContainer).show();
             };
             app.init = function() {
                 $.get(c.API.music.getBrowseByDateList, function(mixesByDate) {
+                    mixesByDate.results[mixesByDate.latest_date].sort(function(a, b) {
+                        if (a.artist < b.artist)
+                            return -1;
+                        if (a.artist > b.artist)
+                            return 1;
+                        return 0;
+                    });
                     c.MixesByDate = mixesByDate;
                     $('[data-app=latest-mixes] div.desktop-icon').removeClass('disabled');
                 });
@@ -710,6 +722,9 @@ cake = new function() {
         };
         h.getRandomInt = function(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
+        h.getRandomColor = function(colors) {
+            return colors[h.getRandomInt(0, colors.length-1)];
         };
     };
     c.Page = new function() {

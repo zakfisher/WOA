@@ -140,7 +140,7 @@ class AdminController {
         $response = $model->deleteTrack($params['music_id']);
         if ($response) {
             $this->setMessage('success', 'Deleted (music_id = ' . $params['music_id'] . ')');
-            unlink("/home1/worldoh4/public_html/_WOA/music/" . $track['url']);
+            unlink("/home1/worldoh4/public_html/_WOA/music/" . urldecode($track['url']));
         }
         else {
             $this->setMessage('danger', 'Unable to delete (music_id = ' . $params['music_id'] . ')');

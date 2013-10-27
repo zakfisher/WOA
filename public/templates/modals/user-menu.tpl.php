@@ -7,7 +7,7 @@
     </div>
     <div class="modal-body clearfix">
         <a class="logout" data-href="/?logout=true">
-            <button class="btn btn-primary pull-left" style="margin-left:2%;">Log out</button>
+            <button class="btn btn-primary pull-right">Log out</button>
         </a>
     <!--    <div class="list-group">-->
     <!--        <a href="/?logout=true" class="list-group-item">Log out</a>-->

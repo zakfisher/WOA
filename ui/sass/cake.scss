@@ -2,6 +2,7 @@ $teal : #009490;
 $pink : #ee528f;
 $gold : #ffae00;
 $yellow : #ffef29;
+$purple : purple;
 @import 'config/mixins';
 @import 'elements/media-element';
 
@@ -10,16 +11,18 @@ $yellow : #ffef29;
 
 // Global
 * {
-   :not(i) { font-family: 'Yanone Kaffeesatz', sans-serif; }
+   //:not(i) { font-family: 'Yanone Kaffeesatz', sans-serif; }
    outline: none !important;
 }
 html,
 body {
+   background: black;
    height: 100%;
    /* The html and body elements cannot have any padding or margin. */
 }
 body {
    @include bg-image('textures/dark_mosaic.png');
+   //@include bg-image('textures/black_mamba.png');
    //background: black;
    &.modal-open { margin: 0; }
 }
@@ -44,10 +47,10 @@ a.teal {
 .text-pink { color: $pink; }
 .text-gold { color: $gold; }
 .text-yellow { color: $yellow; }
+.text-purple { color: $purple; }
 input[type=text],
 input[type=password] {
    color: black;
-   letter-spacing: .8px;
    font-size: 16px;
 }
 
@@ -100,6 +103,8 @@ i.options-menu {
       right: 100px;
       top: 12px;
       input[type=text] {
+         @include customFont();
+         letter-spacing: .8px;
          width: 220px;
       }
       i {
@@ -150,7 +155,7 @@ i.options-menu {
          text-align: left;
          position: relative;
          top: 5px;
-         letter-spacing: 1px;
+//         letter-spacing: 1px;
          font-size: 14px;
          left: 10px;
          span {
@@ -229,27 +234,26 @@ i.options-menu {
    h4 {
       //font-family: 'Yanone Kaffeesatz', sans-serif;
       //letter-spacing: 1px;
-      color: #333;
+      color: black;
+      font-weight: bold;
    }
 }
 .modal-body {
+   padding: 15px;
    @include border-radius(0 0 6px 6px);
    background-color: #f8f8f8;
    .list-group {
       margin: 0;
    }
    input[type=text], input[type=password] {
-//      @include border-radius(0);
       background: white;
       color: black;
-      letter-spacing: .8px;
       font-size: 16px;
-      //border: none;
-//      padding: 15px;
       height: auto;
-      &:first-child {
-         margin-bottom: 20px;
-      }
+      padding: 10px;
+   }
+   input[type=text] {
+      margin-bottom: 15px;
    }
 }
 .modal-content {
@@ -262,7 +266,8 @@ i.options-menu {
    margin: 0;
    button {
       //display: block;
-      width: 48%;
+      @include customFont();
+      width: 49%;
       //padding: 10px;
       font-size: 16px;
       letter-spacing: 1px;
@@ -270,15 +275,17 @@ i.options-menu {
          text-decoration: none;
       }
    }
+   padding: 15px;
+   label.checkbox {
+      margin-top: 5px;
+      margin-bottom: 15px;
+   }
 }
 
 // Login
 #login {
    .modal-footer {
-      label.checkbox {
-         margin-top: 5px;
-         margin-bottom: 15px;
-      }
+
    }
 }
 
@@ -288,7 +295,7 @@ i.options-menu {
       padding: 15px;
       button {
 //         display: block;
-         width: 48%;
+         width: 49%;
          margin-bottom: 10px;
          font-size: 16px;
          letter-spacing: 1px;
@@ -315,22 +322,44 @@ i.options-menu {
       border: 1px solid transparent;
       cursor: pointer;
       width: 100%;
-      height: 90px;
+      height: 98px;
       //background: rgba(0,0,0,.8);
       @include border-radius(6px);
       text-align: center;
       color: white;
       position: relative;
+      padding-top: 3px;
       svg {
          cursor: pointer;
-         //fill: white;
          height: 56px;
          margin: 5px 0;
-         //path { fill: white; }
+         fill: white;
+         * { fill: white; }
       }
       p {
          cursor: pointer;
          margin: 0;
+         margin-top: 4px;
+      }
+      &.svg-teal svg {
+         fill: $teal;
+         * { fill: $teal; }
+      }
+      &.svg-pink svg {
+         fill: $pink;
+         * { fill: $pink; }
+      }
+      &.svg-gold svg {
+         fill: $gold;
+         * { fill: $gold; }
+      }
+      &.svg-yellow svg {
+         fill: $yellow;
+         * { fill: $yellow; }
+      }
+      &.svg-purple svg {
+         fill: $purple;
+         * { fill: $purple; }
       }
       &[data-page='now-playing'] {
          //svg { height: 50px; }
@@ -348,25 +377,38 @@ i.options-menu {
    }
 }
 
-// Browse By Artist List
+// Browse By Artist
 #browse-by-artist {
-   div.modal-body {
-      @include border-radius(0 0 6px 6px);
-      padding: 0;
+   #browse-by-artist-list {
+      * { cursor: pointer; }
+      cursor: pointer;
+      border-bottom: 1px solid black;
+      position: fixed;
+      top: 100px;
+      z-index: 2;
+      width: 100%;
+      &.bg-teal { background: $teal; }
+      &.bg-pink { background: $pink; }
+      &.bg-gold { background: $gold; }
+      &.bg-yellow { background: $yellow; }
+      &.bg-purple { background: $purple; }
       h4 {
+         color: black;
+         font-weight: bold;
          margin: 0 15px;
          position: absolute;
          z-index: 1;
-         top: 15px;
+         top: 11px;
       }
       i.icon-chevron-sign-down {
+         color: black;
          position: absolute;
          font-size: 20px;
          right: 15px;
-         top: 15px;
+         top: 11px;
       }
       select.form-control {
-         height: 50px;
+         height: 40px;
          @include opacity(0);
          position: relative;
          z-index: 5;
@@ -374,25 +416,15 @@ i.options-menu {
          right: -10px;
       }
    }
-   div.modal-footer {
-      //background: white;
-      border: none;
-      padding: 0;
-      text-align: left;
-      #browse-by-artist-mixes {
-         display:none;
-         a.list-group-item {
-            @include border-radius(0);
-            border-left: none;
-            border-right: none;
-            &:last-child {
-               @include border-radius(0 0 6px 6px);
-            }
-            &.current-mix,
-            &:hover {
-               color: white;
-               background: $pink;
-            }
+   #browse-by-artist-mixes {
+      display:none;
+      a.list-group-item {
+         @include border-radius(0);
+         border-left: none;
+         border-right: none;
+         &.current-mix,
+         &:hover {
+            background: #f3f3f3;
          }
       }
    }
@@ -406,13 +438,8 @@ i.options-menu {
          @include border-radius(0);
          border-left: none;
          border-right: none;
-         &:last-child {
-            //@include border-radius(0 0 6px 6px);
-         }
          &.current-mix,
          &:hover {
-//            * { color: white; }
-//            color: white;
             background: #f3f3f3;
          }
       }
@@ -458,32 +485,35 @@ i.options-menu {
          display: none;
          top: 60PX;
          background: black;
+         //@include bg-image('textures/black_mamba.png');
          z-index: 10;
-         height: auto;
+         height: 40px;
          i {
-            color: white;
-            float: left;
-            font-size: 24px;
-            margin: 11px;
             &.icon-remove {
+               font-size: 22px;
+               margin: 9px 15px 0;
                color: #666;
                cursor: pointer;
                &:hover { color: white; }
             }
          }
          h3 {
+            font-weight: bold;
             float: left;
-            margin: 11px 0 0;
-            font-size: 22px;
+            margin: 11px 15px 0;
+            font-size: 18px;
          }
       }
       &.content {
          display:none;
          z-index: 6;
-         padding-top: 105px;
+         padding-top: 102px;
          padding-bottom: 90px;
          overflow: scroll;
          overflow-x: hidden;
+         &.pt140 {
+            padding-top: 140px;
+         }
       }
    }
 }
@@ -525,9 +555,10 @@ i.options-menu {
             float: left;
          }
          p {
-            font-size: 22px;
+            font-size: 18px;
             position: relative;
             top: 28px;
+            @include text-shadow(0px 1px 1px black);
          }
       }
    }

@@ -26,7 +26,7 @@ $tpl->desktop = array(
         array(
             'requires_login' => 0,
             'requires_ajax' => 1,
-            'title' => 'Browse By Artist',
+            'title' => 'Browse Artists',
             'name' => 'browse-by-artist'
         ),
         array(

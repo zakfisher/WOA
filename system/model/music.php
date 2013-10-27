@@ -20,7 +20,7 @@ class MusicModel {
         return $results;
     }
 
-    public function getTrackById($musicId) {
+    public function getMixById($musicId) {
         $db = new DB();
         $results = $db->select_from_where(array('*'), 'music', 'music_id', $musicId);
         return $results;
@@ -28,11 +28,14 @@ class MusicModel {
 
     public function makeArtistList() {
         $db = new DB();
-        $results = $db->select_from_group_by(array('artist'), 'music', 'artist');
+        $results = $db->select_from(array('artist'), 'music');
         $response = array();
         foreach ($results as $obj) {
-            $response[] = $obj['artist'];
+            if (!in_array($obj['artist'], $response)) {
+                $response[] = $obj['artist'];
+            }
         }
+        sort($response);
         return $response;
     }
 

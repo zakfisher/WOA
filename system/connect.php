@@ -21,4 +21,5 @@ else
 }
 
 $db = mysqli_connect($host, $u, $p, $db_name);
+//$db = new PDO("mysql:host=$host;dbname=$db_name", $u, $p);
 if (!$db) die('Database connection failed: '.mysqli_connect_error());
