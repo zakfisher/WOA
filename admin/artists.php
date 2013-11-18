@@ -4,12 +4,14 @@ require_once('../system/model/admin.php');
 require_once('../system/controller/admin.php');
 if (!$user->isLoggedIn()) $user->logout('/admin/');
 
+// Local Vars
 $admin = new AdminController();
 
+// Global Vars
 $tpl->page    = 'Admin Panel';
-//$tpl->actions = $admin->getActions();
 $tpl->user = $user->getUser();
-$tpl->section = 'users';
+$tpl->section = 'artists';
+$tpl->actions = $admin->getActions('artists');
 
 // Handle Form Submission
 if (isset($_POST['submit'])) {
@@ -25,8 +27,10 @@ if (isset($tpl->action) && !empty($tpl->action)) {
     }
 }
 
+// Get Message
 $tpl->message = $admin->getMessage();
 
+// Display Templates
 $tpl->display('templates/header.tpl.php');
 $tpl->display('templates/navigation.tpl.php');
 $tpl->display('templates/actions.tpl.php');

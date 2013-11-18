@@ -104,6 +104,7 @@ cake = new function() {
                 p.setCurrentMix(mixesById[i].music_id);
                 player.fadeIn();
                 $('[data-app=random-mix] div.desktop-icon').removeClass('disabled');
+                $('[data-app=now-playing] div.desktop-icon').removeClass('disabled');
             });
             $(document).on('click', togglePlayerBtn, p.toggleDisplay);
             $(document).on('click', addToPlaylistBtn, p.toggleFavoriteMix);
@@ -150,9 +151,10 @@ cake = new function() {
         var content = id + ' div.content';
         var innerContent = content + ' div.inner';
         a.hideApp = function() {
+            $('#loading').hide();
             $('#app').fadeOut();
             $(header).hide();
-            $(content).hide().removeClass('pt140');
+            $(content).hide();
             $(innerContent).html('');
         };
         a.showApp = function() {
@@ -160,7 +162,8 @@ cake = new function() {
             $('#loading').show();
         };
         a.setTitle = function(title) {
-            $(header).find('h3').html(title).removeClass('text-teal text-pink text-gold text-yellow').addClass('text-' + c.Helpers.getRandomColor(['gold','yellow','teal','pink']));
+            //$(header).find('h3').html(title).removeClass('text-teal text-pink text-gold text-yellow').addClass('text-' + c.Helpers.getRandomColor(['gold','yellow','teal','pink']));
+            $(header).find('h3').html(title).addClass('text-pink');
         };
         a.displayTemplate = function(template, callback) {
             a.showApp();
@@ -211,8 +214,14 @@ cake = new function() {
         };
         a.NowPlaying = new function() {
             var app = this;
+            var id = '#now-playing';
+            var info = id + ' div.info';
             app.start = function() {
                 a.setTitle('Now Playing');
+                $(info).append('<h4>' + c.Player.currentMix.cache.artist + '</h4>');
+                $(info).append('<h5>' + c.Player.currentMix.cache.title + '</h5>');
+                $(info).append('<h5>' + c.Player.currentMix.cache.duration + '</h5>');
+                $(info).append('<h5>Added ' + c.Player.currentMix.cache.added + '</h5>');
             };
             app.init = function() {};
         };
@@ -251,8 +260,8 @@ cake = new function() {
             };
             app.start = function() {
                 a.setTitle('Browse by Artist');
-                $(content).addClass('pt140');
-                $(artistListContainer).addClass('bg-' + c.Helpers.getRandomColor(['gold','yellow','teal','pink'])).append('<select class="form-control" name="artist"><option disabled>Select Artist</option></select>');
+                //$(artistListContainer).addClass('bg-' + c.Helpers.getRandomColor(['gold','yellow','teal','pink'])).append('<select class="form-control" name="artist"><option disabled>Select Artist</option></select>');
+                $(artistListContainer).addClass('bg-pink').append('<select class="form-control" name="artist"><option disabled>Select Artist</option></select>');
                 var i = 0;
                 for (var artist in c.MixesByArtist) {
                     $(artistSelect).append('<option value="' + artist + '">' + artist + ' (' + c.MixesByArtist[artist].length + ')' + '</option>');
@@ -274,7 +283,8 @@ cake = new function() {
             var app = this;
             var id = '#search-results';
             app.start = function() {
-                //c.Modal.getTitleNode().append('<span class="text-teal default-font">' + c.User.first_name + ' ' + c.User.last_name + '</span>');
+                a.setTitle('Search');
+
             };
             app.init = function() {
 
@@ -774,7 +784,7 @@ cake = new function() {
             });
         };
     };
-    c.init = function() {
+    (function() {
         c.isLoggedIn = $('#is-logged-in').length > 0;
         if (c.isLoggedIn) {
             $('#is-logged-in').remove();
@@ -795,6 +805,5 @@ cake = new function() {
         c.Modal.init();
         c.App.init();
         c.Page.init();
-    };
+    })();
 };
-$(cake.init);

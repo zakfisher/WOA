@@ -13,7 +13,7 @@ $tpl->desktop = array(
     'apps' => array(
         array(
             'requires_login' => 0,
-            'requires_ajax' => 0,
+            'requires_ajax' => 1,
             'title' => 'Now Playing',
             'name' => 'now-playing'
         ),

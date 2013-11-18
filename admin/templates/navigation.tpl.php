@@ -15,8 +15,9 @@
     <div class="container">
         <ul class="nav navbar-nav">
             <li class="<?=$this->section=='music'?'active':''?>"><a href="/admin">Music</a></li>
+            <li class="<?=$this->section=='artists'?'active':''?>"><a href="/admin/artists">Artists</a></li>
             <li class="<?=$this->section=='users'?'active':''?>"><a href="/admin/users">Users</a></li>
-            <li><a href="/" target="_blank">View Product</a></li>
+            <li><a href="/" target="_blank">EDM cake</a></li>
 <!--            <li class="dropdown --><?//=$this->section=='documentation'?'active':''?><!--">-->
 <!--                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>-->
 <!--                <ul class="dropdown-menu" role="menu">-->

@@ -47,6 +47,12 @@ class AdminController {
                     'description' => 'Get list of artists and update data.'
                 )
             ),
+            'artists' => array(
+                'fetch-fb-ids' => array(
+                    'title' => 'Fetch FB IDs',
+                    'description' => 'Search FB Graph for artist page ids.'
+                ),
+            ),
             'users' => array()
         );
         return $actions[$section];
@@ -55,6 +61,7 @@ class AdminController {
     public function executeAction($action) {
         $results = array();
         switch ($action) {
+            // Music
             case 'import-new-tracks':
                 $results = $this->importNewTracks();
                 break;
@@ -63,6 +70,10 @@ class AdminController {
                 break;
             case 'update-artist-list':
                 $results = $this->getArtistList();
+                break;
+            // Artists
+            case 'fetch-fb-ids':
+                $results = $this->fetchArtistFBIDs();
                 break;
         }
         return $results;
@@ -123,7 +134,7 @@ class AdminController {
         $model = new AdminModel();
         $response = $model->updateMissingData($params);
         if ($response) {
-            $track = $music->getTrackById($params['music_id']);
+            $track = $music->getMixById($params['music_id']);
             $track = $track[0];
             $this->setMessage('success', 'Updated (music_id = ' . $track['music_id'] . '): ' . $track['artist'] . ' - ' . $track['title']);
         }
@@ -135,7 +146,7 @@ class AdminController {
     public function deleteTrack($params) {
         $music = new MusicModel();
         $model = new AdminModel();
-        $track = $music->getTrackById($params['music_id']);
+        $track = $music->getMixById($params['music_id']);
         $track = $track[0];
         $response = $model->deleteTrack($params['music_id']);
         if ($response) {
@@ -165,4 +176,33 @@ class AdminController {
         }
     }
 
+    public function findFBIDbyArtist($artist) {
+        $fb = new FB();
+        $artistId = $fb->graph('search?q=' . $artist . '&type=page');
+        return  $artistId;
+    }
+
+    public function fetchArtistFBIDs() {
+        $fb = new FB();
+        $music = new MusicController();
+        $artists = $music->listArtists();
+        $results = array('total' => count($artists),'attempted' => 0, 'found' => 0);
+        foreach ($artists as $i => $artist) {
+            $curl = $fb->graph('search?q=' . $artist . '&type=page&category=musician');
+            $firstResult = $curl['data'][0];
+            if (isset($firstResult)) {
+                $j = 0;
+                while ($j < count($curl['data'])) {
+                    if ($firstResult['category'] == 'Musician/band') {
+                        $results['results'][$artist] = $firstResult['id'];
+                        $results['found']++;
+                        break;
+                    }
+                    $j++;
+                }
+            }
+            $results['attempted']++;
+        }
+        return $results;
+    }
 }

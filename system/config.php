@@ -14,9 +14,11 @@ require_once('../system/libraries/getID3-1.9.7/getid3/getid3.php');
 
 /** Utilities **/
 require_once('../system/utilities/browser.php');
+require_once('../system/utilities/curl.php');
 require_once('../system/utilities/date.php');
 require_once('../system/utilities/db.php');
 require_once('../system/utilities/email.php');
+require_once('../system/utilities/facebook.php');
 require_once('../system/utilities/import.php');
 require_once('../system/utilities/json.php');
 require_once('../system/utilities/text.php');
@@ -37,9 +39,9 @@ $tpl = new Savant3();
 // Browser Settings
 $browser = new Browser();
 $tpl->browser = $browser->get_browser_info();
-
+//JSON::print_array($tpl->browser);
 // Check for IE 8 and below
-if ($tpl->browser['short_name'] == 'msie' AND $tpl->browser['version'] <= 8) {
-    echo "Please upgrade your browser.";
-    exit;
-}
+//if ($tpl->browser['short_name'] == 'msie' AND $tpl->browser['version'] <= 8) {
+//    echo "Please upgrade your browser.";
+//    exit;
+//}
