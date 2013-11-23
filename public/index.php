@@ -13,33 +13,28 @@ $tpl->desktop = array(
     'apps' => array(
         array(
             'requires_login' => 0,
-            'requires_ajax' => 1,
+            'title' => 'Random',
+            'name' => 'random-mix'
+        ),
+        array(
+            'requires_login' => 0,
             'title' => 'Now Playing',
             'name' => 'now-playing'
         ),
         array(
-            'requires_login' => 1,
-            'requires_ajax' => 0,
-            'title' => 'My Playlist',
-            'name' => 'my-playlist'
-        ),
-        array(
             'requires_login' => 0,
-            'requires_ajax' => 1,
             'title' => 'Artists',
             'name' => 'browse-by-artist'
         ),
         array(
             'requires_login' => 0,
-            'requires_ajax' => 1,
             'title' => 'Latest',
             'name' => 'latest-mixes'
         ),
         array(
-            'requires_login' => 0,
-            'requires_ajax' => 1,
-            'title' => 'Random',
-            'name' => 'random-mix'
+            'requires_login' => 1,
+            'title' => 'My Playlist',
+            'name' => 'my-playlist'
         )
     )
 );

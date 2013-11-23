@@ -118,4 +118,9 @@ class MusicController {
         $model = new MusicModel();
         return $model->makeBrowseByDateList();
     }
+
+    public function updateRow($updateVals, $where) {
+        $model = new MusicModel();
+        return $model->updateRow($updateVals, $where);
+    }
 }

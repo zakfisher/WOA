@@ -9,8 +9,9 @@ $admin = new AdminController();
 
 // Global Vars
 $tpl->page    = 'Admin Panel';
-$tpl->user = $user->getUser();
+$tpl->user    = $user->getUser();
 $tpl->section = 'artists';
+$tpl->action  = $_GET['action'];
 $tpl->actions = $admin->getActions('artists');
 
 // Handle Form Submission
@@ -33,5 +34,13 @@ $tpl->message = $admin->getMessage();
 // Display Templates
 $tpl->display('templates/header.tpl.php');
 $tpl->display('templates/navigation.tpl.php');
-$tpl->display('templates/actions.tpl.php');
+$tpl->display('templates/message.tpl.php');
+if (empty($tpl->action)) {
+    $tpl->display('templates/actions.tpl.php');
+}
+else {
+    if (file_exists('templates/artists/' . $tpl->action . '.tpl.php')) {
+        $tpl->display('templates/artists/' . $tpl->action . '.tpl.php');
+    }
+}
 $tpl->display('templates/footer.tpl.php');

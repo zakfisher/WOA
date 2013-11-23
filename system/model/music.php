@@ -60,4 +60,10 @@ class MusicModel {
         }
         return $response;
     }
+
+    public function updateRow($updateVals, $where) {
+        $db = new DB();
+        $results = $db->update_where('music', $updateVals, $where['key'], $where['val']);
+        return $results;
+    }
 }

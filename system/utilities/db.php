@@ -6,7 +6,7 @@ class DB {
     {
         global $db;
         //print $query; exit;
-        $result_set = mysqli_query($db, $query) or die("Error at resultset" . mysqli_error($db));
+        $result_set = mysqli_query($db, $query) or die("Error at resultset " . mysqli_error($db) . ' QUERY: ' . $query);
         if (!$result_set) return array('error' => '#1 Invalid query: ' . mysqli_error($db));
         return $result_set;
     }
@@ -152,7 +152,8 @@ class DB {
             $new_values[] = $key . " = '" . $db->real_escape_string($val) . "'";
         }
         $new_values = implode(",", $new_values);
-        $query = "UPDATE " . $table . " SET " . $new_values . " WHERE " . $column . " = " . $value . ";";
+        $query = "UPDATE " . $table . " SET " . $new_values . " WHERE " . $column . " = " . $db->real_escape_string($value) . ";";
+//        print $query; exit;
 
         // Execute Query
         $this->query($query);

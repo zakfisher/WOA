@@ -176,33 +176,42 @@ class AdminController {
         }
     }
 
-    public function findFBIDbyArtist($artist) {
-        $fb = new FB();
-        $artistId = $fb->graph('search?q=' . $artist . '&type=page');
-        return  $artistId;
-    }
-
     public function fetchArtistFBIDs() {
         $fb = new FB();
+        $db = new DB();
         $music = new MusicController();
         $artists = $music->listArtists();
-        $results = array('total' => count($artists),'attempted' => 0, 'found' => 0);
+        $results = array(
+            'customData' => array(
+                'total' => count($artists),
+                'attempted' => 0,
+                'found' => 0,
+                'updated' => 0
+            )
+        );
         foreach ($artists as $i => $artist) {
             $curl = $fb->graph('search?q=' . $artist . '&type=page&category=musician');
-            $firstResult = $curl['data'][0];
-            if (isset($firstResult)) {
+            if (!empty($curl['data'])) {
                 $j = 0;
                 while ($j < count($curl['data'])) {
-                    if ($firstResult['category'] == 'Musician/band') {
-                        $results['results'][$artist] = $firstResult['id'];
-                        $results['found']++;
+                    if ($curl['data'][$j]['category'] == 'Musician/band') {
+                        $results['results'][$artist] = $curl['data'][$j]['id'];
+                        $results['customData']['found']++;
+                        $mixes = $db->select_from_where(array('*'), 'music', 'artist', $artist);
+                        foreach ($mixes as $mix) {
+                            if ($mix['fbid'] === null) {
+                                $music->updateRow(array('fbid' => $curl['data'][$j]['id']), array('key' => 'music_id', 'val' => $mix['music_id']));
+                                $results['customData']['updated']++;
+                            }
+                        }
                         break;
                     }
                     $j++;
                 }
             }
-            $results['attempted']++;
+            $results['customData']['attempted']++;
         }
+        $this->setMessage('success', $results['customData']['total'] . ' total. ' . $results['customData']['attempted'] . ' attempted. ' . $results['customData']['found'] . ' found. ' . $results['customData']['updated'] . ' updated. ');
         return $results;
     }
 }

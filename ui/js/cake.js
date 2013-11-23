@@ -33,23 +33,26 @@ cake = new function() {
         p.isPlaying = function() {
             return $('button[title="Play/Pause"]').parents('.mejs-button').is('.mejs-pause');
         };
+        p.isOpen = function() {
+            return player.is('.open');
+        };
         p.toggleDisplay = function() {
             var icon = $(togglePlayerBtn).find('i');
             if (icon.is('.icon-chevron-up')) {
                 icon.removeClass('icon-chevron-up').addClass('icon-chevron-down');
-                player.animate({
+                player.addClass('open').animate({
                     bottom: '0'
                 }, 300);
-                $('#app div.content').animate({
+                $('#app div.inner span').animate({
                     paddingBottom: '90px'
                 }, 300);
             }
             else {
                 icon.addClass('icon-chevron-up').removeClass('icon-chevron-down');
-                player.animate({
+                player.removeClass('open').animate({
                     bottom: '-60px'
                 }, 300);
-                $('#app div.content').animate({
+                $('#app div.inner span').animate({
                     paddingBottom: '30px'
                 }, 300);
             }
@@ -61,7 +64,7 @@ cake = new function() {
             var url = 'http://www.worldofanarchy.com/_WOA/music/' + mix.url;
             var audio = $('audio');
             audio.attr('src', url);
-            player.find('div.now-playing p').html('<b><span class="text-' + c.Helpers.getRandomColor(['gold','yellow','teal','pink']) + ' default-font">' + mix.artist + '</span></b> <span style="font-size:12px;">' + mix.title + '</span>');
+            player.find('div.now-playing p').html('<b><span class="text-' + c.Helpers.getRandomColor(['teal','pink']) + ' default-font">' + mix.artist + '</span></b> <span style="font-size:12px;">' + mix.title + '</span>');
             p.currentMix = new MediaElementPlayer(audio, {
                 alwaysShowHours: true,
                 success: function(mediaElement, domObject) {
@@ -103,8 +106,8 @@ cake = new function() {
                 }
                 p.setCurrentMix(mixesById[i].music_id);
                 player.fadeIn();
-                $('[data-app=random-mix] div.desktop-icon').removeClass('disabled');
-                $('[data-app=now-playing] div.desktop-icon').removeClass('disabled');
+                c.App.NowPlaying.loaded = true;
+                c.App.RandomMix.loaded = true;
             });
             $(document).on('click', togglePlayerBtn, p.toggleDisplay);
             $(document).on('click', addToPlaylistBtn, p.toggleFavoriteMix);
@@ -150,15 +153,16 @@ cake = new function() {
         var header = id + ' div.header';
         var content = id + ' div.content';
         var innerContent = content + ' div.inner';
+        var span = innerContent + ' > span';
         a.hideApp = function() {
             $('#loading').hide();
-            $('#app').fadeOut();
+            $('#app').hide();
             $(header).hide();
             $(content).hide();
             $(innerContent).html('');
         };
         a.showApp = function() {
-            $('#app').fadeIn('fast');
+            $('#app').show();
             $('#loading').show();
         };
         a.setTitle = function(title) {
@@ -167,14 +171,13 @@ cake = new function() {
         };
         a.displayTemplate = function(template, callback) {
             a.showApp();
-            template = '/apps/' + template + '.tpl.php';
-            if (typeof callback == 'undefined') $(content).load(template);
-            else $(innerContent).load(template, function() {
-                callback();
-                $(header).fadeIn('fast');
-                $(content).fadeIn('fast');
-                $('#loading').hide();
-            });
+            Handlebars.renderTemplate(template, {}, innerContent);
+            if (typeof callback !== 'undefined') callback();
+            $(header).show();//.fadeIn('fast');
+            $(content).show();//.fadeIn('fast');
+            $('#loading').hide();
+            var padding = c.Player.isOpen() ? 90 : 30;
+            $(span).css({paddingBottom: padding + 'px'});
         };
         a.render = function(e) {
             var target = $(e.target).is('[data-app]') ? $(e.target) : $(e.target).parents('[data-app]');
@@ -207,14 +210,26 @@ cake = new function() {
             for (var module in a) {
                 for (var method in a[module]) {
                     if (method == 'init') {
-                        a[module][method]();
+                        a[module].init();
                     }
                 }
             }
+            var int = setInterval(function() {
+                var loadingComplete = (a.NowPlaying.loaded &&
+                                       a.RandomMix.loaded &&
+                                       a.BrowseByArtist.loaded &&
+                                       a.LatestMixes.loaded);
+                if (loadingComplete) {
+                    clearInterval(int);
+                    $('#loading-page').fadeOut('fast');
+                    $('div.desktop-icon').removeClass('disabled');
+                }
+            }, 300);
         };
         a.NowPlaying = new function() {
             var app = this;
             var id = '#now-playing';
+            var artwork = id + ' div.artwork';
             var info = id + ' div.info';
             app.start = function() {
                 a.setTitle('Now Playing');
@@ -222,6 +237,10 @@ cake = new function() {
                 $(info).append('<h5>' + c.Player.currentMix.cache.title + '</h5>');
                 $(info).append('<h5>' + c.Player.currentMix.cache.duration + '</h5>');
                 $(info).append('<h5>Added ' + c.Player.currentMix.cache.added + '</h5>');
+                if (c.Player.currentMix.cache.fbid !== null) {
+                    $(id).prepend('<div class="artwork pull-left"></div>');
+                    $(artwork).append('<img src="https://graph.facebook.com/' + c.Player.currentMix.cache.fbid + '/picture?width=200&height=200" />');
+                }
             };
             app.init = function() {};
         };
@@ -273,7 +292,7 @@ cake = new function() {
             app.init = function() {
                 $.get(c.API.music.getBrowseByArtistList, function(mixesByArtist) {
                     c.MixesByArtist = mixesByArtist;
-                    $('[data-app=browse-by-artist] div.desktop-icon').removeClass('disabled');
+                    app.loaded = true;
                 });
                 $(document).on('change', artistSelect, app.renderMixList);
                 $(document).on('click', mix, app.selectMix);
@@ -341,7 +360,7 @@ cake = new function() {
                         return 0;
                     });
                     c.MixesByDate = mixesByDate;
-                    $('[data-app=latest-mixes] div.desktop-icon').removeClass('disabled');
+                    app.loaded = true;
                 });
                 $(document).on('click', mix, app.selectMix);
             };
@@ -385,13 +404,9 @@ cake = new function() {
             $(message).show().addClass('alert-' + type).find('p').html(msg);
         };
         m.displayTemplate = function(template, callback) {
-            template = '/modals/' + template + '.tpl.php';
-            if (typeof callback == 'undefined') $(content).load(template);
-            else $(content).load(template, function() {
-                callback();
-                $('div.modal-content').fadeIn();
-                $('#loading').hide();
-            });
+            Handlebars.renderTemplate(template, {}, content);
+            if (typeof callback !== 'undefined') callback();
+            $('div.modal-content').show();
         };
         m.render = function(e) {
             var target = $(e.target).is('[data-modal]') ? $(e.target) : $(e.target).parents('[data-modal]');
@@ -421,6 +436,7 @@ cake = new function() {
             });
             modal.on('shown.bs.modal', function () {
                 $('div.modal-content').removeClass('hidden');
+                $('#loading').hide();
             });
             for (var module in m) {
                 for (var method in m[module]) {
@@ -463,6 +479,7 @@ cake = new function() {
                     $.cookie('username', null);
                     $.cookie('password', null);
                 }
+                c.Page.setCookies();
                 $.post(c.API.user.login, POST, function(data) {
                     if (data.success) {
                         if (rememberMe) {
@@ -475,13 +492,13 @@ cake = new function() {
                         c.Modal.displayMessage('danger', data.error);
                     }
                 })
-                    .error(function() {
-                        //c.Modal.displayMessage('danger', 'Unable to reach server.');
-                    });
+                .error(function() {
+                    //c.Modal.displayMessage('danger', 'Unable to reach server.');
+                });
             };
             modal.start = function() {
                 if ($.cookie('username') !== null && $.cookie('password') !== null) {
-                    $(id).find('input[value=remember-me]').prop('checked', true);
+                    $(id).find('input[value=remember-me]').click();
                     $(id).find('input[name=username]').val($.cookie('username'));
                     $(id).find('input[name=password]').val($.cookie('password'));
                 }
@@ -746,13 +763,13 @@ cake = new function() {
                     break;
             }
         };
-        p.refresh = function() {
+        p.setCookies = function() {
             $.cookie('current-mix-id', c.Player.getCurrentMixId());
             $.cookie('current-mix-time', c.Player.currentMix.getCurrentTime());
             $.cookie('current-mix-playing', c.Player.isPlaying());
         };
         p.init = function() {
-            $(window).bind('beforeunload', p.refresh);
+            $(window).bind('beforeunload', p.setCookies);
             $(document).on('keydown', document, p.keydown);
         };
     };
