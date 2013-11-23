@@ -26,19 +26,19 @@ $tpl->desktop = array(
         array(
             'requires_login' => 0,
             'requires_ajax' => 1,
-            'title' => 'Browse Artists',
+            'title' => 'Artists',
             'name' => 'browse-by-artist'
         ),
         array(
             'requires_login' => 0,
             'requires_ajax' => 1,
-            'title' => 'Latest Mixes',
+            'title' => 'Latest',
             'name' => 'latest-mixes'
         ),
         array(
             'requires_login' => 0,
             'requires_ajax' => 1,
-            'title' => 'Random Mix',
+            'title' => 'Random',
             'name' => 'random-mix'
         )
     )

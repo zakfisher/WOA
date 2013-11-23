@@ -1,5 +1,5 @@
     </div>
-    <div id="player">
+    <div id="player" class="open">
         <div class="toggle-player-bar">
             <i class="icon-chevron-down"></i>
         </div>
@@ -18,5 +18,7 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/ui/js/media-element/build/mediaelement-and-player.min.js"></script>
 <script type="text/javascript" src="/ui/js/cookie.js"></script>
+<script type="text/javascript" src="/ui/js/handlebars.js"></script>
+<script type="text/javascript" src="/ui/js/helpers.js"></script>
 <script type="text/javascript" src="/ui/js/cake.js"></script>
 </html>
