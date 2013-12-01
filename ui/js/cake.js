@@ -79,6 +79,9 @@ cake = new function() {
                         $.cookie('current-mix-time', null);
                         $.cookie('current-mix-playing', null);
                     }, false);
+                    mediaElement.addEventListener('ended', function(e) {
+                        c.App.RandomMix.selectRandomMix();
+                    }, false);
                 }
             });
             p.currentMix.cache = mix;
@@ -209,9 +212,9 @@ cake = new function() {
                 case 'browse-by-artist':
                     a.displayTemplate('browse-by-artist', a.BrowseByArtist.start);
                     break;
-                case 'search-results':
-                    a.displayTemplate('search-results', a.SearchResults.start);
-                    break;
+                case 'search':
+                    a.displayTemplate('search', a.Search.start);
+                     break;
                 case 'my-playlist':
                     a.displayTemplate('my-playlist', a.MyPlaylist.start);
                     break;
@@ -426,15 +429,72 @@ cake = new function() {
                 }
             };
         };
-        a.SearchResults = new function() {
+        a.Search = new function() {
             var app = this;
-            var id = '#search-results';
-            app.start = function() {
-                a.setTitle('Search');
-
-            };
+            var id = '#search';
+            var resultsContainer = '#search-results';
+            var mixLI = resultsContainer + ' a';
+            var input = 'input[name=search]';
+            var results, t;
             app.init = function() {
-
+                $(document).on('keyup', input, app.mirrorInputValues);
+                $(document).on('click', mixLI, app.selectMix);
+            };
+            app.start = function() {
+                $(goBackBtn).hide();
+                a.setTitle('Search');
+                app.mirrorInputValues();
+            };
+            app.mirrorInputValues = function(e) {
+                var value;
+                if (typeof e !== 'undefined') {
+                    value = $(e.currentTarget).val();
+                }
+                else {
+                    value = $($(input)[0]).val();
+                }
+                $(input).val(value);
+                app.executeSearch(value.toLowerCase().trim());
+            };
+            app.executeSearch = function(value) {
+                results = [];
+                clearTimeout(t);
+                var limit = 25;
+                $(c.MixArray).each(function(i, mix) {
+                    if (mix.title != null && mix.artist != null) {
+                        var artistMatch = mix.artist.toLowerCase().indexOf(value) > -1;
+                        var titleMatch = mix.title.toLowerCase().indexOf(value) > -1;
+                        if (artistMatch || titleMatch) results.push(mix);
+                        if (results.length > limit) return false;
+                    }
+                });
+                if (results.length == 0 || value == '') {
+                    Handlebars.renderTemplate('search-results', {noResults:true}, resultsContainer);
+                }
+                else {
+                    if ($(id).length > 0) t = setTimeout(app.renderResults, 1000);
+                }
+            };
+            app.renderResults = function() {
+                Handlebars.renderTemplate('search-results', {results:results}, resultsContainer);
+            };
+            app.selectMix = function(e) {
+                var musicId = $(e.target).attr('data-music-id');
+                var isCurrentMix = (musicId == c.Player.getCurrentMixId());
+                if (isCurrentMix) {
+                    if (c.Player.isPlaying()) {
+                        $(mixLI + '.current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
+                    }
+                    else {
+                        $(mixLI + '.current-mix').find('i').addClass('icon-pause').removeClass('icon-play');
+                    }
+                    c.Player.playPause();
+                }
+                else { // Play New Mix
+                    $(mixLI).removeClass('current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
+                    $(e.target).addClass('current-mix').find('i').removeClass('icon-play').addClass('icon-pause');
+                    c.Player.setCurrentMix(musicId, true);
+                }
             };
         };
         a.MyPlaylist = new function() {
@@ -907,7 +967,7 @@ cake = new function() {
         p.init = function() {
             $(window).bind('beforeunload', p.setCookies);
             $(document).on('keydown', document, p.keydown);
-            $(window).on('resize', window, p.resize);
+            $(window).resize(p.resize);
         };
     };
     c.Facebook = new function() {

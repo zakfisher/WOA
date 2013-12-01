@@ -13,13 +13,13 @@
     <!-- Search Bar -->
     <form class="navbar-form" role="search">
         <div class="form-group">
-            <i class="icon-search pull-right" data-app="search-results"></i>
-            <input type="text" list="mix-list" class="form-control pull-right" placeholder="Search artists, events, & mixes.">
-            <!--                <datalist id="mix-list">-->
-            <!--                    <option>EDX</option>-->
-            <!--                    <option>Avicii</option>-->
-            <!--                    <option>Steve Aoki</option>-->
-            <!--                </datalist>-->
+            <i class="icon-search pull-right" data-app="search"></i>
+            <input type="text" list="mix-list" class="form-control pull-right" name="search" placeholder="Search" />
+<!--            <datalist id="mix-list">-->
+<!--                <option>EDX</option>-->
+<!--                <option>Avicii</option>-->
+<!--                <option>Steve Aoki</option>-->
+<!--            </datalist>-->
         </div>
     </form>
 </nav>

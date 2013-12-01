@@ -3,6 +3,7 @@ $color = array('', 'pink', 'teal', 'purple');
 ?>
 <div id="loading-page">
     <div class="lp-contents">
+        <div class="bg"></div>
         <img src="/images/loading-page.gif" />
     </div>
 </div>
