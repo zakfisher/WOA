@@ -13,6 +13,7 @@ require_once('../system/libraries/Savant3-3.0.1/Savant3.php');
 require_once('../system/libraries/getID3-1.9.7/getid3/getid3.php');
 
 /** Utilities **/
+require_once('../system/utilities/helpers.php');
 require_once('../system/utilities/browser.php');
 require_once('../system/utilities/curl.php');
 require_once('../system/utilities/date.php');

@@ -17,6 +17,7 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/ui/js/media-element/build/mediaelement-and-player.min.js"></script>
+<script type="text/javascript" src="/ui/js/jstween-1.1/jstween-1.1.min.js"></script>
 <script type="text/javascript" src="/ui/js/cookie.js"></script>
 <script type="text/javascript" src="/ui/js/handlebars.js"></script>
 <script type="text/javascript" src="/ui/js/helpers.js"></script>

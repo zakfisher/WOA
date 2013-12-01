@@ -66,7 +66,7 @@ a.navbar-brand {
    padding: 0;
    svg {
       height: 52px;
-      left: -20px;
+      left: -25px;
       position: relative;
       top: 3px;
    }
@@ -394,16 +394,16 @@ i.options-menu {
       width: 100px;
       height: 115px;
       margin: 0 auto;
-      background: black;
+//      background: black;
       position: absolute;
       top: 180px;
       left: 50%;
       margin-left: -50px;
       @include border-radius(6px);
       img {
+         width: 64px;
 //         margin-top: 200px;
-         //         width: 260px;
-         //         opacity: .5;
+      //         opacity: .5;
       }
       p {
          @include customFont();
@@ -458,6 +458,14 @@ i.options-menu {
          z-index: 10;
          height: 40px;
          i {
+            &.go-back {
+               display: none;
+               font-size: 22px;
+               margin: 9px 0 0 15px;
+               color: #666;
+               cursor: pointer;
+               &:hover { color: white; }
+            }
             &.icon-remove {
                font-size: 22px;
                margin: 9px 15px 0;
@@ -469,8 +477,9 @@ i.options-menu {
          h3 {
             font-weight: bold;
             float: left;
-            margin: 11px 15px 0;
+            margin: 11px 0 0 15px;
             font-size: 18px;
+            @include ellipsis(68%);
          }
       }
       &.content {
@@ -485,6 +494,9 @@ i.options-menu {
             position: relative;
             &> span {
                display: block;
+               div.pb {
+                  padding-bottom: 60px;
+               }
             }
          }
       }
@@ -521,57 +533,46 @@ i.options-menu {
 
 // Browse By Artist
 #browse-by-artist {
-   #browse-by-artist-list {
-      * { cursor: pointer; }
-      display: none;
-      cursor: pointer;
-      border-bottom: 1px solid black;
-      position: relative;
-      //position: fixed;
-      //top: 100px;
-      //z-index: 2;
-      width: 100%;
-      &.bg-teal { background: $teal; }
-      &.bg-pink { background: $pink; }
-      &.bg-gold { background: $gold; }
-      &.bg-yellow { background: $yellow; }
-      &.bg-purple { background: $purple; }
-      h4 {
-         color: black;
-         font-weight: bold;
-         margin: 0 15px;
-         position: absolute;
-         z-index: 1;
-         top: 11px;
+
+   a.list-group-item {
+      @include border-radius(0);
+      border-left: none;
+      border-right: none;
+      h2, h3 {
+         margin: 0;
       }
-      i.icon-chevron-sign-down {
-         color: black;
-         position: absolute;
-         font-size: 20px;
-         right: 15px;
-         top: 11px;
+      h3 {
+         font-size: 18px;
       }
-      select.form-control {
-         height: 40px;
-         @include opacity(0);
+      i.icon-chevron-sign-right {
+         font-size: 18px;
          position: relative;
-         z-index: 5;
-         @include box-shadow(none);
-         right: -10px;
+      }
+      &.current-mix,
+      &:hover {
+         background: #f3f3f3;
       }
    }
+
+   &> div {
+      * { cursor: pointer; }
+      cursor: pointer;
+      position: absolute;
+      width: 100%;
+   }
+
+   #browse-by-artist-letter {
+
+   }
+
+   #browse-by-artist-list {
+
+   }
+
    #browse-by-artist-mixes {
-      display:none;
-      a.list-group-item {
-         @include border-radius(0);
-         border-left: none;
-         border-right: none;
-         &.current-mix,
-         &:hover {
-            background: #f3f3f3;
-         }
-      }
+
    }
+
 }
 
 // Latest Mixes
@@ -592,6 +593,11 @@ i.options-menu {
 
 // Only Extra Small
 @media (max-width: 668px) {
+   #desktop {
+      div.desktop-icon svg {
+         width: 100%;
+      }
+   }
    #player {
       .toggle-player-bar {
          display: block;
@@ -610,6 +616,9 @@ i.options-menu {
          }
          i {}
       }
+   }
+   div.pb {
+      padding-bottom: 0;
    }
 }
 

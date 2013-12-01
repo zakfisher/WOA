@@ -18,7 +18,7 @@ $tpl->desktop = array(
         ),
         array(
             'requires_login' => 0,
-            'title' => 'Now Playing',
+            'title' => 'Current',
             'name' => 'now-playing'
         ),
         array(
@@ -51,5 +51,15 @@ $tpl->display('templates/header.tpl.php');
 $tpl->display('templates/navigation.tpl.php');
 $tpl->display('templates/modal.tpl.php');
 $tpl->display('templates/desktop.tpl.php');
+
+// Apps
 $tpl->display('templates/app.tpl.php');
+$tpl->display('templates/apps/browse-by-artist.tpl.php');
+$tpl->display('templates/apps/latest-mixes.tpl.php');
+$tpl->display('templates/apps/now-playing.tpl.php');
+$tpl->display('templates/apps/search.tpl.php');
+if ($tpl->isLoggedIn) {
+    $tpl->display('templates/apps/my-playlist.tpl.php');
+}
+
 $tpl->display('templates/footer.tpl.php');

@@ -44,7 +44,10 @@ class MusicModel {
         $results = $db->select_from_order_by(array('*'), 'music', 'artist');
         $response = array();
         foreach ($results as $row) {
-            $response[htmlentities($row['artist'])][] = $row;
+            $letter = strtoupper($row['artist'][0]);
+            if (is_numeric($letter)) $letter = '0-9';
+            $response['mixes'][$letter][htmlentities($row['artist'])][] = $row;
+            if (!in_array($letter, $response['letters'])) $response['letters'][] = $letter;
         }
         return $response;
     }
