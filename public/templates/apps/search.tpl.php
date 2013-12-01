@@ -1,6 +1,7 @@
 <!-- Search -->
 <script id="template-search" type="text/x-handlebars-template">
     <span id="search">
+        <img class="search-loading" src="/images/loading-page.gif" />
         <input type="text" name="search" list="mix-list" placeholder="..." />
         <div id="search-results" class="pb"></div>
     </span>

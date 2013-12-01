@@ -18,7 +18,7 @@ $tpl->desktop = array(
         ),
         array(
             'requires_login' => 0,
-            'title' => 'Current',
+            'title' => 'Now Playing',
             'name' => 'now-playing'
         ),
         array(

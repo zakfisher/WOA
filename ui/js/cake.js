@@ -119,8 +119,8 @@ cake = new function() {
     c.Slideshow = new function() {
         var s = this;
         var id = '#bg-image';
-        var currentImage = 4;
-        var totalImages = 4;
+        var totalImages = 8;
+        var currentImage = 1;
         s.adjustBGposition = function() {
             var imageWidth = $(id).width();
             var docWidth = $(document).width();
@@ -435,9 +435,14 @@ cake = new function() {
             var resultsContainer = '#search-results';
             var mixLI = resultsContainer + ' a';
             var input = 'input[name=search]';
+            var loading = id + ' img.search-loading';
             var results, t;
             app.init = function() {
                 $(document).on('keyup', input, app.mirrorInputValues);
+                $(document).on('submit', 'form.navbar-form', function(e) {
+                    e.preventDefault();
+                    $('[data-app=search]').click();
+                });
                 $(document).on('click', mixLI, app.selectMix);
             };
             app.start = function() {
@@ -460,6 +465,7 @@ cake = new function() {
                 results = [];
                 clearTimeout(t);
                 var limit = 25;
+                $(loading).show();
                 $(c.MixArray).each(function(i, mix) {
                     if (mix.title != null && mix.artist != null) {
                         var artistMatch = mix.artist.toLowerCase().indexOf(value) > -1;
@@ -470,13 +476,15 @@ cake = new function() {
                 });
                 if (results.length == 0 || value == '') {
                     Handlebars.renderTemplate('search-results', {noResults:true}, resultsContainer);
+                    $(loading).hide();
                 }
                 else {
-                    if ($(id).length > 0) t = setTimeout(app.renderResults, 1000);
+                    if ($(id).length > 0) t = setTimeout(app.renderResults, 300);
                 }
             };
             app.renderResults = function() {
                 Handlebars.renderTemplate('search-results', {results:results}, resultsContainer);
+                $(loading).hide();
             };
             app.selectMix = function(e) {
                 var musicId = $(e.target).attr('data-music-id');

@@ -34,7 +34,7 @@ body {
    position: fixed;
    top: 0;
    min-width: 100%;
-   @include opacity(.9);
+//   @include opacity(.8);
 }
 a.teal {
    color: $teal;
@@ -154,7 +154,14 @@ i.options-menu {
    z-index: 10;
    div.now-playing {
       height: 26px;
-      background: black;
+      background: rgb(69,72,77); /* Old browsers */
+      background: -moz-linear-gradient(top,  rgba(69,72,77,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(69,72,77,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
+      background: linear-gradient(to bottom,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
       border-top: 1px solid #333;
       p {
          color: white;
@@ -496,7 +503,6 @@ i.options-menu {
          display: none;
          top: 60PX;
          background: black;
-         //@include bg-image('textures/black_mamba.png');
          z-index: 10;
          height: 40px;
          i {
@@ -623,12 +629,19 @@ i.options-menu {
 //      border-bottom: 1px solid #ddd;
       padding: 5px 15px;
    }
+   img.search-loading {
+      display: none;
+      position: absolute;
+      right: 15px;
+      width: 24px;
+      top: 12px;
+   }
    #search-results {
       p {
          background: white;
          padding: 15px;
          border-top: 1px solid #ddd;
-         border-bottom: 1px solid black;
+         border-bottom: 1px solid #ddd;
       }
    }
 }
