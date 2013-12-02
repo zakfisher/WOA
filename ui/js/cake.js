@@ -27,9 +27,6 @@ cake = new function() {
         var player = $('#player');
         var togglePlayerBtn = '.toggle-player-bar';
         var addToPlaylistBtn = 'i.add-to-playlist';
-        p.playPause = function() {
-            $('button[title="Play/Pause"]').click();
-        };
         p.isPlaying = function() {
             return $('button[title="Play/Pause"]').parents('.mejs-button').is('.mejs-pause');
         };
@@ -202,8 +199,7 @@ cake = new function() {
             }
         };
         a.render = function(e) {
-            var target = $(e.target).is('[data-app]') ? $(e.target) : $(e.target).parents('[data-app]');
-            var app = target.attr('data-app');
+            var app = $(e.currentTarget).attr('data-app');
             //c.Helpers.setURL(modal);
             switch (app) {
                 case 'now-playing':
@@ -350,7 +346,7 @@ cake = new function() {
                     $(mixListContainer).hide();
                 };
                 switch (prevScreen) {
-                    case 'letters':
+                    case 'letter':
                         callback();
                         break;
                     case 'artist':
@@ -416,11 +412,12 @@ cake = new function() {
                 if (isCurrentMix) {
                     if (c.Player.isPlaying()) {
                         $(mixLI + '.current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
+                        c.Player.currentMix.pause();
                     }
                     else {
                         $(mixLI + '.current-mix').find('i').addClass('icon-pause').removeClass('icon-play');
+                        c.Player.currentMix.play();
                     }
-                    c.Player.playPause();
                 }
                 else { // Play New Mix
                     $(mixLI).removeClass('current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
@@ -492,11 +489,12 @@ cake = new function() {
                 if (isCurrentMix) {
                     if (c.Player.isPlaying()) {
                         $(mixLI + '.current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
+                        c.Player.currentMix.pause();
                     }
                     else {
                         $(mixLI + '.current-mix').find('i').addClass('icon-pause').removeClass('icon-play');
+                        c.Player.currentMix.play();
                     }
-                    c.Player.playPause();
                 }
                 else { // Play New Mix
                     $(mixLI).removeClass('current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
@@ -519,21 +517,22 @@ cake = new function() {
             var app = this;
             var id = '#latest-mixes';
             var mixListContainer = '#latest-mixes-list';
-            var mix = mixListContainer + ' a.mix';
+            var mixLI = mixListContainer + ' a.mix';
             app.selectMix = function(e) {
                 var musicId = $(e.target).attr('data-music-id');
                 var isCurrentMix = musicId == c.Player.getCurrentMixId();
                 if (isCurrentMix) {
                     if (c.Player.isPlaying()) {
-                        $(mix + '.current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
+                        $(mixLI + '.current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
+                        c.Player.currentMix.pause();
                     }
                     else {
-                        $(mix + '.current-mix').find('i').addClass('icon-pause').removeClass('icon-play');
+                        $(mixLI + '.current-mix').find('i').addClass('icon-pause').removeClass('icon-play');
+                        c.Player.currentMix.play();
                     }
-                    c.Player.playPause();
                 }
                 else { // Play New Mix
-                    $(mix).removeClass('current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
+                    $(mixLI).removeClass('current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
                     $(e.target).addClass('current-mix').find('i').removeClass('icon-play').addClass('icon-pause');
                     c.Player.setCurrentMix(musicId, true);
                 }
@@ -559,7 +558,7 @@ cake = new function() {
                     c.MixesByDate = mixesByDate;
                     app.loaded = true;
                 });
-                $(document).on('click', mix, app.selectMix);
+                $(document).on('click', mixLI, app.selectMix);
             };
         };
         a.RandomMix = new function() {
@@ -567,7 +566,6 @@ cake = new function() {
             var id = '';
             app.selectRandomMix = function() {
                 var randomIndex = c.Helpers.getRandomInt(0, c.MixArray.length-1);
-                console.log(randomIndex);
                 c.Player.setCurrentMix(c.MixArray[randomIndex].music_id, true);
             };
             app.start = function() {};
@@ -695,7 +693,7 @@ cake = new function() {
             };
             modal.start = function() {
                 if ($.cookie('username') !== null && $.cookie('password') !== null) {
-                    $(id).find('input[value=remember-me]').click();
+                    $(id).find('input[value=remember-me]').prop('checked', true);
                     $(id).find('input[name=username]').val($.cookie('username'));
                     $(id).find('input[name=password]').val($.cookie('password'));
                 }

@@ -16,5 +16,5 @@
     <link type="text/css" href="/ui/css/cake.css" rel="stylesheet" />
 </head>
 <body data-platform="<?= $this->browser['platform']; ?>" data-browser="<?= $this->browser['short_name']; ?>" data-version="<?= $this->browser['version']; ?>">
-    <img id="bg-image" src="/images/bg/8.jpg" />
+    <img id="bg-image" src="/images/bg/1.jpg" />
     <div id="wrap">
