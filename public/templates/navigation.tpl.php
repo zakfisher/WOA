@@ -4,9 +4,9 @@
     <div class="navbar-header">
         <a class="navbar-brand" href="/"><?php require('../ui/images/edmcake_logo.svg'); ?></a>
         <?php if ($this->isLoggedIn): ?>
-        <i class="icon-gear options-menu pull-right" data-toggle="modal" href="#modal" data-modal="logged-in-menu"></i>
+        <i class="icon-gear options-menu pull-right" data-toggle="modal" href="#modal" data-modal="user-menu"></i>
         <?php else: ?>
-        <i class="icon-user options-menu pull-right" data-toggle="modal" href="#modal" data-modal="logged-out-menu"></i>
+        <i class="icon-user options-menu pull-right" data-toggle="modal" href="#modal" data-modal="login"></i>
         <?php endif; ?>
     </div>
 

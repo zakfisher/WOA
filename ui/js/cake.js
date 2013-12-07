@@ -6,7 +6,6 @@
 
 cake = new function() {
     var c = this;
-    var body = $('body');
     c.API = {
         music : {
             getAllMixes : '/api/music/getAllMixes/',
@@ -15,12 +14,9 @@ cake = new function() {
         },
         user : {
             getUser: '/api/user/getUser/',
-            login: '/api/user/login/'
+            login: '/api/user/login/',
+            signup: '/api/user/signup/'
         }
-    };
-    c.Search = new function() {
-        var s = this;
-        s.init = function() {};
     };
     c.Player = new function() {
         var p = this;
@@ -116,8 +112,8 @@ cake = new function() {
     c.Slideshow = new function() {
         var s = this;
         var id = '#bg-image';
-        var totalImages = 8;
-        var currentImage = 1;
+        var totalImages = 6;
+        var currentImage = 2;
         s.adjustBGposition = function() {
             var imageWidth = $(id).width();
             var docWidth = $(document).width();
@@ -134,16 +130,35 @@ cake = new function() {
             if (currentImage > totalImages) currentImage = 1;
             $(id).fadeOut(300, function() {
                 $(id).attr('src', '/images/bg/' + currentImage + '.jpg');
-                setTimeout(function() {
-                    s.adjustBGposition();
-                    $(id).fadeIn();
-                }, 300);
+                s.rotateImage();
             });
+        };
+        s.rotateImage = function() {
+            s.adjustBGposition();
+            $(id).fadeIn('slow');
+            if (c.Browser.isMobile) return false;
+            $(id).tween({
+            transform:{
+                start: 'rotate(0deg) scale( 1 )',
+                stop: 'rotate(20deg) scale( 1.8 )',
+                time: 0,
+                duration: 30,
+                effect:'linear'
+            }
+//                ,opacity:{
+//                    start: 30,
+//                    stop: 95,
+//                    time: 0,
+//                    duration: 25,
+//                    effect:'easeIn'
+//                }
+            }).play();
         };
         s.init = function() {
             s.adjustBGposition();
             $(window).resize(s.adjustBGposition);
             setInterval(s.updateImage, 30000);
+            s.rotateImage();
         };
     };
     c.App = new function() {
@@ -186,7 +201,6 @@ cake = new function() {
             switch (currentApp) {
                 case 'browse-by-artist':
                     var screen = a.BrowseByArtist.getCurrentScreen();
-                    console.log(screen);
                     switch (screen) {
                         case 'artist':
                             a.BrowseByArtist.renderBrowseByLetterList();
@@ -385,8 +399,6 @@ cake = new function() {
             app.selectArtist = function(e) {
                 artist = c.Helpers.htmlentities($(e.currentTarget).find('h3').text());
                 var mixes = c.MixesByArtist.mixes[letter][artist];
-                console.log(letter);
-                console.log(artist);
                 app.renderBrowseByMixList(mixes);
             };
             app.renderBrowseByMixList = function(mixes) {
@@ -589,7 +601,10 @@ cake = new function() {
             $(content).html('');
         };
         m.showModal = function() {
+            m.hideMessage();
             $('#modal').modal('show');
+            $('div.modal-content').show();
+            $('#loading').hide();
         };
         m.hideMessage = function() {
             $(message).hide().removeClass('alert-success alert-danger').find('p').html('');
@@ -601,18 +616,22 @@ cake = new function() {
         m.displayTemplate = function(template, callback) {
             Handlebars.renderTemplate(template, {}, content);
             if (typeof callback !== 'undefined') callback();
-            $('div.modal-content').show();
+            m.showModal();
         };
         m.render = function(e) {
-            var target = $(e.target).is('[data-modal]') ? $(e.target) : $(e.target).parents('[data-modal]');
-            var modal = target.attr('data-modal');
+            var modal;
+            if (typeof e === 'object') modal = $(e.currentTarget).attr('data-modal');
+            else modal = e;
             //c.Helpers.setURL(modal);
             switch (modal) {
-                case 'logged-in-menu':
-                    m.displayTemplate('user-menu', m.UserMenu.start);
-                    break;
-                case 'logged-out-menu':
+                case 'login':
                     m.displayTemplate('login', m.Login.start);
+                    break;
+                case 'sign-up':
+                    m.displayTemplate('sign-up', m.SignUp.start);
+                    break;
+                case 'user-menu':
+                    m.displayTemplate('user-menu', m.UserMenu.start);
                     break;
             }
         };
@@ -658,15 +677,15 @@ cake = new function() {
                 var usernameExists = POST.username.length > 0;
                 var passwordExists = POST.password.length > 0;
                 if (!usernameExists && !passwordExists) {
-                    c.Modal.displayMessage('danger', 'You must provide a username and password to login.');
+                    c.Modal.displayMessage('danger', 'Please provide a username and password to login.');
                     return false;
                 }
                 if (POST.username.length == 0) {
-                    c.Modal.displayMessage('danger', 'You must provide a username to login.');
+                    c.Modal.displayMessage('danger', 'Please provide a username to login.');
                     return false;
                 }
                 if (POST.password.length == 0) {
-                    c.Modal.displayMessage('danger', 'You must provide a password to login.');
+                    c.Modal.displayMessage('danger', 'Please provide a password to login.');
                     return false;
                 }
                 var rememberMe = $(id).find('input[value=remember-me]').is(':checked');
@@ -704,6 +723,92 @@ cake = new function() {
             };
             modal.init = function() {
                 $(document).on('submit', form, modal.submitForm);
+            };
+        };
+        m.SignUp = new function() {
+            var modal = this;
+            var id = '#sign-up';
+            var message   = $(id).find('div.message');
+            var form      = id + ' form';
+            var firstName  = form + ' input[name=firstname]';
+            var lastName  = form + ' input[name=lastname]';
+            var email  = form + ' input[name=email]';
+            var username  = form + ' input[name=username]';
+            var confirmPassword  = form + ' input[name=confirm-password]';
+            var password  = form + ' input[name=password]';
+            modal.submitForm = function(e) {
+                e.preventDefault();
+                c.Modal.hideMessage();
+                var POST = {
+                    first_name : $(firstName).val(),
+                    last_name : $(lastName).val(),
+                    email : $(email).val(),
+                    username : $(username).val(),
+                    password : $(password).val(),
+                    confirmPassword : $(confirmPassword).val()
+                };
+                var firstNameExists = POST.first_name.length > 0;
+                var lastNameExists = POST.last_name.length > 0;
+                var emailExists = POST.email.length > 0;
+                var emailIsValid = (c.Helpers.validate('email', POST.email)) !== null;
+                var usernameExists = POST.username.length > 0;
+                var passwordExists = POST.password.length > 0;
+                var confirmPasswordExists = POST.confirmPassword.length > 0;
+                if (!firstNameExists) {
+                    c.Modal.displayMessage('danger', 'Please provide a first name.');
+                    return false;
+                }
+                if (!lastNameExists) {
+                    c.Modal.displayMessage('danger', 'Please provide a last name.');
+                    return false;
+                }
+                if (!emailExists || !emailIsValid) {
+                    c.Modal.displayMessage('danger', 'Please provide a valid email.');
+                    return false;
+                }
+                if (!usernameExists) {
+                    c.Modal.displayMessage('danger', 'Please provide a username.');
+                    return false;
+                }
+                if (!passwordExists) {
+                    c.Modal.displayMessage('danger', 'Please provide a password.');
+                    return false;
+                }
+                if (!confirmPasswordExists) {
+                    c.Modal.displayMessage('danger', 'Please confirm your password.');
+                    return false;
+                }
+                if (POST.password !== POST.confirmPassword) {
+                    c.Modal.displayMessage('danger', 'Your passwords do not match.');
+                    return false;
+                }
+                c.Modal.displayMessage('success', 'Yeehaw mfffs');
+                delete POST.confirmPassword;
+                console.log(POST);
+//                $.post(c.API.user.login, POST, function(data) {
+//                    if (data.success) {
+//                        if (rememberMe) {
+//                            $.cookie('username', POST.username);
+//                            $.cookie('password', POST.password);
+//                        }
+//                        location.href = '/';
+//                    }
+//                    if (data.error) {
+//                        c.Modal.displayMessage('danger', data.error);
+//                    }
+//                })
+//                    .error(function() {
+//                        //c.Modal.displayMessage('danger', 'Unable to reach server.');
+//                    });
+            };
+            modal.start = function() {
+
+            };
+            modal.init = function() {
+                $(document).on('submit', form, modal.submitForm);
+                $(document).on('click', form + ' button.login', function(e) {
+                    m.render('login');
+                });
             };
         };
         m.UserMenu = new function() {
@@ -948,6 +1053,33 @@ cake = new function() {
         h.getRandomColor = function(colors) {
             return colors[h.getRandomInt(0, colors.length-1)];
         };
+        h.validate = function(type, value) {
+            var regex;
+            switch (type) {
+                case 'ip':
+                    regex = new RegExp(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/g);
+                    break;
+                case 'email':
+                    regex = new RegExp(/^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/);
+                    break;
+                case 'hex':
+                    regex = new RegExp(/^#(?:[0-9a-f]{3}){1,2}$/i);
+                    break;
+                case 'zip':
+                    regex = new RegExp(/^\d{5}$/);
+                    break;
+                case 'password':
+                    var errors = [];
+                    if (value.length < 8) errors.push("Password must be at least 8 characters.");
+                    if (value.search(/[a-z]/) < 0) errors.push("Password must contain at least one lowercase letter.");
+                    if (value.search(/[A-Z]/) < 0) errors.push("Password must contain at least one uppercase letter.");
+                    if (value.search(/[0-9]/) < 0) errors.push("Password must contain at least one number.");
+                    if (errors.length > 0) return errors[0];
+                    return true;
+                default:
+            }
+            return regex.exec(value);
+        };
     };
     c.Page = new function() {
         var p = this;
@@ -955,6 +1087,7 @@ cake = new function() {
             switch (e.keyCode) {
                 case 27: // Escape
                     c.App.hideApp();
+                    c.Modal.hideModal();
                     break;
             }
         };
@@ -983,7 +1116,6 @@ cake = new function() {
             if (e.status == 'connected') {
                 APIready = true;
             }
-            console.log(e);
             f.fetchData();
         };
         f.fetchData = function() {
@@ -992,7 +1124,7 @@ cake = new function() {
                 '/search?q=conference&type=event',
                 'get',
                 function(response) {
-                    console.log(response);
+                    //console.log(response);
                 }
             );
         };
@@ -1012,6 +1144,7 @@ cake = new function() {
                 c.User = user;
             });
         }
+        var body = $('body');
         c.Browser = {
             name: body.attr('data-browser'),
             platform: body.attr('data-platform'),
@@ -1019,7 +1152,6 @@ cake = new function() {
         };
         c.Browser.isMobile = ($.inArray(c.Browser.platform, ['android', 'ipad', 'iphone']) != -1);
         c.Facebook.init();
-        c.Search.init();
         c.Player.init();
         c.Slideshow.init();
         c.Modal.init();

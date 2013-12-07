@@ -34,7 +34,7 @@ body {
    position: fixed;
    top: 0;
    min-width: 100%;
-//   @include opacity(.8);
+   @include opacity(.85);
 }
 a.teal {
    color: $teal;
@@ -266,9 +266,10 @@ i.options-menu {
       font-size: 16px;
       height: auto;
       padding: 10px;
-   }
-   input[type=text] {
       margin-bottom: 15px;
+      &:last-child {
+         margin-bottom: 0;
+      }
    }
 }
 .modal-content {
@@ -281,11 +282,13 @@ i.options-menu {
    margin: 0;
    button {
       //display: block;
-      @include customFont();
+      //@include customFont();
       width: 49%;
-      //padding: 10px;
-      font-size: 16px;
-      letter-spacing: 1px;
+      font-size: 12px;
+      @include border-radius(0);
+      height: 40px;
+//      letter-spacing: 1px;
+      text-transform: uppercase;
       &:hover {
          text-decoration: none;
       }
@@ -310,11 +313,14 @@ i.options-menu {
       padding: 15px;
       button {
 //         display: block;
-         @include customFont();
+//         @include customFont();
          width: 49%;
          margin-bottom: 10px;
-         font-size: 16px;
-         letter-spacing: 1px;
+         font-size: 12px;
+         @include border-radius(0);
+         height: 40px;
+//         letter-spacing: 1px;
+         text-transform: uppercase;
          &:last-child {
             margin-bottom: 0;
          }
@@ -339,8 +345,9 @@ i.options-menu {
       cursor: pointer;
       width: 100%;
       height: 94px;
-      background: rgba(0,0,0,.8);
-      @include border-radius(6px);
+      background: rgba(0,0,0,.75);
+//      @include border-radius(6px);
+      @include border-radius(0px);
       text-align: center;
       color: white;
       position: relative;
@@ -392,7 +399,7 @@ i.options-menu {
       }
       &:hover {
          border: 1px solid white;
-         //background: rgba(0,0,0,.3);
+         background: rgba(0,0,0,.8);
       }
    }
 }
@@ -421,9 +428,12 @@ i.options-menu {
          position: absolute;
          top: 50%;
          left: 50%;
-         margin-left: -32px;
-         margin-top: -64px;
-         width: 64px;
+//         margin-left: -32px;
+//         margin-top: -64px;
+//         width: 64px;
+         margin-left: -16px;
+         margin-top: -16px;
+         width: 32px;
       }
       p {
          @include customFont();
@@ -531,7 +541,8 @@ i.options-menu {
          }
       }
       &.content {
-         @include bg-image('textures/honey_im_subtle.png');
+         background: none;
+         //@include bg-image('textures/honey_im_subtle.png');
          display:none;
          z-index: 6;
          padding-top: 100px;

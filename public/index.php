@@ -18,7 +18,7 @@ $tpl->desktop = array(
         ),
         array(
             'requires_login' => 0,
-            'title' => 'Now Playing',
+            'title' => 'Right Now',
             'name' => 'now-playing'
         ),
         array(
@@ -49,7 +49,14 @@ if ($tpl->isLoggedIn) {
 
 $tpl->display('templates/header.tpl.php');
 $tpl->display('templates/navigation.tpl.php');
+
+// Modals
 $tpl->display('templates/modal.tpl.php');
+$tpl->display('templates/modals/login.tpl.php');
+$tpl->display('templates/modals/sign-up.tpl.php');
+$tpl->display('templates/modals/user-menu.tpl.php');
+
+// Desktop
 $tpl->display('templates/desktop.tpl.php');
 
 // Apps
