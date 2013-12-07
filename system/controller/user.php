@@ -1,8 +1,6 @@
 <?php
 class UserController {
 
-    function __construct() {}
-
     public function getMethods() {
         return array(
             'login' => array(),
@@ -19,14 +17,34 @@ class UserController {
             return $model->authenticate($params);
         }
         if (!isset($params['username']) && !isset($params['password'])) {
-            return array('error' => 'You must provide a username and password to login.');
+            return array('error' => 'Please provide a username and password to login.');
         }
         if (!isset($params['username'])) {
-            return array('error' => 'You must provide a username to login.');
+            return array('error' => 'Please provide a username to login.');
         }
         if (!isset($params['password'])) {
-            return array('error' => 'You must provide a password to login.');
+            return array('error' => 'Please provide a password to login.');
         }
+    }
+
+    public function signup($params) {
+        $model = new UserModel();
+        if (!isset($params['first_name'])) {
+            return array('error' => 'Please provide a username to sign up.');
+        }
+        if (!isset($params['last_name'])) {
+            return array('error' => 'Please provide a username to sign up.');
+        }
+        if (!isset($params['email'])) {
+            return array('error' => 'Please provide a username to sign up.');
+        }
+        if (!isset($params['username'])) {
+            return array('error' => 'Please provide a username to sign up.');
+        }
+        if (!isset($params['password'])) {
+            return array('error' => 'Please provide a password to sign up.');
+        }
+        return $model->createUser($params);
     }
 
     public function logout($location) {

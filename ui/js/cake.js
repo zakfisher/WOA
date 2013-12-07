@@ -782,24 +782,30 @@ cake = new function() {
                     c.Modal.displayMessage('danger', 'Your passwords do not match.');
                     return false;
                 }
-                c.Modal.displayMessage('success', 'Yeehaw mfffs');
                 delete POST.confirmPassword;
-                console.log(POST);
-//                $.post(c.API.user.login, POST, function(data) {
-//                    if (data.success) {
-//                        if (rememberMe) {
-//                            $.cookie('username', POST.username);
-//                            $.cookie('password', POST.password);
-//                        }
-//                        location.href = '/';
-//                    }
-//                    if (data.error) {
-//                        c.Modal.displayMessage('danger', data.error);
-//                    }
-//                })
-//                    .error(function() {
-//                        //c.Modal.displayMessage('danger', 'Unable to reach server.');
-//                    });
+                $.post(c.API.user.signup, POST, function(data) {
+                    if (data.success) {
+                        c.Modal.displayMessage('success', data.success);
+                        $.post(c.API.user.login, POST, function(d) {
+                            if (d.success) {
+                                $(modal).scrollTop(0);
+                                setTimeout(function() { location.href = '/'; }, 2000);
+                            }
+                            if (d.error) {
+                                c.Modal.displayMessage('danger', d.error);
+                            }
+                        })
+                        .error(function() {
+                            //c.Modal.displayMessage('danger', 'Unable to reach server.');
+                        });
+                    }
+                    if (data.error) {
+                        c.Modal.displayMessage('danger', data.error);
+                    }
+                })
+                .error(function() {
+                    //c.Modal.displayMessage('danger', 'Unable to reach server.');
+                });
             };
             modal.start = function() {
 

@@ -5,7 +5,6 @@
             <button type="button" class="close" aria-hidden="true"><i class="icon-remove"></i></button>
             <p></p>
         </div>
-        <div class="modal-content">
-        </div>
+        <div class="modal-content"></div>
     </div>
 </div>

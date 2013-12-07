@@ -48,4 +48,30 @@ class UserModel {
         return $database->update_where('users', array('token' => null), 'user_id', $_SESSION['user']['user_id']);
     }
 
+    public function createUser($params) {
+        $database = new DB();
+        $params['access'] = 'user';
+        $password = $params['password'];
+        $params['password'] = sha1($params['password']);
+        // Check username/email
+        $existingUsername = $database->select_from_where(array('*'), 'users', 'username', $params['username']);
+        $existingEmail = $database->select_from_where(array('*'), 'users', 'email', $params['email']);
+        if (!empty($existingEmail)) {
+            $response = array('error' => 'This email is already being used.');
+            return $response;
+        }
+        if (!empty($existingUsername)) {
+            $response = array('error' => 'This username is already being used.');
+            return $response;
+        }
+        // Create User
+        $user = $database->insert_into('users', $params);
+        if (empty($user)) {
+            $response = array('error' => 'Unable to create account.');
+        }
+        else {
+            $response = array('success' => 'Account created successfully!');
+        }
+        return $response;
+    }
 }
