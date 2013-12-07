@@ -74,4 +74,26 @@ class UserModel {
         }
         return $response;
     }
+
+    public function addFavoriteRow($params) {
+        $database = new DB();
+        $existingRow = $database->select_from_where(array('*'), 'user_playlist', 'user_id', $params['user_id'], 'music_id', $params['music_id']);
+        if (!empty($existingRow)) {
+            return array('error' => 'Already a favorite!');
+        }
+        $response = $database->insert_into('user_playlist', $params);
+        if (empty($response)) {
+            $response = array('error' => 'Unable to save to playlist.');
+        }
+        return $response;
+    }
+
+    public function removeFavoriteRow($params) {
+        $database = new DB();
+        $response = $database->delete_from_where_and('user_playlist', 'user_id', $params['user_id'], 'music_id', $params['music_id']);
+        if (empty($response)) {
+            $response = array('error' => 'Unable to save to playlist.');
+        }
+        return $response;
+    }
 }

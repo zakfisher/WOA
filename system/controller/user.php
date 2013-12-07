@@ -74,4 +74,25 @@ class UserController {
         return $_SESSION['user']['access'];
     }
 
+    public function addFavoriteMix($params) {
+        $model = new UserModel();
+        if (!isset($params['user_id'])) {
+            return array('error' => 'User not found.');
+        }
+        if (!isset($params['music_id'])) {
+            return array('error' => 'Mix not found.');
+        }
+        return $model->addFavoriteRow($params);
+    }
+
+    public function removeFavoriteMix($params) {
+        $model = new UserModel();
+        if (!isset($params['user_id'])) {
+            return array('error' => 'User not found.');
+        }
+        if (!isset($params['music_id'])) {
+            return array('error' => 'Mix not found.');
+        }
+        return $model->removeFavoriteRow($params);
+    }
 }

@@ -88,9 +88,21 @@ cake = new function() {
             return p.currentMix.cache.music_id;
         };
         p.toggleFavoriteMix = function() {
-            if ($(addToPlaylistBtn).is('.favorite')) $(addToPlaylistBtn).removeClass('favorite');
-            else $(addToPlaylistBtn).addClass('favorite');
+            if ($(addToPlaylistBtn).is('.favorite')) {
+                $(addToPlaylistBtn).removeClass('favorite');
+                $.post(c.API.user.removeFavoriteMix, {user_id:c.User.user_id,music_id:p.getCurrentMixId()}, function(data) {
+                    console.log(data);
+                }).error(function(){});
+            }
+            else {
+                $(addToPlaylistBtn).addClass('favorite');
+                $.post(c.API.user.addFavoriteMix, {user_id:c.User.user_id,music_id:p.getCurrentMixId()}, function(data) {
+                    console.log(data);
+                }).error(function(){});
+            }
         };
+        p.addFavoriteMix = function() {};
+        p.removeFavoriteMix = function() {};
         p.init = function() {
             $.get(c.API.music.getAllMixes, function(mixesById) {
                 c.MixesById = mixesById;
@@ -519,7 +531,7 @@ cake = new function() {
             var app = this;
             var id = '#my-playlist';
             app.start = function() {
-                //c.Modal.getTitleNode().append('<span class="text-teal default-font">' + c.User.first_name + ' ' + c.User.last_name + '</span>');
+
             };
             app.init = function() {
 
@@ -1148,6 +1160,10 @@ cake = new function() {
             $('#is-logged-in').remove();
             $.get(c.API.user.getUser, function(user) {
                 c.User = user;
+                $.extend(c.API.user, {
+                    addFavoriteMix : '/api/user/addFavoriteMix/',
+                    removeFavoriteMix : '/api/user/removeFavoriteMix/'
+                });
             });
         }
         var body = $('body');

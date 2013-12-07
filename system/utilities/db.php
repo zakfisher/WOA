@@ -167,9 +167,16 @@ class DB {
         $query = "DELETE FROM " . $table . " WHERE " . $column . " = " . $value . ";";
 
         // Execute Query
-        $this->query($query);
+        return $this->query($query);
+    }
 
-        return true;
+    function delete_from_where_and($table, $column1, $value1, $column2, $value2)
+    {
+        // Compose DELETE Query
+        $query = "DELETE FROM " . $table . " WHERE " . $column1 . " = " . $value1 . " AND " . $column2 . " = " . $value2 . ";";
+
+        // Execute Query
+        return $this->query($query);
     }
 
     function get_last_row($table, $column)
