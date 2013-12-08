@@ -347,9 +347,11 @@ i.options-menu {
       cursor: pointer;
       width: 100%;
       height: 94px;
-      background: rgba(0,0,0,.75);
+//      background: rgba(0,0,0,.75);
 //      @include border-radius(6px);
-      @include border-radius(0px);
+      @include border-radius(10px);
+      @include bg-image('textures/binding_dark.png');
+      @include opacity(.9);
       text-align: center;
       color: white;
       position: relative;
@@ -401,7 +403,9 @@ i.options-menu {
       }
       &:hover {
          border: 1px solid white;
-         background: rgba(0,0,0,.8);
+//         background: rgba(0,0,0,.8);
+         @include bg-image('textures/binding_dark.png');
+         @include opacity(.95);
       }
    }
 }

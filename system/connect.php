@@ -3,7 +3,7 @@
 global $db;
 
 // Production
-if (ENV == 'www')
+if (ENV == 'production')
 {
     $host = 'localhost';
     $db_name = 'worldoh4_woa_prod';
