@@ -79,26 +79,55 @@ cake = new function() {
             });
             p.currentMix.cache = mix;
             if (play) p.currentMix.play();
-            if (c.isLoggedIn && $(addToPlaylistBtn).length == 0) {
-                $('.mejs-controls').prepend('<i class="icon-heart add-to-playlist"></i>');
-                $('.mejs-currenttime-container').addClass('showing-heart');
+            if (c.isLoggedIn) {
+                var isFavorite = false;
+                $(addToPlaylistBtn).removeClass('favorite');
+                if (c.User.playlist.music_ids.length > 0) {
+                    isFavorite = ($.inArray(Number(mix.music_id), c.User.playlist.music_ids) > -1);
+                }
+                if ($(addToPlaylistBtn).length == 0) {
+                    $('.mejs-controls').prepend('<i class="icon-heart add-to-playlist"></i>');
+                    $('.mejs-currenttime-container').addClass('showing-heart');
+                }
+                if (isFavorite) $(addToPlaylistBtn).addClass('favorite');
             }
         };
         p.getCurrentMixId = function() {
-            return p.currentMix.cache.music_id;
+            return Number(p.currentMix.cache.music_id);
         };
         p.toggleFavoriteMix = function() {
+            if ($(addToPlaylistBtn).is('.locked')) return false;
+            $(addToPlaylistBtn).addClass('locked');
+            // Remove Favorite
             if ($(addToPlaylistBtn).is('.favorite')) {
                 $(addToPlaylistBtn).removeClass('favorite');
                 $.post(c.API.user.removeFavoriteMix, {user_id:c.User.user_id,music_id:p.getCurrentMixId()}, function(data) {
-                    console.log(data);
-                }).error(function(){});
+                    $(c.User.playlist.music_ids).each(function(i, musicId) {
+                        if (p.getCurrentMixId() === musicId) {
+                            c.User.playlist.music_ids.splice(i, 1);
+                            return false;
+                        }
+                    });
+                    if ($('#my-playlist').length > 0) {
+                        c.App.MyPlaylist.start();
+                    }
+                    $(addToPlaylistBtn).removeClass('locked');
+                }).error(function(){
+                        $(addToPlaylistBtn).removeClass('locked');
+                    });
             }
+            // Add Favorite
             else {
                 $(addToPlaylistBtn).addClass('favorite');
                 $.post(c.API.user.addFavoriteMix, {user_id:c.User.user_id,music_id:p.getCurrentMixId()}, function(data) {
-                    console.log(data);
-                }).error(function(){});
+                    c.User.playlist.music_ids.push(p.getCurrentMixId());
+                    if ($('#my-playlist').length > 0) {
+                        c.App.MyPlaylist.start();
+                    }
+                    $(addToPlaylistBtn).removeClass('locked');
+                }).error(function(){
+                        $(addToPlaylistBtn).removeClass('locked');
+                    });
             }
         };
         p.addFavoriteMix = function() {};
@@ -264,6 +293,7 @@ cake = new function() {
                                        a.RandomMix.loaded &&
                                        a.BrowseByArtist.loaded &&
                                        a.LatestMixes.loaded);
+                if (c.isLoggedIn) loadingComplete = (loadingComplete && a.MyPlaylist.loaded);
                 if (loadingComplete) {
                     clearInterval(int);
                     $('#loading-page').fadeOut('fast');
@@ -530,11 +560,50 @@ cake = new function() {
         a.MyPlaylist = new function() {
             var app = this;
             var id = '#my-playlist';
+            var mixListContainer = '#my-playlist-list';
+            var mixLI = mixListContainer + ' a.mix';
+            app.selectMix = function(e) {
+                var musicId = $(e.target).attr('data-music-id');
+                var isCurrentMix = musicId == c.Player.getCurrentMixId();
+                if (isCurrentMix) {
+                    if (c.Player.isPlaying()) {
+                        $(mixLI + '.current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
+                        c.Player.currentMix.pause();
+                    }
+                    else {
+                        $(mixLI + '.current-mix').find('i').addClass('icon-pause').removeClass('icon-play');
+                        c.Player.currentMix.play();
+                    }
+                }
+                else { // Play New Mix
+                    $(mixLI).removeClass('current-mix').find('i').addClass('icon-play').removeClass('icon-pause');
+                    $(e.target).addClass('current-mix').find('i').removeClass('icon-play').addClass('icon-pause');
+                    c.Player.setCurrentMix(musicId, true);
+                }
+            };
             app.start = function() {
-
+                $(goBackBtn).hide();
+                a.setTitle(c.User.first_name + '\'s Favorites');
+                $(mixListContainer).html('');
+                if (c.User.playlist.music_ids.length == 0) {
+                    $(mixListContainer).show();
+                    $('#loading').hide();
+                    return false;
+                }
+                $(c.User.playlist.music_ids).each(function(i, mixId) {
+                    var mix = c.MixesById[mixId];
+                    var isCurrentMix = (mix.music_id == c.Player.getCurrentMixId());
+                    $(mixListContainer).append('<a href="javascript:void(0);" class="list-group-item mix default-font' + (isCurrentMix ? ' current-mix' : '') + '" data-music-id="' + mix.music_id + '"><i class="icon-' + (isCurrentMix && c.Player.isPlaying() ? 'pause' : 'play') + '"></i>&nbsp;&nbsp;&nbsp;<b><span class="text-' + c.Helpers.getRandomColor(['teal','pink','purple']) + ' default-font">' + mix.artist + '</span></b> ' + mix.title + '</a>');
+                });
+                $(mixListContainer).show();
             };
             app.init = function() {
-
+                if (!c.isLoggedIn) return false;
+                $.get(c.API.user.getMyPlaylist, function(musicIds) {
+                    c.User.playlist = musicIds;
+                    app.loaded = true;
+                });
+                $(document).on('click', mixLI, app.selectMix);
             };
         };
         a.LatestMixes = new function() {
@@ -1158,12 +1227,13 @@ cake = new function() {
         c.isLoggedIn = $('#is-logged-in').length > 0;
         if (c.isLoggedIn) {
             $('#is-logged-in').remove();
+            $.extend(c.API.user, {
+                addFavoriteMix : '/api/user/addFavoriteMix/',
+                removeFavoriteMix : '/api/user/removeFavoriteMix/',
+                getMyPlaylist : '/api/user/getMyPlaylist/'
+            });
             $.get(c.API.user.getUser, function(user) {
                 c.User = user;
-                $.extend(c.API.user, {
-                    addFavoriteMix : '/api/user/addFavoriteMix/',
-                    removeFavoriteMix : '/api/user/removeFavoriteMix/'
-                });
             });
         }
         var body = $('body');

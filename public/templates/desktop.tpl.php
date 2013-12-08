@@ -1,5 +1,5 @@
 <?php
-$color = array('', 'pink', 'teal', 'purple');
+$color = array('pink', 'teal', 'purple', '', '');
 ?>
 <div id="loading-page">
     <div class="lp-contents">

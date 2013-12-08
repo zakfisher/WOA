@@ -95,4 +95,9 @@ class UserController {
         }
         return $model->removeFavoriteRow($params);
     }
+
+    public function getMyPlaylist() {
+        $model = new UserModel();
+        return $model->getPlaylist();
+    }
 }

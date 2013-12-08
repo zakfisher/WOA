@@ -77,7 +77,7 @@ class UserModel {
 
     public function addFavoriteRow($params) {
         $database = new DB();
-        $existingRow = $database->select_from_where(array('*'), 'user_playlist', 'user_id', $params['user_id'], 'music_id', $params['music_id']);
+        $existingRow = $database->select_from_where_and(array('*'), 'user_playlist', 'user_id', $params['user_id'], 'music_id', $params['music_id']);
         if (!empty($existingRow)) {
             return array('error' => 'Already a favorite!');
         }
@@ -94,6 +94,20 @@ class UserModel {
         if (empty($response)) {
             $response = array('error' => 'Unable to save to playlist.');
         }
+        return $response;
+    }
+
+    public function getPlaylist() {
+        $database = new DB();
+        $response = $database->select_from_where(array('*'), 'user_playlist', 'user_id', $_SESSION['user']['user_id']);
+        if (empty($response)) {
+            return array('music_ids' => array());
+        }
+        $musicIds = array();
+        foreach ($response as $item) {
+            $musicIds[] = (int)$item['music_id'];
+        }
+        $response = array('music_ids' => $musicIds);
         return $response;
     }
 }

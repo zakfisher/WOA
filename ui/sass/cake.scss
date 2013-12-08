@@ -154,15 +154,17 @@ i.options-menu {
    z-index: 10;
    div.now-playing {
       height: 26px;
-      background: rgb(69,72,77); /* Old browsers */
-      background: -moz-linear-gradient(top,  rgba(69,72,77,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(69,72,77,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
-      background: -webkit-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
-      background: -o-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
-      background: -ms-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
-      background: linear-gradient(to bottom,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
-      border-top: 1px solid #333;
+//      background: rgb(69,72,77); /* Old browsers */
+//      background: -moz-linear-gradient(top,  rgba(69,72,77,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+//      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(69,72,77,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+//      background: -webkit-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+//      background: -o-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+//      background: -ms-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
+//      background: linear-gradient(to bottom,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
+//      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+//      background: rgba(0,0,0,.8);
+      @include bg-image('textures/binding_dark.png');
+      border-top: 1px solid black;
       p {
          color: white;
          margin: 0;
@@ -418,21 +420,21 @@ i.options-menu {
       width: 100%;
       @include border-radius(6px);
       div.bg {
-         @include bg-image('textures/dark_leather.png');
+         @include bg-image('textures/binding_dark.png');
          @include opacity(.7);
          position: absolute;
+//         z-index: 10;
          height: 100%;
          width: 100%;
       }
       img {
          position: absolute;
-         top: 50%;
-         left: 50%;
-//         margin-left: -32px;
-//         margin-top: -64px;
-//         width: 64px;
+//         top: 50%;
+//         left: 50%;
          margin-left: -16px;
-         margin-top: -16px;
+//         margin-top: -16px;
+         right: 20px;
+         bottom: 20px;
          width: 32px;
       }
       p {
@@ -506,13 +508,16 @@ i.options-menu {
       top: 0;
       z-index: 5;
       &.bg {
-         @include bg-image('textures/black_mamba.png');
-         @include opacity(.96);
+         //@include bg-image('textures/black_linen_v2.png');
+         //background: black;
+         @include bg-image('textures/binding_dark.png');
+         @include opacity(.9);
       }
       &.header {
          display: none;
          top: 60PX;
-         background: black;
+         //background: black;
+         @include bg-image('textures/binding_dark.png');
          z-index: 10;
          height: 40px;
          i {
@@ -698,8 +703,10 @@ i.options-menu {
       div.desktop-icon {
          text-align: left;
          svg {
-            height: 80px;
+            height: 60px;
             float: left;
+            top: 10px;
+            position: relative;
          }
          p {
             font-size: 18px;

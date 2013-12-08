@@ -13,12 +13,7 @@ $tpl->desktop = array(
     'apps' => array(
         array(
             'requires_login' => 0,
-            'title' => 'Random',
-            'name' => 'random-mix'
-        ),
-        array(
-            'requires_login' => 0,
-            'title' => 'Right Now',
+            'title' => 'Playing',
             'name' => 'now-playing'
         ),
         array(
@@ -32,8 +27,13 @@ $tpl->desktop = array(
             'name' => 'latest-mixes'
         ),
         array(
+            'requires_login' => 0,
+            'title' => 'Random',
+            'name' => 'random-mix'
+        ),
+        array(
             'requires_login' => 1,
-            'title' => 'My Playlist',
+            'title' => 'Favorites',
             'name' => 'my-playlist'
         )
     )
